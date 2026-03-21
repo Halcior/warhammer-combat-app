@@ -5,7 +5,13 @@ import type {
   Unit,
   Weapon,
 } from "../types/combat";
-import { getAntiRule, getMeltaValue, getRapidFireValue, getSustainedHitsValue, hasRule } from "./rules";
+import {
+  getAntiRule,
+  getMeltaValue,
+  getRapidFireValue,
+  getSustainedHitsValue,
+  hasRule,
+} from "./rules";
 
 export function getWoundTarget(strength: number, toughness: number): number {
   if (strength >= toughness * 2) return 2;
@@ -23,7 +29,7 @@ export function applyCoverToSave(
   if (!isTargetInCover) return saveTarget;
   if (weaponType !== "ranged") return saveTarget;
 
-  return Math.max(3, saveTarget - 1);
+  return Math.max(2, saveTarget - 1);
 }
 
 export function getModifiedSave(
@@ -94,13 +100,16 @@ export function calculateExpectedDamage({
   activeModifierRules = [],
 }: CalculateExpectedDamageParams) {
   void attacker;
+
   const combinedWeaponRules = [
-  ...(weapon.specialRules ?? []),
-  ...(activeModifierRules ?? []),
-];
+    ...(weapon.specialRules ?? []),
+    ...(activeModifierRules ?? []),
+  ];
+
   const meltaBonus = conditions.isHalfRange
-  ? getMeltaValue(combinedWeaponRules)
-  : 0;
+    ? getMeltaValue(combinedWeaponRules)
+    : 0;
+
   const baseAttacksPerModel = parseDiceValue(weapon.attacks);
   const damagePerFailedSave = parseDiceValue(weapon.damage) + meltaBonus;
 
@@ -119,50 +128,66 @@ export function calculateExpectedDamage({
   const isTorrent = hasRule(combinedWeaponRules, "TORRENT");
   const ignoresCover = hasRule(combinedWeaponRules, "IGNORES_COVER");
   const hasLethalHits = hasRule(combinedWeaponRules, "LETHAL_HITS");
-  const hasDevastatingWounds = hasRule(combinedWeaponRules, "DEVASTATING_WOUNDS");
+  const hasDevastatingWounds = hasRule(
+    combinedWeaponRules,
+    "DEVASTATING_WOUNDS"
+  );
   const hasTwinLinked = hasRule(combinedWeaponRules, "TWIN_LINKED");
   const sustainedHitsValue = getSustainedHitsValue(combinedWeaponRules);
 
-const hasHeavyRule = hasRule(combinedWeaponRules, "HEAVY");
+  const hasHeavyRule = hasRule(combinedWeaponRules, "HEAVY");
 
-let modifiedHitTarget = weapon.skill;
+  let modifiedHitTarget = weapon.skill;
 
-if (hasHeavyRule && conditions.remainedStationary) {
-  modifiedHitTarget = Math.max(2, modifiedHitTarget - 1);
-}
+  if (hasHeavyRule && conditions.remainedStationary) {
+    modifiedHitTarget = Math.max(2, modifiedHitTarget - 1);
+  }
 
-const hitTarget = modifiedHitTarget;
-const hitChance = getSuccessChance(hitTarget);
+  const hitTarget = modifiedHitTarget;
+  const hitChance = isTorrent ? 1 : getSuccessChance(hitTarget);
 
-const hasLanceRule = hasRule(combinedWeaponRules, "LANCE");
+  const hasLanceRule = hasRule(combinedWeaponRules, "LANCE");
 
-let modifiedWoundTarget = getWoundTarget(
-  weapon.strength,
-  defender.toughness
-);
+  let modifiedWoundTarget = getWoundTarget(
+    weapon.strength,
+    defender.toughness
+  );
 
-if (hasLanceRule && conditions.isChargeTurn) {
-  modifiedWoundTarget = Math.max(2, modifiedWoundTarget - 1);
-}
+  if (hasLanceRule && conditions.isChargeTurn) {
+    modifiedWoundTarget = Math.max(2, modifiedWoundTarget - 1);
+  }
 
-const woundTarget = modifiedWoundTarget;
-const woundChance = getSuccessChance(woundTarget);
-const antiRule = getAntiRule(combinedWeaponRules);
+  const woundTarget = modifiedWoundTarget;
+  const woundChance = getSuccessChance(woundTarget);
+  const antiRule = getAntiRule(combinedWeaponRules);
 
-let criticalWoundThreshold = 6;
+  let criticalWoundThreshold = 6;
 
-if (antiRule && conditions.targetHasMatchingAntiKeyword) {
-  criticalWoundThreshold = antiRule.value;
-}
+  if (antiRule && conditions.targetHasMatchingAntiKeyword) {
+    criticalWoundThreshold = antiRule.value;
+  }
 
-const criticalWoundChance =
-  woundTarget !== null
-    ? Math.max(0, (7 - criticalWoundThreshold) / 6)
-    : 0;
-  
-    const effectiveWoundChance = hasTwinLinked
-  ? woundChance + (1 - woundChance) * woundChance
-  : woundChance;
+  const criticalHitChance = isTorrent ? 0 : Math.min(hitChance, 1 / 6);
+
+  const effectiveWoundChance = hasTwinLinked
+    ? woundChance + (1 - woundChance) * woundChance
+    : woundChance;
+
+  const criticalWoundChanceRaw =
+    woundTarget !== null
+      ? Math.max(0, (7 - criticalWoundThreshold) / 6)
+      : 0;
+
+  const effectiveCriticalWoundChance = hasTwinLinked
+    ? criticalWoundChanceRaw +
+      (1 - woundChance) * criticalWoundChanceRaw
+    : criticalWoundChanceRaw;
+
+  const effectiveNormalWoundChance = Math.max(
+    0,
+    effectiveWoundChance - effectiveCriticalWoundChance
+  );
+
   const baseSaveTarget = getModifiedSave(
     defender.save,
     weapon.ap,
@@ -179,20 +204,18 @@ const criticalWoundChance =
   const failedSaveChance = 1 - saveChance;
 
   // HIT STEP
-  const criticalHits = isTorrent ? 0 : totalAttacks * (1 / 6);
+  const criticalHits = totalAttacks * criticalHitChance;
   const baseExpectedHits = totalAttacks * hitChance;
 
-  // Sustained Hits: crit hity generują dodatkowe hity
   const extraHitsFromSustained = isTorrent
     ? 0
-    : totalAttacks * (1 / 6) * sustainedHitsValue;
+    : criticalHits * sustainedHitsValue;
 
   const expectedHits = baseExpectedHits + extraHitsFromSustained;
 
   // WOUND STEP
   const normalHitsBeforeSustained = Math.max(0, baseExpectedHits - criticalHits);
 
-  // Lethal Hits: crit hity auto-woundują, ale nie są crit woundami
   const autoWoundsFromLethalHits = hasLethalHits ? criticalHits : 0;
 
   const hitsThatRollToWound = hasLethalHits
@@ -200,12 +223,12 @@ const criticalWoundChance =
     : expectedHits;
 
   const criticalWoundsFromRolls = hasDevastatingWounds
-    ? hitsThatRollToWound * criticalWoundChance
+    ? hitsThatRollToWound * effectiveCriticalWoundChance
     : 0;
 
   const normalWoundsFromRolls = hasDevastatingWounds
-    ? hitsThatRollToWound * Math.max(0, woundChance - criticalWoundChance)
-    : hitsThatRollToWound * woundChance;
+    ? hitsThatRollToWound * effectiveNormalWoundChance
+    : hitsThatRollToWound * effectiveWoundChance;
 
   const expectedWounds =
     autoWoundsFromLethalHits + criticalWoundsFromRolls + normalWoundsFromRolls;
@@ -230,11 +253,13 @@ const criticalWoundChance =
     damagePerFailedSave / defender.woundsPerModel
   );
 
-  const slainModelsFromNormal = expectedUnsavedNormalWounds * normalKillsPerFailedSave;
+  const slainModelsFromNormal =
+    expectedUnsavedNormalWounds * normalKillsPerFailedSave;
 
   const slainModelsFromDevastating = hasDevastatingWounds
     ? Math.min(
-        criticalWoundsFromRolls * damagePerFailedSave / defender.woundsPerModel,
+        (criticalWoundsFromRolls * damagePerFailedSave) /
+          defender.woundsPerModel,
         criticalWoundsFromRolls
       )
     : 0;
@@ -291,7 +316,10 @@ export function resolveAttack({
   const unsavedWounds = safeWounds - safeSaves;
   const resolvedDamage = unsavedWounds * damagePerFailedSave;
 
-  const killsPerFailedSave = Math.min(1, damagePerFailedSave / defender.woundsPerModel);
+  const killsPerFailedSave = Math.min(
+    1,
+    damagePerFailedSave / defender.woundsPerModel
+  );
   const rawResolvedSlainModels = unsavedWounds * killsPerFailedSave;
   const resolvedSlainModels = Math.min(rawResolvedSlainModels, defendingModels);
 
