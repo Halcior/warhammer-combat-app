@@ -7,7 +7,7 @@ export const wordeatersUnits: Unit[] = [
   faction: "World Eaters",
   toughness: 4,
   save: 3,
-  invulnerableSave: null,
+  invulnerableSave: 0,
   woundsPerModel: 2,
   weapons: [
     {
@@ -202,7 +202,7 @@ export const wordeatersUnits: Unit[] = [
   faction: "World Eaters",
   toughness: 4,
   save: 6,
-  invulnerableSave: null,
+  invulnerableSave: 0,
   woundsPerModel: 1,
   weapons: [
     {
