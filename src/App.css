@@ -6,7 +6,7 @@ body {
 }
 
 #root {
-  max-width: 1400px;
+  max-width: 1800px;
   margin: 0 auto;
   padding: 24px;
 }
@@ -19,12 +19,18 @@ body {
 
 .top-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(320px, 1fr));
+  grid-template-columns: repeat(3, minmax(280px, 1fr));
   gap: 20px;
   align-items: start;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
+  .top-grid {
+    grid-template-columns: repeat(2, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
   .top-grid {
     grid-template-columns: 1fr;
   }
@@ -72,7 +78,7 @@ input {
 }
 
 .stat-box {
-  background: #2a2a2a;
+  background: #323232;
   border-radius: 10px;
   padding: 14px 16px;
   display: flex;

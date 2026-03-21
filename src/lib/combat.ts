@@ -121,37 +121,42 @@ export function calculateExpectedDamage({
   const hasLethalHits = hasRule(combinedWeaponRules, "LETHAL_HITS");
   const hasDevastatingWounds = hasRule(combinedWeaponRules, "DEVASTATING_WOUNDS");
   const hasTwinLinked = hasRule(combinedWeaponRules, "TWIN_LINKED");
-  const hasHeavy = hasRule(combinedWeaponRules, "HEAVY");
-  const hasLance = hasRule(combinedWeaponRules, "LANCE");
-  const antiRule = getAntiRule(combinedWeaponRules);
   const sustainedHitsValue = getSustainedHitsValue(combinedWeaponRules);
+
+const hasHeavyRule = hasRule(combinedWeaponRules, "HEAVY");
 
 let modifiedHitTarget = weapon.skill;
 
-if (hasHeavy && conditions.remainedStationary) {
+if (hasHeavyRule && conditions.remainedStationary) {
   modifiedHitTarget = Math.max(2, modifiedHitTarget - 1);
 }
 
-  const hitTarget = isTorrent ? null : weapon.skill;
-  const hitChance = isTorrent ? 1 : getSuccessChance(weapon.skill);
+const hitTarget = modifiedHitTarget;
+const hitChance = getSuccessChance(hitTarget);
 
-  let modifiedWoundTarget = getWoundTarget(weapon.strength, defender.toughness);
+const hasLanceRule = hasRule(combinedWeaponRules, "LANCE");
 
-if (hasLance && conditions.isChargeTurn) {
+let modifiedWoundTarget = getWoundTarget(
+  weapon.strength,
+  defender.toughness
+);
+
+if (hasLanceRule && conditions.isChargeTurn) {
   modifiedWoundTarget = Math.max(2, modifiedWoundTarget - 1);
 }
 
-  const woundTarget = getWoundTarget(weapon.strength, defender.toughness);
-  const woundChance = getSuccessChance(woundTarget);
+const woundTarget = modifiedWoundTarget;
+const woundChance = getSuccessChance(woundTarget);
+const antiRule = getAntiRule(combinedWeaponRules);
 
- let criticalWoundThreshold = 6;
+let criticalWoundThreshold = 6;
 
 if (antiRule && conditions.targetHasMatchingAntiKeyword) {
   criticalWoundThreshold = antiRule.value;
 }
 
 const criticalWoundChance =
-  woundTarget !== null && criticalWoundThreshold <= 6
+  woundTarget !== null
     ? Math.max(0, (7 - criticalWoundThreshold) / 6)
     : 0;
   
