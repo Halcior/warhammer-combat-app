@@ -7,7 +7,7 @@ export const wordeatersUnits: Unit[] = [
   faction: "World Eaters",
   toughness: 4,
   save: 3,
-  invulnerableSave: 0,
+  invulnerableSave: 10,
   woundsPerModel: 2,
   weapons: [
     {
@@ -97,19 +97,9 @@ export const wordeatersUnits: Unit[] = [
       name: "Gorechild (Strike)",
       attacks: 8,
       skill: 2,
-      strength: 6,
+      strength: 7,
       ap: -2,
-      damage: 2,
-      type: "melee",
-    },
-    {
-      id: "gorechild_sweep",
-      name: "Gorechild (Sweep)",
-      attacks: 12,
-      skill: 2,
-      strength: 5,
-      ap: -1,
-      damage: 1,
+      damage: 3,
       type: "melee",
     },
     {
@@ -202,7 +192,7 @@ export const wordeatersUnits: Unit[] = [
   faction: "World Eaters",
   toughness: 4,
   save: 6,
-  invulnerableSave: 0,
+  invulnerableSave: 10,
   woundsPerModel: 1,
   weapons: [
     {

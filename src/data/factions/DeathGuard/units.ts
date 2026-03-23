@@ -344,7 +344,7 @@ export const deathguardUnits: Unit[] = [
     faction: "Death Guard",
     toughness: 6,
     save: 3,
-    invulnerableSave: 0,
+    invulnerableSave: 10,
     woundsPerModel: 2,
     weapons: [
       {
