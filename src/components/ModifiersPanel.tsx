@@ -1,18 +1,8 @@
-import type { SpecialRule, Unit, Weapon } from "../types/combat";
 import { formatSpecialRule } from "../lib/rules";
+import type { SpecialRule, Unit, Weapon } from "../types/combat";
+import type { RuleOption, StratagemConfig, DetachmentConfig } from "../types/faction";
 
 type ModifiersPanelProps = {
-  attackerFaction: string;
-  activeFactionModifiers: {
-    martialKatahLethalHits: boolean;
-    martialKatahSustainedHits: boolean;
-  };
-  setActiveFactionModifiers: React.Dispatch<
-    React.SetStateAction<{
-      martialKatahLethalHits: boolean;
-      martialKatahSustainedHits: boolean;
-    }>
-  >;
   activeAttackModifiers: {
     devastatingWounds: boolean;
     lethalHits: boolean;
@@ -28,58 +18,98 @@ type ModifiersPanelProps = {
   allActiveModifierRules: SpecialRule[];
   selectedWeapon: Weapon;
   attacker: Unit;
+
+  availableDetachments: DetachmentConfig[];
+  selectedDetachmentId: string;
+  setSelectedDetachmentId: React.Dispatch<React.SetStateAction<string>>;
+  selectedDetachment?: DetachmentConfig;
+  availableRuleOptions: RuleOption[];
+  activeRuleOptionIds: string[];
+  toggleRuleOption: (ruleId: string) => void;
+  stratagems: StratagemConfig[];
 };
 
 export function ModifiersPanel({
-  attackerFaction,
-  activeFactionModifiers,
-  setActiveFactionModifiers,
   activeAttackModifiers,
   setActiveAttackModifiers,
   allActiveModifierRules,
   selectedWeapon,
   attacker,
+  availableDetachments,
+  selectedDetachmentId,
+  setSelectedDetachmentId,
+  selectedDetachment,
+  availableRuleOptions,
+  activeRuleOptionIds,
+  toggleRuleOption,
+  stratagems,
 }: ModifiersPanelProps) {
   return (
     <div className="card">
       <h2>Modifiers & Rules</h2>
 
-      {attackerFaction === "Adeptus Custodes" && (
+      {availableDetachments.length > 0 && (
         <div className="rules-section">
-          <h3>Faction modifiers</h3>
+          <h3>Detachment</h3>
 
-          <label className="checkbox-row">
-            <input
-              type="checkbox"
-              checked={activeFactionModifiers.martialKatahLethalHits}
-              onChange={(e) =>
-                setActiveFactionModifiers((prev) => ({
-                  ...prev,
-                  martialKatahLethalHits: e.target.checked,
-                }))
-              }
-            />
-            Martial Ka’tah: Lethal Hits
+          <label>
+            Active detachment
+            <select
+              value={selectedDetachmentId || selectedDetachment?.id || ""}
+              onChange={(e) => setSelectedDetachmentId(e.target.value)}
+            >
+              {availableDetachments.map((detachment) => (
+                <option key={detachment.id} value={detachment.id}>
+                  {detachment.name}
+                </option>
+              ))}
+            </select>
           </label>
 
-          <label className="checkbox-row">
-            <input
-              type="checkbox"
-              checked={activeFactionModifiers.martialKatahSustainedHits}
-              onChange={(e) =>
-                setActiveFactionModifiers((prev) => ({
-                  ...prev,
-                  martialKatahSustainedHits: e.target.checked,
-                }))
-              }
-            />
-            Martial Ka’tah: Sustained Hits 1
-          </label>
+          {selectedDetachment?.description && (
+            <p className="muted-text">{selectedDetachment.description}</p>
+          )}
+        </div>
+      )}
+
+      {availableRuleOptions.length > 0 && (
+        <div className="rules-section">
+          <h3>Faction & Detachment Rules</h3>
+
+          {availableRuleOptions.map((rule) => (
+  <label key={rule.id} className="checkbox-row">
+    <input
+      type="checkbox"
+      checked={activeRuleOptionIds.includes(rule.id)}
+      onChange={() => toggleRuleOption(rule.id)}
+    />
+    <span>
+      {rule.name}
+      {rule.supportLevel && (
+        <span className="muted-text"> ({rule.supportLevel})</span>
+      )}
+    </span>
+  </label>
+))}
+        </div>
+      )}
+
+      {stratagems.length > 0 && (
+        <div className="rules-section">
+          <h3>Available Stratagems</h3>
+          <div className="rules-list">
+            {stratagems.map((stratagem) => (
+  <span key={stratagem.id} className="rule-tag">
+    {stratagem.name} ({stratagem.cpCost}CP)
+    {stratagem.supportLevel && ` - ${stratagem.supportLevel}`}
+  </span>
+))}
+          </div>
         </div>
       )}
 
       <div className="rules-section">
-        <h3>Active attack modifiers</h3>
+        <h3>Manual attack modifiers</h3>
 
         <label className="checkbox-row">
           <input
@@ -125,7 +155,7 @@ export function ModifiersPanel({
       </div>
 
       <div className="rules-section">
-        <h3>Temporary modifiers</h3>
+        <h3>Active modifiers</h3>
         {allActiveModifierRules.length > 0 ? (
           <div className="rules-list">
             {allActiveModifierRules.map((rule, index) => (
@@ -135,7 +165,7 @@ export function ModifiersPanel({
             ))}
           </div>
         ) : (
-          <p className="muted-text">No temporary modifiers</p>
+          <p className="muted-text">No active modifiers</p>
         )}
       </div>
 

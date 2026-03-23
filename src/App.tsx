@@ -8,17 +8,30 @@ import { ExpectedResultPanel } from "./components/ExpectedResultPanel";
 import { useBattleSetup } from "./hooks/useBattleSetup";
 import { useAttackModifiers } from "./hooks/useAttackModifiers";
 import { useResolver } from "./hooks/useResolver";
+import { useFactionRules } from "./hooks/useFactionRules";
+import { useRuleOptions } from "./hooks/useRuleOptions";
 
 function App() {
   const battleSetup = useBattleSetup();
 
   const attackModifiers = useAttackModifiers();
 
+  const factionRules = useFactionRules(battleSetup.attackerFaction);
+
+  const ruleOptions = useRuleOptions(factionRules.allAvailableRuleOptions);
+
   const resolver = useResolver({
     weapon: battleSetup.selectedWeapon,
     defender: battleSetup.defender,
     defendingModels: battleSetup.defendingModels,
   });
+
+  const allActiveModifierRules = useMemo(() => {
+    return [
+      ...attackModifiers.allActiveModifierRules,
+      ...ruleOptions.activeRuleModifiers,
+    ];
+  }, [attackModifiers.allActiveModifierRules, ruleOptions.activeRuleModifiers]);
 
   const expectedResult = useMemo(() => {
     return calculateExpectedDamage({
@@ -28,7 +41,7 @@ function App() {
       attackingModels: battleSetup.attackingModels,
       defendingModels: battleSetup.defendingModels,
       conditions: battleSetup.conditions,
-      activeModifierRules: attackModifiers.allActiveModifierRules,
+      activeModifierRules: allActiveModifierRules,
     });
   }, [
     battleSetup.attacker,
@@ -37,7 +50,7 @@ function App() {
     battleSetup.attackingModels,
     battleSetup.defendingModels,
     battleSetup.conditions,
-    attackModifiers.allActiveModifierRules,
+    allActiveModifierRules,
   ]);
 
   return (
@@ -84,14 +97,19 @@ function App() {
         />
 
         <ModifiersPanel
-          attackerFaction={battleSetup.attackerFaction}
-          activeFactionModifiers={attackModifiers.activeFactionModifiers}
-          setActiveFactionModifiers={attackModifiers.setActiveFactionModifiers}
           activeAttackModifiers={attackModifiers.activeAttackModifiers}
           setActiveAttackModifiers={attackModifiers.setActiveAttackModifiers}
-          allActiveModifierRules={attackModifiers.allActiveModifierRules}
+          allActiveModifierRules={allActiveModifierRules}
           selectedWeapon={battleSetup.selectedWeapon}
           attacker={battleSetup.attacker}
+          availableDetachments={factionRules.availableDetachments}
+          selectedDetachmentId={factionRules.selectedDetachmentId}
+          setSelectedDetachmentId={factionRules.setSelectedDetachmentId}
+          selectedDetachment={factionRules.selectedDetachment}
+          availableRuleOptions={factionRules.allAvailableRuleOptions}
+          activeRuleOptionIds={ruleOptions.activeRuleOptionIds}
+          toggleRuleOption={ruleOptions.toggleRuleOption}
+          stratagems={factionRules.stratagems}
         />
 
         <ResolveAttackPanel
