@@ -4,6 +4,7 @@ import type {
   RuleOption,
   StratagemConfig,
   DetachmentConfig,
+  EnhancementConfig,
 } from "../types/faction";
 
 type ModifiersPanelProps = {
@@ -31,6 +32,7 @@ type ModifiersPanelProps = {
   activeRuleOptionIds: string[];
   toggleRuleOption: (ruleId: string) => void;
   stratagems: StratagemConfig[];
+  enhancements: EnhancementConfig[];
 };
 
 export function ModifiersPanel({
@@ -47,6 +49,7 @@ export function ModifiersPanel({
   activeRuleOptionIds,
   toggleRuleOption,
   stratagems,
+  enhancements,
 }: ModifiersPanelProps) {
   return (
     <div className="card">
@@ -95,6 +98,20 @@ export function ModifiersPanel({
               </span>
             </label>
           ))}
+        </div>
+      )}
+
+      {enhancements.length > 0 && (
+        <div className="rules-section">
+          <h3>Enhancements</h3>
+          <div className="rules-list">
+            {enhancements.map((enhancement) => (
+              <span key={enhancement.id} className="rule-tag">
+                {enhancement.name}
+                {enhancement.supportLevel && ` - ${enhancement.supportLevel}`}
+              </span>
+            ))}
+          </div>
         </div>
       )}
 
