@@ -1,10 +1,11 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 import { calculateExpectedDamage } from "./lib/combat";
 import { SetupPanel } from "./components/SetupPanel";
 import { ModifiersPanel } from "./components/ModifiersPanel";
 import { ResolveAttackPanel } from "./components/ResolveAttackPanel";
 import { ExpectedResultPanel } from "./components/ExpectedResultPanel";
+import { CompareWeaponsPanel } from "./components/CompareWeaponsPanel";
 import { useBattleSetup } from "./hooks/useBattleSetup";
 import { useAttackModifiers } from "./hooks/useAttackModifiers";
 import { useResolver } from "./hooks/useResolver";
@@ -18,9 +19,7 @@ function App() {
 
   const factionRules = useFactionRules(battleSetup.attackerFaction);
 
- const ruleOptions = useRuleOptions({
-  ruleOptions: factionRules.allAvailableRuleOptions,
-});
+ const ruleOptions = useRuleOptions(factionRules.allAvailableRuleOptions);
 
   const resolver = useResolver({
     weapon: battleSetup.selectedWeapon,
@@ -28,34 +27,71 @@ function App() {
     defendingModels: battleSetup.defendingModels,
   });
 
+  const [compareWeaponId, setCompareWeaponId] = useState("");
+
+  useEffect(() => {
+    const fallbackWeapon =
+      battleSetup.attacker.weapons.find(
+        (weapon) => weapon.id !== battleSetup.selectedWeapon.id
+      ) ?? battleSetup.selectedWeapon;
+
+    setCompareWeaponId(fallbackWeapon.id);
+  }, [battleSetup.attacker, battleSetup.selectedWeapon]);
+
+  const compareWeapon =
+    battleSetup.attacker.weapons.find((weapon) => weapon.id === compareWeaponId) ??
+    battleSetup.selectedWeapon;
+
   const allActiveModifierRules = useMemo(() => {
-  return [
-    ...attackModifiers.allActiveModifierRules,
-    ...ruleOptions.activeRuleModifiers,
-  ];
-}, [attackModifiers.allActiveModifierRules, ruleOptions.activeRuleModifiers]);
+    return [
+      ...attackModifiers.allActiveModifierRules,
+      ...ruleOptions.activeRuleModifiers,
+    ];
+  }, [attackModifiers.allActiveModifierRules, ruleOptions.activeRuleModifiers]);
 
   const expectedResult = useMemo(() => {
-  return calculateExpectedDamage({
-    attacker: battleSetup.attacker,
-    weapon: battleSetup.selectedWeapon,
-    defender: battleSetup.defender,
-    attackingModels: battleSetup.attackingModels,
-    defendingModels: battleSetup.defendingModels,
-    conditions: battleSetup.conditions,
-    activeModifierRules: allActiveModifierRules,
-    activeEngineTags: ruleOptions.activeEngineTags,
-  });
-}, [
-  battleSetup.attacker,
-  battleSetup.selectedWeapon,
-  battleSetup.defender,
-  battleSetup.attackingModels,
-  battleSetup.defendingModels,
-  battleSetup.conditions,
-  allActiveModifierRules,
-  ruleOptions.activeEngineTags,
-]);
+    return calculateExpectedDamage({
+      attacker: battleSetup.attacker,
+      weapon: battleSetup.selectedWeapon,
+      defender: battleSetup.defender,
+      attackingModels: battleSetup.attackingModels,
+      defendingModels: battleSetup.defendingModels,
+      conditions: battleSetup.conditions,
+      activeModifierRules: allActiveModifierRules,
+      activeEngineTags: ruleOptions.activeEngineTags,
+    });
+  }, [
+    battleSetup.attacker,
+    battleSetup.selectedWeapon,
+    battleSetup.defender,
+    battleSetup.attackingModels,
+    battleSetup.defendingModels,
+    battleSetup.conditions,
+    allActiveModifierRules,
+    ruleOptions.activeEngineTags,
+  ]);
+
+  const compareResult = useMemo(() => {
+    return calculateExpectedDamage({
+      attacker: battleSetup.attacker,
+      weapon: compareWeapon,
+      defender: battleSetup.defender,
+      attackingModels: battleSetup.attackingModels,
+      defendingModels: battleSetup.defendingModels,
+      conditions: battleSetup.conditions,
+      activeModifierRules: allActiveModifierRules,
+      activeEngineTags: ruleOptions.activeEngineTags,
+    });
+  }, [
+    battleSetup.attacker,
+    compareWeapon,
+    battleSetup.defender,
+    battleSetup.attackingModels,
+    battleSetup.defendingModels,
+    battleSetup.conditions,
+    allActiveModifierRules,
+    ruleOptions.activeEngineTags,
+  ]);
 
   return (
     <div className="app">
@@ -130,6 +166,18 @@ function App() {
       </div>
 
       <ExpectedResultPanel expectedResult={expectedResult} />
+
+      {battleSetup.attacker.weapons.length > 1 && (
+        <CompareWeaponsPanel
+          weaponA={battleSetup.selectedWeapon}
+          weaponB={compareWeapon}
+          compareWeaponId={compareWeaponId}
+          setCompareWeaponId={setCompareWeaponId}
+          availableWeapons={battleSetup.attacker.weapons}
+          resultA={expectedResult}
+          resultB={compareResult}
+        />
+      )}
     </div>
   );
 }
