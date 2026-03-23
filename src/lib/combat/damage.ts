@@ -1,14 +1,5 @@
-import type { Unit, Weapon } from "../../types/combat";
 import { parseDiceValue } from "./probability";
-
-type ResolveAttackParams = {
-  weapon: Weapon;
-  defender: Unit;
-  defendingModels: number;
-  rolledHits: number;
-  rolledWounds: number;
-  successfulSaves: number;
-};
+import type { ResolveAttackParams, ResolvedAttackResult } from "./types";
 
 export function resolveAttack({
   weapon,
@@ -17,7 +8,7 @@ export function resolveAttack({
   rolledHits,
   rolledWounds,
   successfulSaves,
-}: ResolveAttackParams) {
+}: ResolveAttackParams): ResolvedAttackResult {
   const damagePerFailedSave = parseDiceValue(weapon.damage);
 
   const safeHits = Math.max(0, rolledHits);

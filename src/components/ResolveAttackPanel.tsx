@@ -1,3 +1,5 @@
+import type { ResolvedAttackResult } from "../lib/combat";
+
 type ResolveAttackPanelProps = {
   expectedTotalAttacks: number;
   rolledHits: number;
@@ -6,11 +8,7 @@ type ResolveAttackPanelProps = {
   setRolledHits: React.Dispatch<React.SetStateAction<number>>;
   setRolledWounds: React.Dispatch<React.SetStateAction<number>>;
   setSuccessfulSaves: React.Dispatch<React.SetStateAction<number>>;
-  resolvedResult: {
-    unsavedWounds: number;
-    resolvedDamage: number;
-    resolvedSlainModels: number;
-  };
+  resolvedResult: ResolvedAttackResult;
 };
 
 export function ResolveAttackPanel({

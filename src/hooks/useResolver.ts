@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import type { Unit, Weapon } from "../types/combat";
-import { resolveAttack } from "../lib/combat";
+import { resolveAttack, type ResolvedAttackResult } from "../lib/combat/index";
 
 type UseResolverParams = {
   weapon: Weapon;
@@ -17,7 +17,7 @@ export function useResolver({
   const [rolledWounds, setRolledWounds] = useState(0);
   const [successfulSaves, setSuccessfulSaves] = useState(0);
 
-  const resolvedResult = useMemo(() => {
+  const resolvedResult: ResolvedAttackResult = useMemo(() => {
     return resolveAttack({
       weapon,
       defender,

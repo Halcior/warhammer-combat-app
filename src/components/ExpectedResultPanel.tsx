@@ -1,23 +1,7 @@
-type ExpectedResult = {
-  totalAttacks: number;
-  hitTarget: number | null;
-  woundTarget: number;
-  saveTarget: number;
-  expectedHits: number;
-  expectedWounds: number;
-  expectedUnsavedWounds: number;
-  expectedDamage: number;
-  expectedSlainModels: number;
-  blastBonus?: number;
-  criticalHits?: number;
-  extraHitsFromSustained?: number;
-  autoWoundsFromLethalHits?: number;
-  criticalWoundsFromRolls?: number;
-  mortalWoundsFromDevastating?: number;
-};
+import type { ExpectedDamageResult } from "../lib/combat/index";
 
 type ExpectedResultPanelProps = {
-  expectedResult: ExpectedResult;
+  expectedResult: ExpectedDamageResult;
 };
 
 export function ExpectedResultPanel({
@@ -81,41 +65,41 @@ export function ExpectedResultPanel({
 
         <div className="stat-box">
           <span className="stat-label">Blast bonus</span>
-          <span className="stat-value">{expectedResult.blastBonus ?? 0}</span>
+          <span className="stat-value">{expectedResult.blastBonus}</span>
         </div>
 
         <div className="stat-box">
           <span className="stat-label">Critical hits</span>
           <span className="stat-value">
-            {expectedResult.criticalHits?.toFixed(2) ?? "0.00"}
+            {expectedResult.criticalHits.toFixed(2)}
           </span>
         </div>
 
         <div className="stat-box">
           <span className="stat-label">Extra hits</span>
           <span className="stat-value">
-            {expectedResult.extraHitsFromSustained?.toFixed(2) ?? "0.00"}
+            {expectedResult.extraHitsFromSustained.toFixed(2)}
           </span>
         </div>
 
         <div className="stat-box">
           <span className="stat-label">Auto wounds</span>
           <span className="stat-value">
-            {expectedResult.autoWoundsFromLethalHits?.toFixed(2) ?? "0.00"}
+            {expectedResult.autoWoundsFromLethalHits.toFixed(2)}
           </span>
         </div>
 
         <div className="stat-box">
           <span className="stat-label">Critical wounds</span>
           <span className="stat-value">
-            {expectedResult.criticalWoundsFromRolls?.toFixed(2) ?? "0.00"}
+            {expectedResult.criticalWoundsFromRolls.toFixed(2)}
           </span>
         </div>
 
         <div className="stat-box stat-box--highlight">
           <span className="stat-label">Mortal wounds</span>
           <span className="stat-value">
-            {expectedResult.mortalWoundsFromDevastating?.toFixed(2) ?? "0.00"}
+            {expectedResult.mortalWoundsFromDevastating.toFixed(2)}
           </span>
         </div>
       </div>
