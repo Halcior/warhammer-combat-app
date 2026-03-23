@@ -13,6 +13,7 @@ export type CalculateExpectedDamageParams = {
   defendingModels: number;
   conditions: AttackConditions;
   activeModifierRules?: SpecialRule[];
+  activeEngineTags?: string[];
 };
 
 export type ExpectedDamageResult = {
@@ -33,6 +34,7 @@ export type ExpectedDamageResult = {
   autoWoundsFromLethalHits: number;
   criticalWoundsFromRolls: number;
   mortalWoundsFromDevastating: number;
+  effectiveAp: number;
 };
 
 export type ResolveAttackParams = {

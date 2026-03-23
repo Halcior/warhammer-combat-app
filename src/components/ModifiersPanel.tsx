@@ -1,6 +1,10 @@
 import { formatSpecialRule } from "../lib/rules";
 import type { SpecialRule, Unit, Weapon } from "../types/combat";
-import type { RuleOption, StratagemConfig, DetachmentConfig } from "../types/faction";
+import type {
+  RuleOption,
+  StratagemConfig,
+  DetachmentConfig,
+} from "../types/faction";
 
 type ModifiersPanelProps = {
   activeAttackModifiers: {
@@ -77,20 +81,20 @@ export function ModifiersPanel({
           <h3>Faction & Detachment Rules</h3>
 
           {availableRuleOptions.map((rule) => (
-  <label key={rule.id} className="checkbox-row">
-    <input
-      type="checkbox"
-      checked={activeRuleOptionIds.includes(rule.id)}
-      onChange={() => toggleRuleOption(rule.id)}
-    />
-    <span>
-      {rule.name}
-      {rule.supportLevel && (
-        <span className="muted-text"> ({rule.supportLevel})</span>
-      )}
-    </span>
-  </label>
-))}
+            <label key={rule.id} className="checkbox-row">
+              <input
+                type="checkbox"
+                checked={activeRuleOptionIds.includes(rule.id)}
+                onChange={() => toggleRuleOption(rule.id)}
+              />
+              <span>
+                {rule.name}
+                {rule.supportLevel && (
+                  <span className="muted-text"> ({rule.supportLevel})</span>
+                )}
+              </span>
+            </label>
+          ))}
         </div>
       )}
 
@@ -99,11 +103,11 @@ export function ModifiersPanel({
           <h3>Available Stratagems</h3>
           <div className="rules-list">
             {stratagems.map((stratagem) => (
-  <span key={stratagem.id} className="rule-tag">
-    {stratagem.name} ({stratagem.cpCost}CP)
-    {stratagem.supportLevel && ` - ${stratagem.supportLevel}`}
-  </span>
-))}
+              <span key={stratagem.id} className="rule-tag">
+                {stratagem.name} ({stratagem.cpCost}CP)
+                {stratagem.supportLevel && ` - ${stratagem.supportLevel}`}
+              </span>
+            ))}
           </div>
         </div>
       )}
@@ -174,7 +178,10 @@ export function ModifiersPanel({
         {selectedWeapon.specialRules && selectedWeapon.specialRules.length > 0 ? (
           <div className="rules-list">
             {selectedWeapon.specialRules.map((rule, index) => (
-              <span key={`${selectedWeapon.id}-rule-${index}`} className="rule-tag">
+              <span
+                key={`${selectedWeapon.id}-rule-${index}`}
+                className="rule-tag"
+              >
                 {formatSpecialRule(rule)}
               </span>
             ))}

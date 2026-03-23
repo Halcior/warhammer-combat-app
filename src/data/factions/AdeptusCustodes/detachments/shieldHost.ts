@@ -3,7 +3,8 @@ import type { DetachmentConfig } from "../../../../types/faction";
 export const shieldHostDetachment: DetachmentConfig = {
   id: "shield-host",
   name: "Shield Host",
-  description: "Elite combat detachment focused on Martial Mastery and enhanced wargear.",
+  description:
+    "Elite combat detachment focused on Martial Mastery and enhanced wargear.",
   ruleOptions: [
     {
       id: "martial-mastery-crit-5plus",
@@ -71,7 +72,8 @@ export const shieldHostDetachment: DetachmentConfig = {
     {
       id: "from-the-hall-of-armouries",
       name: "From the Hall of Armouries",
-      description: "Add 1 to the Strength and Damage of the bearer's melee weapons.",
+      description:
+        "Add 1 to the Strength and Damage of the bearer's melee weapons.",
       effects: [
         {
           id: "hall-of-armouries-strength",

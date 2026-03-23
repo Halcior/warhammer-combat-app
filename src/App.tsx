@@ -18,7 +18,9 @@ function App() {
 
   const factionRules = useFactionRules(battleSetup.attackerFaction);
 
-  const ruleOptions = useRuleOptions(factionRules.allAvailableRuleOptions);
+ const ruleOptions = useRuleOptions({
+  ruleOptions: factionRules.allAvailableRuleOptions,
+});
 
   const resolver = useResolver({
     weapon: battleSetup.selectedWeapon,
@@ -27,31 +29,33 @@ function App() {
   });
 
   const allActiveModifierRules = useMemo(() => {
-    return [
-      ...attackModifiers.allActiveModifierRules,
-      ...ruleOptions.activeRuleModifiers,
-    ];
-  }, [attackModifiers.allActiveModifierRules, ruleOptions.activeRuleModifiers]);
+  return [
+    ...attackModifiers.allActiveModifierRules,
+    ...ruleOptions.activeRuleModifiers,
+  ];
+}, [attackModifiers.allActiveModifierRules, ruleOptions.activeRuleModifiers]);
 
   const expectedResult = useMemo(() => {
-    return calculateExpectedDamage({
-      attacker: battleSetup.attacker,
-      weapon: battleSetup.selectedWeapon,
-      defender: battleSetup.defender,
-      attackingModels: battleSetup.attackingModels,
-      defendingModels: battleSetup.defendingModels,
-      conditions: battleSetup.conditions,
-      activeModifierRules: allActiveModifierRules,
-    });
-  }, [
-    battleSetup.attacker,
-    battleSetup.selectedWeapon,
-    battleSetup.defender,
-    battleSetup.attackingModels,
-    battleSetup.defendingModels,
-    battleSetup.conditions,
-    allActiveModifierRules,
-  ]);
+  return calculateExpectedDamage({
+    attacker: battleSetup.attacker,
+    weapon: battleSetup.selectedWeapon,
+    defender: battleSetup.defender,
+    attackingModels: battleSetup.attackingModels,
+    defendingModels: battleSetup.defendingModels,
+    conditions: battleSetup.conditions,
+    activeModifierRules: allActiveModifierRules,
+    activeEngineTags: ruleOptions.activeEngineTags,
+  });
+}, [
+  battleSetup.attacker,
+  battleSetup.selectedWeapon,
+  battleSetup.defender,
+  battleSetup.attackingModels,
+  battleSetup.defendingModels,
+  battleSetup.conditions,
+  allActiveModifierRules,
+  ruleOptions.activeEngineTags,
+]);
 
   return (
     <div className="app">
@@ -110,6 +114,7 @@ function App() {
           activeRuleOptionIds={ruleOptions.activeRuleOptionIds}
           toggleRuleOption={ruleOptions.toggleRuleOption}
           stratagems={factionRules.stratagems}
+          enhancements={factionRules.enhancements}
         />
 
         <ResolveAttackPanel

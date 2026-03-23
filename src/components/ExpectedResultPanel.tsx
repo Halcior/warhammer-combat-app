@@ -35,6 +35,11 @@ export function ExpectedResultPanel({
         </div>
 
         <div className="stat-box">
+          <span className="stat-label">Effective AP</span>
+          <span className="stat-value">{expectedResult.effectiveAp}</span>
+        </div>
+
+        <div className="stat-box">
           <span className="stat-label">Expected hits</span>
           <span className="stat-value">{expectedResult.expectedHits.toFixed(2)}</span>
         </div>

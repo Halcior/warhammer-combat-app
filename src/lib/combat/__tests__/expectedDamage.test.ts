@@ -230,3 +230,44 @@ describe("calculateExpectedDamage", () => {
     expect(withCover.expectedDamage).toBeLessThan(noCover.expectedDamage);
   });
 });
+
+it("applies melee AP bonus from engine tag", () => {
+  const weapon: Weapon = {
+    id: "melee-weapon",
+    name: "Melee Weapon",
+    attacks: 4,
+    skill: 3,
+    strength: 5,
+    ap: -1,
+    damage: 1,
+    type: "melee",
+    specialRules: [],
+  };
+
+  const noBonus = calculateExpectedDamage({
+    attacker,
+    weapon,
+    defender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: baseConditions,
+    activeModifierRules: [],
+    activeEngineTags: [],
+  });
+
+  const withBonus = calculateExpectedDamage({
+    attacker,
+    weapon,
+    defender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: baseConditions,
+    activeModifierRules: [],
+    activeEngineTags: ["melee-ap-plus-1"],
+  });
+
+  expect(noBonus.effectiveAp).toBe(-1);
+  expect(withBonus.effectiveAp).toBe(-2);
+  expect(withBonus.saveTarget).toBeGreaterThan(noBonus.saveTarget);
+  expect(withBonus.expectedDamage).toBeGreaterThan(noBonus.expectedDamage);
+});

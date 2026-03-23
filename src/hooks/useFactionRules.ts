@@ -20,10 +20,16 @@ export function useFactionRules(attackerFaction: string) {
   const armyRules = factionConfig?.armyRules ?? [];
   const detachmentRuleOptions = selectedDetachment?.ruleOptions ?? [];
   const stratagems = selectedDetachment?.stratagems ?? [];
+  const enhancements = selectedDetachment?.enhancements ?? [];
+
+  const enhancementRuleOptions: RuleOption[] = enhancements.flatMap(
+    (enhancement) => enhancement.effects
+  );
 
   const allAvailableRuleOptions: RuleOption[] = [
     ...armyRules,
     ...detachmentRuleOptions,
+    ...enhancementRuleOptions,
   ];
 
   return {
@@ -35,6 +41,8 @@ export function useFactionRules(attackerFaction: string) {
     armyRules,
     detachmentRuleOptions,
     stratagems,
+    enhancements,
+    enhancementRuleOptions,
     allAvailableRuleOptions,
   };
 }

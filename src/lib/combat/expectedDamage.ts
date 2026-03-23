@@ -21,6 +21,7 @@ export function calculateExpectedDamage({
   defendingModels,
   conditions,
   activeModifierRules = [],
+  activeEngineTags = [],
 }: CalculateExpectedDamageParams): ExpectedDamageResult {
   void attacker;
 
@@ -28,6 +29,11 @@ export function calculateExpectedDamage({
     ...(weapon.specialRules ?? []),
     ...(activeModifierRules ?? []),
   ];
+
+  const hasMeleeApBonus =
+    weapon.type === "melee" && activeEngineTags.includes("melee-ap-plus-1");
+
+  const effectiveAp = hasMeleeApBonus ? weapon.ap - 1 : weapon.ap;
 
   const meltaBonus = conditions.isHalfRange
     ? getMeltaValue(combinedWeaponRules)
@@ -110,7 +116,7 @@ export function calculateExpectedDamage({
 
   const baseSaveTarget = getModifiedSave(
     defender.save,
-    weapon.ap,
+    effectiveAp,
     defender.invulnerableSave ?? null
   );
 
@@ -203,5 +209,6 @@ export function calculateExpectedDamage({
     autoWoundsFromLethalHits,
     criticalWoundsFromRolls,
     mortalWoundsFromDevastating,
+    effectiveAp,
   };
 }
