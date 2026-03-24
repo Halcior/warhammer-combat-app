@@ -4,6 +4,23 @@ type ExpectedResultPanelProps = {
   expectedResult: ExpectedDamageResult;
 };
 
+function StatBox({
+  label,
+  value,
+  highlight = false,
+}: {
+  label: string;
+  value: string | number;
+  highlight?: boolean;
+}) {
+  return (
+    <div className={`stat-box ${highlight ? "stat-box--highlight" : ""}`}>
+      <span className="stat-label">{label}</span>
+      <span className="stat-value">{value}</span>
+    </div>
+  );
+}
+
 export function ExpectedResultPanel({
   expectedResult,
 }: ExpectedResultPanelProps) {
@@ -11,101 +28,77 @@ export function ExpectedResultPanel({
     <div className="card">
       <h2>Expected Result</h2>
 
-      <div className="stats-grid">
-        <div className="stat-box">
-          <span className="stat-label">Total attacks</span>
-          <span className="stat-value">{expectedResult.totalAttacks}</span>
+      <div className="result-section">
+        <h3>Main Outcome</h3>
+        <div className="stats-grid stats-grid--primary">
+           <StatBox
+            label="Hit on"
+            value={
+              expectedResult.hitTarget === null
+                ? "Auto"
+                : `${expectedResult.hitTarget}+`
+            }
+          />
+          <StatBox label="Wound on" value={`${expectedResult.woundTarget}+`} />
+          <StatBox label="Save on" value={`${expectedResult.saveTarget}+`} />
+          <StatBox
+            label="Expected unsaved wounds"
+            value={expectedResult.expectedUnsavedWounds.toFixed(2)}
+          />
+          <StatBox
+            label="Expected damage"
+            value={expectedResult.expectedDamage.toFixed(2)}
+            highlight
+          />
+          <StatBox
+            label="Expected slain models"
+            value={expectedResult.expectedSlainModels.toFixed(2)}
+            highlight
+          />
         </div>
+      </div>
 
-        <div className="stat-box">
-          <span className="stat-label">Hit on</span>
-          <span className="stat-value">
-            {expectedResult.hitTarget === null ? "Auto" : `${expectedResult.hitTarget}+`}
-          </span>
+      <div className="result-section">
+        <h3>Attack Profile</h3>
+        <div className="stats-grid stats-grid--secondary">
+          <StatBox label="Total attacks" value={expectedResult.totalAttacks} />
+          <StatBox label="Effective AP" value={expectedResult.effectiveAp} />
+          <StatBox label="Blast bonus" value={expectedResult.blastBonus} />
         </div>
+      </div>
 
-        <div className="stat-box">
-          <span className="stat-label">Wound on</span>
-          <span className="stat-value">{expectedResult.woundTarget}+</span>
-        </div>
-
-        <div className="stat-box">
-          <span className="stat-label">Save on</span>
-          <span className="stat-value">{expectedResult.saveTarget}+</span>
-        </div>
-
-        <div className="stat-box">
-          <span className="stat-label">Effective AP</span>
-          <span className="stat-value">{expectedResult.effectiveAp}</span>
-        </div>
-
-        <div className="stat-box">
-          <span className="stat-label">Expected hits</span>
-          <span className="stat-value">{expectedResult.expectedHits.toFixed(2)}</span>
-        </div>
-
-        <div className="stat-box">
-          <span className="stat-label">Expected wounds</span>
-          <span className="stat-value">{expectedResult.expectedWounds.toFixed(2)}</span>
-        </div>
-
-        <div className="stat-box">
-          <span className="stat-label">Expected unsaved wounds</span>
-          <span className="stat-value">
-            {expectedResult.expectedUnsavedWounds.toFixed(2)}
-          </span>
-        </div>
-
-        <div className="stat-box stat-box--highlight">
-          <span className="stat-label">Expected damage</span>
-          <span className="stat-value">{expectedResult.expectedDamage.toFixed(2)}</span>
-        </div>
-
-        <div className="stat-box stat-box--highlight">
-          <span className="stat-label">Expected slain models</span>
-          <span className="stat-value">
-            {expectedResult.expectedSlainModels.toFixed(2)}
-          </span>
-        </div>
-
-        <div className="stat-box">
-          <span className="stat-label">Blast bonus</span>
-          <span className="stat-value">{expectedResult.blastBonus}</span>
-        </div>
-
-        <div className="stat-box">
-          <span className="stat-label">Critical hits</span>
-          <span className="stat-value">
-            {expectedResult.criticalHits.toFixed(2)}
-          </span>
-        </div>
-
-        <div className="stat-box">
-          <span className="stat-label">Extra hits</span>
-          <span className="stat-value">
-            {expectedResult.extraHitsFromSustained.toFixed(2)}
-          </span>
-        </div>
-
-        <div className="stat-box">
-          <span className="stat-label">Auto wounds</span>
-          <span className="stat-value">
-            {expectedResult.autoWoundsFromLethalHits.toFixed(2)}
-          </span>
-        </div>
-
-        <div className="stat-box">
-          <span className="stat-label">Critical wounds</span>
-          <span className="stat-value">
-            {expectedResult.criticalWoundsFromRolls.toFixed(2)}
-          </span>
-        </div>
-
-        <div className="stat-box stat-box--highlight">
-          <span className="stat-label">Mortal wounds</span>
-          <span className="stat-value">
-            {expectedResult.mortalWoundsFromDevastating.toFixed(2)}
-          </span>
+      <div className="result-section">
+        <h3>Detailed Breakdown</h3>
+        <div className="stats-grid stats-grid--secondary">
+          <StatBox
+            label="Expected hits"
+            value={expectedResult.expectedHits.toFixed(2)}
+          />
+          <StatBox
+            label="Expected wounds"
+            value={expectedResult.expectedWounds.toFixed(2)}
+          />
+          <StatBox
+            label="Critical hits"
+            value={expectedResult.criticalHits.toFixed(2)}
+          />
+          <StatBox
+            label="Extra hits"
+            value={expectedResult.extraHitsFromSustained.toFixed(2)}
+          />
+          <StatBox
+            label="Auto wounds"
+            value={expectedResult.autoWoundsFromLethalHits.toFixed(2)}
+          />
+          <StatBox
+            label="Critical wounds"
+            value={expectedResult.criticalWoundsFromRolls.toFixed(2)}
+          />
+          <StatBox
+            label="Mortal wounds"
+            value={expectedResult.mortalWoundsFromDevastating.toFixed(2)}
+            highlight
+          />
         </div>
       </div>
     </div>

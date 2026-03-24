@@ -1,13 +1,3 @@
-import { adeptusCustodesUnits } from "./factions/AdeptusCustodes/units";
-import { necronUnits } from "./factions/Necrons/units";
-import { wordeatersUnits } from "./factions/WorldEaters/units";
-import { tauUnits } from "./factions/Tau/units";
-import { deathguardUnits } from "./factions/DeathGuard/units";
+import { generatedUnits } from "./generated/units.generated";
 
-export const units = [
-  ...adeptusCustodesUnits,
-  ...necronUnits,
-  ...wordeatersUnits,
-  ...tauUnits,
-  ...deathguardUnits
-];   
+export const units = generatedUnits;
