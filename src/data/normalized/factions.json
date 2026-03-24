@@ -1,0 +1,106 @@
+[
+  {
+    "id": "AS",
+    "name": "Adepta Sororitas"
+  },
+  {
+    "id": "AC",
+    "name": "Adeptus Custodes"
+  },
+  {
+    "id": "AdM",
+    "name": "Adeptus Mechanicus"
+  },
+  {
+    "id": "TL",
+    "name": "Adeptus Titanicus"
+  },
+  {
+    "id": "AE",
+    "name": "Aeldari"
+  },
+  {
+    "id": "AM",
+    "name": "Astra Militarum"
+  },
+  {
+    "id": "CD",
+    "name": "Chaos Daemons"
+  },
+  {
+    "id": "QT",
+    "name": "Chaos Knights"
+  },
+  {
+    "id": "CSM",
+    "name": "Chaos Space Marines"
+  },
+  {
+    "id": "DG",
+    "name": "Death Guard"
+  },
+  {
+    "id": "DRU",
+    "name": "Drukhari"
+  },
+  {
+    "id": "EC",
+    "name": "Emperor’s Children"
+  },
+  {
+    "id": "GC",
+    "name": "Genestealer Cults"
+  },
+  {
+    "id": "GK",
+    "name": "Grey Knights"
+  },
+  {
+    "id": "AoI",
+    "name": "Imperial Agents"
+  },
+  {
+    "id": "QI",
+    "name": "Imperial Knights"
+  },
+  {
+    "id": "LoV",
+    "name": "Leagues of Votann"
+  },
+  {
+    "id": "NEC",
+    "name": "Necrons"
+  },
+  {
+    "id": "ORK",
+    "name": "Orks"
+  },
+  {
+    "id": "SM",
+    "name": "Space Marines"
+  },
+  {
+    "id": "TAU",
+    "name": "T’au Empire"
+  },
+  {
+    "id": "TS",
+    "name": "Thousand Sons"
+  },
+  {
+    "id": "TYR",
+    "name": "Tyranids"
+  },
+  {
+    "id": "UN",
+    "name": "Unaligned Forces"
+  },
+  {
+    "id": "UA",
+    "name": "Unbound Adversaries"
+  },
+  {
+    "id": "WE",
+    "name": "World Eaters"
+  }
+]

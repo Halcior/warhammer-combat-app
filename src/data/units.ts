@@ -1,3 +1,7 @@
-import { generatedUnits } from "./generated/units.generated";
+import normalizedUnitsRaw from "./normalized/units.json";
+import { mapNormalizedUnitToCombatUnit } from "./mappers/mapNormalizedUnitToCombatUnit";
+import type { NormalizedUnit } from "../types/wahapedia";
 
-export const units = generatedUnits;
+const normalizedUnits = normalizedUnitsRaw as NormalizedUnit[];
+
+export const units = normalizedUnits.map(mapNormalizedUnitToCombatUnit);
