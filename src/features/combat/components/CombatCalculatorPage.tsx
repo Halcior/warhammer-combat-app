@@ -4,9 +4,17 @@ import { ModifiersPanel } from "../../../components/ModifiersPanel";
 import { ResolveAttackPanel } from "../../../components/ResolveAttackPanel";
 import { SetupPanel } from "../../../components/SetupPanel";
 import { useCombatCalculatorPage } from "../hooks/useCombatCalculatorPage";
+import { SimulationPanel } from "./SimulationPanel";
+import { useSimulationMode } from "../hooks/useSimulationMode";
 
 export function CombatCalculatorPage() {
   const calculator = useCombatCalculatorPage();
+
+  const simulation = useSimulationMode({
+    expectedResult: calculator.expectedResult,
+    weapon: calculator.battleSetup.selectedWeapon,
+    defender: calculator.battleSetup.defender,
+  });
 
   return (
     <div className="app">
@@ -81,6 +89,15 @@ export function CombatCalculatorPage() {
       </div>
 
       <ExpectedResultPanel expectedResult={calculator.expectedResult} />
+
+      <SimulationPanel
+        mode={simulation.mode}
+        setMode={simulation.setMode}
+        runs={simulation.runs}
+        setRuns={simulation.setRuns}
+        onRun={simulation.runSimulation}
+        summary={simulation.simulationSummary}
+      />
 
       {calculator.battleSetup.attacker.weapons.length > 1 && (
         <CompareWeaponsPanel
