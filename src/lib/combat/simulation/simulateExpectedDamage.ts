@@ -41,6 +41,10 @@ function simulateSingleRun(
 
 function passesRoll(target: number | null): boolean {
   if (target === null) return true;
+
+  // 0+ w tym flow oznacza, że realnie nie ma już save'a do rzucenia
+  if (target === 0) return false;
+
   if (target <= 1) return true;
   if (target > 6) return false;
 
