@@ -62,46 +62,60 @@ function simulateSingleAttackSequence(
   const hasLethal = hasRule(combinedRules, "LETHAL_HITS");
   const sustainedHits = getRuleValue(combinedRules, "SUSTAINED_HITS") ?? 0;
 
+  let totalHits = 0;
+  let totalWounds = 0;
+  let totalFailedSaves = 0;
+  let totalMortals = 0;
   let totalDamage = 0;
   let pendingHitRolls = attackCount;
 
   while (pendingHitRolls > 0) {
-    pendingHitRolls -= 1;
+  pendingHitRolls -= 1;
 
-    const hitRoll = rollD6();
-    if (!passesTarget(hitTarget, hitRoll)) {
-      continue;
-    }
+  const hitRoll = rollD6();
+  if (!passesTarget(hitTarget, hitRoll)) {
+    continue;
+  }
 
-    const criticalHit = hitRoll === 6;
+  totalHits++;
 
-    if (criticalHit && sustainedHits > 0) {
-      pendingHitRolls += sustainedHits;
-    }
+  const criticalHit = hitRoll === 6;
 
-    if (criticalHit && hasLethal) {
-      if (!passesSave(saveTarget)) {
-        totalDamage += rollDamage(params.weapon, combinedRules, params.conditions);
-      }
-      continue;
-    }
+  if (criticalHit && sustainedHits > 0) {
+    pendingHitRolls += sustainedHits;
+  }
 
-    const woundRoll = rollD6();
-    if (!passesTarget(woundTarget, woundRoll)) {
-      continue;
-    }
-
-    const criticalWound = woundRoll === 6;
-
-    if (criticalWound && hasDevastating) {
-      totalDamage += rollDamage(params.weapon, combinedRules, params.conditions);
-      continue;
-    }
+  if (criticalHit && hasLethal) {
+    totalWounds++;
 
     if (!passesSave(saveTarget)) {
+      totalFailedSaves++;
       totalDamage += rollDamage(params.weapon, combinedRules, params.conditions);
     }
+
+    continue;
   }
+
+  const woundRoll = rollD6();
+  if (!passesTarget(woundTarget, woundRoll)) {
+    continue;
+  }
+
+  totalWounds++;
+
+  const criticalWound = woundRoll === 6;
+
+  if (criticalWound && hasDevastating) {
+    totalMortals++;
+    totalDamage += rollDamage(params.weapon, combinedRules, params.conditions);
+    continue;
+  }
+
+  if (!passesSave(saveTarget)) {
+    totalFailedSaves++;
+    totalDamage += rollDamage(params.weapon, combinedRules, params.conditions);
+  }
+}
 
   const slainModels = Math.min(
     params.defendingModels,
@@ -111,6 +125,10 @@ function simulateSingleAttackSequence(
   return {
     damage: totalDamage,
     slainModels,
+    hits: totalHits,
+    wounds: totalWounds,
+    failedSaves: totalFailedSaves,
+    mortals: totalMortals
   };
 }
 

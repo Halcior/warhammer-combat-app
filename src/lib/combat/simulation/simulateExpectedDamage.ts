@@ -37,6 +37,10 @@ export function simulateExpectedDamage(
     results.push({
       damage,
       slainModels,
+      hits: 0,
+      wounds: 0,
+      failedSaves: 0,
+      mortals: 0
     });
   }
 

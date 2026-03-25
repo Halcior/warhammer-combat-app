@@ -1,6 +1,11 @@
 export type SimulationRunResult = {
   damage: number;
   slainModels: number;
+
+  hits: number;
+  wounds: number;
+  failedSaves: number;
+  mortals: number;
 };
 
 export type SimulationSummary = {
