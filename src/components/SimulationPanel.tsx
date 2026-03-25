@@ -85,19 +85,39 @@ export function SimulationPanel({
       )}
 
       {summary && (
-        <div className="result-section">
-          <h3>Monte Carlo Summary</h3>
-          <div className="stats-grid stats-grid--secondary">
-            <StatBox label="Mean damage" value={summary.mean.toFixed(2)} highlight />
-            <StatBox label="Median damage" value={summary.median.toFixed(2)} />
-            <StatBox label="Low roll (P10)" value={summary.p10.toFixed(2)} />
-            <StatBox label="High roll (P90)" value={summary.p90.toFixed(2)} />
-            <StatBox label="Min damage" value={summary.min.toFixed(2)} />
-            <StatBox label="Max damage" value={summary.max.toFixed(2)} />
-            <StatBox label="Kill chance" value={`${(summary.killChance * 100).toFixed(1)}%`} highlight />
-            <StatBox label="Runs" value={summary.runs} />
+        <>
+          <div className="result-section">
+            <h3>Damage Summary</h3>
+            <div className="stats-grid stats-grid--secondary">
+              <StatBox label="Mean damage" value={summary.meanDamage.toFixed(2)} highlight />
+              <StatBox label="Median damage" value={summary.medianDamage.toFixed(2)} />
+              <StatBox label="Low roll (P10)" value={summary.p10Damage.toFixed(2)} />
+              <StatBox label="High roll (P90)" value={summary.p90Damage.toFixed(2)} />
+              <StatBox label="Min damage" value={summary.minDamage.toFixed(2)} />
+              <StatBox label="Max damage" value={summary.maxDamage.toFixed(2)} />
+              <StatBox label="Runs" value={summary.runs} />
+            </div>
           </div>
-        </div>
+
+          <div className="result-section">
+            <h3>Slain Models Summary</h3>
+            <div className="stats-grid stats-grid--secondary">
+              <StatBox label="Mean slain" value={summary.meanSlainModels.toFixed(2)} highlight />
+              <StatBox label="Median slain" value={summary.medianSlainModels.toFixed(2)} />
+              <StatBox label="Min slain" value={summary.minSlainModels.toFixed(2)} />
+              <StatBox label="Max slain" value={summary.maxSlainModels.toFixed(2)} />
+              <StatBox
+                label="Kill 1+ chance"
+                value={`${(summary.killOneChance * 100).toFixed(1)}%`}
+              />
+              <StatBox
+                label="Wipe chance"
+                value={`${(summary.wipeChance * 100).toFixed(1)}%`}
+                highlight
+              />
+            </div>
+          </div>
+        </>
       )}
     </div>
   );

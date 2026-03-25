@@ -1,26 +1,46 @@
-import type { SpecialRule, Weapon } from "../../../types/combat";
+import type { Weapon } from "../../../types/combat";
 import type { ExpectedDamageResult } from "../types";
-import { analyzeSimulation, type SimulationSummary } from "./analyzeSimulation";
+import {
+  analyzeSimulation,
+  type SimulationRunResult,
+  type SimulationSummary,
+} from "./analyzeSimulation";
 
 export type SimulateExpectedDamageParams = {
   expectedResult: ExpectedDamageResult;
   weapon: Weapon;
   targetWounds: number;
+  defendingModels?: number;
   runs: number;
 };
 
 export function simulateExpectedDamage(
   params: SimulateExpectedDamageParams
 ): SimulationSummary {
-  const { expectedResult, weapon, targetWounds, runs } = params;
-  const results: number[] = [];
+  const {
+    expectedResult,
+    weapon,
+    targetWounds,
+    defendingModels = 1,
+    runs,
+  } = params;
+
+  const results: SimulationRunResult[] = [];
 
   for (let i = 0; i < runs; i++) {
-    results.push(simulateSingleRun(expectedResult, weapon));
+    const damage = simulateSingleRun(expectedResult, weapon);
+    const slainModels = Math.min(
+      defendingModels,
+      Math.floor(damage / targetWounds)
+    );
+
+    results.push({
+      damage,
+      slainModels,
+    });
   }
-  console.log("SIM EXPECTED", expectedResult);
-  console.log("SIM RESULTS", results);
-  return analyzeSimulation(results, targetWounds);
+
+  return analyzeSimulation(results, defendingModels);
 }
 
 function simulateSingleRun(
@@ -29,44 +49,16 @@ function simulateSingleRun(
 ): number {
   let totalDamage = 0;
 
-  const hasDevastatingWounds = hasRule(weapon.specialRules, "DEVASTATING_WOUNDS");
-  const hasLethalHits = hasRule(weapon.specialRules, "LETHAL_HITS");
-
   for (let i = 0; i < expectedResult.totalAttacks; i++) {
-    const hitRoll = rollD6();
+    if (!passesRoll(expectedResult.hitTarget)) continue;
+    if (!passesRoll(expectedResult.woundTarget)) continue;
 
-    if (!passesRollValue(expectedResult.hitTarget, hitRoll)) {
-      continue;
-    }
-
-    const isCriticalHit = hitRoll === 6;
-
-    // Lethal Hits: critical hit auto-wounds
-    if (hasLethalHits && isCriticalHit) {
-      if (expectedResult.saveTarget !== null && passesTarget(expectedResult.saveTarget)) {
-        continue;
-      }
-
-      totalDamage += rollValue(weapon.damage);
-      continue;
-    }
-
-    const woundRoll = rollD6();
-
-    if (!passesRollValue(expectedResult.woundTarget, woundRoll)) {
-      continue;
-    }
-
-    const isCriticalWound = woundRoll === 6;
-
-    // Devastating Wounds: critical wound bypasses save and becomes mortal damage
-    if (hasDevastatingWounds && isCriticalWound) {
-      totalDamage += rollValue(weapon.damage);
-      continue;
-    }
-
-    // null / 0 means no save roll left -> auto fail save
-    if (expectedResult.saveTarget !== null && passesTarget(expectedResult.saveTarget)) {
+    // null = no save available, 0 = effectively no save left
+    if (
+      expectedResult.saveTarget !== null &&
+      expectedResult.saveTarget !== 0 &&
+      passesRoll(expectedResult.saveTarget)
+    ) {
       continue;
     }
 
@@ -76,28 +68,13 @@ function simulateSingleRun(
   return totalDamage;
 }
 
-function hasRule(
-  rules: SpecialRule[] | undefined,
-  type: SpecialRule["type"]
-): boolean {
-  return (rules ?? []).some((rule) => rule.type === type);
-}
-
-function passesTarget(target: number): boolean {
-  if (target === 0) return false;
-  if (target <= 1) return true;
-  if (target > 6) return false;
-
-  return rollD6() >= target;
-}
-
-function passesRollValue(target: number | null, roll: number): boolean {
+function passesRoll(target: number | null): boolean {
   if (target === null) return true;
   if (target === 0) return false;
   if (target <= 1) return true;
   if (target > 6) return false;
 
-  return roll >= target;
+  return rollD6() >= target;
 }
 
 function rollD6(): number {
@@ -114,7 +91,6 @@ function rollValue(value: number | string): number {
     return plainNumber;
   }
 
-  // obsługa np. D6, 2D6, D3+3, 2D6+1 itd.
   const match = normalized.match(/^(?:(\d+)D)?(3|6)([+-]\d+)?$/);
   if (!match) {
     return 0;
@@ -125,10 +101,9 @@ function rollValue(value: number | string): number {
   const modifier = Number(match[3] ?? 0);
 
   let total = modifier;
-
   for (let i = 0; i < diceCount; i++) {
     total += sides === 3 ? Math.ceil(rollD6() / 2) : rollD6();
   }
-  
+
   return total;
 }

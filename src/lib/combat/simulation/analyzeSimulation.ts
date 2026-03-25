@@ -1,65 +1,77 @@
+export type SimulationRunResult = {
+  damage: number;
+  slainModels: number;
+};
+
 export type SimulationSummary = {
   runs: number;
-  mean: number;
-  median: number;
-  min: number;
-  max: number;
-  p10: number;
-  p90: number;
-  killChance: number;
-  histogram: Array<{
-    damage: number;
-    count: number;
-    probability: number;
-  }>;
+
+  meanDamage: number;
+  medianDamage: number;
+  minDamage: number;
+  maxDamage: number;
+  p10Damage: number;
+  p90Damage: number;
+
+  meanSlainModels: number;
+  medianSlainModels: number;
+  minSlainModels: number;
+  maxSlainModels: number;
+
+  killOneChance: number;
+  wipeChance: number;
 };
 
 export function analyzeSimulation(
-  results: number[],
-  woundsToKillTarget?: number
+  results: SimulationRunResult[],
+  defendingModels: number
 ): SimulationSummary {
   if (results.length === 0) {
     return {
       runs: 0,
-      mean: 0,
-      median: 0,
-      min: 0,
-      max: 0,
-      p10: 0,
-      p90: 0,
-      killChance: 0,
-      histogram: [],
+      meanDamage: 0,
+      medianDamage: 0,
+      minDamage: 0,
+      maxDamage: 0,
+      p10Damage: 0,
+      p90Damage: 0,
+      meanSlainModels: 0,
+      medianSlainModels: 0,
+      minSlainModels: 0,
+      maxSlainModels: 0,
+      killOneChance: 0,
+      wipeChance: 0,
     };
   }
 
-  const sorted = [...results].sort((a, b) => a - b);
-  const runs = sorted.length;
-  const sum = sorted.reduce((acc, value) => acc + value, 0);
-  const histogramMap = new Map<number, number>();
+  const runs = results.length;
 
-  for (const value of sorted) {
-    histogramMap.set(value, (histogramMap.get(value) ?? 0) + 1);
-  }
+  const damageValues = results.map((r) => r.damage).sort((a, b) => a - b);
+  const slainValues = results.map((r) => r.slainModels).sort((a, b) => a - b);
 
-  const killThreshold = woundsToKillTarget ?? Number.POSITIVE_INFINITY;
-  const killCount = Number.isFinite(killThreshold)
-    ? sorted.filter((value) => value >= killThreshold).length
-    : 0;
+  const sumDamage = damageValues.reduce((acc, value) => acc + value, 0);
+  const sumSlain = slainValues.reduce((acc, value) => acc + value, 0);
+
+  const killOneCount = slainValues.filter((value) => value >= 1).length;
+  const wipeCount = slainValues.filter((value) => value >= defendingModels).length;
 
   return {
     runs,
-    mean: sum / runs,
-    median: percentile(sorted, 0.5),
-    min: sorted[0],
-    max: sorted[sorted.length - 1],
-    p10: percentile(sorted, 0.1),
-    p90: percentile(sorted, 0.9),
-    killChance: Number.isFinite(killThreshold) ? killCount / runs : 0,
-    histogram: [...histogramMap.entries()].map(([damage, count]) => ({
-      damage,
-      count,
-      probability: count / runs,
-    })),
+
+    meanDamage: sumDamage / runs,
+    medianDamage: percentile(damageValues, 0.5),
+    minDamage: damageValues[0],
+    maxDamage: damageValues[damageValues.length - 1],
+    p10Damage: percentile(damageValues, 0.1),
+    p90Damage: percentile(damageValues, 0.9),
+
+    meanSlainModels: sumSlain / runs,
+    medianSlainModels: percentile(slainValues, 0.5),
+    minSlainModels: slainValues[0],
+    maxSlainModels: slainValues[slainValues.length - 1],
+
+    killOneChance: killOneCount / runs,
+    wipeChance: wipeCount / runs,
   };
 }
 

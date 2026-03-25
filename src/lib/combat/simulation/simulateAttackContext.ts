@@ -2,7 +2,11 @@ import type { AttackConditions, SpecialRule, Unit, Weapon } from "../../../types
 import type { CalculateExpectedDamageParams } from "../types";
 import { getModifiedSave, applyCoverToSave } from "../save";
 import { getWoundTarget } from "../wound";
-import { analyzeSimulation, type SimulationSummary } from "./analyzeSimulation";
+import {
+  analyzeSimulation,
+  type SimulationRunResult,
+  type SimulationSummary,
+} from "./analyzeSimulation";
 
 export type SimulateAttackContextParams = Pick<
   CalculateExpectedDamageParams,
@@ -20,20 +24,22 @@ export type SimulateAttackContextParams = Pick<
 export function simulateAttackContext(
   params: SimulateAttackContextParams
 ): SimulationSummary {
-  const results: number[] = [];
+  const results: SimulationRunResult[] = [];
 
   for (let i = 0; i < params.runs; i++) {
     results.push(simulateSingleAttackSequence(params));
   }
 
-  return analyzeSimulation(results, params.defender.woundsPerModel);
+  return analyzeSimulation(results, params.defendingModels);
 }
 
 function simulateSingleAttackSequence(
-  
   params: SimulateAttackContextParams
-): number {
-  const combinedRules = [...(params.weapon.specialRules ?? []), ...(params.activeModifierRules ?? [])];
+): SimulationRunResult {
+  const combinedRules = [
+    ...(params.weapon.specialRules ?? []),
+    ...(params.activeModifierRules ?? []),
+  ];
 
   const attackCount = getTotalAttacks(
     params.weapon,
@@ -45,7 +51,12 @@ function simulateSingleAttackSequence(
 
   const hitTarget = getHitTarget(params.weapon, params.conditions);
   const woundTarget = getWoundTarget(params.weapon.strength, params.defender.toughness);
-  const saveTarget = getSaveTarget(params.weapon, params.defender, params.conditions, combinedRules);
+  const saveTarget = getSaveTarget(
+    params.weapon,
+    params.defender,
+    params.conditions,
+    combinedRules
+  );
 
   const hasDevastating = hasRule(combinedRules, "DEVASTATING_WOUNDS");
   const hasLethal = hasRule(combinedRules, "LETHAL_HITS");
@@ -92,7 +103,15 @@ function simulateSingleAttackSequence(
     }
   }
 
-  return totalDamage;
+  const slainModels = Math.min(
+    params.defendingModels,
+    Math.floor(totalDamage / params.defender.woundsPerModel)
+  );
+
+  return {
+    damage: totalDamage,
+    slainModels,
+  };
 }
 
 function getTotalAttacks(
@@ -158,9 +177,10 @@ function rollDamage(
   conditions: AttackConditions
 ): number {
   const baseDamage = rollValue(weapon.damage);
-  const melta = hasRule(rules, "MELTA") && conditions.isHalfRange
-    ? getRuleValue(rules, "MELTA") ?? 0
-    : 0;
+  const melta =
+    hasRule(rules, "MELTA") && conditions.isHalfRange
+      ? (getRuleValue(rules, "MELTA") ?? 0)
+      : 0;
 
   return Math.max(0, baseDamage + melta);
 }
@@ -180,10 +200,7 @@ function getRuleValue(
   const match = (rules ?? []).find((rule) => rule.type === type);
 
   if (!match) return null;
-
-  if ("value" in match) {
-    return match.value;
-  }
+  if ("value" in match) return match.value;
 
   return null;
 }
