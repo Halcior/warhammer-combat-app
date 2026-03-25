@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 import { calculateExpectedDamage } from "./lib/combat";
-import { simulateExpectedDamage } from "./lib/combat/simulation/simulateExpectedDamage";
+import { simulateAttackContext } from "./lib/combat/simulation/simulateAttackContext";
 
 import { SetupPanel } from "./components/SetupPanel";
 import { ModifiersPanel } from "./components/ModifiersPanel";
@@ -52,6 +52,20 @@ function App() {
     ];
   }, [attackModifiers.allActiveModifierRules, ruleOptions.activeRuleModifiers]);
 
+  useEffect(() => {
+    setSimulationSummary(null);
+  }, [
+    battleSetup.attacker,
+    battleSetup.selectedWeapon,
+    battleSetup.defender,
+    battleSetup.attackingModels,
+    battleSetup.defendingModels,
+    battleSetup.conditions,
+    allActiveModifierRules,
+    runs,
+    mode,
+  ]);
+
   const expectedResult = useMemo(() => {
     return calculateExpectedDamage({
       attacker: battleSetup.attacker,
@@ -64,7 +78,12 @@ function App() {
       activeEngineTags: ruleOptions.activeEngineTags,
     });
   }, [
-    battleSetup,
+    battleSetup.attacker,
+    battleSetup.selectedWeapon,
+    battleSetup.defender,
+    battleSetup.attackingModels,
+    battleSetup.defendingModels,
+    battleSetup.conditions,
     allActiveModifierRules,
     ruleOptions.activeEngineTags,
   ]);
@@ -85,17 +104,25 @@ function App() {
       activeEngineTags: ruleOptions.activeEngineTags,
     });
   }, [
-    battleSetup,
+    battleSetup.attacker,
     compareWeapon,
+    battleSetup.defender,
+    battleSetup.attackingModels,
+    battleSetup.defendingModels,
+    battleSetup.conditions,
     allActiveModifierRules,
     ruleOptions.activeEngineTags,
   ]);
 
   const handleRunSimulation = () => {
-    const summary = simulateExpectedDamage({
-      expectedResult,
+    const summary = simulateAttackContext({
+      attacker: battleSetup.attacker,
       weapon: battleSetup.selectedWeapon,
-      targetWounds: battleSetup.defender.woundsPerModel,
+      defender: battleSetup.defender,
+      attackingModels: battleSetup.attackingModels,
+      defendingModels: battleSetup.defendingModels,
+      conditions: battleSetup.conditions,
+      activeModifierRules: allActiveModifierRules,
       runs,
     });
 
@@ -107,35 +134,71 @@ function App() {
       <h1>Warhammer Helper</h1>
 
       <div className="top-grid">
-        <SetupPanel {...battleSetup} />
+        <SetupPanel
+          factions={battleSetup.factions}
+          attackerFaction={battleSetup.attackerFaction}
+          defenderFaction={battleSetup.defenderFaction}
+          attackerId={battleSetup.attackerId}
+          defenderId={battleSetup.defenderId}
+          weaponId={battleSetup.weaponId}
+          attackingModels={battleSetup.attackingModels}
+          defendingModels={battleSetup.defendingModels}
+          conditions={battleSetup.conditions}
+          attackerUnits={battleSetup.attackerUnits}
+          defenderUnits={battleSetup.defenderUnits}
+          attacker={battleSetup.attacker}
+          setAttackingModels={battleSetup.setAttackingModels}
+          setDefendingModels={battleSetup.setDefendingModels}
+          setConditions={battleSetup.setConditions}
+          handleAttackerFactionChange={(value) => {
+            battleSetup.handleAttackerFactionChange(value);
+            resolver.resetResolveAttack();
+          }}
+          handleAttackerChange={(value) => {
+            battleSetup.handleAttackerChange(value);
+            resolver.resetResolveAttack();
+          }}
+          handleWeaponChange={(value) => {
+            battleSetup.handleWeaponChange(value);
+            resolver.resetResolveAttack();
+          }}
+          handleDefenderFactionChange={(value) => {
+            battleSetup.handleDefenderFactionChange(value);
+            resolver.resetResolveAttack();
+          }}
+          handleDefenderChange={(value) => {
+            battleSetup.handleDefenderChange(value);
+            resolver.resetResolveAttack();
+          }}
+        />
 
         <ModifiersPanel
-  activeAttackModifiers={attackModifiers.activeAttackModifiers}
-  setActiveAttackModifiers={attackModifiers.setActiveAttackModifiers}
-  allActiveModifierRules={allActiveModifierRules}
-  selectedWeapon={battleSetup.selectedWeapon}
-  attacker={battleSetup.attacker}
-  availableDetachments={factionRules.availableDetachments}
-  selectedDetachmentId={factionRules.selectedDetachmentId}
-  setSelectedDetachmentId={factionRules.setSelectedDetachmentId}
-  selectedDetachment={factionRules.selectedDetachment}
-  availableRuleOptions={factionRules.allAvailableRuleOptions}
-  activeRuleOptionIds={ruleOptions.activeRuleOptionIds}
-  toggleRuleOption={ruleOptions.toggleRuleOption}
-  stratagems={factionRules.stratagems}
-  enhancements={factionRules.enhancements}
-/>
+          activeAttackModifiers={attackModifiers.activeAttackModifiers}
+          setActiveAttackModifiers={attackModifiers.setActiveAttackModifiers}
+          allActiveModifierRules={allActiveModifierRules}
+          selectedWeapon={battleSetup.selectedWeapon}
+          attacker={battleSetup.attacker}
+          availableDetachments={factionRules.availableDetachments}
+          selectedDetachmentId={factionRules.selectedDetachmentId}
+          setSelectedDetachmentId={factionRules.setSelectedDetachmentId}
+          selectedDetachment={factionRules.selectedDetachment}
+          availableRuleOptions={factionRules.allAvailableRuleOptions}
+          activeRuleOptionIds={ruleOptions.activeRuleOptionIds}
+          toggleRuleOption={ruleOptions.toggleRuleOption}
+          stratagems={factionRules.stratagems}
+          enhancements={factionRules.enhancements}
+        />
 
         <ResolveAttackPanel
-  expectedTotalAttacks={expectedResult.totalAttacks}
-  rolledHits={resolver.rolledHits}
-  rolledWounds={resolver.rolledWounds}
-  successfulSaves={resolver.successfulSaves}
-  setRolledHits={resolver.setRolledHits}
-  setRolledWounds={resolver.setRolledWounds}
-  setSuccessfulSaves={resolver.setSuccessfulSaves}
-  resolvedResult={resolver.resolvedResult}
-/>
+          expectedTotalAttacks={expectedResult.totalAttacks}
+          rolledHits={resolver.rolledHits}
+          rolledWounds={resolver.rolledWounds}
+          successfulSaves={resolver.successfulSaves}
+          setRolledHits={resolver.setRolledHits}
+          setRolledWounds={resolver.setRolledWounds}
+          setSuccessfulSaves={resolver.setSuccessfulSaves}
+          resolvedResult={resolver.resolvedResult}
+        />
       </div>
 
       <ExpectedResultPanel expectedResult={expectedResult} />
