@@ -52,20 +52,6 @@ function App() {
     ];
   }, [attackModifiers.allActiveModifierRules, ruleOptions.activeRuleModifiers]);
 
-  useEffect(() => {
-    setSimulationSummary(null);
-  }, [
-    battleSetup.attacker,
-    battleSetup.selectedWeapon,
-    battleSetup.defender,
-    battleSetup.attackingModels,
-    battleSetup.defendingModels,
-    battleSetup.conditions,
-    allActiveModifierRules,
-    runs,
-    mode,
-  ]);
-
   const expectedResult = useMemo(() => {
     return calculateExpectedDamage({
       attacker: battleSetup.attacker,

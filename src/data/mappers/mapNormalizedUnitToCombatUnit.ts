@@ -5,17 +5,20 @@ export function mapNormalizedUnitToCombatUnit(unit: NormalizedUnit): Unit {
   const primaryModel = pickPrimaryModel(unit);
 
   return {
-    id: unit.id,
-    name: unit.name,
-    faction: unit.factionName,
-    toughness: primaryModel.toughness,
-    save: primaryModel.save,
-    invulnerableSave: primaryModel.invulnerableSave,
-    woundsPerModel: primaryModel.wounds,
-    weapons: unit.weapons.map(mapWeapon),
-    specialRules: parseUnitRules(unit.abilities),
-    keywords: unit.keywords,
-  };
+  id: unit.id,
+  name: unit.name,
+  faction: unit.factionName,
+  toughness: primaryModel.toughness,
+  save: primaryModel.save,
+  invulnerableSave:
+    primaryModel.invulnerableSave && primaryModel.invulnerableSave > 0
+      ? primaryModel.invulnerableSave
+      : undefined,
+  woundsPerModel: primaryModel.wounds,
+  weapons: unit.weapons.map(mapWeapon),
+  specialRules: parseUnitRules(unit.abilities),
+  keywords: unit.keywords,
+};
 }
 
 function pickPrimaryModel(unit: NormalizedUnit) {

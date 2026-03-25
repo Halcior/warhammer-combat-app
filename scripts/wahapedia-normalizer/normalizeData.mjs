@@ -139,15 +139,18 @@ function buildFactionMap(factions) {
 }
 
 function buildModelProfile(datasheetName, row, index) {
+  const rawInvul =
+    row.inv_sv && String(row.inv_sv).trim() !== ""
+      ? toNumber(row.inv_sv)
+      : undefined;
+
   return {
     id: `${sanitizeId(datasheetName)}_model_${index + 1}`,
     name: row.name || datasheetName,
     toughness: toNumber(row.T),
     save: toNumber(row.Sv),
     invulnerableSave:
-      row.inv_sv && String(row.inv_sv).trim() !== ""
-        ? toNumber(row.inv_sv)
-        : undefined,
+      rawInvul && rawInvul > 0 ? rawInvul : undefined,
     wounds: toNumber(row.W),
   };
 }
