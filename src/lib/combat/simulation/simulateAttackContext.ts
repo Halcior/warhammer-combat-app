@@ -30,6 +30,7 @@ export function simulateAttackContext(
 }
 
 function simulateSingleAttackSequence(
+  
   params: SimulateAttackContextParams
 ): number {
   const combinedRules = [...(params.weapon.specialRules ?? []), ...(params.activeModifierRules ?? [])];

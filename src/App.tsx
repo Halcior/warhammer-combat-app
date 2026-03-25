@@ -101,19 +101,31 @@ function App() {
   ]);
 
   const handleRunSimulation = () => {
-    const summary = simulateAttackContext({
-      attacker: battleSetup.attacker,
-      weapon: battleSetup.selectedWeapon,
-      defender: battleSetup.defender,
-      attackingModels: battleSetup.attackingModels,
-      defendingModels: battleSetup.defendingModels,
-      conditions: battleSetup.conditions,
-      activeModifierRules: allActiveModifierRules,
-      runs,
-    });
+  const summary = simulateAttackContext({
+    attacker: battleSetup.attacker,
+    weapon: battleSetup.selectedWeapon,
+    defender: battleSetup.defender,
+    attackingModels: battleSetup.attackingModels,
+    defendingModels: battleSetup.defendingModels,
+    conditions: battleSetup.conditions,
+    activeModifierRules: allActiveModifierRules,
+    runs,
+  });
 
-    setSimulationSummary(summary);
-  };
+  console.log("SIM SUMMARY", summary);
+  console.log("SIM INPUT", {
+    attacker: battleSetup.attacker.name,
+    weapon: battleSetup.selectedWeapon.name,
+    defender: battleSetup.defender.name,
+    attackingModels: battleSetup.attackingModels,
+    defendingModels: battleSetup.defendingModels,
+    conditions: battleSetup.conditions,
+    activeModifierRules: allActiveModifierRules,
+    runs,
+  });
+
+  setSimulationSummary(summary);
+};
 
   return (
     <div className="app">
