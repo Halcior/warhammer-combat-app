@@ -76,34 +76,38 @@ export const shieldHostDetachment: DetachmentConfig = {
       supportLevel: "info-only",
     },
     {
-      id: "from-the-hall-of-armouries",
-      name: "From the Hall of Armouries",
-      description:
-        "Add 1 to the Strength and Damage of the bearer's melee weapons.",
-      effects: [
-        {
-          id: "hall-of-armouries-strength",
-          name: "Hall of Armouries: +1 Strength",
-          appliesTo: "attacker",
-          phase: "fight",
-          isToggle: true,
-          modifiers: [],
-          supportLevel: "planned",
-          engineTags: ["melee-strength-plus-1"],
-        },
-        {
-          id: "hall-of-armouries-damage",
-          name: "Hall of Armouries: +1 Damage",
-          appliesTo: "attacker",
-          phase: "fight",
-          isToggle: true,
-          modifiers: [],
-          supportLevel: "planned",
-          engineTags: ["melee-damage-plus-1"],
-        },
+  id: "from-the-hall-of-armouries",
+  name: "From the Hall of Armouries",
+  description:
+    "Add 1 to the Strength and Damage characteristics of melee weapons equipped by the bearer.",
+  effects: [
+    {
+      id: "hall-of-armouries-strength",
+      name: "Hall of Armouries: +1 Strength",
+      appliesTo: "attacker",
+      phase: "fight",
+      isToggle: true,
+      modifiers: [
+        { type: "STRENGTH_MODIFIER", value: 1, attackType: "melee" },
       ],
-      supportLevel: "planned",
+      supportLevel: "implemented",
+      engineTags: ["melee-strength-plus-1"],
     },
+    {
+      id: "hall-of-armouries-damage",
+      name: "Hall of Armouries: +1 Damage",
+      appliesTo: "attacker",
+      phase: "fight",
+      isToggle: true,
+      modifiers: [
+        { type: "DAMAGE_MODIFIER", value: 1, attackType: "melee" },
+      ],
+      supportLevel: "implemented",
+      engineTags: ["melee-damage-plus-1"],
+    },
+  ],
+  supportLevel: "implemented",
+},
     {
       id: "panoptispex",
       name: "Panoptispex",

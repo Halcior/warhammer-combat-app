@@ -24,7 +24,9 @@ export type SpecialRule =
   | { type: "FEEL_NO_PAIN"; value: number }
   | { type: "DAMAGE_REDUCTION"; value: number }
   | { type: "CRITICAL_HITS_ON"; value: number }
-  | { type: "AP_MODIFIER"; value: number; attackType?: "melee" | "ranged" };
+  | { type: "AP_MODIFIER"; value: number; attackType?: "melee" | "ranged" }
+  | { type: "STRENGTH_MODIFIER"; value: number; attackType?: "melee" | "ranged" }
+  | { type: "DAMAGE_MODIFIER"; value: number; attackType?: "melee" | "ranged" };
 
 export type Weapon = {
   id: string;
