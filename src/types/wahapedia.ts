@@ -43,3 +43,38 @@ export type NormalizedUnit = {
   keywords: string[];
   abilities: NormalizedAbility[];
 };
+
+export type NormalizedDetachmentAbility = {
+  id: string;
+  name: string;
+  description: string;
+  type?: string;
+};
+
+export type NormalizedEnhancement = {
+  id: string;
+  name: string;
+  description: string;
+  points?: number;
+};
+
+export type NormalizedStratagem = {
+  id: string;
+  name: string;
+  description: string;
+  cpCost?: number;
+  type?: string;
+  turn?: string;
+  phase?: string;
+};
+
+export type NormalizedDetachment = {
+  id: string;
+  name: string;
+  factionId: string;
+  factionName: string;
+  description?: string;
+  abilities: NormalizedDetachmentAbility[];
+  enhancements: NormalizedEnhancement[];
+  stratagems: NormalizedStratagem[];
+};
