@@ -26,12 +26,12 @@ export function useFactionRules(attackerFaction: string) {
   }, [selectedDetachment]);
 
   return {
-    availableDetachments,
-    selectedDetachmentId,
-    setSelectedDetachmentId,
-    selectedDetachment,
-    allAvailableRuleOptions,
-    stratagems: runtimeData.stratagems,
-    enhancements: runtimeData.enhancements,
-  };
+  availableDetachments,
+  selectedDetachmentId,
+  setSelectedDetachmentId,
+  selectedDetachment,
+  allAvailableRuleOptions,
+  stratagems: selectedDetachment?.stratagems ?? [],
+  enhancements: selectedDetachment?.enhancements ?? [],
+};
 }
