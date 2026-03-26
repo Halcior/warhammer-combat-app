@@ -1,4 +1,3 @@
-import type { RuleOption } from "../../../types/faction";
 import type { DetachmentRuleOverride } from "../types";
 
 export const shieldHostRuleOverride: DetachmentRuleOverride = ({ rule }) => {

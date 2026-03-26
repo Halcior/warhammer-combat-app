@@ -12,6 +12,7 @@ import type {
   CalculateExpectedDamageParams,
   ExpectedDamageResult,
 } from "./types";
+import type { SpecialRule } from "../../types/combat";
 
 export function calculateExpectedDamage({
   attacker,
@@ -30,10 +31,8 @@ export function calculateExpectedDamage({
     ...(activeModifierRules ?? []),
   ];
 
-  const hasMeleeApBonus =
-    weapon.type === "melee" && activeEngineTags.includes("melee-ap-plus-1");
-
-  const effectiveAp = hasMeleeApBonus ? weapon.ap - 1 : weapon.ap;
+  const apModifier = getApModifier(combinedWeaponRules, weapon.type);
+  const effectiveAp = weapon.ap - apModifier;
 
   const meltaBonus = conditions.isHalfRange
     ? getMeltaValue(combinedWeaponRules)
@@ -96,7 +95,10 @@ export function calculateExpectedDamage({
     criticalWoundThreshold = antiRule.value;
   }
 
-  const criticalHitChance = isTorrent ? 0 : Math.min(hitChance, 1 / 6);
+  const criticalHitThreshold = getCriticalHitThreshold(combinedWeaponRules);
+  const criticalHitChance = isTorrent
+    ? 0
+    : Math.min(hitChance, Math.max(0, (7 - criticalHitThreshold) / 6));
 
   const effectiveWoundChance = hasTwinLinked
     ? woundChance + (1 - woundChance) * woundChance
@@ -211,4 +213,24 @@ export function calculateExpectedDamage({
     mortalWoundsFromDevastating,
     effectiveAp,
   };
+}
+
+function getCriticalHitThreshold(rules: SpecialRule[]): number {
+  const match = rules.find((rule) => rule.type === "CRITICAL_HITS_ON");
+
+  if (!match) return 6;
+  if ("value" in match) return match.value;
+
+  return 6;
+}
+
+function getApModifier(
+  rules: SpecialRule[],
+  weaponType: "melee" | "ranged"
+): number {
+  return rules.reduce((sum, rule) => {
+    if (rule.type !== "AP_MODIFIER") return sum;
+    if (rule.attackType && rule.attackType !== weaponType) return sum;
+    return sum + rule.value;
+  }, 0);
 }

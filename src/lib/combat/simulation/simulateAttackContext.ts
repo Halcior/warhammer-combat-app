@@ -61,6 +61,7 @@ function simulateSingleAttackSequence(
   const hasDevastating = hasRule(combinedRules, "DEVASTATING_WOUNDS");
   const hasLethal = hasRule(combinedRules, "LETHAL_HITS");
   const sustainedHits = getRuleValue(combinedRules, "SUSTAINED_HITS") ?? 0;
+  const criticalHitThreshold = getCriticalHitThreshold(combinedRules);
 
   let totalHits = 0;
   let totalWounds = 0;
@@ -70,52 +71,52 @@ function simulateSingleAttackSequence(
   let pendingHitRolls = attackCount;
 
   while (pendingHitRolls > 0) {
-  pendingHitRolls -= 1;
+    pendingHitRolls -= 1;
 
-  const hitRoll = rollD6();
-  if (!passesTarget(hitTarget, hitRoll)) {
-    continue;
-  }
+    const hitRoll = rollD6();
+    if (!passesTarget(hitTarget, hitRoll)) {
+      continue;
+    }
 
-  totalHits++;
+    totalHits++;
 
-  const criticalHit = hitRoll === 6;
+    const criticalHit = hitRoll >= criticalHitThreshold;
 
-  if (criticalHit && sustainedHits > 0) {
-    pendingHitRolls += sustainedHits;
-  }
+    if (criticalHit && sustainedHits > 0) {
+      pendingHitRolls += sustainedHits;
+    }
 
-  if (criticalHit && hasLethal) {
+    if (criticalHit && hasLethal) {
+      totalWounds++;
+
+      if (!passesSave(saveTarget)) {
+        totalFailedSaves++;
+        totalDamage += rollDamage(params.weapon, combinedRules, params.conditions);
+      }
+
+      continue;
+    }
+
+    const woundRoll = rollD6();
+    if (!passesTarget(woundTarget, woundRoll)) {
+      continue;
+    }
+
     totalWounds++;
+
+    const criticalWound = woundRoll === 6;
+
+    if (criticalWound && hasDevastating) {
+      totalMortals++;
+      totalDamage += rollDamage(params.weapon, combinedRules, params.conditions);
+      continue;
+    }
 
     if (!passesSave(saveTarget)) {
       totalFailedSaves++;
       totalDamage += rollDamage(params.weapon, combinedRules, params.conditions);
     }
-
-    continue;
   }
-
-  const woundRoll = rollD6();
-  if (!passesTarget(woundTarget, woundRoll)) {
-    continue;
-  }
-
-  totalWounds++;
-
-  const criticalWound = woundRoll === 6;
-
-  if (criticalWound && hasDevastating) {
-    totalMortals++;
-    totalDamage += rollDamage(params.weapon, combinedRules, params.conditions);
-    continue;
-  }
-
-  if (!passesSave(saveTarget)) {
-    totalFailedSaves++;
-    totalDamage += rollDamage(params.weapon, combinedRules, params.conditions);
-  }
-}
 
   const slainModels = Math.min(
     params.defendingModels,
@@ -128,7 +129,7 @@ function simulateSingleAttackSequence(
     hits: totalHits,
     wounds: totalWounds,
     failedSaves: totalFailedSaves,
-    mortals: totalMortals
+    mortals: totalMortals,
   };
 }
 
@@ -178,7 +179,8 @@ function getSaveTarget(
 ): number | null {
   const ignoresCover = hasRule(rules, "IGNORES_COVER");
   const invul = defender.invulnerableSave ?? null;
-  const modified = getModifiedSave(defender.save, weapon.ap, invul);
+  const effectiveAp = weapon.ap - getApModifier(rules, weapon.type);
+  const modified = getModifiedSave(defender.save, effectiveAp, invul);
   const covered = ignoresCover
     ? modified
     : applyCoverToSave(modified, weapon.type, conditions.isTargetInCover);
@@ -221,6 +223,26 @@ function getRuleValue(
   if ("value" in match) return match.value;
 
   return null;
+}
+
+function getCriticalHitThreshold(rules: SpecialRule[] | undefined): number {
+  const match = (rules ?? []).find((rule) => rule.type === "CRITICAL_HITS_ON");
+
+  if (!match) return 6;
+  if ("value" in match) return match.value;
+
+  return 6;
+}
+
+function getApModifier(
+  rules: SpecialRule[] | undefined,
+  weaponType: "melee" | "ranged"
+): number {
+  return (rules ?? []).reduce((sum, rule) => {
+    if (rule.type !== "AP_MODIFIER") return sum;
+    if (rule.attackType && rule.attackType !== weaponType) return sum;
+    return sum + rule.value;
+  }, 0);
 }
 
 function passesSave(target: number | null): boolean {
