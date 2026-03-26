@@ -50,7 +50,13 @@ function simulateSingleAttackSequence(
   );
 
   const hitTarget = getHitTarget(params.weapon, params.conditions);
-  const woundTarget = getWoundTarget(params.weapon.strength, params.defender.toughness);
+    const effectiveStrength =
+    params.weapon.strength + getStrengthModifier(combinedRules, params.weapon.type);
+
+  const woundTarget = getWoundTarget(
+    effectiveStrength,
+    params.defender.toughness
+  );
   const saveTarget = getSaveTarget(
     params.weapon,
     params.defender,
@@ -197,12 +203,13 @@ function rollDamage(
   conditions: AttackConditions
 ): number {
   const baseDamage = rollValue(weapon.damage);
+  const damageModifier = getDamageModifier(rules, weapon.type);
   const melta =
     hasRule(rules, "MELTA") && conditions.isHalfRange
       ? (getRuleValue(rules, "MELTA") ?? 0)
       : 0;
 
-  return Math.max(0, baseDamage + melta);
+  return Math.max(0, baseDamage + damageModifier + melta);
 }
 
 function hasTorrent(rules?: SpecialRule[]): boolean {
@@ -240,6 +247,28 @@ function getApModifier(
 ): number {
   return (rules ?? []).reduce((sum, rule) => {
     if (rule.type !== "AP_MODIFIER") return sum;
+    if (rule.attackType && rule.attackType !== weaponType) return sum;
+    return sum + rule.value;
+  }, 0);
+}
+
+function getStrengthModifier(
+  rules: SpecialRule[] | undefined,
+  weaponType: "melee" | "ranged"
+): number {
+  return (rules ?? []).reduce((sum, rule) => {
+    if (rule.type !== "STRENGTH_MODIFIER") return sum;
+    if (rule.attackType && rule.attackType !== weaponType) return sum;
+    return sum + rule.value;
+  }, 0);
+}
+
+function getDamageModifier(
+  rules: SpecialRule[] | undefined,
+  weaponType: "melee" | "ranged"
+): number {
+  return (rules ?? []).reduce((sum, rule) => {
+    if (rule.type !== "DAMAGE_MODIFIER") return sum;
     if (rule.attackType && rule.attackType !== weaponType) return sum;
     return sum + rule.value;
   }, 0);

@@ -32,14 +32,19 @@ export function calculateExpectedDamage({
   ];
 
   const apModifier = getApModifier(combinedWeaponRules, weapon.type);
+  const strengthModifier = getStrengthModifier(combinedWeaponRules, weapon.type);
+  const damageModifier = getDamageModifier(combinedWeaponRules, weapon.type);
+
   const effectiveAp = weapon.ap - apModifier;
+  const effectiveStrength = weapon.strength + strengthModifier;
 
   const meltaBonus = conditions.isHalfRange
     ? getMeltaValue(combinedWeaponRules)
     : 0;
 
   const baseAttacksPerModel = parseDiceValue(weapon.attacks);
-  const damagePerFailedSave = parseDiceValue(weapon.damage) + meltaBonus;
+  const damagePerFailedSave =
+    parseDiceValue(weapon.damage) + damageModifier + meltaBonus;
 
   const rapidFireBonus = conditions.isHalfRange
     ? getRapidFireValue(combinedWeaponRules)
@@ -76,8 +81,8 @@ export function calculateExpectedDamage({
 
   const hasLanceRule = hasRule(combinedWeaponRules, "LANCE");
 
-  let modifiedWoundTarget = getWoundTarget(
-    weapon.strength,
+ let modifiedWoundTarget = getWoundTarget(
+    effectiveStrength,
     defender.toughness
   );
 
@@ -230,6 +235,28 @@ function getApModifier(
 ): number {
   return rules.reduce((sum, rule) => {
     if (rule.type !== "AP_MODIFIER") return sum;
+    if (rule.attackType && rule.attackType !== weaponType) return sum;
+    return sum + rule.value;
+  }, 0);
+}
+
+function getStrengthModifier(
+  rules: SpecialRule[],
+  weaponType: "melee" | "ranged"
+): number {
+  return rules.reduce((sum, rule) => {
+    if (rule.type !== "STRENGTH_MODIFIER") return sum;
+    if (rule.attackType && rule.attackType !== weaponType) return sum;
+    return sum + rule.value;
+  }, 0);
+}
+
+function getDamageModifier(
+  rules: SpecialRule[],
+  weaponType: "melee" | "ranged"
+): number {
+  return rules.reduce((sum, rule) => {
+    if (rule.type !== "DAMAGE_MODIFIER") return sum;
     if (rule.attackType && rule.attackType !== weaponType) return sum;
     return sum + rule.value;
   }, 0);
