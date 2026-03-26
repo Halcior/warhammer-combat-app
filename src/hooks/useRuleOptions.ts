@@ -6,11 +6,30 @@ export function useRuleOptions(ruleOptions: RuleOption[]) {
   const [activeRuleOptionIds, setActiveRuleOptionIds] = useState<string[]>([]);
 
   const toggleRuleOption = (ruleId: string) => {
-    setActiveRuleOptionIds((prev) =>
-      prev.includes(ruleId)
-        ? prev.filter((id) => id !== ruleId)
-        : [...prev, ruleId]
-    );
+    const option = ruleOptions.find((o) => o.id === ruleId);
+    if (!option) return;
+
+    setActiveRuleOptionIds((prev) => {
+      const isActive = prev.includes(ruleId);
+
+      if (option.selectionGroup) {
+        const sameGroupIds = ruleOptions
+          .filter((o) => o.selectionGroup === option.selectionGroup)
+          .map((o) => o.id);
+
+        if (isActive) {
+          return prev.filter((id) => id !== ruleId);
+        }
+
+        return [...prev.filter((id) => !sameGroupIds.includes(id)), ruleId];
+      }
+
+      if (isActive) {
+        return prev.filter((id) => id !== ruleId);
+      }
+
+      return [...prev, ruleId];
+    });
   };
 
   const activeRuleOptions = useMemo(() => {

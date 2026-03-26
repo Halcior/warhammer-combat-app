@@ -14,9 +14,12 @@ export const shieldHostDetachment: DetachmentConfig = {
       appliesTo: "attacker",
       phase: "fight",
       isToggle: true,
-      modifiers: [],
-      supportLevel: "planned",
+      modifiers: [{ type: "CRITICAL_HITS_ON", value: 5 }],
+      supportLevel: "implemented",
       engineTags: ["critical-hit-on-5plus", "melee-only"],
+
+      selectionGroup: "custodes-martial-mastery",
+      maxSelectionsInGroup: 1,
     },
     {
       id: "martial-mastery-ap-bonus",
@@ -26,9 +29,12 @@ export const shieldHostDetachment: DetachmentConfig = {
       appliesTo: "attacker",
       phase: "fight",
       isToggle: true,
-      modifiers: [],
-      supportLevel: "planned",
+      modifiers: [{ type: "AP_MODIFIER", value: 1, attackType: "melee" }],
+      supportLevel: "implemented",
       engineTags: ["melee-ap-plus-1"],
+
+      selectionGroup: "custodes-martial-mastery",
+      maxSelectionsInGroup: 1,
     },
   ],
   stratagems: [

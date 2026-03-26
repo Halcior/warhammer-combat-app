@@ -9,6 +9,9 @@ export const adeptusCustodesArmyRules: RuleOption[] = [
     appliesTo: "attacker",
     phase: "fight",
     isToggle: true,
+
+    selectionGroup: "custodes-martial-katah",
+    maxSelectionsInGroup: 1,
   },
   {
     id: "martial-katah-sustained",
@@ -18,5 +21,8 @@ export const adeptusCustodesArmyRules: RuleOption[] = [
     appliesTo: "attacker",
     phase: "fight",
     isToggle: true,
+
+    selectionGroup: "custodes-martial-katah",
+    maxSelectionsInGroup: 1,
   },
 ];

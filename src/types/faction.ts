@@ -28,6 +28,9 @@ export type RuleOption = {
   isToggle?: boolean;
   supportLevel?: RuleSupportLevel;
   engineTags?: string[];
+
+  selectionGroup?: string;
+  maxSelectionsInGroup?: number;
 };
 
 export type StratagemConfig = {
