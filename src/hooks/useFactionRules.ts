@@ -1,48 +1,37 @@
-import { useMemo, useState } from "react";
-import { getFactionConfigByName } from "../data/factions";
+import { useEffect, useMemo, useState } from "react";
+import { getFactionRuntimeDetachments } from "../data/factions/runtimeDetachments";
 import type { RuleOption } from "../types/faction";
 
 export function useFactionRules(attackerFaction: string) {
-  const factionConfig = useMemo(() => {
-    return getFactionConfigByName(attackerFaction);
+  const runtimeData = useMemo(() => {
+    return getFactionRuntimeDetachments(attackerFaction);
   }, [attackerFaction]);
 
-  const availableDetachments = factionConfig?.detachments ?? [];
-  const [selectedDetachmentId, setSelectedDetachmentId] = useState<string>("");
+  const availableDetachments = runtimeData.detachments;
 
-  const selectedDetachment =
-    availableDetachments.find((d) => d.id === selectedDetachmentId) ??
-    availableDetachments[0];
-
-  const resolvedSelectedDetachmentId =
-    selectedDetachmentId || selectedDetachment?.id || "";
-
-  const armyRules = factionConfig?.armyRules ?? [];
-  const detachmentRuleOptions = selectedDetachment?.ruleOptions ?? [];
-  const stratagems = selectedDetachment?.stratagems ?? [];
-  const enhancements = selectedDetachment?.enhancements ?? [];
-
-  const enhancementRuleOptions: RuleOption[] = enhancements.flatMap(
-    (enhancement) => enhancement.effects
+  const [selectedDetachmentId, setSelectedDetachmentId] = useState(
+    availableDetachments[0]?.id ?? ""
   );
 
-  const allAvailableRuleOptions: RuleOption[] = [
-    ...armyRules,
-    ...detachmentRuleOptions,
-    ...enhancementRuleOptions,
-  ];
+  useEffect(() => {
+    setSelectedDetachmentId(availableDetachments[0]?.id ?? "");
+  }, [attackerFaction]);
+
+  const selectedDetachment =
+    availableDetachments.find((detachment) => detachment.id === selectedDetachmentId) ??
+    availableDetachments[0];
+
+  const allAvailableRuleOptions: RuleOption[] = useMemo(() => {
+    return selectedDetachment?.ruleOptions ?? [];
+  }, [selectedDetachment]);
 
   return {
-    factionConfig,
     availableDetachments,
-    selectedDetachment,
-    selectedDetachmentId: resolvedSelectedDetachmentId,
+    selectedDetachmentId,
     setSelectedDetachmentId,
-    armyRules,
-    detachmentRuleOptions,
-    stratagems,
-    enhancements,
-    enhancementRuleOptions,
+    selectedDetachment,
     allAvailableRuleOptions,
+    stratagems: runtimeData.stratagems,
+    enhancements: runtimeData.enhancements,
   };
 }
