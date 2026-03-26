@@ -1,25 +1,28 @@
 import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 import { calculateExpectedDamage } from "./lib/combat";
+import { simulateAttackContext } from "./lib/combat/simulation/simulateAttackContext";
+
 import { SetupPanel } from "./components/SetupPanel";
 import { ModifiersPanel } from "./components/ModifiersPanel";
 import { ResolveAttackPanel } from "./components/ResolveAttackPanel";
 import { ExpectedResultPanel } from "./components/ExpectedResultPanel";
 import { CompareWeaponsPanel } from "./components/CompareWeaponsPanel";
+import { SimulationPanel, type CalculationMode } from "./components/SimulationPanel";
+
 import { useBattleSetup } from "./hooks/useBattleSetup";
 import { useAttackModifiers } from "./hooks/useAttackModifiers";
 import { useResolver } from "./hooks/useResolver";
 import { useFactionRules } from "./hooks/useFactionRules";
 import { useRuleOptions } from "./hooks/useRuleOptions";
 
+import type { SimulationSummary } from "./lib/combat/simulation/analyzeSimulation";
+
 function App() {
   const battleSetup = useBattleSetup();
-
   const attackModifiers = useAttackModifiers();
-
   const factionRules = useFactionRules(battleSetup.attackerFaction);
-
- const ruleOptions = useRuleOptions(factionRules.allAvailableRuleOptions);
+  const ruleOptions = useRuleOptions(factionRules.allAvailableRuleOptions);
 
   const resolver = useResolver({
     weapon: battleSetup.selectedWeapon,
@@ -28,19 +31,19 @@ function App() {
   });
 
   const [compareWeaponId, setCompareWeaponId] = useState("");
+  const [mode, setMode] = useState<CalculationMode>("fast");
+  const [runs, setRuns] = useState(5000);
+  const [simulationSummary, setSimulationSummary] =
+    useState<SimulationSummary | null>(null);
 
   useEffect(() => {
     const fallbackWeapon =
       battleSetup.attacker.weapons.find(
-        (weapon) => weapon.id !== battleSetup.selectedWeapon.id
+        (w) => w.id !== battleSetup.selectedWeapon.id
       ) ?? battleSetup.selectedWeapon;
 
     setCompareWeaponId(fallbackWeapon.id);
   }, [battleSetup.attacker, battleSetup.selectedWeapon]);
-
-  const compareWeapon =
-    battleSetup.attacker.weapons.find((weapon) => weapon.id === compareWeaponId) ??
-    battleSetup.selectedWeapon;
 
   const allActiveModifierRules = useMemo(() => {
     return [
@@ -71,6 +74,10 @@ function App() {
     ruleOptions.activeEngineTags,
   ]);
 
+  const compareWeapon =
+    battleSetup.attacker.weapons.find((w) => w.id === compareWeaponId) ??
+    battleSetup.selectedWeapon;
+
   const compareResult = useMemo(() => {
     return calculateExpectedDamage({
       attacker: battleSetup.attacker,
@@ -92,6 +99,33 @@ function App() {
     allActiveModifierRules,
     ruleOptions.activeEngineTags,
   ]);
+
+  const handleRunSimulation = () => {
+  const summary = simulateAttackContext({
+    attacker: battleSetup.attacker,
+    weapon: battleSetup.selectedWeapon,
+    defender: battleSetup.defender,
+    attackingModels: battleSetup.attackingModels,
+    defendingModels: battleSetup.defendingModels,
+    conditions: battleSetup.conditions,
+    activeModifierRules: allActiveModifierRules,
+    runs,
+  });
+
+  console.log("SIM SUMMARY", summary);
+  console.log("SIM INPUT", {
+    attacker: battleSetup.attacker.name,
+    weapon: battleSetup.selectedWeapon.name,
+    defender: battleSetup.defender.name,
+    attackingModels: battleSetup.attackingModels,
+    defendingModels: battleSetup.defendingModels,
+    conditions: battleSetup.conditions,
+    activeModifierRules: allActiveModifierRules,
+    runs,
+  });
+
+  setSimulationSummary(summary);
+};
 
   return (
     <div className="app">
@@ -166,6 +200,15 @@ function App() {
       </div>
 
       <ExpectedResultPanel expectedResult={expectedResult} />
+
+      <SimulationPanel
+        mode={mode}
+        setMode={setMode}
+        runs={runs}
+        setRuns={setRuns}
+        onRun={handleRunSimulation}
+        summary={simulationSummary}
+      />
 
       {battleSetup.attacker.weapons.length > 1 && (
         <CompareWeaponsPanel
