@@ -44,13 +44,84 @@ if (detachment.id === "shield_host") {
 export function mapNormalizedDetachmentToEnhancements(
   detachment: NormalizedDetachment
 ): EnhancementConfig[] {
-  return detachment.enhancements.map((enhancement) => ({
-    id: enhancement.id,
-    name: enhancement.name,
-    description: enhancement.description,
-    supportLevel: "info-only",
-    effects: [],
-  }));
+  return detachment.enhancements.map((enhancement) => {
+    const enhancementName = enhancement.name.toLowerCase();
+    const enhancementId = enhancement.id.toLowerCase();
+
+    if (
+      detachment.id === "shield_host" &&
+      (enhancementId.includes("hall_of_armouries") ||
+        enhancementName.includes("hall of armouries"))
+    ) {
+      return {
+        id: enhancement.id,
+        name: enhancement.name,
+        description: enhancement.description,
+        supportLevel: "implemented",
+        effects: [
+          {
+            id: `${enhancement.id}-strength`,
+            name: "Hall of Armouries: +1 Strength",
+            description: "Add 1 to the Strength characteristic of melee weapons.",
+            appliesTo: "attacker",
+            phase: "fight",
+            isToggle: true,
+            supportLevel: "implemented",
+            engineTags: ["melee-strength-plus-1"],
+            modifiers: [
+              { type: "STRENGTH_MODIFIER", value: 1, attackType: "melee" },
+            ],
+          },
+          {
+            id: `${enhancement.id}-damage`,
+            name: "Hall of Armouries: +1 Damage",
+            description: "Add 1 to the Damage characteristic of melee weapons.",
+            appliesTo: "attacker",
+            phase: "fight",
+            isToggle: true,
+            supportLevel: "implemented",
+            engineTags: ["melee-damage-plus-1"],
+            modifiers: [
+              { type: "DAMAGE_MODIFIER", value: 1, attackType: "melee" },
+            ],
+          },
+        ],
+      };
+    }
+
+    if (
+      detachment.id === "shield_host" &&
+      (enhancementId.includes("panoptispex") ||
+        enhancementName.includes("panoptispex"))
+    ) {
+      return {
+        id: enhancement.id,
+        name: enhancement.name,
+        description: enhancement.description,
+        supportLevel: "implemented",
+        effects: [
+          {
+            id: `${enhancement.id}-effect`,
+            name: "Panoptispex Effect",
+            appliesTo: "attacker",
+            phase: "shooting",
+            isToggle: true,
+            supportLevel: "implemented",
+            engineTags: ["ignores-cover-ranged"],
+            modifiers: [{ type: "IGNORES_COVER" }],
+          },
+        ],
+      };
+    }
+
+    return {
+      id: enhancement.id,
+      name: enhancement.name,
+      description: enhancement.description,
+      supportLevel: "info-only",
+      effects: [],
+    };
+  });
 }
 
 export function mapNormalizedDetachmentToStratagems(
