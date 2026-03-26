@@ -22,7 +22,9 @@ export type SpecialRule =
   | { type: "DEVASTATING_WOUNDS" }
   | { type: "ANTI"; keyword: string; value: number }
   | { type: "FEEL_NO_PAIN"; value: number }
-  | { type: "DAMAGE_REDUCTION"; value: number };
+  | { type: "DAMAGE_REDUCTION"; value: number }
+  | { type: "CRITICAL_HITS_ON"; value: number }
+  | { type: "AP_MODIFIER"; value: number; attackType?: "melee" | "ranged" };
 
 export type Weapon = {
   id: string;

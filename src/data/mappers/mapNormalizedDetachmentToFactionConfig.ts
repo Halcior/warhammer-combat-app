@@ -5,15 +5,37 @@ import type {
   StratagemConfig,
 } from "../../types/faction";
 import type { NormalizedDetachment } from "../../types/wahapedia";
+import { getDetachmentRuleOverride } from "../detachmentRules/registry";
 
 export function mapNormalizedDetachmentToDetachmentConfig(
   detachment: NormalizedDetachment
 ): DetachmentConfig {
+  const override = getDetachmentRuleOverride(detachment.id);
+
+  const baseRuleOptions = detachment.abilities.map(mapAbilityToRuleOption);
+  const ruleOptions = override
+    ? baseRuleOptions.map((rule) =>
+        override({
+          rule,
+          context: { detachment },
+        })
+      )
+    : baseRuleOptions;
+if (detachment.id === "shield_host") {
+  console.log(
+    "SHIELD HOST ABILITIES",
+    detachment.abilities.map((a) => ({
+      id: a.id,
+      name: a.name,
+      description: a.description,
+    }))
+  );
+}
   return {
     id: detachment.id,
     name: detachment.name,
     description: detachment.description ?? "",
-    ruleOptions: detachment.abilities.map(mapAbilityToRuleOption),
+    ruleOptions,
     stratagems: mapNormalizedDetachmentToStratagems(detachment),
     enhancements: mapNormalizedDetachmentToEnhancements(detachment),
   };

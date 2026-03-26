@@ -4,29 +4,14 @@ import type { DetachmentRuleOverride } from "../types";
 export const shieldHostRuleOverride: DetachmentRuleOverride = ({ rule }) => {
   const haystack = `${rule.name} ${rule.description ?? ""}`.toLowerCase();
 
-  if (haystack.includes("lethal hits")) {
+  if (haystack.includes("martial mastery")) {
     return {
       ...rule,
       supportLevel: "implemented",
-      modifiers: [{ type: "LETHAL_HITS" }],
-      engineTags: [],
-    };
-  }
-
-  if (haystack.includes("sustained hits")) {
-    return {
-      ...rule,
-      supportLevel: "implemented",
-      modifiers: [{ type: "SUSTAINED_HITS", value: 1 }],
-      engineTags: [],
-    };
-  }
-
-  if (haystack.includes("ignores cover") || haystack.includes("ignore cover")) {
-    return {
-      ...rule,
-      supportLevel: "implemented",
-      modifiers: [{ type: "IGNORES_COVER" }],
+      modifiers: [
+        { type: "CRITICAL_HITS_ON", value: 5 },
+        { type: "AP_MODIFIER", value: 1, attackType: "melee" },
+      ],
       engineTags: [],
     };
   }
