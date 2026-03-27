@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import type { RuleOption } from "../types/faction";
+import type { RuleOption, EnhancementConfig } from "../types/faction";
 import type { SpecialRule } from "../types/combat";
 
 export function useRuleOptions(ruleOptions: RuleOption[]) {
@@ -51,5 +51,30 @@ export function useRuleOptions(ruleOptions: RuleOption[]) {
     activeRuleModifiers,
     activeEngineTags,
     toggleRuleOption,
+  };
+}
+
+export function useEnhancementOptions(enhancements: EnhancementConfig[]) {
+  const [activeEnhancementIds, setActiveEnhancementIds] = useState<string[]>([]);
+
+  const toggleEnhancement = (id: string) => {
+    setActiveEnhancementIds((prev) =>
+      prev.includes(id)
+        ? prev.filter((x) => x !== id)
+        : [...prev, id]
+    );
+  };
+
+  const activeEnhancementEffects: SpecialRule[] = useMemo(() => {
+    return enhancements
+      .filter((e) => activeEnhancementIds.includes(e.id))
+      .flatMap((e) => e.effects)
+      .flatMap((effect) => effect.modifiers);
+  }, [enhancements, activeEnhancementIds]);
+
+  return {
+    activeEnhancementIds,
+    toggleEnhancement,
+    activeEnhancementEffects,
   };
 }

@@ -42,6 +42,20 @@ export function formatSpecialRule(rule: SpecialRule): string {
       return `Feel No Pain ${rule.value}+`;
     case "DAMAGE_REDUCTION":
       return `Damage Reduction ${rule.value}`;
+        case "CRITICAL_HITS_ON":
+      return `Critical Hits on ${rule.value}+`;
+    case "AP_MODIFIER":
+      return rule.attackType
+        ? `AP +${rule.value} (${rule.attackType})`
+        : `AP +${rule.value}`;
+    case "STRENGTH_MODIFIER":
+      return rule.attackType
+        ? `Strength +${rule.value} (${rule.attackType})`
+        : `Strength +${rule.value}`;
+    case "DAMAGE_MODIFIER":
+      return rule.attackType
+        ? `Damage +${rule.value} (${rule.attackType})`
+        : `Damage +${rule.value}`;
     default: {
       const exhaustiveCheck: never = rule;
       void exhaustiveCheck;

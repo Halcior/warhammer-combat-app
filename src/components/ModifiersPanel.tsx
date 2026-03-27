@@ -33,6 +33,8 @@ type ModifiersPanelProps = {
   toggleRuleOption: (ruleId: string) => void;
   stratagems: StratagemConfig[];
   enhancements: EnhancementConfig[];
+  activeEnhancementIds: string[];
+  toggleEnhancement: (id: string) => void;
 };
 
 export function ModifiersPanel({
@@ -50,6 +52,8 @@ export function ModifiersPanel({
   toggleRuleOption,
   stratagems,
   enhancements,
+  activeEnhancementIds,
+  toggleEnhancement,
 }: ModifiersPanelProps) {
   return (
     <div className="card">
@@ -106,10 +110,19 @@ export function ModifiersPanel({
           <h3>Enhancements</h3>
           <div className="rules-list">
             {enhancements.map((enhancement) => (
-              <span key={enhancement.id} className="rule-tag">
-                {enhancement.name}
-                {enhancement.supportLevel && ` - ${enhancement.supportLevel}`}
-              </span>
+              <label key={enhancement.id} className="checkbox-row">
+                <input
+                  type="checkbox"
+                  checked={activeEnhancementIds.includes(enhancement.id)}
+                  onChange={() => toggleEnhancement(enhancement.id)}
+                />
+                <span>
+                  {enhancement.name}
+                  {enhancement.supportLevel && (
+                    <span className="muted-text"> ({enhancement.supportLevel})</span>
+                  )}
+                </span>
+              </label>
             ))}
           </div>
         </div>
