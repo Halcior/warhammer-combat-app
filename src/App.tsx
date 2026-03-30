@@ -18,6 +18,9 @@ import { useRuleOptions, useEnhancementOptions, useStratagemOptions } from "./ho
 
 import type { SimulationSummary } from "./lib/combat/simulation/analyzeSimulation";
 
+import { explainAttackBreakdown } from "./lib/combat/explainAttackBreakdown";
+import { AttackBreakdownSourcesPanel } from "./components/AttackBreakdownSourcesPanel";
+
 function App() {
   const battleSetup = useBattleSetup();
   const attackModifiers = useAttackModifiers();
@@ -84,6 +87,20 @@ console.log("toggleStratagem typeof", typeof stratagemOptions.toggleStratagem);
     battleSetup.conditions,
     allActiveModifierRules,
     ruleOptions.activeEngineTags,
+  ]);
+
+  const attackBreakdownExplanation = useMemo(() => {
+  return explainAttackBreakdown({
+    weapon: battleSetup.selectedWeapon,
+    defender: battleSetup.defender,
+    conditions: battleSetup.conditions,
+    activeModifierRules: allActiveModifierRules,
+  });
+  }, [
+  battleSetup.selectedWeapon,
+  battleSetup.defender,
+  battleSetup.conditions,
+  allActiveModifierRules,
   ]);
 
   const compareWeapon =
@@ -216,6 +233,7 @@ console.log("toggleStratagem typeof", typeof stratagemOptions.toggleStratagem);
       </div>
 
       <ExpectedResultPanel expectedResult={expectedResult} />
+      <AttackBreakdownSourcesPanel explanation={attackBreakdownExplanation} />
 
       <SimulationPanel
         mode={mode}
