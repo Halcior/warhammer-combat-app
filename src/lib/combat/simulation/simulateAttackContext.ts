@@ -50,13 +50,17 @@ function simulateSingleAttackSequence(
   );
 
   const hitTarget = getHitTarget(params.weapon, params.conditions);
-    const effectiveStrength =
-    params.weapon.strength + getStrengthModifier(combinedRules, params.weapon.type);
+  const effectiveStrength =
+  params.weapon.strength + getStrengthModifier(combinedRules, params.weapon.type);
 
-  const woundTarget = getWoundTarget(
-    effectiveStrength,
-    params.defender.toughness
+  let woundTarget = getWoundTarget(
+  effectiveStrength,
+  params.defender.toughness
   );
+
+if (hasRule(combinedRules, "LANCE") && params.conditions.isChargeTurn) {
+  woundTarget = Math.max(2, woundTarget - 1);
+}
   const saveTarget = getSaveTarget(
     params.weapon,
     params.defender,
