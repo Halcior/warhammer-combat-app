@@ -35,6 +35,18 @@ const defender: Unit = {
   weapons: [],
 };
 
+const custodesMeleeWeapon: Weapon = {
+  id: "guardian-spear-melee",
+  name: "Guardian Spear (Melee)",
+  attacks: 5,
+  skill: 2,
+  strength: 7,
+  ap: -2,
+  damage: 2,
+  type: "melee",
+  specialRules: [],
+};
+
 describe("calculateExpectedDamage", () => {
   it("calculates a simple baseline attack", () => {
     const weapon: Weapon = {
@@ -229,45 +241,157 @@ describe("calculateExpectedDamage", () => {
     expect(withCover.saveTarget).toBe(3);
     expect(withCover.expectedDamage).toBeLessThan(noCover.expectedDamage);
   });
-});
 
-it("applies melee AP bonus from engine tag", () => {
-  const weapon: Weapon = {
-    id: "melee-weapon",
-    name: "Melee Weapon",
-    attacks: 4,
-    skill: 3,
-    strength: 5,
-    ap: -1,
-    damage: 1,
-    type: "melee",
-    specialRules: [],
-  };
+  it("applies Critical Hits on 5+ modifier", () => {
+    const noBonus = calculateExpectedDamage({
+      attacker,
+      weapon: custodesMeleeWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+    });
 
-  const noBonus = calculateExpectedDamage({
-    attacker,
-    weapon,
-    defender,
-    attackingModels: 1,
-    defendingModels: 10,
-    conditions: baseConditions,
-    activeModifierRules: [],
-    activeEngineTags: [],
+    const withCrit5 = calculateExpectedDamage({
+      attacker,
+      weapon: custodesMeleeWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [{ type: "CRITICAL_HITS_ON", value: 5 }],
+    });
+
+    expect(noBonus.criticalHits).toBeCloseTo(5 / 6, 3);
+    expect(withCrit5.criticalHits).toBeCloseTo(10 / 6, 3);
+    expect(withCrit5.criticalHits).toBeGreaterThan(noBonus.criticalHits);
   });
 
-  const withBonus = calculateExpectedDamage({
-    attacker,
-    weapon,
-    defender,
-    attackingModels: 1,
-    defendingModels: 10,
-    conditions: baseConditions,
-    activeModifierRules: [],
-    activeEngineTags: ["melee-ap-plus-1"],
+  it("applies melee AP modifier from active modifier rules", () => {
+    const noBonus = calculateExpectedDamage({
+      attacker,
+      weapon: custodesMeleeWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+    });
+
+    const withApBonus = calculateExpectedDamage({
+      attacker,
+      weapon: custodesMeleeWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [
+        { type: "AP_MODIFIER", value: 1, attackType: "melee" },
+      ],
+    });
+
+    expect(noBonus.effectiveAp).toBe(-2);
+    expect(withApBonus.effectiveAp).toBe(-3);
+    expect(withApBonus.saveTarget).toBeGreaterThan(noBonus.saveTarget);
+    expect(withApBonus.expectedDamage).toBeGreaterThan(noBonus.expectedDamage);
   });
 
-  expect(noBonus.effectiveAp).toBe(-1);
-  expect(withBonus.effectiveAp).toBe(-2);
-  expect(withBonus.saveTarget).toBeGreaterThan(noBonus.saveTarget);
-  expect(withBonus.expectedDamage).toBeGreaterThan(noBonus.expectedDamage);
+  it("applies melee Strength modifier to wound target", () => {
+    const toughDefender: Unit = {
+      ...defender,
+      toughness: 8,
+    };
+
+    const noBonus = calculateExpectedDamage({
+      attacker,
+      weapon: custodesMeleeWeapon,
+      defender: toughDefender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+    });
+
+    const withStrengthBonus = calculateExpectedDamage({
+      attacker,
+      weapon: custodesMeleeWeapon,
+      defender: toughDefender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [
+        { type: "STRENGTH_MODIFIER", value: 1, attackType: "melee" },
+      ],
+    });
+
+    expect(noBonus.woundTarget).toBe(5);
+    expect(withStrengthBonus.woundTarget).toBe(4);
+    expect(withStrengthBonus.expectedDamage).toBeGreaterThan(noBonus.expectedDamage);
+  });
+
+  it("applies melee Damage modifier to damage per failed save", () => {
+    const noBonus = calculateExpectedDamage({
+      attacker,
+      weapon: custodesMeleeWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+    });
+
+    const withDamageBonus = calculateExpectedDamage({
+      attacker,
+      weapon: custodesMeleeWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [
+        { type: "DAMAGE_MODIFIER", value: 1, attackType: "melee" },
+      ],
+    });
+
+    expect(noBonus.damagePerFailedSave).toBe(2);
+    expect(withDamageBonus.damagePerFailedSave).toBe(3);
+    expect(withDamageBonus.expectedDamage).toBeGreaterThan(noBonus.expectedDamage);
+  });
+
+  it("applies Lance on charge", () => {
+    const toughDefender: Unit = {
+      ...defender,
+      toughness: 8,
+    };
+
+    const noCharge = calculateExpectedDamage({
+      attacker,
+      weapon: custodesMeleeWeapon,
+      defender: toughDefender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        isChargeTurn: false,
+      },
+      activeModifierRules: [{ type: "LANCE" }],
+    });
+
+    const onCharge = calculateExpectedDamage({
+      attacker,
+      weapon: custodesMeleeWeapon,
+      defender: toughDefender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        isChargeTurn: true,
+      },
+      activeModifierRules: [{ type: "LANCE" }],
+    });
+
+    expect(noCharge.woundTarget).toBe(5);
+    expect(onCharge.woundTarget).toBe(4);
+    expect(onCharge.expectedDamage).toBeGreaterThan(noCharge.expectedDamage);
+  });
 });
