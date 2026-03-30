@@ -26,12 +26,12 @@ export function ExpectedResultPanel({
 }: ExpectedResultPanelProps) {
   return (
     <div className="card">
-      <h2>Expected Result</h2>
+      <h2>Combat Breakdown</h2>
 
       <div className="result-section">
-        <h3>Main Outcome</h3>
+        <h3>Core thresholds</h3>
         <div className="stats-grid stats-grid--primary">
-           <StatBox
+          <StatBox
             label="Hit on"
             value={
               expectedResult.hitTarget === null
@@ -41,43 +41,21 @@ export function ExpectedResultPanel({
           />
           <StatBox label="Wound on" value={`${expectedResult.woundTarget}+`} />
           <StatBox label="Save on" value={`${expectedResult.saveTarget}+`} />
-          <StatBox
-            label="Expected unsaved wounds"
-            value={expectedResult.expectedUnsavedWounds.toFixed(2)}
-          />
-          <StatBox
-            label="Expected damage"
-            value={expectedResult.expectedDamage.toFixed(2)}
-            highlight
-          />
-          <StatBox
-            label="Expected slain models"
-            value={expectedResult.expectedSlainModels.toFixed(2)}
-            highlight
-          />
-        </div>
-      </div>
-
-      <div className="result-section">
-        <h3>Attack Profile</h3>
-        <div className="stats-grid stats-grid--secondary">
-          <StatBox label="Total attacks" value={expectedResult.totalAttacks} />
           <StatBox label="Effective AP" value={expectedResult.effectiveAp} />
-          <StatBox label="Blast bonus" value={expectedResult.blastBonus} />
+          <StatBox
+            label="Damage / failed save"
+            value={expectedResult.damagePerFailedSave}
+            highlight
+          />
         </div>
       </div>
 
       <div className="result-section">
-        <h3>Detailed Breakdown</h3>
+        <h3>Quick attack math</h3>
         <div className="stats-grid stats-grid--secondary">
-          <StatBox
-            label="Expected hits"
-            value={expectedResult.expectedHits.toFixed(2)}
-          />
-          <StatBox
-            label="Expected wounds"
-            value={expectedResult.expectedWounds.toFixed(2)}
-          />
+          <StatBox label="Attacks / model" value={expectedResult.attacksPerModel} />
+          <StatBox label="Total attacks" value={expectedResult.totalAttacks} />
+          <StatBox label="Blast bonus" value={expectedResult.blastBonus} />
           <StatBox
             label="Critical hits"
             value={expectedResult.criticalHits.toFixed(2)}
@@ -90,9 +68,31 @@ export function ExpectedResultPanel({
             label="Auto wounds"
             value={expectedResult.autoWoundsFromLethalHits.toFixed(2)}
           />
+        </div>
+      </div>
+
+      <div className="result-section">
+        <h3>Analytical preview</h3>
+        <div className="stats-grid stats-grid--secondary">
           <StatBox
-            label="Critical wounds"
-            value={expectedResult.criticalWoundsFromRolls.toFixed(2)}
+            label="Expected hits"
+            value={expectedResult.expectedHits.toFixed(2)}
+          />
+          <StatBox
+            label="Expected wounds"
+            value={expectedResult.expectedWounds.toFixed(2)}
+          />
+          <StatBox
+            label="Expected unsaved"
+            value={expectedResult.expectedUnsavedWounds.toFixed(2)}
+          />
+          <StatBox
+            label="Expected damage"
+            value={expectedResult.expectedDamage.toFixed(2)}
+          />
+          <StatBox
+            label="Expected slain"
+            value={expectedResult.expectedSlainModels.toFixed(2)}
           />
           <StatBox
             label="Mortal wounds"
