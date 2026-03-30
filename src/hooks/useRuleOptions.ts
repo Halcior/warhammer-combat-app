@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import type { RuleOption, EnhancementConfig } from "../types/faction";
+import type { RuleOption, EnhancementConfig, StratagemConfig } from "../types/faction";
 import type { SpecialRule } from "../types/combat";
 
 export function useRuleOptions(ruleOptions: RuleOption[]) {
@@ -76,5 +76,28 @@ export function useEnhancementOptions(enhancements: EnhancementConfig[]) {
     activeEnhancementIds,
     toggleEnhancement,
     activeEnhancementEffects,
+  };
+}
+
+export function useStratagemOptions(stratagems: StratagemConfig[]) {
+  const [activeStratagemIds, setActiveStratagemIds] = useState<string[]>([]);
+
+  const toggleStratagem = (id: string) => {
+    setActiveStratagemIds((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
+  };
+
+  const activeStratagemEffects: SpecialRule[] = useMemo(() => {
+    return stratagems
+      .filter((s) => activeStratagemIds.includes(s.id))
+      .flatMap((s) => s.effects)
+      .flatMap((effect) => effect.modifiers);
+  }, [stratagems, activeStratagemIds]);
+
+  return {
+    activeStratagemIds,
+    toggleStratagem,
+    activeStratagemEffects,
   };
 }

@@ -23,7 +23,6 @@ type ModifiersPanelProps = {
   allActiveModifierRules: SpecialRule[];
   selectedWeapon: Weapon;
   attacker: Unit;
-
   availableDetachments: DetachmentConfig[];
   selectedDetachmentId: string;
   setSelectedDetachmentId: React.Dispatch<React.SetStateAction<string>>;
@@ -35,6 +34,8 @@ type ModifiersPanelProps = {
   enhancements: EnhancementConfig[];
   activeEnhancementIds: string[];
   toggleEnhancement: (id: string) => void;
+  activeStratagemIds: string[];
+  toggleStratagem: (id: string) => void;
 };
 
 export function ModifiersPanel({
@@ -52,8 +53,10 @@ export function ModifiersPanel({
   toggleRuleOption,
   stratagems,
   enhancements,
-  activeEnhancementIds,
+  activeEnhancementIds = [],
   toggleEnhancement,
+  activeStratagemIds = [],
+  toggleStratagem,
 }: ModifiersPanelProps) {
   return (
     <div className="card">
@@ -133,10 +136,19 @@ export function ModifiersPanel({
           <h3>Available Stratagems</h3>
           <div className="rules-list">
             {stratagems.map((stratagem) => (
-              <span key={stratagem.id} className="rule-tag">
-                {stratagem.name} ({stratagem.cpCost}CP)
-                {stratagem.supportLevel && ` - ${stratagem.supportLevel}`}
-              </span>
+              <label key={stratagem.id} className="checkbox-row">
+                <input
+                  type="checkbox"
+                  checked={activeStratagemIds.includes(stratagem.id)}
+                  onChange={() => toggleStratagem(stratagem.id)}
+                />
+                <span>
+                  {stratagem.name} ({stratagem.cpCost}CP)
+                  {stratagem.supportLevel && (
+                    <span className="muted-text"> ({stratagem.supportLevel})</span>
+                  )}
+                </span>
+              </label>
             ))}
           </div>
         </div>
