@@ -14,7 +14,7 @@ import { useBattleSetup } from "./hooks/useBattleSetup";
 import { useAttackModifiers } from "./hooks/useAttackModifiers";
 import { useResolver } from "./hooks/useResolver";
 import { useFactionRules } from "./hooks/useFactionRules";
-import { useRuleOptions, useEnhancementOptions } from "./hooks/useRuleOptions";
+import { useRuleOptions, useEnhancementOptions, useStratagemOptions } from "./hooks/useRuleOptions";
 
 import type { SimulationSummary } from "./lib/combat/simulation/analyzeSimulation";
 
@@ -24,6 +24,10 @@ function App() {
   const factionRules = useFactionRules(battleSetup.attackerFaction);
   const ruleOptions = useRuleOptions(factionRules.allAvailableRuleOptions);
   const enhancementOptions = useEnhancementOptions(factionRules.enhancements);
+  const stratagemOptions = useStratagemOptions(factionRules.stratagems);
+
+console.log("stratagemOptions", stratagemOptions);
+console.log("toggleStratagem typeof", typeof stratagemOptions.toggleStratagem);
 
   const resolver = useResolver({
     weapon: battleSetup.selectedWeapon,
@@ -51,11 +55,13 @@ function App() {
       ...attackModifiers.allActiveModifierRules,
       ...ruleOptions.activeRuleModifiers,
       ...enhancementOptions.activeEnhancementEffects,
+      ...stratagemOptions.activeStratagemEffects,
     ];
   }, [
     attackModifiers.allActiveModifierRules,
     ruleOptions.activeRuleModifiers,
     enhancementOptions.activeEnhancementEffects,
+    stratagemOptions.activeStratagemEffects,
   ]);
 
   const expectedResult = useMemo(() => {
@@ -193,6 +199,8 @@ function App() {
         enhancements={factionRules.enhancements}
         activeEnhancementIds={enhancementOptions.activeEnhancementIds}
         toggleEnhancement={enhancementOptions.toggleEnhancement}
+        activeStratagemIds={stratagemOptions.activeStratagemIds}
+        toggleStratagem={stratagemOptions.toggleStratagem}
         />
 
         <ResolveAttackPanel
