@@ -395,3 +395,76 @@ describe("calculateExpectedDamage", () => {
     expect(onCharge.expectedDamage).toBeGreaterThan(noCharge.expectedDamage);
   });
 });
+
+it("applies wound modifier against high toughness targets", () => {
+  const toughDefender: Unit = {
+    ...defender,
+    toughness: 8,
+  };
+
+  const noBonus = calculateExpectedDamage({
+    attacker,
+    weapon: custodesMeleeWeapon,
+    defender: toughDefender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: baseConditions,
+    activeModifierRules: [],
+  });
+
+  const withWoundBonus = calculateExpectedDamage({
+    attacker,
+    weapon: custodesMeleeWeapon,
+    defender: toughDefender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: baseConditions,
+    activeModifierRules: [
+      {
+        type: "WOUND_MODIFIER",
+        value: 1,
+        attackType: "melee",
+        targetToughnessAtLeast: 7,
+      },
+    ],
+  });
+
+  expect(noBonus.woundTarget).toBe(5);
+  expect(withWoundBonus.woundTarget).toBe(4);
+  expect(withWoundBonus.expectedDamage).toBeGreaterThan(noBonus.expectedDamage);
+});
+
+it("does not apply wound modifier below toughness threshold", () => {
+  const noBonus = calculateExpectedDamage({
+    attacker,
+    weapon: custodesMeleeWeapon,
+    defender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: baseConditions,
+    activeModifierRules: [],
+  });
+
+  const withConditionalBonus = calculateExpectedDamage({
+    attacker,
+    weapon: custodesMeleeWeapon,
+    defender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: baseConditions,
+    activeModifierRules: [
+      {
+        type: "WOUND_MODIFIER",
+        value: 1,
+        attackType: "melee",
+        targetToughnessAtLeast: 7,
+      },
+    ],
+  });
+
+  expect(withConditionalBonus.woundTarget).toBe(noBonus.woundTarget);
+  expect(withConditionalBonus.expectedDamage).toBeCloseTo(
+    noBonus.expectedDamage,
+    5
+  );
+});

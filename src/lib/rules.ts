@@ -56,6 +56,20 @@ export function formatSpecialRule(rule: SpecialRule): string {
       return rule.attackType
         ? `Damage +${rule.value} (${rule.attackType})`
         : `Damage +${rule.value}`;
+    case "WOUND_MODIFIER":
+      if (rule.attackType && rule.targetToughnessAtLeast !== undefined) {
+        return `Wound +${rule.value} (${rule.attackType}, vs T${rule.targetToughnessAtLeast}+)`;
+      }
+
+      if (rule.attackType) {
+        return `Wound +${rule.value} (${rule.attackType})`;
+      }
+
+      if (rule.targetToughnessAtLeast !== undefined) {
+        return `Wound +${rule.value} (vs T${rule.targetToughnessAtLeast}+)`;
+      }
+
+      return `Wound +${rule.value}`;
     default: {
       const exhaustiveCheck: never = rule;
       void exhaustiveCheck;
@@ -106,3 +120,4 @@ export function getAntiRule(rules?: SpecialRule[]) {
   const antiRule = rules.find((rule) => rule.type === "ANTI");
   return antiRule?.type === "ANTI" ? antiRule : null;
 }
+

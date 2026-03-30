@@ -81,7 +81,7 @@ export function calculateExpectedDamage({
 
   const hasLanceRule = hasRule(combinedWeaponRules, "LANCE");
 
- let modifiedWoundTarget = getWoundTarget(
+   let modifiedWoundTarget = getWoundTarget(
     effectiveStrength,
     defender.toughness
   );
@@ -89,6 +89,14 @@ export function calculateExpectedDamage({
   if (hasLanceRule && conditions.isChargeTurn) {
     modifiedWoundTarget = Math.max(2, modifiedWoundTarget - 1);
   }
+
+  const woundModifier = getWoundModifier(
+    combinedWeaponRules,
+    weapon.type,
+    defender.toughness
+  );
+
+  modifiedWoundTarget = Math.max(2, modifiedWoundTarget - woundModifier);
 
   const woundTarget = modifiedWoundTarget;
   const woundChance = getSuccessChance(woundTarget);
@@ -258,6 +266,25 @@ function getDamageModifier(
   return rules.reduce((sum, rule) => {
     if (rule.type !== "DAMAGE_MODIFIER") return sum;
     if (rule.attackType && rule.attackType !== weaponType) return sum;
+    return sum + rule.value;
+  }, 0);
+}
+
+function getWoundModifier(
+  rules: SpecialRule[],
+  weaponType: "melee" | "ranged",
+  defenderToughness: number
+): number {
+  return rules.reduce((sum, rule) => {
+    if (rule.type !== "WOUND_MODIFIER") return sum;
+    if (rule.attackType && rule.attackType !== weaponType) return sum;
+    if (
+      rule.targetToughnessAtLeast !== undefined &&
+      defenderToughness < rule.targetToughnessAtLeast
+    ) {
+      return sum;
+    }
+
     return sum + rule.value;
   }, 0);
 }

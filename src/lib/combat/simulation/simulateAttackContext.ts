@@ -53,14 +53,22 @@ function simulateSingleAttackSequence(
   const effectiveStrength =
   params.weapon.strength + getStrengthModifier(combinedRules, params.weapon.type);
 
-  let woundTarget = getWoundTarget(
+let woundTarget = getWoundTarget(
   effectiveStrength,
   params.defender.toughness
-  );
+);
 
 if (hasRule(combinedRules, "LANCE") && params.conditions.isChargeTurn) {
   woundTarget = Math.max(2, woundTarget - 1);
 }
+
+const woundModifier = getWoundModifier(
+  combinedRules,
+  params.weapon.type,
+  params.defender.toughness
+);
+
+woundTarget = Math.max(2, woundTarget - woundModifier);
   const saveTarget = getSaveTarget(
     params.weapon,
     params.defender,
@@ -324,4 +332,23 @@ function rollValue(value: number | string): number {
   }
 
   return total;
+}
+
+function getWoundModifier(
+  rules: SpecialRule[] | undefined,
+  weaponType: "melee" | "ranged",
+  defenderToughness: number
+): number {
+  return (rules ?? []).reduce((sum, rule) => {
+    if (rule.type !== "WOUND_MODIFIER") return sum;
+    if (rule.attackType && rule.attackType !== weaponType) return sum;
+    if (
+      rule.targetToughnessAtLeast !== undefined &&
+      defenderToughness < rule.targetToughnessAtLeast
+    ) {
+      return sum;
+    }
+
+    return sum + rule.value;
+  }, 0);
 }

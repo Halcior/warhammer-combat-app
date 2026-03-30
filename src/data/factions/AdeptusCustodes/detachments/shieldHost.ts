@@ -51,7 +51,14 @@ export const shieldHostDetachment: DetachmentConfig = {
           appliesTo: "attacker",
           phase: "fight",
           isToggle: true,
-          modifiers: [{ type: "LANCE" }],
+          modifiers: [
+          {
+            type: "WOUND_MODIFIER",
+            value: 1,
+            attackType: "melee",
+            targetToughnessAtLeast: 7,
+          },
+          ],
           supportLevel: "implemented",
           engineTags: ["lance"],
         },
