@@ -14,7 +14,11 @@ import { useBattleSetup } from "./hooks/useBattleSetup";
 import { useAttackModifiers } from "./hooks/useAttackModifiers";
 import { useResolver } from "./hooks/useResolver";
 import { useFactionRules } from "./hooks/useFactionRules";
-import { useRuleOptions, useEnhancementOptions, useStratagemOptions } from "./hooks/useRuleOptions";
+import {
+  useRuleOptions,
+  useEnhancementOptions,
+  useStratagemOptions,
+} from "./hooks/useRuleOptions";
 
 import type { SimulationSummary } from "./lib/combat/simulation/analyzeSimulation";
 import type { CalculationMode } from "./lib/combat/simulation/runSimulationByMode";
@@ -29,9 +33,6 @@ function App() {
   const ruleOptions = useRuleOptions(factionRules.allAvailableRuleOptions);
   const enhancementOptions = useEnhancementOptions(factionRules.enhancements);
   const stratagemOptions = useStratagemOptions(factionRules.stratagems);
-
-console.log("stratagemOptions", stratagemOptions);
-console.log("toggleStratagem typeof", typeof stratagemOptions.toggleStratagem);
 
   const resolver = useResolver({
     weapon: battleSetup.selectedWeapon,
@@ -105,17 +106,17 @@ console.log("toggleStratagem typeof", typeof stratagemOptions.toggleStratagem);
   ]);
 
   const attackBreakdownExplanation = useMemo(() => {
-  return explainAttackBreakdown({
-    weapon: battleSetup.selectedWeapon,
-    defender: battleSetup.defender,
-    conditions: battleSetup.conditions,
-    activeModifierRules: allActiveModifierRules,
-  });
+    return explainAttackBreakdown({
+      weapon: battleSetup.selectedWeapon,
+      defender: battleSetup.defender,
+      conditions: battleSetup.conditions,
+      activeModifierRules: allActiveModifierRules,
+    });
   }, [
-  battleSetup.selectedWeapon,
-  battleSetup.defender,
-  battleSetup.conditions,
-  allActiveModifierRules,
+    battleSetup.selectedWeapon,
+    battleSetup.defender,
+    battleSetup.conditions,
+    allActiveModifierRules,
   ]);
 
   const compareWeapon =
@@ -145,8 +146,6 @@ console.log("toggleStratagem typeof", typeof stratagemOptions.toggleStratagem);
   ]);
 
   const handleRunSimulation = () => {
-<<<<<<< ours
-<<<<<<< ours
     const summary = runSimulationByMode({
       mode,
       expectedResult,
@@ -165,38 +164,6 @@ console.log("toggleStratagem typeof", typeof stratagemOptions.toggleStratagem);
       },
     });
 
-=======
-=======
->>>>>>> theirs
-    const summary = simulateAttackContext({
-      attacker: battleSetup.attacker,
-      weapon: battleSetup.selectedWeapon,
-      defender: battleSetup.defender,
-      attackingModels: battleSetup.attackingModels,
-      defendingModels: battleSetup.defendingModels,
-      conditions: battleSetup.conditions,
-      activeModifierRules: allActiveModifierRules,
-      runs,
-    });
-
-<<<<<<< ours
-    if (import.meta.env.DEV) {
-      console.log("SIM SUMMARY", summary);
-      console.log("SIM INPUT", {
-        attacker: battleSetup.attacker.name,
-        weapon: battleSetup.selectedWeapon.name,
-        defender: battleSetup.defender.name,
-        attackingModels: battleSetup.attackingModels,
-        defendingModels: battleSetup.defendingModels,
-        conditions: battleSetup.conditions,
-        activeModifierRules: allActiveModifierRules,
-        runs,
-      });
-    }
-
->>>>>>> theirs
-=======
->>>>>>> theirs
     setSimulationSummary(summary);
   };
 
@@ -244,24 +211,24 @@ console.log("toggleStratagem typeof", typeof stratagemOptions.toggleStratagem);
         />
 
         <ModifiersPanel
-        activeAttackModifiers={attackModifiers.activeAttackModifiers}
-        setActiveAttackModifiers={attackModifiers.setActiveAttackModifiers}
-        allActiveModifierRules={allActiveModifierRules}
-        selectedWeapon={battleSetup.selectedWeapon}
-        attacker={battleSetup.attacker}
-        availableDetachments={factionRules.availableDetachments}
-        selectedDetachmentId={factionRules.selectedDetachmentId}
-        setSelectedDetachmentId={factionRules.setSelectedDetachmentId}
-        selectedDetachment={factionRules.selectedDetachment}
-        availableRuleOptions={factionRules.allAvailableRuleOptions}
-        activeRuleOptionIds={ruleOptions.activeRuleOptionIds}
-        toggleRuleOption={ruleOptions.toggleRuleOption}
-        stratagems={factionRules.stratagems}
-        enhancements={factionRules.enhancements}
-        activeEnhancementIds={enhancementOptions.activeEnhancementIds}
-        toggleEnhancement={enhancementOptions.toggleEnhancement}
-        activeStratagemIds={stratagemOptions.activeStratagemIds}
-        toggleStratagem={stratagemOptions.toggleStratagem}
+          activeAttackModifiers={attackModifiers.activeAttackModifiers}
+          setActiveAttackModifiers={attackModifiers.setActiveAttackModifiers}
+          allActiveModifierRules={allActiveModifierRules}
+          selectedWeapon={battleSetup.selectedWeapon}
+          attacker={battleSetup.attacker}
+          availableDetachments={factionRules.availableDetachments}
+          selectedDetachmentId={factionRules.selectedDetachmentId}
+          setSelectedDetachmentId={factionRules.setSelectedDetachmentId}
+          selectedDetachment={factionRules.selectedDetachment}
+          availableRuleOptions={factionRules.allAvailableRuleOptions}
+          activeRuleOptionIds={ruleOptions.activeRuleOptionIds}
+          toggleRuleOption={ruleOptions.toggleRuleOption}
+          stratagems={factionRules.stratagems}
+          enhancements={factionRules.enhancements}
+          activeEnhancementIds={enhancementOptions.activeEnhancementIds}
+          toggleEnhancement={enhancementOptions.toggleEnhancement}
+          activeStratagemIds={stratagemOptions.activeStratagemIds}
+          toggleStratagem={stratagemOptions.toggleStratagem}
         />
 
         <ResolveAttackPanel
