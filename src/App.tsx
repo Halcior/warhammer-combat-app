@@ -146,6 +146,7 @@ function App() {
   ]);
 
   const handleRunSimulation = () => {
+<<<<<<< ours
     const summary = runSimulationByMode({
       mode,
       expectedResult,
@@ -162,6 +163,17 @@ function App() {
         conditions: battleSetup.conditions,
         activeModifierRules: allActiveModifierRules,
       },
+=======
+    const summary = simulateAttackContext({
+      attacker: battleSetup.attacker,
+      weapon: battleSetup.selectedWeapon,
+      defender: battleSetup.defender,
+      attackingModels: battleSetup.attackingModels,
+      defendingModels: battleSetup.defendingModels,
+      conditions: battleSetup.conditions,
+      activeModifierRules: allActiveModifierRules,
+      runs,
+>>>>>>> theirs
     });
 
     setSimulationSummary(summary);

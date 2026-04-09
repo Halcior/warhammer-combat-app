@@ -1,6 +1,7 @@
 # Warhammer Combat App
 
 <<<<<<< ours
+<<<<<<< ours
 Aplikacja webowa do szybkiej analizy skuteczności ataku w **Warhammer 40,000 (10th edition)**.
 Pozwala porównać bronie i jednostki, włączyć wybrane modyfikatory/reguły oraz sprawdzić wynik zarówno analitycznie (expected value), jak i symulacyjnie (Monte Carlo).
 
@@ -184,6 +185,30 @@ This is a proxy for "most common model" until explicit composition counts are av
 =======
 >>>>>>> theirs
 =======
+=======
+Aplikacja webowa (React + TypeScript + Vite) do analizy starć jednostek Warhammer 40k.
+
+## Cel na teraz: jedna stabilna baza
+
+Jeśli masz bałagan między gałęziami a `main`, najlepszym podejściem jest najpierw ustabilizować jeden punkt odniesienia, a dopiero potem rozwijać funkcje.
+
+W repozytorium dodałem prosty workflow, który to porządkuje:
+
+1. Ustalenie **jednej gałęzi stabilnej** (`main`).
+2. Zbieranie zmian z innych gałęzi przez PR-y do `main`.
+3. Szybki smoke test (`npm run build`, `npm run test`, `npm run lint`) przed każdym mergem.
+4. Oznaczanie stabilnych punktów tagami (`v0.1.0`, `v0.2.0`, itd.).
+
+Szczegóły procesu (w tym gotowa sekwencja komend do łączenia gałęzi) są opisane w: [`docs/branching-strategy.md`](docs/branching-strategy.md).
+
+## Uruchomienie lokalne
+
+```bash
+npm install
+npm run dev
+```
+
+>>>>>>> theirs
 ## Skrypty
 
 - `npm run dev` — uruchamia aplikację lokalnie
@@ -198,4 +223,7 @@ This is a proxy for "most common model" until explicit composition counts are av
 2. Zrób backup aktualnego stanu (tag lub osobna gałąź).
 3. Wyrównaj różnice z aktywnych gałęzi tylko przez PR-y.
 4. Po przejściu testów oznacz release tagiem.
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
