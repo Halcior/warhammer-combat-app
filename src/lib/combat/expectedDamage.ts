@@ -199,13 +199,11 @@ export function calculateExpectedDamage({
     ? normalHitsBeforeSustained + extraHitsFromSustained
     : expectedHits;
 
-  const criticalWoundsFromRolls = hasDevastatingWounds
-    ? hitsThatRollToWound * effectiveCriticalWoundChance
-    : 0;
+  const criticalWoundsFromRolls =
+    hitsThatRollToWound * effectiveCriticalWoundChance;
 
-  const normalWoundsFromRolls = hasDevastatingWounds
-    ? hitsThatRollToWound * effectiveNormalWoundChance
-    : hitsThatRollToWound * effectiveWoundChance;
+  const normalWoundsFromRolls =
+    hitsThatRollToWound * effectiveNormalWoundChance;
 
   const expectedWounds =
     autoWoundsFromLethalHits + criticalWoundsFromRolls + normalWoundsFromRolls;
@@ -221,7 +219,11 @@ export function calculateExpectedDamage({
     ? criticalWoundsFromRolls
     : criticalWoundsFromRolls * criticalFailedSaveChance;
 
-  const normalDamage = expectedUnsavedNormalWounds * damagePerFailedSave;
+  const criticalDamage = hasDevastatingWounds
+    ? 0
+    : expectedUnsavedCriticalWounds * damagePerFailedSave;
+  const normalDamage =
+    expectedUnsavedNormalWounds * damagePerFailedSave + criticalDamage;
   const expectedUnsavedWounds =
     expectedUnsavedNormalWounds + expectedUnsavedCriticalWounds;
 
@@ -234,6 +236,9 @@ export function calculateExpectedDamage({
 
   const slainModelsFromNormal =
     expectedUnsavedNormalWounds * normalKillsPerFailedSave;
+  const slainModelsFromCritical = hasDevastatingWounds
+    ? 0
+    : expectedUnsavedCriticalWounds * normalKillsPerFailedSave;
 
   const slainModelsFromDevastating = hasDevastatingWounds
     ? Math.min(
@@ -244,7 +249,7 @@ export function calculateExpectedDamage({
     : 0;
 
   const rawExpectedSlainModels =
-    slainModelsFromNormal + slainModelsFromDevastating;
+    slainModelsFromNormal + slainModelsFromCritical + slainModelsFromDevastating;
 
   const expectedSlainModels = Math.min(rawExpectedSlainModels, defendingModels);
 

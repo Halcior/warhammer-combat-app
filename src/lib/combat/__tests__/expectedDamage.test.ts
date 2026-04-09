@@ -21,6 +21,7 @@ const baseConditions: AttackConditions = {
   attackerIsGuided: false,
   attackerIsVesselOfWrath: false,
   attackerWithinFriendlyCharacterRange: false,
+  attackerWithinFriendlyMonsterAura: false,
   attackerWithinPowerMatrix: false,
   attackerSetUpThisTurn: false,
   attackerSetToDefend: false,
@@ -578,6 +579,87 @@ describe("calculateExpectedDamage", () => {
 
     expect(result.hitTarget).toBe(4);
     expect(result.expectedHits).toBeCloseTo(2, 5);
+  });
+
+  it("applies Monster aura-gated hit and wound bonuses when enabled", () => {
+    const meleeWeapon: Weapon = {
+      id: "jakhal-chainblades",
+      name: "Jakhal Chainblades",
+      attacks: 4,
+      skill: 4,
+      strength: 4,
+      ap: 0,
+      damage: 1,
+      type: "melee",
+      specialRules: [],
+    };
+
+    const auraOff = calculateExpectedDamage({
+      attacker: {
+        ...attacker,
+        keywords: ["JAKHALS"],
+      },
+      weapon: meleeWeapon,
+      defender: {
+        ...defender,
+        toughness: 5,
+      },
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [
+        {
+          type: "HIT_MODIFIER",
+          value: 1,
+          requiredAttackerKeywords: ["JAKHALS", "GOREMONGERS"],
+          requiresAttackerWithinFriendlyMonsterAura: true,
+        },
+        {
+          type: "WOUND_MODIFIER",
+          value: 1,
+          requiredAttackerKeywords: ["JAKHALS", "GOREMONGERS"],
+          requiresAttackerWithinFriendlyMonsterAura: true,
+        },
+      ],
+    });
+
+    const auraOn = calculateExpectedDamage({
+      attacker: {
+        ...attacker,
+        keywords: ["JAKHALS"],
+      },
+      weapon: meleeWeapon,
+      defender: {
+        ...defender,
+        toughness: 5,
+      },
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        attackerWithinFriendlyMonsterAura: true,
+      },
+      activeModifierRules: [
+        {
+          type: "HIT_MODIFIER",
+          value: 1,
+          requiredAttackerKeywords: ["JAKHALS", "GOREMONGERS"],
+          requiresAttackerWithinFriendlyMonsterAura: true,
+        },
+        {
+          type: "WOUND_MODIFIER",
+          value: 1,
+          requiredAttackerKeywords: ["JAKHALS", "GOREMONGERS"],
+          requiresAttackerWithinFriendlyMonsterAura: true,
+        },
+      ],
+    });
+
+    expect(auraOff.hitTarget).toBe(4);
+    expect(auraOff.woundTarget).toBe(5);
+    expect(auraOn.hitTarget).toBe(3);
+    expect(auraOn.woundTarget).toBe(4);
+    expect(auraOn.expectedDamage).toBeGreaterThan(auraOff.expectedDamage);
   });
 
   it("applies battle-shock gated wound bonuses only when the target qualifies", () => {

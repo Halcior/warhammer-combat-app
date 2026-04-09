@@ -9,6 +9,7 @@ export type ConditionalRuleFields = {
   requiresAttackerFiringOverwatch?: boolean;
   requiresAttackerIsVesselOfWrath?: boolean;
   requiresAttackerWithinFriendlyCharacterRange?: boolean;
+  requiresAttackerWithinFriendlyMonsterAura?: boolean;
   requiresChargeTurn?: boolean;
   requiresHalfRange?: boolean;
   requiresAttachedUnit?: boolean;
@@ -122,6 +123,7 @@ export type AttackConditions = {
   attackerIsGuided: boolean;
   attackerIsVesselOfWrath: boolean;
   attackerWithinFriendlyCharacterRange: boolean;
+  attackerWithinFriendlyMonsterAura: boolean;
   attackerWithinPowerMatrix: boolean;
   attackerSetUpThisTurn: boolean;
   attackerSetToDefend: boolean;

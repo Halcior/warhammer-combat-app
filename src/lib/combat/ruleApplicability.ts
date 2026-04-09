@@ -62,6 +62,14 @@ export function ruleApplies(
   }
 
   if (
+    "requiresAttackerWithinFriendlyMonsterAura" in rule &&
+    rule.requiresAttackerWithinFriendlyMonsterAura &&
+    !context.conditions.attackerWithinFriendlyMonsterAura
+  ) {
+    return false;
+  }
+
+  if (
     "requiresAttackerGuided" in rule &&
     rule.requiresAttackerGuided &&
     !context.conditions.attackerIsGuided

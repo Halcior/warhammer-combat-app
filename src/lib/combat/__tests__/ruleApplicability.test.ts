@@ -25,6 +25,7 @@ const baseConditions: AttackConditions = {
   attackerIsGuided: false,
   attackerIsVesselOfWrath: false,
   attackerWithinFriendlyCharacterRange: false,
+  attackerWithinFriendlyMonsterAura: false,
   attackerWithinPowerMatrix: false,
   attackerSetUpThisTurn: false,
   attackerSetToDefend: false,
@@ -169,6 +170,12 @@ describe("ruleApplicability", () => {
         requiresAttackerWithinFriendlyCharacterRange: true,
       },
       {
+        type: "HIT_MODIFIER",
+        value: 1,
+        requiredAttackerKeywords: ["JAKHALS", "GOREMONGERS"],
+        requiresAttackerWithinFriendlyMonsterAura: true,
+      },
+      {
         type: "AP_MODIFIER",
         value: 1,
         attackType: "melee",
@@ -190,6 +197,7 @@ describe("ruleApplicability", () => {
         attackerIsGuided: true,
         attackerIsVesselOfWrath: true,
         attackerWithinFriendlyCharacterRange: true,
+        attackerWithinFriendlyMonsterAura: true,
         isHalfRange: true,
         isChargeTurn: true,
         isAttachedUnit: true,
@@ -243,6 +251,11 @@ describe("ruleApplicability", () => {
         type: "STRENGTH_MODIFIER",
         value: 1,
         requiresAttackerWithinFriendlyCharacterRange: true,
+      },
+      {
+        type: "HIT_MODIFIER",
+        value: 1,
+        requiresAttackerWithinFriendlyMonsterAura: true,
       },
     ];
 

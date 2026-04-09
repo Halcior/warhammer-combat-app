@@ -19,6 +19,7 @@ import { montKaRuleOverride } from "./tau/montKa";
 import { retaliationCadreRuleOverride } from "./tau/retaliationCadre";
 import { starfireCadreRuleOverride } from "./tau/starfireCadre";
 import { berzerkerWarbandRuleOverride } from "./worldEaters/berzerkerWarband";
+import { cultOfBloodRuleOverride } from "./worldEaters/cultOfBlood";
 import { goretrackOnslaughtRuleOverride } from "./worldEaters/goretrackOnslaught";
 
 const detachmentRuleOverrideRegistry: Record<string, DetachmentRuleOverride> = {
@@ -29,6 +30,7 @@ const detachmentRuleOverrideRegistry: Record<string, DetachmentRuleOverride> = {
   black_ship_guardians: blackShipGuardiansRuleOverride,
   canoptek_court: canoptekCourtRuleOverride,
   canoptek_harvesters: canoptekHarvestersRuleOverride,
+  cult_of_blood: cultOfBloodRuleOverride,
   cursed_legion: cursedLegionRuleOverride,
   goretrack_onslaught: goretrackOnslaughtRuleOverride,
   kauyon: kauyonRuleOverride,

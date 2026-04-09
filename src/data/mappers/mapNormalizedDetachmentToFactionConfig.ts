@@ -1371,6 +1371,64 @@ export function mapNormalizedDetachmentToStratagems(
     }
 
     if (
+      detachment.id === "cult_of_blood" &&
+      stratagemName.includes("bloody vengeance")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Bloody Vengeance Effect",
+          description:
+            "Jakhals and Goremongers re-roll hits against the enemy that destroyed your Monster or Titanic unit.",
+          phase,
+          modifiers: [
+            {
+              type: "REROLL_HITS",
+              requiredAttackerKeywords: ["JAKHALS", "GOREMONGERS"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "cult_of_blood" &&
+      stratagemName.includes("fail not the blood god")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-reroll-ones-effect`,
+          name: "Fail Not the Blood God: Re-roll Hit Rolls of 1",
+          description:
+            "Jakhals and Goremongers re-roll hit rolls of 1 in melee.",
+          phase,
+          modifiers: [
+            {
+              type: "REROLL_HITS_ONES",
+              attackType: "melee",
+              requiredAttackerKeywords: ["JAKHALS", "GOREMONGERS"],
+            },
+          ],
+        }),
+        createImplementedRuleOption({
+          id: `${stratagem.id}-full-reroll-effect`,
+          name: "Fail Not the Blood God: Full Hit Re-rolls",
+          description:
+            "Jakhals and Goremongers within Monster or Titanic support range re-roll hits in melee.",
+          phase,
+          modifiers: [
+            {
+              type: "REROLL_HITS",
+              attackType: "melee",
+              requiredAttackerKeywords: ["JAKHALS", "GOREMONGERS"],
+              requiresAttackerWithinFriendlyMonsterAura: true,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
       detachment.id === "cryptek_conclave" &&
       stratagemName.includes("animus curse")
     ) {

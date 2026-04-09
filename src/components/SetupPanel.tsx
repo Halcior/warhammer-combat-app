@@ -312,6 +312,20 @@ export function SetupPanel({
       <label className="checkbox-row">
         <input
           type="checkbox"
+          checked={conditions.attackerWithinFriendlyMonsterAura}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              attackerWithinFriendlyMonsterAura: e.target.checked,
+            }))
+          }
+        />
+        Attacker within friendly Monster/Titanic aura
+      </label>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
           checked={conditions.attackWithinObjectiveRange}
           onChange={(e) =>
             setConditions((prev) => ({

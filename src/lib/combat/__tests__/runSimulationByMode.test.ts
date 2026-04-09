@@ -33,6 +33,7 @@ const baseConditions: AttackConditions = {
   attackerIsGuided: false,
   attackerIsVesselOfWrath: false,
   attackerWithinFriendlyCharacterRange: false,
+  attackerWithinFriendlyMonsterAura: false,
   attackerWithinPowerMatrix: false,
   attackerSetUpThisTurn: false,
   attackerSetToDefend: false,
