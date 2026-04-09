@@ -13,6 +13,19 @@ const baseConditions: AttackConditions = {
   targetHasMatchingAntiKeyword: false,
   isChargeTurn: false,
   isAttachedUnit: false,
+  attackWithinObjectiveRange: false,
+  attackerWithinPowerMatrix: false,
+  attackerSetUpThisTurn: false,
+  attackerSetToDefend: false,
+  targetIsClosestEligible: false,
+  targetIsUnravelling: false,
+  targetWithinObjectiveRange: false,
+  targetIsBattleShocked: false,
+  targetBelowStartingStrength: false,
+  targetBelowHalfStrength: false,
+  attackerBelowStartingStrength: false,
+  attackerBelowHalfStrength: false,
+  attackerIsIsolated: false,
 };
 
 const attacker: Unit = {
@@ -356,6 +369,404 @@ describe("calculateExpectedDamage", () => {
     expect(noBonus.damagePerFailedSave).toBe(2);
     expect(withDamageBonus.damagePerFailedSave).toBe(3);
     expect(withDamageBonus.expectedDamage).toBeGreaterThan(noBonus.expectedDamage);
+  });
+
+  it("applies hit modifier to improve hit target", () => {
+    const noBonus = calculateExpectedDamage({
+      attacker,
+      weapon: custodesMeleeWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+    });
+
+    const withHitBonus = calculateExpectedDamage({
+      attacker,
+      weapon: custodesMeleeWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [{ type: "HIT_MODIFIER", value: 1, attackType: "melee" }],
+    });
+
+    expect(noBonus.hitTarget).toBe(2);
+    expect(withHitBonus.hitTarget).toBe(2);
+    expect(withHitBonus.expectedHits).toBeCloseTo(noBonus.expectedHits, 5);
+  });
+
+  it("applies hit modifier when a weapon has room to improve", () => {
+    const rangedWeapon: Weapon = {
+      id: "boltgun",
+      name: "Boltgun",
+      attacks: 2,
+      skill: 3,
+      strength: 4,
+      ap: 0,
+      damage: 1,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const noBonus = calculateExpectedDamage({
+      attacker,
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+    });
+
+    const withHitBonus = calculateExpectedDamage({
+      attacker,
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [{ type: "HIT_MODIFIER", value: 1, attackType: "ranged" }],
+    });
+
+    expect(noBonus.hitTarget).toBe(3);
+    expect(withHitBonus.hitTarget).toBe(2);
+    expect(withHitBonus.expectedHits).toBeGreaterThan(noBonus.expectedHits);
+  });
+
+  it("applies attacks modifier to attacks per model", () => {
+    const noBonus = calculateExpectedDamage({
+      attacker,
+      weapon: custodesMeleeWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+    });
+
+    const withAttackBonus = calculateExpectedDamage({
+      attacker,
+      weapon: custodesMeleeWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [
+        { type: "ATTACKS_MODIFIER", value: 2, attackType: "melee" },
+      ],
+    });
+
+    expect(noBonus.attacksPerModel).toBe(5);
+    expect(withAttackBonus.attacksPerModel).toBe(7);
+    expect(withAttackBonus.totalAttacks).toBe(7);
+    expect(withAttackBonus.expectedDamage).toBeGreaterThan(noBonus.expectedDamage);
+  });
+
+  it("applies full hit rerolls when attacker keyword condition matches", () => {
+    const rangedWeapon: Weapon = {
+      id: "gauss-blaster",
+      name: "Gauss Blaster",
+      attacks: 4,
+      skill: 4,
+      strength: 5,
+      ap: -1,
+      damage: 1,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const result = calculateExpectedDamage({
+      attacker: {
+        ...attacker,
+        keywords: ["CHARACTER"],
+      },
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [
+        {
+          type: "REROLL_HITS",
+          attackType: "ranged",
+          requiredAttackerKeywords: ["CHARACTER"],
+        },
+      ],
+    });
+
+    expect(result.hitTarget).toBe(4);
+    expect(result.expectedHits).toBeCloseTo(3, 5);
+  });
+
+  it("does not apply conditional rerolls when requirements are not met", () => {
+    const rangedWeapon: Weapon = {
+      id: "gauss-blaster",
+      name: "Gauss Blaster",
+      attacks: 4,
+      skill: 4,
+      strength: 5,
+      ap: -1,
+      damage: 1,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const result = calculateExpectedDamage({
+      attacker,
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [
+        {
+          type: "REROLL_HITS",
+          attackType: "ranged",
+          requiredAttackerKeywords: ["CHARACTER"],
+        },
+      ],
+    });
+
+    expect(result.hitTarget).toBe(4);
+    expect(result.expectedHits).toBeCloseTo(2, 5);
+  });
+
+  it("applies battle-shock gated wound bonuses only when the target qualifies", () => {
+    const rangedWeapon: Weapon = {
+      id: "psycannon",
+      name: "Psycannon",
+      attacks: 4,
+      skill: 3,
+      strength: 5,
+      ap: -1,
+      damage: 1,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const battleShockedTarget: Unit = {
+      ...defender,
+      keywords: ["PSYKER"],
+      toughness: 8,
+    };
+
+    const withoutCondition = calculateExpectedDamage({
+      attacker,
+      weapon: rangedWeapon,
+      defender: battleShockedTarget,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [
+        {
+          type: "WOUND_MODIFIER",
+          value: 1,
+          attackType: "ranged",
+          requiredDefenderKeywords: ["PSYKER"],
+          requiresTargetBattleShocked: true,
+        },
+      ],
+    });
+
+    const withCondition = calculateExpectedDamage({
+      attacker,
+      weapon: rangedWeapon,
+      defender: battleShockedTarget,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        targetIsBattleShocked: true,
+      },
+      activeModifierRules: [
+        {
+          type: "WOUND_MODIFIER",
+          value: 1,
+          attackType: "ranged",
+          requiredDefenderKeywords: ["PSYKER"],
+          requiresTargetBattleShocked: true,
+        },
+      ],
+    });
+
+    expect(withoutCondition.woundTarget).toBe(5);
+    expect(withCondition.woundTarget).toBe(4);
+    expect(withCondition.expectedDamage).toBeGreaterThan(
+      withoutCondition.expectedDamage
+    );
+  });
+
+  it("applies closest-target AP bonuses when the condition is enabled", () => {
+    const rangedWeapon: Weapon = {
+      id: "heavy-gauss",
+      name: "Heavy Gauss",
+      attacks: 2,
+      skill: 3,
+      strength: 8,
+      ap: -1,
+      damage: 2,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const noClosestTarget = calculateExpectedDamage({
+      attacker: {
+        ...attacker,
+        keywords: ["DESTROYER CULT"],
+      },
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [
+        {
+          type: "AP_MODIFIER",
+          value: 1,
+          attackType: "ranged",
+          requiredAttackerKeywords: ["DESTROYER CULT"],
+          requiresTargetIsClosestEligible: true,
+        },
+      ],
+    });
+
+    const closestTarget = calculateExpectedDamage({
+      attacker: {
+        ...attacker,
+        keywords: ["DESTROYER CULT"],
+      },
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        targetIsClosestEligible: true,
+      },
+      activeModifierRules: [
+        {
+          type: "AP_MODIFIER",
+          value: 1,
+          attackType: "ranged",
+          requiredAttackerKeywords: ["DESTROYER CULT"],
+          requiresTargetIsClosestEligible: true,
+        },
+      ],
+    });
+
+    expect(noClosestTarget.effectiveAp).toBe(-1);
+    expect(closestTarget.effectiveAp).toBe(-2);
+    expect(closestTarget.expectedDamage).toBeGreaterThan(
+      noClosestTarget.expectedDamage
+    );
+  });
+
+  it("applies Power Matrix full hit rerolls when the attacker qualifies", () => {
+    const rangedWeapon: Weapon = {
+      id: "particle-beamer",
+      name: "Particle Beamer",
+      attacks: 4,
+      skill: 4,
+      strength: 5,
+      ap: 0,
+      damage: 1,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const outsideMatrix = calculateExpectedDamage({
+      attacker: {
+        ...attacker,
+        keywords: ["CANOPTEK"],
+      },
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [
+        {
+          type: "REROLL_HITS",
+          requiredAttackerKeywords: ["CANOPTEK"],
+          requiresAttackerWithinPowerMatrix: true,
+        },
+      ],
+    });
+
+    const insideMatrix = calculateExpectedDamage({
+      attacker: {
+        ...attacker,
+        keywords: ["CANOPTEK"],
+      },
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        attackerWithinPowerMatrix: true,
+      },
+      activeModifierRules: [
+        {
+          type: "REROLL_HITS",
+          requiredAttackerKeywords: ["CANOPTEK"],
+          requiresAttackerWithinPowerMatrix: true,
+        },
+      ],
+    });
+
+    expect(outsideMatrix.expectedHits).toBeCloseTo(2, 5);
+    expect(insideMatrix.expectedHits).toBeCloseTo(3, 5);
+  });
+
+  it("improves unsaved critical wounds with critical wound AP modifiers", () => {
+    const weapon: Weapon = {
+      id: "voidblade",
+      name: "Voidblade",
+      attacks: 6,
+      skill: 2,
+      strength: 6,
+      ap: -1,
+      damage: 1,
+      type: "melee",
+      specialRules: [],
+    };
+
+    const noBonus = calculateExpectedDamage({
+      attacker,
+      weapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+    });
+
+    const withBonus = calculateExpectedDamage({
+      attacker,
+      weapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        attackWithinObjectiveRange: true,
+      },
+      activeModifierRules: [
+        {
+          type: "CRITICAL_WOUND_AP_MODIFIER",
+          value: 1,
+          requiresAttackWithinObjectiveRange: true,
+        },
+      ],
+    });
+
+    expect(withBonus.expectedDamage).toBeGreaterThan(noBonus.expectedDamage);
+    expect(withBonus.expectedUnsavedWounds).toBeGreaterThan(
+      noBonus.expectedUnsavedWounds
+    );
   });
 
   it("applies Lance on charge", () => {

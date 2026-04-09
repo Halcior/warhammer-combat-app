@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { units } from "../data/units";
+import type { AttackConditions } from "../types/combat";
 
 type UseBattleSetupParams = {
   onResetResolveAttack?: () => void;
@@ -8,6 +9,32 @@ type UseBattleSetupParams = {
 export function useBattleSetup({
   onResetResolveAttack,
 }: UseBattleSetupParams = {}) {
+  const initialConditions: AttackConditions = {
+    isTargetInCover: false,
+    isHalfRange: false,
+    remainedStationary: false,
+    advancedThisTurn: false,
+    targetVisible: true,
+    targetInEngagementRange: false,
+    targetModelCount: 10,
+    targetHasMatchingAntiKeyword: false,
+    isChargeTurn: false,
+    isAttachedUnit: false,
+    attackWithinObjectiveRange: false,
+    attackerWithinPowerMatrix: false,
+    attackerSetUpThisTurn: false,
+    attackerSetToDefend: false,
+    targetIsClosestEligible: false,
+    targetIsUnravelling: false,
+    targetWithinObjectiveRange: false,
+    targetIsBattleShocked: false,
+    targetBelowStartingStrength: false,
+    targetBelowHalfStrength: false,
+    attackerBelowStartingStrength: false,
+    attackerBelowHalfStrength: false,
+    attackerIsIsolated: false,
+  };
+
   const factions = [...new Set(units.map((unit) => unit.faction))];
 
   const initialAttackerFaction = units[0].faction;
@@ -32,18 +59,7 @@ export function useBattleSetup({
   const [attackingModels, setAttackingModels] = useState(1);
   const [defendingModels, setDefendingModels] = useState(10);
 
-  const [conditions, setConditions] = useState({
-    isTargetInCover: false,
-    isHalfRange: false,
-    remainedStationary: false,
-    advancedThisTurn: false,
-    targetVisible: true,
-    targetInEngagementRange: false,
-    targetModelCount: 10,
-    targetHasMatchingAntiKeyword: false,
-    isChargeTurn: false,
-    isAttachedUnit: false,
-  });
+  const [conditions, setConditions] = useState<AttackConditions>(initialConditions);
 
   const attackerUnits = useMemo(() => {
     return units.filter((unit) => unit.faction === attackerFaction);

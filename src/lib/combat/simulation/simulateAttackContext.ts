@@ -3,6 +3,12 @@ import type { CalculateExpectedDamageParams } from "../types";
 import { getModifiedSave, applyCoverToSave } from "../save";
 import { getWoundTarget } from "../wound";
 import {
+  filterActiveRules,
+  getHitRerollMode,
+  getWoundRerollMode,
+  type RerollMode,
+} from "../ruleApplicability";
+import {
   analyzeSimulation,
   type SimulationRunResult,
   type SimulationSummary,
@@ -40,46 +46,59 @@ function simulateSingleAttackSequence(
     ...(params.weapon.specialRules ?? []),
     ...(params.activeModifierRules ?? []),
   ];
+  const activeRules = filterActiveRules(combinedRules, {
+    attacker: params.attacker,
+    defender: params.defender,
+    weapon: params.weapon,
+    conditions: params.conditions,
+  });
 
   const attackCount = getTotalAttacks(
     params.weapon,
     params.attackingModels,
     params.defendingModels,
     params.conditions,
-    combinedRules
+    activeRules
   );
 
-  const hitTarget = getHitTarget(params.weapon, params.conditions);
+  const hitTarget = getHitTarget(params.weapon, params.conditions, activeRules);
   const effectiveStrength =
-  params.weapon.strength + getStrengthModifier(combinedRules, params.weapon.type);
+    params.weapon.strength +
+    getStrengthModifier(activeRules, params.weapon.type);
 
-let woundTarget = getWoundTarget(
-  effectiveStrength,
-  params.defender.toughness
-);
+  let woundTarget = getWoundTarget(effectiveStrength, params.defender.toughness);
 
-if (hasRule(combinedRules, "LANCE") && params.conditions.isChargeTurn) {
-  woundTarget = Math.max(2, woundTarget - 1);
-}
+  if (hasRule(activeRules, "LANCE") && params.conditions.isChargeTurn) {
+    woundTarget = Math.max(2, woundTarget - 1);
+  }
 
-const woundModifier = getWoundModifier(
-  combinedRules,
-  params.weapon.type,
-  params.defender.toughness
-);
+  const woundModifier = getWoundModifier(
+    activeRules,
+    params.weapon.type,
+    params.defender.toughness
+  );
 
-woundTarget = Math.max(2, woundTarget - woundModifier);
+  woundTarget = Math.max(2, woundTarget - woundModifier);
   const saveTarget = getSaveTarget(
     params.weapon,
     params.defender,
     params.conditions,
-    combinedRules
+    activeRules
+  );
+  const criticalSaveTarget = getSaveTarget(
+    params.weapon,
+    params.defender,
+    params.conditions,
+    activeRules,
+    getCriticalWoundApModifier(activeRules, params.weapon.type)
   );
 
-  const hasDevastating = hasRule(combinedRules, "DEVASTATING_WOUNDS");
-  const hasLethal = hasRule(combinedRules, "LETHAL_HITS");
-  const sustainedHits = getRuleValue(combinedRules, "SUSTAINED_HITS") ?? 0;
-  const criticalHitThreshold = getCriticalHitThreshold(combinedRules);
+  const hasDevastating = hasRule(activeRules, "DEVASTATING_WOUNDS");
+  const hasLethal = hasRule(activeRules, "LETHAL_HITS");
+  const sustainedHits = getRuleValue(activeRules, "SUSTAINED_HITS") ?? 0;
+  const criticalHitThreshold = getCriticalHitThreshold(activeRules);
+  const hitRerollMode = getHitRerollMode(activeRules);
+  const woundRerollMode = getWoundRerollMode(activeRules);
 
   let totalHits = 0;
   let totalWounds = 0;
@@ -91,14 +110,14 @@ woundTarget = Math.max(2, woundTarget - woundModifier);
   while (pendingHitRolls > 0) {
     pendingHitRolls -= 1;
 
-    const hitRoll = rollD6();
-    if (!passesTarget(hitTarget, hitRoll)) {
+    const hitResult = rollWithReroll(hitTarget, criticalHitThreshold, hitRerollMode);
+    if (!hitResult.success) {
       continue;
     }
 
     totalHits++;
 
-    const criticalHit = hitRoll >= criticalHitThreshold;
+    const criticalHit = hitResult.critical;
 
     if (criticalHit && sustainedHits > 0) {
       pendingHitRolls += sustainedHits;
@@ -109,30 +128,30 @@ woundTarget = Math.max(2, woundTarget - woundModifier);
 
       if (!passesSave(saveTarget)) {
         totalFailedSaves++;
-        totalDamage += rollDamage(params.weapon, combinedRules, params.conditions);
+        totalDamage += rollDamage(params.weapon, activeRules, params.conditions);
       }
 
       continue;
     }
 
-    const woundRoll = rollD6();
-    if (!passesTarget(woundTarget, woundRoll)) {
+    const woundResult = rollWithReroll(woundTarget, 6, woundRerollMode);
+    if (!woundResult.success) {
       continue;
     }
 
     totalWounds++;
 
-    const criticalWound = woundRoll === 6;
+    const criticalWound = woundResult.critical;
 
     if (criticalWound && hasDevastating) {
       totalMortals++;
-      totalDamage += rollDamage(params.weapon, combinedRules, params.conditions);
+      totalDamage += rollDamage(params.weapon, activeRules, params.conditions);
       continue;
     }
 
-    if (!passesSave(saveTarget)) {
+    if (!passesSave(criticalWound ? criticalSaveTarget : saveTarget)) {
       totalFailedSaves++;
-      totalDamage += rollDamage(params.weapon, combinedRules, params.conditions);
+      totalDamage += rollDamage(params.weapon, activeRules, params.conditions);
     }
   }
 
@@ -158,10 +177,11 @@ function getTotalAttacks(
   conditions: AttackConditions,
   rules: SpecialRule[]
 ): number {
+  const attacksModifier = getAttacksModifier(rules, weapon.type);
   let attacks = 0;
 
   for (let i = 0; i < attackingModels; i++) {
-    attacks += rollValue(weapon.attacks);
+    attacks += Math.max(0, rollValue(weapon.attacks) + attacksModifier);
   }
 
   if (hasRule(rules, "RAPID_FIRE") && conditions.isHalfRange) {
@@ -175,29 +195,34 @@ function getTotalAttacks(
   return Math.max(0, attacks);
 }
 
-function getHitTarget(weapon: Weapon, conditions: AttackConditions): number | null {
-  if (hasTorrent(weapon.specialRules)) {
+function getHitTarget(
+  weapon: Weapon,
+  conditions: AttackConditions,
+  rules: SpecialRule[]
+): number | null {
+  if (hasTorrent(rules)) {
     return null;
   }
 
   let target = weapon.skill;
 
-  if (hasRule(weapon.specialRules ?? [], "HEAVY") && conditions.remainedStationary) {
+  if (hasRule(rules, "HEAVY") && conditions.remainedStationary) {
     target = Math.max(2, target - 1);
   }
 
-  return target;
+  return Math.max(2, target - getHitModifier(rules, weapon.type));
 }
 
 function getSaveTarget(
   weapon: Weapon,
   defender: Unit,
   conditions: AttackConditions,
-  rules: SpecialRule[]
+  rules: SpecialRule[],
+  apBonus = 0
 ): number | null {
   const ignoresCover = hasRule(rules, "IGNORES_COVER");
   const invul = defender.invulnerableSave ?? null;
-  const effectiveAp = weapon.ap - getApModifier(rules, weapon.type);
+  const effectiveAp = weapon.ap - getApModifier(rules, weapon.type) - apBonus;
   const modified = getModifiedSave(defender.save, effectiveAp, invul);
   const covered = ignoresCover
     ? modified
@@ -222,6 +247,34 @@ function rollDamage(
       : 0;
 
   return Math.max(0, baseDamage + damageModifier + melta);
+}
+
+function rollWithReroll(
+  target: number | null,
+  criticalThreshold: number,
+  rerollMode: RerollMode
+): {
+  success: boolean;
+  critical: boolean;
+} {
+  if (target === null) {
+    return { success: true, critical: false };
+  }
+
+  let roll = rollD6();
+
+  if (
+    (rerollMode === "ones" && roll === 1) ||
+    (rerollMode === "full" && !passesTarget(target, roll))
+  ) {
+    roll = rollD6();
+  }
+
+  const success = passesTarget(target, roll);
+  return {
+    success,
+    critical: success && roll >= criticalThreshold,
+  };
 }
 
 function hasTorrent(rules?: SpecialRule[]): boolean {
@@ -251,6 +304,39 @@ function getCriticalHitThreshold(rules: SpecialRule[] | undefined): number {
   if ("value" in match) return match.value;
 
   return 6;
+}
+
+function getAttacksModifier(
+  rules: SpecialRule[] | undefined,
+  weaponType: "melee" | "ranged"
+): number {
+  return (rules ?? []).reduce((sum, rule) => {
+    if (rule.type !== "ATTACKS_MODIFIER") return sum;
+    if (rule.attackType && rule.attackType !== weaponType) return sum;
+    return sum + rule.value;
+  }, 0);
+}
+
+function getCriticalWoundApModifier(
+  rules: SpecialRule[] | undefined,
+  weaponType: "melee" | "ranged"
+): number {
+  return (rules ?? []).reduce((sum, rule) => {
+    if (rule.type !== "CRITICAL_WOUND_AP_MODIFIER") return sum;
+    if (rule.attackType && rule.attackType !== weaponType) return sum;
+    return sum + rule.value;
+  }, 0);
+}
+
+function getHitModifier(
+  rules: SpecialRule[] | undefined,
+  weaponType: "melee" | "ranged"
+): number {
+  return (rules ?? []).reduce((sum, rule) => {
+    if (rule.type !== "HIT_MODIFIER") return sum;
+    if (rule.attackType && rule.attackType !== weaponType) return sum;
+    return sum + rule.value;
+  }, 0);
 }
 
 function getApModifier(

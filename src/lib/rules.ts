@@ -42,34 +42,54 @@ export function formatSpecialRule(rule: SpecialRule): string {
       return `Feel No Pain ${rule.value}+`;
     case "DAMAGE_REDUCTION":
       return `Damage Reduction ${rule.value}`;
-        case "CRITICAL_HITS_ON":
+    case "REROLL_HITS":
+      return "Re-roll Hits";
+    case "REROLL_HITS_ONES":
+      return "Re-roll Hit Rolls of 1";
+    case "REROLL_WOUNDS":
+      return "Re-roll Wounds";
+    case "REROLL_WOUNDS_ONES":
+      return "Re-roll Wound Rolls of 1";
+    case "HIT_MODIFIER":
+      return rule.attackType
+        ? `Hit ${formatSignedValue(rule.value)} (${rule.attackType})`
+        : `Hit ${formatSignedValue(rule.value)}`;
+    case "ATTACKS_MODIFIER":
+      return rule.attackType
+        ? `Attacks ${formatSignedValue(rule.value)} (${rule.attackType})`
+        : `Attacks ${formatSignedValue(rule.value)}`;
+    case "CRITICAL_WOUND_AP_MODIFIER":
+      return rule.attackType
+        ? `Critical Wound AP ${formatSignedValue(rule.value)} (${rule.attackType})`
+        : `Critical Wound AP ${formatSignedValue(rule.value)}`;
+    case "CRITICAL_HITS_ON":
       return `Critical Hits on ${rule.value}+`;
     case "AP_MODIFIER":
       return rule.attackType
-        ? `AP +${rule.value} (${rule.attackType})`
-        : `AP +${rule.value}`;
+        ? `AP ${formatSignedValue(rule.value)} (${rule.attackType})`
+        : `AP ${formatSignedValue(rule.value)}`;
     case "STRENGTH_MODIFIER":
       return rule.attackType
-        ? `Strength +${rule.value} (${rule.attackType})`
-        : `Strength +${rule.value}`;
+        ? `Strength ${formatSignedValue(rule.value)} (${rule.attackType})`
+        : `Strength ${formatSignedValue(rule.value)}`;
     case "DAMAGE_MODIFIER":
       return rule.attackType
-        ? `Damage +${rule.value} (${rule.attackType})`
-        : `Damage +${rule.value}`;
+        ? `Damage ${formatSignedValue(rule.value)} (${rule.attackType})`
+        : `Damage ${formatSignedValue(rule.value)}`;
     case "WOUND_MODIFIER":
       if (rule.attackType && rule.targetToughnessAtLeast !== undefined) {
-        return `Wound +${rule.value} (${rule.attackType}, vs T${rule.targetToughnessAtLeast}+)`;
+        return `Wound ${formatSignedValue(rule.value)} (${rule.attackType}, vs T${rule.targetToughnessAtLeast}+)`;
       }
 
       if (rule.attackType) {
-        return `Wound +${rule.value} (${rule.attackType})`;
+        return `Wound ${formatSignedValue(rule.value)} (${rule.attackType})`;
       }
 
       if (rule.targetToughnessAtLeast !== undefined) {
-        return `Wound +${rule.value} (vs T${rule.targetToughnessAtLeast}+)`;
+        return `Wound ${formatSignedValue(rule.value)} (vs T${rule.targetToughnessAtLeast}+)`;
       }
 
-      return `Wound +${rule.value}`;
+      return `Wound ${formatSignedValue(rule.value)}`;
     default: {
       const exhaustiveCheck: never = rule;
       void exhaustiveCheck;
@@ -119,5 +139,9 @@ export function getAntiRule(rules?: SpecialRule[]) {
   if (!rules) return null;
   const antiRule = rules.find((rule) => rule.type === "ANTI");
   return antiRule?.type === "ANTI" ? antiRule : null;
+}
+
+function formatSignedValue(value: number): string {
+  return value >= 0 ? `+${value}` : `${value}`;
 }
 

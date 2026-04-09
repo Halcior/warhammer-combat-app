@@ -8,6 +8,12 @@ import {
 import { parseDiceValue, getSuccessChance } from "./probability";
 import { getModifiedSave, applyCoverToSave } from "./save";
 import { getWoundTarget } from "./wound";
+import {
+  filterActiveRules,
+  getHitRerollMode,
+  getWoundRerollMode,
+  type RerollMode,
+} from "./ruleApplicability";
 import type {
   CalculateExpectedDamageParams,
   ExpectedDamageResult,
@@ -29,16 +35,28 @@ export function calculateExpectedDamage({
     ...(weapon.specialRules ?? []),
     ...(activeModifierRules ?? []),
   ];
+  const activeRules = filterActiveRules(combinedWeaponRules, {
+    attacker,
+    defender,
+    weapon,
+    conditions,
+  });
 
-  const apModifier = getApModifier(combinedWeaponRules, weapon.type);
-  const strengthModifier = getStrengthModifier(combinedWeaponRules, weapon.type);
-  const damageModifier = getDamageModifier(combinedWeaponRules, weapon.type);
+  const apModifier = getApModifier(activeRules, weapon.type);
+  const criticalWoundApModifier = getCriticalWoundApModifier(
+    activeRules,
+    weapon.type
+  );
+  const attacksModifier = getAttacksModifier(activeRules, weapon.type);
+  const hitModifier = getHitModifier(activeRules, weapon.type);
+  const strengthModifier = getStrengthModifier(activeRules, weapon.type);
+  const damageModifier = getDamageModifier(activeRules, weapon.type);
 
   const effectiveAp = weapon.ap - apModifier;
   const effectiveStrength = weapon.strength + strengthModifier;
 
   const meltaBonus = conditions.isHalfRange
-    ? getMeltaValue(combinedWeaponRules)
+    ? getMeltaValue(activeRules)
     : 0;
 
   const baseAttacksPerModel = parseDiceValue(weapon.attacks);
@@ -46,28 +64,29 @@ export function calculateExpectedDamage({
     parseDiceValue(weapon.damage) + damageModifier + meltaBonus;
 
   const rapidFireBonus = conditions.isHalfRange
-    ? getRapidFireValue(combinedWeaponRules)
+    ? getRapidFireValue(activeRules)
     : 0;
 
-  const hasBlast = hasRule(combinedWeaponRules, "BLAST");
+  const hasBlast = hasRule(activeRules, "BLAST");
   const blastBonus = hasBlast
     ? Math.floor(conditions.targetModelCount / 5)
     : 0;
 
-  const attacksPerModel = baseAttacksPerModel + rapidFireBonus + blastBonus;
+  const attacksPerModel = Math.max(
+    0,
+    baseAttacksPerModel + rapidFireBonus + blastBonus + attacksModifier
+  );
   const totalAttacks = attackingModels * attacksPerModel;
 
-  const isTorrent = hasRule(combinedWeaponRules, "TORRENT");
-  const ignoresCover = hasRule(combinedWeaponRules, "IGNORES_COVER");
-  const hasLethalHits = hasRule(combinedWeaponRules, "LETHAL_HITS");
-  const hasDevastatingWounds = hasRule(
-    combinedWeaponRules,
-    "DEVASTATING_WOUNDS"
-  );
-  const hasTwinLinked = hasRule(combinedWeaponRules, "TWIN_LINKED");
-  const sustainedHitsValue = getSustainedHitsValue(combinedWeaponRules);
+  const isTorrent = hasRule(activeRules, "TORRENT");
+  const ignoresCover = hasRule(activeRules, "IGNORES_COVER");
+  const hasLethalHits = hasRule(activeRules, "LETHAL_HITS");
+  const hasDevastatingWounds = hasRule(activeRules, "DEVASTATING_WOUNDS");
+  const sustainedHitsValue = getSustainedHitsValue(activeRules);
+  const hitRerollMode = getHitRerollMode(activeRules);
+  const woundRerollMode = getWoundRerollMode(activeRules);
 
-  const hasHeavyRule = hasRule(combinedWeaponRules, "HEAVY");
+  const hasHeavyRule = hasRule(activeRules, "HEAVY");
 
   let modifiedHitTarget = weapon.skill;
 
@@ -75,10 +94,13 @@ export function calculateExpectedDamage({
     modifiedHitTarget = Math.max(2, modifiedHitTarget - 1);
   }
 
-  const hitTarget = modifiedHitTarget;
-  const hitChance = isTorrent ? 1 : getSuccessChance(hitTarget);
+  const hitTarget = Math.max(2, modifiedHitTarget - hitModifier);
+  const hitProbabilities = isTorrent
+    ? { successChance: 1, criticalChance: 0 }
+    : getRollProbabilities(hitTarget, getCriticalHitThreshold(activeRules), hitRerollMode);
+  const hitChance = hitProbabilities.successChance;
 
-  const hasLanceRule = hasRule(combinedWeaponRules, "LANCE");
+  const hasLanceRule = hasRule(activeRules, "LANCE");
 
    let modifiedWoundTarget = getWoundTarget(
     effectiveStrength,
@@ -90,7 +112,7 @@ export function calculateExpectedDamage({
   }
 
   const woundModifier = getWoundModifier(
-    combinedWeaponRules,
+    activeRules,
     weapon.type,
     defender.toughness
   );
@@ -98,8 +120,7 @@ export function calculateExpectedDamage({
   modifiedWoundTarget = Math.max(2, modifiedWoundTarget - woundModifier);
 
   const woundTarget = modifiedWoundTarget;
-  const woundChance = getSuccessChance(woundTarget);
-  const antiRule = getAntiRule(combinedWeaponRules);
+  const antiRule = getAntiRule(activeRules);
 
   let criticalWoundThreshold = 6;
 
@@ -107,21 +128,16 @@ export function calculateExpectedDamage({
     criticalWoundThreshold = antiRule.value;
   }
 
-  const criticalHitThreshold = getCriticalHitThreshold(combinedWeaponRules);
-  const criticalHitChance = isTorrent
-    ? 0
-    : Math.min(hitChance, Math.max(0, (7 - criticalHitThreshold) / 6));
+  const criticalHitChance = hitProbabilities.criticalChance;
 
-  const effectiveWoundChance = hasTwinLinked
-    ? woundChance + (1 - woundChance) * woundChance
-    : woundChance;
+  const woundProbabilities = getRollProbabilities(
+    woundTarget,
+    criticalWoundThreshold,
+    woundRerollMode
+  );
 
-  const criticalWoundChanceRaw =
-    Math.max(0, (7 - criticalWoundThreshold) / 6);
-
-  const effectiveCriticalWoundChance = hasTwinLinked
-    ? criticalWoundChanceRaw + (1 - woundChance) * criticalWoundChanceRaw
-    : criticalWoundChanceRaw;
+  const effectiveWoundChance = woundProbabilities.successChance;
+  const effectiveCriticalWoundChance = woundProbabilities.criticalChance;
 
   const effectiveNormalWoundChance = Math.max(
     0,
@@ -139,9 +155,20 @@ export function calculateExpectedDamage({
     weapon.type,
     conditions.isTargetInCover && !ignoresCover
   );
+  const criticalSaveTarget = applyCoverToSave(
+    getModifiedSave(
+      defender.save,
+      effectiveAp - criticalWoundApModifier,
+      defender.invulnerableSave ?? null
+    ),
+    weapon.type,
+    conditions.isTargetInCover && !ignoresCover
+  );
 
   const saveChance = getSuccessChance(saveTarget);
   const failedSaveChance = 1 - saveChance;
+  const criticalSaveChance = getSuccessChance(criticalSaveTarget);
+  const criticalFailedSaveChance = 1 - criticalSaveChance;
 
   const criticalHits = totalAttacks * criticalHitChance;
   const baseExpectedHits = totalAttacks * hitChance;
@@ -178,9 +205,13 @@ export function calculateExpectedDamage({
     ? criticalWoundsFromRolls * damagePerFailedSave
     : 0;
 
+  const expectedUnsavedCriticalWounds = hasDevastatingWounds
+    ? criticalWoundsFromRolls
+    : criticalWoundsFromRolls * criticalFailedSaveChance;
+
   const normalDamage = expectedUnsavedNormalWounds * damagePerFailedSave;
   const expectedUnsavedWounds =
-    expectedUnsavedNormalWounds + criticalWoundsFromRolls;
+    expectedUnsavedNormalWounds + expectedUnsavedCriticalWounds;
 
   const expectedDamage = normalDamage + mortalWoundsFromDevastating;
 
@@ -234,6 +265,73 @@ function getCriticalHitThreshold(rules: SpecialRule[]): number {
   if ("value" in match) return match.value;
 
   return 6;
+}
+
+function getRollProbabilities(
+  target: number,
+  criticalThreshold: number,
+  rerollMode: RerollMode
+): {
+  successChance: number;
+  criticalChance: number;
+} {
+  const baseSuccessChance = getSuccessChance(target);
+  const criticalTarget = Math.max(target, criticalThreshold);
+  const baseCriticalChance = getSuccessChance(criticalTarget);
+
+  if (rerollMode === "full") {
+    const failureChance = 1 - baseSuccessChance;
+
+    return {
+      successChance: baseSuccessChance + failureChance * baseSuccessChance,
+      criticalChance: baseCriticalChance + failureChance * baseCriticalChance,
+    };
+  }
+
+  if (rerollMode === "ones") {
+    return {
+      successChance: baseSuccessChance + (1 / 6) * baseSuccessChance,
+      criticalChance: baseCriticalChance + (1 / 6) * baseCriticalChance,
+    };
+  }
+
+  return {
+    successChance: baseSuccessChance,
+    criticalChance: baseCriticalChance,
+  };
+}
+
+function getAttacksModifier(
+  rules: SpecialRule[],
+  weaponType: "melee" | "ranged"
+): number {
+  return rules.reduce((sum, rule) => {
+    if (rule.type !== "ATTACKS_MODIFIER") return sum;
+    if (rule.attackType && rule.attackType !== weaponType) return sum;
+    return sum + rule.value;
+  }, 0);
+}
+
+function getCriticalWoundApModifier(
+  rules: SpecialRule[],
+  weaponType: "melee" | "ranged"
+): number {
+  return rules.reduce((sum, rule) => {
+    if (rule.type !== "CRITICAL_WOUND_AP_MODIFIER") return sum;
+    if (rule.attackType && rule.attackType !== weaponType) return sum;
+    return sum + rule.value;
+  }, 0);
+}
+
+function getHitModifier(
+  rules: SpecialRule[],
+  weaponType: "melee" | "ranged"
+): number {
+  return rules.reduce((sum, rule) => {
+    if (rule.type !== "HIT_MODIFIER") return sum;
+    if (rule.attackType && rule.attackType !== weaponType) return sum;
+    return sum + rule.value;
+  }, 0);
 }
 
 function getApModifier(

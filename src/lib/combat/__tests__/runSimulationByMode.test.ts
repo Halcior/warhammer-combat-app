@@ -25,6 +25,19 @@ const baseConditions: AttackConditions = {
   targetHasMatchingAntiKeyword: false,
   isChargeTurn: false,
   isAttachedUnit: false,
+  attackWithinObjectiveRange: false,
+  attackerWithinPowerMatrix: false,
+  attackerSetUpThisTurn: false,
+  attackerSetToDefend: false,
+  targetIsClosestEligible: false,
+  targetIsUnravelling: false,
+  targetWithinObjectiveRange: false,
+  targetIsBattleShocked: false,
+  targetBelowStartingStrength: false,
+  targetBelowHalfStrength: false,
+  attackerBelowStartingStrength: false,
+  attackerBelowHalfStrength: false,
+  attackerIsIsolated: false,
 };
 
 const attacker: Unit = {

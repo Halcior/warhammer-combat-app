@@ -58,6 +58,10 @@ export function ModifiersPanel({
   activeStratagemIds = [],
   toggleStratagem,
 }: ModifiersPanelProps) {
+  const selectedDetachmentDescription = selectedDetachment?.description
+    ? formatDescription(selectedDetachment.description)
+    : "";
+
   return (
     <div className="card">
       <h2>Modifiers & Rules</h2>
@@ -80,8 +84,16 @@ export function ModifiersPanel({
             </select>
           </label>
 
-          {selectedDetachment?.description && (
-            <p className="muted-text">{selectedDetachment.description}</p>
+          {selectedDetachment && (
+            <div className="detachment-summary">
+              <HoverInfo
+                label={<span className="detachment-summary__name">{selectedDetachment.name}</span>}
+                tooltip={buildDetachmentTooltip(selectedDetachment)}
+              />
+              {selectedDetachmentDescription && (
+                <p className="muted-text">{selectedDetachmentDescription}</p>
+              )}
+            </div>
           )}
         </div>
       )}
@@ -97,12 +109,17 @@ export function ModifiersPanel({
                 checked={activeRuleOptionIds.includes(rule.id)}
                 onChange={() => toggleRuleOption(rule.id)}
               />
-              <span>
-                {rule.name}
-                {rule.supportLevel && (
-                  <span className="muted-text"> ({rule.supportLevel})</span>
-                )}
-              </span>
+              <HoverInfo
+                label={
+                  <span>
+                    {rule.name}
+                    {rule.supportLevel && (
+                      <span className="muted-text"> ({rule.supportLevel})</span>
+                    )}
+                  </span>
+                }
+                tooltip={buildRuleOptionTooltip(rule)}
+              />
             </label>
           ))}
         </div>
@@ -119,12 +136,17 @@ export function ModifiersPanel({
                   checked={activeEnhancementIds.includes(enhancement.id)}
                   onChange={() => toggleEnhancement(enhancement.id)}
                 />
-                <span>
-                  {enhancement.name}
-                  {enhancement.supportLevel && (
-                    <span className="muted-text"> ({enhancement.supportLevel})</span>
-                  )}
-                </span>
+                <HoverInfo
+                  label={
+                    <span>
+                      {enhancement.name}
+                      {enhancement.supportLevel && (
+                        <span className="muted-text"> ({enhancement.supportLevel})</span>
+                      )}
+                    </span>
+                  }
+                  tooltip={buildEnhancementTooltip(enhancement)}
+                />
               </label>
             ))}
           </div>
@@ -142,12 +164,17 @@ export function ModifiersPanel({
                   checked={activeStratagemIds.includes(stratagem.id)}
                   onChange={() => toggleStratagem(stratagem.id)}
                 />
-                <span>
-                  {stratagem.name} ({stratagem.cpCost}CP)
-                  {stratagem.supportLevel && (
-                    <span className="muted-text"> ({stratagem.supportLevel})</span>
-                  )}
-                </span>
+                <HoverInfo
+                  label={
+                    <span>
+                      {stratagem.name} ({stratagem.cpCost}CP)
+                      {stratagem.supportLevel && (
+                        <span className="muted-text"> ({stratagem.supportLevel})</span>
+                      )}
+                    </span>
+                  }
+                  tooltip={buildStratagemTooltip(stratagem)}
+                />
               </label>
             ))}
           </div>
@@ -206,7 +233,10 @@ export function ModifiersPanel({
           <div className="rules-list">
             {allActiveModifierRules.map((rule, index) => (
               <span key={`temp-rule-${index}`} className="rule-tag">
-                {formatSpecialRule(rule)}
+                <HoverInfo
+                  label={<span>{formatSpecialRule(rule)}</span>}
+                  tooltip={buildActiveRuleTooltip(rule)}
+                />
               </span>
             ))}
           </div>
@@ -224,7 +254,10 @@ export function ModifiersPanel({
                 key={`${selectedWeapon.id}-rule-${index}`}
                 className="rule-tag"
               >
-                {formatSpecialRule(rule)}
+                <HoverInfo
+                  label={<span>{formatSpecialRule(rule)}</span>}
+                  tooltip={buildActiveRuleTooltip(rule)}
+                />
               </span>
             ))}
           </div>
@@ -237,7 +270,10 @@ export function ModifiersPanel({
           <div className="rules-list">
             {attacker.specialRules.map((rule, index) => (
               <span key={`${attacker.id}-rule-${index}`} className="rule-tag">
-                {formatSpecialRule(rule)}
+                <HoverInfo
+                  label={<span>{formatSpecialRule(rule)}</span>}
+                  tooltip={buildActiveRuleTooltip(rule)}
+                />
               </span>
             ))}
           </div>
@@ -247,4 +283,113 @@ export function ModifiersPanel({
       </div>
     </div>
   );
+}
+
+type HoverInfoProps = {
+  label: React.ReactNode;
+  tooltip: string;
+};
+
+function HoverInfo({ label, tooltip }: HoverInfoProps) {
+  if (!tooltip) {
+    return <span>{label}</span>;
+  }
+
+  return (
+    <span className="hover-info" tabIndex={0} title={tooltip}>
+      <span className="hover-info__label">{label}</span>
+      <span className="hover-info__tooltip" role="tooltip">
+        {tooltip}
+      </span>
+    </span>
+  );
+}
+
+function buildDetachmentTooltip(detachment: DetachmentConfig): string {
+  const lines = [
+    detachment.name,
+    formatDescription(detachment.description),
+    formatList("Rules", detachment.ruleOptions.map((rule) => rule.name)),
+    formatList("Enhancements", (detachment.enhancements ?? []).map((item) => item.name)),
+    formatList("Stratagems", detachment.stratagems.map((item) => item.name)),
+  ];
+
+  return lines.filter(Boolean).join("\n\n");
+}
+
+function buildRuleOptionTooltip(rule: RuleOption): string {
+  const lines = [
+    rule.name,
+    rule.supportLevel ? `Support: ${rule.supportLevel}` : "",
+    formatDescription(rule.description),
+    formatList("Effects", rule.modifiers.map((modifier) => formatSpecialRule(modifier))),
+  ];
+
+  return lines.filter(Boolean).join("\n\n");
+}
+
+function buildEnhancementTooltip(enhancement: EnhancementConfig): string {
+  const effectDescriptions = enhancement.effects
+    .map((effect) => formatDescription(effect.description))
+    .filter(Boolean);
+
+  const lines = [
+    enhancement.name,
+    enhancement.supportLevel ? `Support: ${enhancement.supportLevel}` : "",
+    formatDescription(enhancement.description),
+    formatList("Implemented effects", effectDescriptions),
+  ];
+
+  return lines.filter(Boolean).join("\n\n");
+}
+
+function buildStratagemTooltip(stratagem: StratagemConfig): string {
+  const effectDescriptions = stratagem.effects
+    .map((effect) => formatDescription(effect.description))
+    .filter(Boolean);
+
+  const lines = [
+    stratagem.name,
+    `Phase: ${stratagem.phase}`,
+    `Cost: ${stratagem.cpCost}CP`,
+    stratagem.supportLevel ? `Support: ${stratagem.supportLevel}` : "",
+    formatDescription(stratagem.description),
+    formatList("Implemented effects", effectDescriptions),
+  ];
+
+  return lines.filter(Boolean).join("\n\n");
+}
+
+function buildActiveRuleTooltip(rule: SpecialRule): string {
+  return formatSpecialRule(rule);
+}
+
+function formatList(title: string, items: string[]): string {
+  const nonEmptyItems = items.filter(Boolean);
+
+  if (nonEmptyItems.length === 0) {
+    return "";
+  }
+
+  return `${title}:\n${nonEmptyItems.map((item) => `- ${item}`).join("\n")}`;
+}
+
+function formatDescription(description?: string): string {
+  if (!description) {
+    return "";
+  }
+
+  return description
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/li>/gi, "\n")
+    .replace(/<li>/gi, "- ")
+    .replace(/<\/(ul|ol|p|div)>/gi, "\n")
+    .replace(/<[^>]+>/g, "")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .replace(/\n{3,}/g, "\n\n")
+    .replace(/[ \t]+\n/g, "\n")
+    .trim();
 }

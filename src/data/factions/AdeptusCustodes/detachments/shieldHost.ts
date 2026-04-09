@@ -1,7 +1,7 @@
 import type { DetachmentConfig } from "../../../../types/faction";
 
 export const shieldHostDetachment: DetachmentConfig = {
-  id: "shield-host",
+  id: "shield_host",
   name: "Shield Host",
   description:
     "Elite combat detachment focused on Martial Mastery and enhanced wargear.",

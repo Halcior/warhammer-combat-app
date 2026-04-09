@@ -196,6 +196,76 @@ export function SetupPanel({
       <label className="checkbox-row">
         <input
           type="checkbox"
+          checked={conditions.isAttachedUnit}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              isAttachedUnit: e.target.checked,
+            }))
+          }
+        />
+        Unit is attached / led
+      </label>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
+          checked={conditions.attackWithinObjectiveRange}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              attackWithinObjectiveRange: e.target.checked,
+            }))
+          }
+        />
+        Attack in objective range
+      </label>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
+          checked={conditions.attackerWithinPowerMatrix}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              attackerWithinPowerMatrix: e.target.checked,
+            }))
+          }
+        />
+        Attacker in Power Matrix
+      </label>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
+          checked={conditions.attackerSetUpThisTurn}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              attackerSetUpThisTurn: e.target.checked,
+            }))
+          }
+        />
+        Attacker set up this turn
+      </label>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
+          checked={conditions.attackerSetToDefend}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              attackerSetToDefend: e.target.checked,
+            }))
+          }
+        />
+        Attacker set to defend
+      </label>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
           checked={conditions.isHalfRange}
           onChange={(e) =>
             setConditions((prev) => ({
@@ -205,6 +275,132 @@ export function SetupPanel({
           }
         />
         Half range
+      </label>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
+          checked={conditions.targetIsClosestEligible}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              targetIsClosestEligible: e.target.checked,
+            }))
+          }
+        />
+        Target is closest eligible
+      </label>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
+          checked={conditions.targetIsUnravelling}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              targetIsUnravelling: e.target.checked,
+            }))
+          }
+        />
+        Target is unravelling
+      </label>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
+          checked={conditions.targetWithinObjectiveRange}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              targetWithinObjectiveRange: e.target.checked,
+            }))
+          }
+        />
+        Target within objective range
+      </label>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
+          checked={conditions.targetIsBattleShocked}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              targetIsBattleShocked: e.target.checked,
+            }))
+          }
+        />
+        Target is Battle-shocked
+      </label>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
+          checked={conditions.targetBelowStartingStrength}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              targetBelowStartingStrength: e.target.checked,
+            }))
+          }
+        />
+        Target below starting strength
+      </label>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
+          checked={conditions.targetBelowHalfStrength}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              targetBelowHalfStrength: e.target.checked,
+            }))
+          }
+        />
+        Target below half strength
+      </label>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
+          checked={conditions.attackerBelowStartingStrength}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              attackerBelowStartingStrength: e.target.checked,
+            }))
+          }
+        />
+        Attacker below starting strength
+      </label>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
+          checked={conditions.attackerBelowHalfStrength}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              attackerBelowHalfStrength: e.target.checked,
+            }))
+          }
+        />
+        Attacker below half strength
+      </label>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
+          checked={conditions.attackerIsIsolated}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              attackerIsIsolated: e.target.checked,
+            }))
+          }
+        />
+        Attacker is isolated
       </label>
     </div>
   );

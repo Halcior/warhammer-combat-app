@@ -2,11 +2,34 @@ export type DiceValue = number | string;
 
 export type WeaponType = "melee" | "ranged";
 
+export type ConditionalRuleFields = {
+  attackType?: WeaponType;
+  requiresAttackWithinObjectiveRange?: boolean;
+  requiresHalfRange?: boolean;
+  requiresAttachedUnit?: boolean;
+  requiresAttackerWithinPowerMatrix?: boolean;
+  requiresAttackerSetUpThisTurn?: boolean;
+  requiresAttackerSetToDefend?: boolean;
+  requiresTargetIsClosestEligible?: boolean;
+  requiresTargetUnravelling?: boolean;
+  requiresTargetWithinObjectiveRange?: boolean;
+  requiredAttackerKeywords?: string[];
+  requiredDefenderKeywords?: string[];
+  excludedAttackerKeywords?: string[];
+  excludedDefenderKeywords?: string[];
+  requiresTargetBattleShocked?: boolean;
+  requiresTargetBelowStartingStrength?: boolean;
+  requiresTargetBelowHalfStrength?: boolean;
+  requiresAttackerBelowStartingStrength?: boolean;
+  requiresAttackerBelowHalfStrength?: boolean;
+  requiresAttackerIsolated?: boolean;
+};
+
 export type SpecialRule =
-  | { type: "ASSAULT" }
+  | ({ type: "ASSAULT" } & ConditionalRuleFields)
   | { type: "PISTOL" }
   | { type: "RAPID_FIRE"; value: number }
-  | { type: "IGNORES_COVER" }
+  | ({ type: "IGNORES_COVER" } & ConditionalRuleFields)
   | { type: "TWIN_LINKED" }
   | { type: "TORRENT" }
   | { type: "LETHAL_HITS" }
@@ -17,18 +40,29 @@ export type SpecialRule =
   | { type: "MELTA"; value: number }
   | { type: "HEAVY" }
   | { type: "HAZARDOUS" }
-  | { type: "SUSTAINED_HITS"; value: number }
+  | ({ type: "SUSTAINED_HITS"; value: number } & ConditionalRuleFields)
   | { type: "EXTRA_ATTACKS" }
-  | { type: "DEVASTATING_WOUNDS" }
+  | ({ type: "DEVASTATING_WOUNDS" } & ConditionalRuleFields)
   | { type: "ANTI"; keyword: string; value: number }
   | { type: "FEEL_NO_PAIN"; value: number }
   | { type: "DAMAGE_REDUCTION"; value: number }
-  | { type: "CRITICAL_HITS_ON"; value: number }
-  | { type: "AP_MODIFIER"; value: number; attackType?: "melee" | "ranged" }
-  | { type: "STRENGTH_MODIFIER"; value: number; attackType?: "melee" | "ranged" }
-  | { type: "DAMAGE_MODIFIER"; value: number; attackType?: "melee" | "ranged" }
-  | { type: "WOUND_MODIFIER"; value: number; attackType?: "melee" | "ranged"; targetToughnessAtLeast?: number };
-  
+  | ({ type: "REROLL_HITS" } & ConditionalRuleFields)
+  | ({ type: "REROLL_HITS_ONES" } & ConditionalRuleFields)
+  | ({ type: "REROLL_WOUNDS" } & ConditionalRuleFields)
+  | ({ type: "REROLL_WOUNDS_ONES" } & ConditionalRuleFields)
+  | ({ type: "HIT_MODIFIER"; value: number } & ConditionalRuleFields)
+  | ({ type: "ATTACKS_MODIFIER"; value: number } & ConditionalRuleFields)
+  | ({ type: "CRITICAL_WOUND_AP_MODIFIER"; value: number } & ConditionalRuleFields)
+  | ({ type: "CRITICAL_HITS_ON"; value: number } & ConditionalRuleFields)
+  | ({ type: "AP_MODIFIER"; value: number } & ConditionalRuleFields)
+  | ({ type: "STRENGTH_MODIFIER"; value: number } & ConditionalRuleFields)
+  | ({ type: "DAMAGE_MODIFIER"; value: number } & ConditionalRuleFields)
+  | ({
+      type: "WOUND_MODIFIER";
+      value: number;
+      targetToughnessAtLeast?: number;
+    } & ConditionalRuleFields);
+
 
 export type Weapon = {
   id: string;
@@ -66,4 +100,17 @@ export type AttackConditions = {
   targetHasMatchingAntiKeyword: boolean;
   isChargeTurn: boolean;
   isAttachedUnit: boolean;
+  attackWithinObjectiveRange: boolean;
+  attackerWithinPowerMatrix: boolean;
+  attackerSetUpThisTurn: boolean;
+  attackerSetToDefend: boolean;
+  targetIsClosestEligible: boolean;
+  targetIsUnravelling: boolean;
+  targetWithinObjectiveRange: boolean;
+  targetIsBattleShocked: boolean;
+  targetBelowStartingStrength: boolean;
+  targetBelowHalfStrength: boolean;
+  attackerBelowStartingStrength: boolean;
+  attackerBelowHalfStrength: boolean;
+  attackerIsIsolated: boolean;
 };
