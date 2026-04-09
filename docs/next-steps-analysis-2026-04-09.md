@@ -2,82 +2,67 @@
 
 ## Szybkie podsumowanie
 
-Projekt ma działający trzon domenowy (`expected` + `simulation`) i przechodzące testy jednostkowe,
-ale obecny stan gałęzi nie jest jeszcze „production-ready”, bo pipeline jakości (lint/build) nie przechodzi.
+Aplikacja ma solidny trzon domenowy (analityka + symulacje), ale aktualnie gałąź jest w stanie **niestabilnym** i wymaga prac porządkowych przed dalszym rozwojem funkcjonalnym.
 
-## Co działa
+Najważniejszy blocker: w kodzie i dokumentacji pozostały markery konfliktów merge (`<<<<<<<`, `=======`, `>>>>>>>`).
 
-- Testy jednostkowe: **45/45 PASS**.
-- Architektura ma sensowny podział na:
-  - `src/lib/combat` (silnik domenowy),
-  - `src/hooks` i `src/components` (UI + stan),
-  - `src/data` (mapowanie i dane wejściowe).
+## Co potwierdziłem lokalnie
 
-## Główne problemy blokujące stabilność
+- `npm run check` nie przechodzi.
+- Pierwszy twardy błąd: parser ESLint zatrzymuje się na markerze konfliktu w `src/App.tsx`.
+- `README.md` również zawiera nierozwiązane konflikty.
 
-1. **README zawiera markery konfliktu merge** (`<<<<<<<`, `=======`, `>>>>>>>`).
-   - To sygnał nieskończonego scalania i ryzyko niespójnej dokumentacji.
+## Najpilniejsze zadania (kolejność rekomendowana)
 
-2. **Build nie przechodzi (TypeScript)**:
-   - `talonsOfTheEmperor.ts`: użycie pola `description`, którego nie ma w typie `DetachmentDefinition`.
-   - `expectedDamage.ts`: nieużywana zmienna `activeEngineTags`.
+### 1) Stabilizacja repo i CI (must-have)
 
-3. **Lint nie przechodzi (React hooks + unused vars)**:
-   - `useFactionRules.ts`: `setState` w `useEffect`, co łamie regułę `react-hooks/set-state-in-effect`.
-   - powtórzenie problemu nieużywanej zmiennej `activeEngineTags`.
+1. Rozwiązać konflikty merge w:
+   - `src/App.tsx`
+   - `README.md`
+2. Ustalić jedną wersję API symulacji w `App.tsx` (obecnie konflikt między wywołaniem `runSimulationByMode(...)` i innym podejściem).
+3. Doprowadzić `npm run check` do PASS jako warunek wejścia w kolejne feature’y.
 
-4. **Niespójność modeli detachmentów**:
-   - W kodzie są równolegle różne reprezentacje (`domain/detachment.ts` vs runtime config `types/faction.ts`),
-     co utrudnia rozwój reguł i importów.
+### 2) Spójność modelu domenowego reguł
 
-## Proponowana kolejność prac (plan 2 sprintów)
+1. Ujednolicić model detachmentu/rule options między warstwą danych i runtime.
+2. Ograniczyć duplikację reprezentacji (szczególnie między `src/domain/*`, `src/types/*`, `src/data/factions/*`).
+3. Dodać „single source of truth” dla mapowania reguł na modyfikatory silnika (`SpecialRule`).
 
-### Sprint 1 — „Stabilizacja main”
+### 3) Testy, które odblokują bezpieczny rozwój
 
-1. **Naprawić blokery CI**
-   - Usunąć markery konfliktu z `README.md` i ujednolicić treść.
-   - Ujednolicić typy detachmentów (albo rozszerzyć `DetachmentDefinition`, albo przestać go używać w runtime config).
-   - Rozwiązać lint w `useFactionRules` (wyprowadzić inicjalizację `selectedDetachmentId` bez efektu wymuszającego setState).
-   - Usunąć/zaimplementować użycie `activeEngineTags`.
+1. Dodać test integracyjny dla głównego flow `App`:
+   - wybór jednostki,
+   - aktywacja reguł,
+   - uruchomienie expected/simulation.
+2. Dodać testy kontraktowe dla warstwy mapowania reguł (rule option -> efekt w silniku).
+3. Dla każdej nowej reguły: minimum 1 test pozytywny + 1 test edge-case.
 
-2. **Dodać gate jakości lokalnie i w CI**
-   - Jedna komenda np. `npm run check` => `lint + test + build`.
-   - Ustawić wymagane checki przed mergem do `main`.
+### 4) Roadmapa funkcjonalna (po stabilizacji)
 
-3. **Minimalna higiena dokumentacji**
-   - README: stan faktyczny funkcji + lista ograniczeń + workflow branchowania.
+1. **Priorytet A:** rozbudowa pokrycia reguł frakcyjnych/detachmentów i ich interakcji.
+2. **Priorytet B:** większa transparentność wyniku (źródła modyfikatorów i ich wkład procentowy).
+3. **Priorytet C:** porównania scenariuszowe (ten sam weapon profile przy różnych warunkach: cover, charge, half range).
+4. **Priorytet D:** import kolejnych frakcji/danych i walidacja jakości parsera danych wejściowych.
 
-### Sprint 2 — „Porządkowanie domeny reguł”
+## Proponowany backlog na 2 sprinty
 
-1. **Jeden model reguł i detachmentów**
-   - Spiąć import/normalizację z modelem runtime.
-   - Zdefiniować jedno źródło prawdy dla:
-     - `RuleOption`,
-     - `DetachmentConfig`,
-     - mapowania do `SpecialRule`/engine tags.
+### Sprint 1 — „Green CI + porządek techniczny”
 
-2. **Warstwa Army Rules jako osobny moduł**
-   - Nie dokładać wszystkiego do listy modifierów broni.
-   - Dodać kontekst: army/detachment/phase w jednym obiekcie wejściowym do silnika.
+- [ ] Naprawa konfliktów merge (`App.tsx`, `README.md`)
+- [ ] `npm run check` = PASS
+- [ ] Checklista jakości PR (lint/test/build)
+- [ ] Krótki dokument ADR: docelowy model rule engine
 
-3. **Weryfikowalność implementacji reguł**
-   - Tabela „support level” + testy kontraktowe dla każdej reguły (implemented/planned/info-only).
+### Sprint 2 — „Spójny model reguł + testowalność”
 
-## Definition of Done dla „stabilnego main”
+- [ ] Refactor warstwy typów reguł/detachmentów
+- [ ] Testy kontraktowe mapowania reguł
+- [ ] 1–2 kompletne implementacje nowych detachment interactions
+- [ ] Aktualizacja README o realne pokrycie zasad
 
-- `npm run lint` = PASS
-- `npm run test` = PASS
-- `npm run build` = PASS
-- README bez konfliktów merge
-- Co najmniej 1 test dla każdej nowej reguły engine
+## Definition of Done dla „stabilnej bazy pod rozwój”
 
-## Rekomendacja praktyczna na najbliższy PR
-
-Najpierw zrobić **PR „Stabilizacja jakości i typów”** (bez nowych feature’ów), który:
-
-- czyści README,
-- naprawia typy detachmentów,
-- naprawia lint/build,
-- dodaje skrypt agregujący checki.
-
-Dopiero na tej bazie rozwijać army rules i kolejne detachmenty.
+- Brak markerów konfliktu merge w repo
+- `npm run check` = PASS
+- Każda nowa reguła silnika ma test(y)
+- README odzwierciedla rzeczywisty stan funkcji i ograniczeń
