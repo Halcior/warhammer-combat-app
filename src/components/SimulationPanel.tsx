@@ -1,6 +1,5 @@
 import type { SimulationSummary } from "../lib/combat/simulation/analyzeSimulation";
-
-export type CalculationMode = "fast" | "accurate";
+import type { CalculationMode } from "../lib/combat/simulation/runSimulationByMode";
 
 type SimulationPanelProps = {
   mode: CalculationMode;
@@ -57,32 +56,30 @@ export function SimulationPanel({
         </button>
       </div>
 
-      {mode === "fast" ? (
-        <p className="muted-text">
-          Fast mode uses analytical expected damage. Switch to Accurate to run Monte Carlo simulation.
-        </p>
-      ) : (
-        <>
-          <label>
-            Simulation runs
-            <input
-              type="range"
-              min={1000}
-              max={20000}
-              step={1000}
-              value={runs}
-              onChange={(e) => setRuns(Number(e.target.value))}
-            />
-          </label>
+      <p className="muted-text">
+        {mode === "fast"
+          ? "Fast mode uses analytical expected damage for each roll sequence."
+          : "Accurate mode uses full attack sequence Monte Carlo simulation."}
+      </p>
 
-          <div className="simulation-toolbar">
-            <span className="simulation-runs">{runs} runs</span>
-            <button type="button" onClick={onRun}>
-              Run simulation
-            </button>
-          </div>
-        </>
-      )}
+      <label>
+        Simulation runs
+        <input
+          type="range"
+          min={1000}
+          max={20000}
+          step={1000}
+          value={runs}
+          onChange={(e) => setRuns(Number(e.target.value))}
+        />
+      </label>
+
+      <div className="simulation-toolbar">
+        <span className="simulation-runs">{runs} runs</span>
+        <button type="button" onClick={onRun}>
+          Run simulation
+        </button>
+      </div>
 
       {summary && (
         <>

@@ -22,8 +22,34 @@ export function mapNormalizedUnitToCombatUnit(unit: NormalizedUnit): Unit {
 }
 
 function pickPrimaryModel(unit: NormalizedUnit) {
-  const sorted = [...unit.models].sort((a, b) => a.name.localeCompare(b.name));
-  return sorted[0];
+  // Business heuristic:
+  // 1) Prefer a "rank-and-file" model profile over leader/variant profiles
+  //    (Sergeant/Exarch/Superior/Champion/etc.).
+  // 2) Keep source order from the normalized data as a stable fallback
+  //    (do not sort alphabetically).
+  //
+  // This approximates "most common model" for multi-profile units when we do not
+  // yet have explicit composition counts in the normalized shape.
+  const leaderVariantMarkers = [
+    "sergeant",
+    "superior",
+    "exarch",
+    "champion",
+    "leader",
+    "captain",
+    "underseer",
+    "nob",
+    "boss",
+    "prime",
+    "alpha",
+  ];
+
+  return (
+    unit.models.find((model) => {
+      const name = model.name.toLowerCase();
+      return !leaderVariantMarkers.some((marker) => name.includes(marker));
+    }) ?? unit.models[0]
+  );
 }
 
 function mapWeapon(weapon: NormalizedUnit["weapons"][number]): Weapon {
