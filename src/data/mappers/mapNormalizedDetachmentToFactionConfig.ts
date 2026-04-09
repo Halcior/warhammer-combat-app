@@ -79,6 +79,22 @@ export function mapNormalizedDetachmentToEnhancements(
     }
 
     if (
+      detachment.id === "cult_of_blood" &&
+      enhancementName.includes("brazen form")
+    ) {
+      return createImplementedEnhancement(enhancement, "any", [
+        createImplementedDefenderRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Brazen Form Effect",
+          description:
+            "The enhanced model gains Feel No Pain 5+ while it is the defended unit.",
+          phase: "any",
+          modifiers: [{ type: "FEEL_NO_PAIN", value: 5 }],
+        }),
+      ]);
+    }
+
+    if (
       detachment.id === "shield_host" &&
       (enhancementId.includes("hall_of_armouries") ||
         enhancementName.includes("hall of armouries"))

@@ -742,6 +742,46 @@ describe("calculateExpectedDamage", () => {
     expect(withPenalty.expectedDamage).toBeLessThan(noPenalty.expectedDamage);
   });
 
+  it("applies active defender feel no pain rules", () => {
+    const damageTwoWeapon: Weapon = {
+      id: "sawblade",
+      name: "Sawblade",
+      attacks: 4,
+      skill: 3,
+      strength: 6,
+      ap: -1,
+      damage: 2,
+      type: "melee",
+      specialRules: [],
+    };
+
+    const baseline = calculateExpectedDamage({
+      attacker,
+      weapon: damageTwoWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+    });
+
+    const withFeelNoPain = calculateExpectedDamage({
+      attacker,
+      weapon: damageTwoWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+      activeDefenderModifierRules: [{ type: "FEEL_NO_PAIN", value: 5 }],
+    });
+
+    expect(withFeelNoPain.expectedDamage).toBeLessThan(baseline.expectedDamage);
+    expect(withFeelNoPain.expectedSlainModels).toBeLessThan(
+      baseline.expectedSlainModels
+    );
+  });
+
   it("applies battle-shock gated wound bonuses only when the target qualifies", () => {
     const rangedWeapon: Weapon = {
       id: "psycannon",

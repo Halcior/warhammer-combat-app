@@ -63,8 +63,14 @@ export function ModifiersPanel({
     : "";
 
   return (
-    <div className="card">
-      <h2>Modifiers & Rules</h2>
+    <div className="card card--modifiers">
+      <div className="panel-heading">
+        <p className="panel-eyebrow">Rules Engine</p>
+        <h2>Modifiers & Rules</h2>
+        <p className="muted-text">
+          Zebrane w sekcje, żeby łatwiej odróżnić aktywne boosty od samych opisów.
+        </p>
+      </div>
 
       {availableDetachments.length > 0 && (
         <div className="rules-section">
@@ -102,33 +108,35 @@ export function ModifiersPanel({
         <div className="rules-section">
           <h3>Faction & Detachment Rules</h3>
 
-          {availableRuleOptions.map((rule) => (
-            <label key={rule.id} className="checkbox-row">
-              <input
-                type="checkbox"
-                checked={activeRuleOptionIds.includes(rule.id)}
-                onChange={() => toggleRuleOption(rule.id)}
-              />
-              <HoverInfo
-                label={
-                  <span>
-                    {rule.name}
-                    {rule.supportLevel && (
-                      <span className="muted-text"> ({rule.supportLevel})</span>
-                    )}
-                  </span>
-                }
-                tooltip={buildRuleOptionTooltip(rule)}
-              />
-            </label>
-          ))}
+          <div className="option-list">
+            {availableRuleOptions.map((rule) => (
+              <label key={rule.id} className="checkbox-row">
+                <input
+                  type="checkbox"
+                  checked={activeRuleOptionIds.includes(rule.id)}
+                  onChange={() => toggleRuleOption(rule.id)}
+                />
+                <HoverInfo
+                  label={
+                    <span>
+                      {rule.name}
+                      {rule.supportLevel && (
+                        <span className="muted-text"> ({rule.supportLevel})</span>
+                      )}
+                    </span>
+                  }
+                  tooltip={buildRuleOptionTooltip(rule)}
+                />
+              </label>
+            ))}
+          </div>
         </div>
       )}
 
       {enhancements.length > 0 && (
         <div className="rules-section">
           <h3>Enhancements</h3>
-          <div className="rules-list">
+          <div className="option-list">
             {enhancements.map((enhancement) => (
               <label key={enhancement.id} className="checkbox-row">
                 <input
@@ -155,8 +163,8 @@ export function ModifiersPanel({
 
       {stratagems.length > 0 && (
         <div className="rules-section">
-          <h3>Available Stratagems</h3>
-          <div className="rules-list">
+          <h3>Stratagems</h3>
+          <div className="option-list">
             {stratagems.map((stratagem) => (
               <label key={stratagem.id} className="checkbox-row">
                 <input
@@ -184,47 +192,49 @@ export function ModifiersPanel({
       <div className="rules-section">
         <h3>Manual attack modifiers</h3>
 
-        <label className="checkbox-row">
-          <input
-            type="checkbox"
-            checked={activeAttackModifiers.devastatingWounds}
-            onChange={(e) =>
-              setActiveAttackModifiers((prev) => ({
-                ...prev,
-                devastatingWounds: e.target.checked,
-              }))
-            }
-          />
-          Devastating Wounds
-        </label>
+        <div className="option-list option-list--compact">
+          <label className="checkbox-row">
+            <input
+              type="checkbox"
+              checked={activeAttackModifiers.devastatingWounds}
+              onChange={(e) =>
+                setActiveAttackModifiers((prev) => ({
+                  ...prev,
+                  devastatingWounds: e.target.checked,
+                }))
+              }
+            />
+            Devastating Wounds
+          </label>
 
-        <label className="checkbox-row">
-          <input
-            type="checkbox"
-            checked={activeAttackModifiers.lethalHits}
-            onChange={(e) =>
-              setActiveAttackModifiers((prev) => ({
-                ...prev,
-                lethalHits: e.target.checked,
-              }))
-            }
-          />
-          Lethal Hits
-        </label>
+          <label className="checkbox-row">
+            <input
+              type="checkbox"
+              checked={activeAttackModifiers.lethalHits}
+              onChange={(e) =>
+                setActiveAttackModifiers((prev) => ({
+                  ...prev,
+                  lethalHits: e.target.checked,
+                }))
+              }
+            />
+            Lethal Hits
+          </label>
 
-        <label className="checkbox-row">
-          <input
-            type="checkbox"
-            checked={activeAttackModifiers.ignoresCover}
-            onChange={(e) =>
-              setActiveAttackModifiers((prev) => ({
-                ...prev,
-                ignoresCover: e.target.checked,
-              }))
-            }
-          />
-          Ignores Cover
-        </label>
+          <label className="checkbox-row">
+            <input
+              type="checkbox"
+              checked={activeAttackModifiers.ignoresCover}
+              onChange={(e) =>
+                setActiveAttackModifiers((prev) => ({
+                  ...prev,
+                  ignoresCover: e.target.checked,
+                }))
+              }
+            />
+            Ignores Cover
+          </label>
+        </div>
       </div>
 
       <div className="rules-section">

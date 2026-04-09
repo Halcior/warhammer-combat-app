@@ -192,7 +192,39 @@ function App() {
 
   return (
     <div className="app">
-      <h1>Warhammer Helper</h1>
+      <header className="app-hero">
+        <div className="app-hero__content">
+          <p className="app-hero__eyebrow">Combat Sandbox</p>
+          <h1>Warhammer Helper</h1>
+          <p className="app-hero__lead">
+            Kalkulator progów, reguł detachmentów i symulacji ataku w
+            czytelniejszej, mniej przytłaczającej formie.
+          </p>
+        </div>
+
+        <div className="app-hero__meta">
+          <div className="hero-chip">
+            <span className="hero-chip__label">Attacker</span>
+            <span className="hero-chip__value">{battleSetup.attacker.name}</span>
+          </div>
+
+          <div className="hero-chip">
+            <span className="hero-chip__label">Weapon</span>
+            <span className="hero-chip__value">
+              {battleSetup.selectedWeapon.name}
+            </span>
+          </div>
+
+          {factionRules.selectedDetachment && (
+            <div className="hero-chip">
+              <span className="hero-chip__label">Detachment</span>
+              <span className="hero-chip__value">
+                {factionRules.selectedDetachment.name}
+              </span>
+            </div>
+          )}
+        </div>
+      </header>
 
       <div className="top-grid">
         <SetupPanel

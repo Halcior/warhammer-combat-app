@@ -46,130 +46,166 @@ export function SetupPanel({
   handleDefenderChange,
 }: SetupPanelProps) {
   return (
-    <div className="card">
-      <h2>Setup</h2>
+    <div className="card card--setup">
+      <div className="panel-heading">
+        <p className="panel-eyebrow">Battle Setup</p>
+        <h2>Setup</h2>
+        <p className="muted-text">
+          Najpierw ustaw jednostki i broń, a potem tylko dopasuj stan bitwy.
+        </p>
+      </div>
 
-      <label>
-        Attacker faction
-        <select
-          value={attackerFaction}
-          onChange={(e) => handleAttackerFactionChange(e.target.value)}
-        >
-          {factions.map((faction) => (
-            <option key={faction} value={faction}>
-              {faction}
-            </option>
-          ))}
-        </select>
-      </label>
+      <section className="form-section">
+        <div className="form-section__header">
+          <h3>Army selection</h3>
+          <p className="muted-text">Wybierz strony starcia i aktywną broń.</p>
+        </div>
 
-      <label>
-        Attacker unit
-        <select value={attackerId} onChange={(e) => handleAttackerChange(e.target.value)}>
-          {attackerUnits.map((unit) => (
-            <option key={unit.id} value={unit.id}>
-              {unit.name}
-            </option>
-          ))}
-        </select>
-      </label>
+        <div className="setup-fields-grid">
+          <label>
+            Attacker faction
+            <select
+              value={attackerFaction}
+              onChange={(e) => handleAttackerFactionChange(e.target.value)}
+            >
+              {factions.map((faction) => (
+                <option key={faction} value={faction}>
+                  {faction}
+                </option>
+              ))}
+            </select>
+          </label>
 
-      <label>
-        Attacking models
-        <input
-          type="number"
-          min={1}
-          value={attackingModels}
-          onChange={(e) => setAttackingModels(Math.max(1, Number(e.target.value) || 1))}
-        />
-      </label>
+          <label>
+            Attacker unit
+            <select
+              value={attackerId}
+              onChange={(e) => handleAttackerChange(e.target.value)}
+            >
+              {attackerUnits.map((unit) => (
+                <option key={unit.id} value={unit.id}>
+                  {unit.name}
+                </option>
+              ))}
+            </select>
+          </label>
 
-      <label>
-        Weapon
-        <select value={weaponId} onChange={(e) => handleWeaponChange(e.target.value)}>
-          {attacker.weapons.map((weapon: Weapon) => (
-            <option key={weapon.id} value={weapon.id}>
-              {weapon.name}
-            </option>
-          ))}
-        </select>
-      </label>
+          <label>
+            Attacking models
+            <input
+              type="number"
+              min={1}
+              value={attackingModels}
+              onChange={(e) =>
+                setAttackingModels(Math.max(1, Number(e.target.value) || 1))
+              }
+            />
+          </label>
 
-      <label>
-        Defender faction
-        <select
-          value={defenderFaction}
-          onChange={(e) => handleDefenderFactionChange(e.target.value)}
-        >
-          {factions.map((faction) => (
-            <option key={faction} value={faction}>
-              {faction}
-            </option>
-          ))}
-        </select>
-      </label>
+          <label>
+            Weapon
+            <select
+              value={weaponId}
+              onChange={(e) => handleWeaponChange(e.target.value)}
+            >
+              {attacker.weapons.map((weapon: Weapon) => (
+                <option key={weapon.id} value={weapon.id}>
+                  {weapon.name}
+                </option>
+              ))}
+            </select>
+          </label>
 
-      <label>
-        Defender unit
-        <select value={defenderId} onChange={(e) => handleDefenderChange(e.target.value)}>
-          {defenderUnits.map((unit) => (
-            <option key={unit.id} value={unit.id}>
-              {unit.name}
-            </option>
-          ))}
-        </select>
-      </label>
+          <label>
+            Defender faction
+            <select
+              value={defenderFaction}
+              onChange={(e) => handleDefenderFactionChange(e.target.value)}
+            >
+              {factions.map((faction) => (
+                <option key={faction} value={faction}>
+                  {faction}
+                </option>
+              ))}
+            </select>
+          </label>
 
-      <label>
-        Defending models
-        <input
-          type="number"
-          min={1}
-          value={defendingModels}
-          onChange={(e) => {
-            const value = Math.max(1, Number(e.target.value) || 1);
-            setDefendingModels(value);
-            setConditions((prev) => ({
-              ...prev,
-              targetModelCount: value,
-            }));
-          }}
-        />
-      </label>
+          <label>
+            Defender unit
+            <select
+              value={defenderId}
+              onChange={(e) => handleDefenderChange(e.target.value)}
+            >
+              {defenderUnits.map((unit) => (
+                <option key={unit.id} value={unit.id}>
+                  {unit.name}
+                </option>
+              ))}
+            </select>
+          </label>
 
-      <label>
-        Battle round
-        <input
-          type="number"
-          min={1}
-          max={5}
-          value={conditions.battleRound}
-          onChange={(e) =>
-            setConditions((prev) => ({
-              ...prev,
-              battleRound: Math.min(5, Math.max(1, Number(e.target.value) || 1)),
-            }))
-          }
-        />
-      </label>
+          <label>
+            Defending models
+            <input
+              type="number"
+              min={1}
+              value={defendingModels}
+              onChange={(e) => {
+                const value = Math.max(1, Number(e.target.value) || 1);
+                setDefendingModels(value);
+                setConditions((prev) => ({
+                  ...prev,
+                  targetModelCount: value,
+                }));
+              }}
+            />
+          </label>
 
-      <label>
-        Target distance (")
-        <input
-          type="number"
-          min={0}
-          step={1}
-          value={conditions.targetDistanceInches}
-          onChange={(e) =>
-            setConditions((prev) => ({
-              ...prev,
-              targetDistanceInches: Math.max(0, Number(e.target.value) || 0),
-            }))
-          }
-        />
-      </label>
+          <label>
+            Battle round
+            <input
+              type="number"
+              min={1}
+              max={5}
+              value={conditions.battleRound}
+              onChange={(e) =>
+                setConditions((prev) => ({
+                  ...prev,
+                  battleRound: Math.min(5, Math.max(1, Number(e.target.value) || 1)),
+                }))
+              }
+            />
+          </label>
 
-      <label className="checkbox-row">
+          <label>
+            Target distance (")
+            <input
+              type="number"
+              min={0}
+              step={1}
+              value={conditions.targetDistanceInches}
+              onChange={(e) =>
+                setConditions((prev) => ({
+                  ...prev,
+                  targetDistanceInches: Math.max(0, Number(e.target.value) || 0),
+                }))
+              }
+            />
+          </label>
+        </div>
+      </section>
+
+      <section className="form-section">
+        <div className="form-section__header">
+          <h3>Battle state</h3>
+          <p className="muted-text">
+            Tylko te przełączniki, które faktycznie mają znaczenie dla danego
+            starcia.
+          </p>
+        </div>
+
+        <div className="setup-conditions-grid">
+          <label className="checkbox-row">
         <input
           type="checkbox"
           checked={conditions.isTargetInCover}
@@ -546,6 +582,8 @@ export function SetupPanel({
         />
         Attacker is isolated
       </label>
+        </div>
+      </section>
     </div>
   );
 }
