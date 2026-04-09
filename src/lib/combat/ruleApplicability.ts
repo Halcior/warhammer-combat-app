@@ -30,6 +30,22 @@ export function ruleApplies(
   }
 
   if (
+    "requiresAttackerDisembarkedThisTurn" in rule &&
+    rule.requiresAttackerDisembarkedThisTurn &&
+    !context.conditions.attackerDisembarkedThisTurn
+  ) {
+    return false;
+  }
+
+  if (
+    "requiresAttackerFiringOverwatch" in rule &&
+    rule.requiresAttackerFiringOverwatch &&
+    !context.conditions.attackerIsFiringOverwatch
+  ) {
+    return false;
+  }
+
+  if (
     "requiresAttackerGuided" in rule &&
     rule.requiresAttackerGuided &&
     !context.conditions.attackerIsGuided
@@ -113,6 +129,14 @@ export function ruleApplies(
     "requiresTargetModelCountAtLeast" in rule &&
     typeof rule.requiresTargetModelCountAtLeast === "number" &&
     context.conditions.targetModelCount < rule.requiresTargetModelCountAtLeast
+  ) {
+    return false;
+  }
+
+  if (
+    "requiresTargetOppositeHatchway" in rule &&
+    rule.requiresTargetOppositeHatchway &&
+    !context.conditions.targetOppositeHatchway
   ) {
     return false;
   }

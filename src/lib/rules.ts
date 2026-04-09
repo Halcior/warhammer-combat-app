@@ -50,6 +50,8 @@ export function formatSpecialRule(rule: SpecialRule): string {
       return "Re-roll Wounds";
     case "REROLL_WOUNDS_ONES":
       return "Re-roll Wound Rolls of 1";
+    case "FIXED_HIT_ROLL":
+      return `Hits on ${rule.value}+`;
     case "HIT_MODIFIER":
       return rule.attackType
         ? `Hit ${formatSignedValue(rule.value)} (${rule.attackType})`

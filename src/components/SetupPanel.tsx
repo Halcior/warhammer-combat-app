@@ -242,6 +242,34 @@ export function SetupPanel({
       <label className="checkbox-row">
         <input
           type="checkbox"
+          checked={conditions.attackerDisembarkedThisTurn}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              attackerDisembarkedThisTurn: e.target.checked,
+            }))
+          }
+        />
+        Attacker disembarked this turn
+      </label>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
+          checked={conditions.attackerIsFiringOverwatch}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              attackerIsFiringOverwatch: e.target.checked,
+            }))
+          }
+        />
+        Attacker is firing Overwatch
+      </label>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
           checked={conditions.attackerIsGuided}
           onChange={(e) =>
             setConditions((prev) => ({
@@ -349,6 +377,20 @@ export function SetupPanel({
           }
         />
         Target is spotted / markerlit
+      </label>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
+          checked={conditions.targetOppositeHatchway}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              targetOppositeHatchway: e.target.checked,
+            }))
+          }
+        />
+        Target opposite hatchway
       </label>
 
       <label className="checkbox-row">

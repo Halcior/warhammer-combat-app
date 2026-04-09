@@ -16,12 +16,15 @@ const baseConditions: AttackConditions = {
   isChargeTurn: false,
   isAttachedUnit: false,
   attackWithinObjectiveRange: false,
+  attackerDisembarkedThisTurn: false,
+  attackerIsFiringOverwatch: false,
   attackerIsGuided: false,
   attackerWithinPowerMatrix: false,
   attackerSetUpThisTurn: false,
   attackerSetToDefend: false,
   targetIsClosestEligible: false,
   targetIsSpotted: false,
+  targetOppositeHatchway: false,
   targetIsUnravelling: false,
   targetWithinObjectiveRange: false,
   targetIsBattleShocked: false,
@@ -808,6 +811,54 @@ describe("calculateExpectedDamage", () => {
     expect(noCharge.woundTarget).toBe(5);
     expect(onCharge.woundTarget).toBe(4);
     expect(onCharge.expectedDamage).toBeGreaterThan(noCharge.expectedDamage);
+  });
+
+  it("uses fixed hit rolls for overwatch-style attacks", () => {
+    const rangedWeapon: Weapon = {
+      id: "pulse-rifle",
+      name: "Pulse Rifle",
+      attacks: 4,
+      skill: 3,
+      strength: 5,
+      ap: 0,
+      damage: 1,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const normalAttack = calculateExpectedDamage({
+      attacker,
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+    });
+
+    const snapshotAttack = calculateExpectedDamage({
+      attacker,
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        attackerIsFiringOverwatch: true,
+      },
+      activeModifierRules: [
+        {
+          type: "FIXED_HIT_ROLL",
+          value: 5,
+          attackType: "ranged",
+          requiresAttackerFiringOverwatch: true,
+        },
+      ],
+    });
+
+    expect(normalAttack.hitTarget).toBe(3);
+    expect(snapshotAttack.hitTarget).toBe(5);
+    expect(snapshotAttack.expectedHits).toBeLessThan(normalAttack.expectedHits);
   });
 });
 

@@ -204,6 +204,11 @@ function getHitTarget(
     return null;
   }
 
+  const fixedHitRoll = getFixedHitRoll(rules, weapon.type);
+  if (fixedHitRoll !== null) {
+    return Math.max(2, fixedHitRoll);
+  }
+
   let target = weapon.skill;
 
   if (hasRule(rules, "HEAVY") && conditions.remainedStationary) {
@@ -326,6 +331,23 @@ function getCriticalWoundApModifier(
     if (rule.attackType && rule.attackType !== weaponType) return sum;
     return sum + rule.value;
   }, 0);
+}
+
+function getFixedHitRoll(
+  rules: SpecialRule[] | undefined,
+  weaponType: "melee" | "ranged"
+): number | null {
+  const candidates = (rules ?? [])
+    .filter(
+      (rule): rule is Extract<SpecialRule, { type: "FIXED_HIT_ROLL" }> =>
+        rule.type === "FIXED_HIT_ROLL" &&
+        (!rule.attackType || rule.attackType === weaponType)
+    )
+    .map((rule) => rule.value);
+
+  if (candidates.length === 0) return null;
+
+  return Math.min(...candidates);
 }
 
 function getHitModifier(

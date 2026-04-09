@@ -40,6 +40,7 @@ export function explainAttackBreakdown(params: {
   });
 
   const hitModifier = getRuleModifier(activeRules, "HIT_MODIFIER", weapon.type);
+  const fixedHitRoll = getRuleModifier(activeRules, "FIXED_HIT_ROLL", weapon.type);
   const heavyBonus =
     hasRule(activeRules, "HEAVY") && conditions.remainedStationary ? 1 : 0;
   const attacksModifier = getRuleModifier(
@@ -54,7 +55,10 @@ export function explainAttackBreakdown(params: {
   const finalHit =
     hasRule(combinedRules, "TORRENT")
       ? "Auto"
-      : `${Math.max(2, weapon.skill - heavyBonus - hitModifier)}+`;
+      : `${Math.max(
+          2,
+          fixedHitRoll || weapon.skill - heavyBonus - hitModifier
+        )}+`;
 
   const strengthModifier = getRuleModifier(
     activeRules,
@@ -110,6 +114,7 @@ export function explainAttackBreakdown(params: {
   return {
     hit: [
       { label: "Base skill", value: `${baseHit}+` },
+      { label: "Fixed hit roll", value: fixedHitRoll ? `${fixedHitRoll}+` : 0 },
       { label: "Heavy bonus", value: heavyBonus ? `-${heavyBonus}` : 0 },
       {
         label: "Hit modifier",
@@ -179,6 +184,7 @@ function getMeltaValue(rules: SpecialRule[]): number {
 function getRuleModifier(
   rules: SpecialRule[],
   type:
+    | "FIXED_HIT_ROLL"
     | "HIT_MODIFIER"
     | "ATTACKS_MODIFIER"
     | "CRITICAL_WOUND_AP_MODIFIER"
@@ -191,6 +197,9 @@ function getRuleModifier(
     if (rule.type !== type) return sum;
     if ("attackType" in rule && rule.attackType && rule.attackType !== weaponType) {
       return sum;
+    }
+    if (type === "FIXED_HIT_ROLL") {
+      return sum === 0 ? rule.value : Math.min(sum, rule.value);
     }
     return sum + rule.value;
   }, 0);

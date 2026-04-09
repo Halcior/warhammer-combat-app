@@ -5,6 +5,8 @@ export type WeaponType = "melee" | "ranged";
 export type ConditionalRuleFields = {
   attackType?: WeaponType;
   requiresAttackWithinObjectiveRange?: boolean;
+  requiresAttackerDisembarkedThisTurn?: boolean;
+  requiresAttackerFiringOverwatch?: boolean;
   requiresHalfRange?: boolean;
   requiresAttachedUnit?: boolean;
   requiresAttackerGuided?: boolean;
@@ -15,6 +17,7 @@ export type ConditionalRuleFields = {
   requiresBattleRoundAtMost?: number;
   requiresTargetIsClosestEligible?: boolean;
   requiresTargetModelCountAtLeast?: number;
+  requiresTargetOppositeHatchway?: boolean;
   requiresTargetSpotted?: boolean;
   requiresTargetUnravelling?: boolean;
   requiresTargetWithinRange?: number;
@@ -56,6 +59,7 @@ export type SpecialRule =
   | ({ type: "REROLL_HITS_ONES" } & ConditionalRuleFields)
   | ({ type: "REROLL_WOUNDS" } & ConditionalRuleFields)
   | ({ type: "REROLL_WOUNDS_ONES" } & ConditionalRuleFields)
+  | ({ type: "FIXED_HIT_ROLL"; value: number } & ConditionalRuleFields)
   | ({ type: "HIT_MODIFIER"; value: number } & ConditionalRuleFields)
   | ({ type: "ATTACKS_MODIFIER"; value: number } & ConditionalRuleFields)
   | ({ type: "CRITICAL_WOUND_AP_MODIFIER"; value: number } & ConditionalRuleFields)
@@ -109,12 +113,15 @@ export type AttackConditions = {
   isChargeTurn: boolean;
   isAttachedUnit: boolean;
   attackWithinObjectiveRange: boolean;
+  attackerDisembarkedThisTurn: boolean;
+  attackerIsFiringOverwatch: boolean;
   attackerIsGuided: boolean;
   attackerWithinPowerMatrix: boolean;
   attackerSetUpThisTurn: boolean;
   attackerSetToDefend: boolean;
   targetIsClosestEligible: boolean;
   targetIsSpotted: boolean;
+  targetOppositeHatchway: boolean;
   targetIsUnravelling: boolean;
   targetWithinObjectiveRange: boolean;
   targetIsBattleShocked: boolean;

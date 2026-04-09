@@ -20,12 +20,15 @@ const baseConditions: AttackConditions = {
   isChargeTurn: false,
   isAttachedUnit: false,
   attackWithinObjectiveRange: false,
+  attackerDisembarkedThisTurn: false,
+  attackerIsFiringOverwatch: false,
   attackerIsGuided: false,
   attackerWithinPowerMatrix: false,
   attackerSetUpThisTurn: false,
   attackerSetToDefend: false,
   targetIsClosestEligible: false,
   targetIsSpotted: false,
+  targetOppositeHatchway: false,
   targetIsUnravelling: false,
   targetWithinObjectiveRange: false,
   targetIsBattleShocked: false,
@@ -119,6 +122,12 @@ describe("ruleApplicability", () => {
         requiresAttackerSetUpThisTurn: true,
       },
       {
+        type: "FIXED_HIT_ROLL",
+        value: 5,
+        requiresAttackerFiringOverwatch: true,
+        requiresTargetOppositeHatchway: true,
+      },
+      {
         type: "LETHAL_HITS",
         attackType: "ranged",
         requiresAttackerGuided: true,
@@ -156,6 +165,8 @@ describe("ruleApplicability", () => {
       conditions: {
         ...baseConditions,
         attackWithinObjectiveRange: true,
+        attackerDisembarkedThisTurn: true,
+        attackerIsFiringOverwatch: true,
         attackerIsGuided: true,
         isHalfRange: true,
         isAttachedUnit: true,
@@ -165,6 +176,7 @@ describe("ruleApplicability", () => {
         attackerSetUpThisTurn: true,
         attackerSetToDefend: true,
         targetIsClosestEligible: true,
+        targetOppositeHatchway: true,
         targetIsSpotted: true,
         targetIsUnravelling: true,
         targetWithinObjectiveRange: true,
@@ -172,7 +184,7 @@ describe("ruleApplicability", () => {
       },
     });
 
-    expect(activeRules).toHaveLength(13);
+    expect(activeRules).toHaveLength(14);
     expect(activeRules.map((rule) => rule.type)).toEqual([
       "REROLL_HITS",
       "REROLL_WOUNDS",
@@ -180,6 +192,7 @@ describe("ruleApplicability", () => {
       "IGNORES_COVER",
       "REROLL_WOUNDS_ONES",
       "REROLL_HITS",
+      "FIXED_HIT_ROLL",
       "AP_MODIFIER",
       "REROLL_HITS",
       "LETHAL_HITS",

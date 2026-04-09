@@ -635,6 +635,86 @@ export function mapNormalizedDetachmentToEnhancements(
     }
 
     if (
+      detachment.id === "kroot_hunting_pack" &&
+      enhancementName.includes("kroothawk flock")
+    ) {
+      return createImplementedEnhancement(enhancement, "shooting", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Kroothawk Flock Effect",
+          description: "Kroot ranged weapons gain Ignores Cover.",
+          phase: "shooting",
+          modifiers: [
+            {
+              type: "IGNORES_COVER",
+              attackType: "ranged",
+              requiredAttackerKeywords: ["KROOT"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "kroot_hunting_pack" &&
+      enhancementName.includes("nomadic hunter")
+    ) {
+      return createImplementedEnhancement(enhancement, "shooting", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Nomadic Hunter Effect",
+          description: "A led Kroot unit gains Assault on ranged weapons.",
+          phase: "shooting",
+          modifiers: [
+            {
+              type: "ASSAULT",
+              attackType: "ranged",
+              requiredAttackerKeywords: ["KROOT"],
+              requiresAttachedUnit: true,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "kroot_hunting_pack" &&
+      enhancementName.includes("root-carved weapons")
+    ) {
+      return createImplementedEnhancement(enhancement, "any", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Root-carved Weapons Effect",
+          description:
+            "The bearer's weapons gain Precision and Devastating Wounds.",
+          phase: "any",
+          modifiers: [{ type: "PRECISION" }, { type: "DEVASTATING_WOUNDS" }],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "kroot_raiding_party" &&
+      enhancementName.includes("experienced leader")
+    ) {
+      return createImplementedEnhancement(enhancement, "any", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Experienced Leader Effect",
+          description:
+            "Kroot attacks re-roll wounds against the marked enemy unit.",
+          phase: "any",
+          modifiers: [
+            {
+              type: "REROLL_WOUNDS",
+              requiredAttackerKeywords: ["KROOT"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
       detachment.id === "mont_ka" &&
       enhancementName.includes("coordinated exploitation")
     ) {
@@ -1299,6 +1379,65 @@ export function mapNormalizedDetachmentToStratagems(
     }
 
     if (
+      detachment.id === "kroot_hunting_pack" &&
+      stratagemName.includes("trap well laid")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "A Trap Well Laid Effect",
+          description:
+            "Kroot attacks against the trapped enemy unit improve AP by 1.",
+          phase,
+          modifiers: [
+            {
+              type: "AP_MODIFIER",
+              value: 1,
+              requiredAttackerKeywords: ["KROOT"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "kroot_raiding_party" &&
+      stratagemName.includes("boarding blades")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-ap-effect`,
+          name: "Boarding Blades: AP Bonus",
+          description: "Kroot melee weapons improve AP by 1.",
+          phase,
+          modifiers: [
+            {
+              type: "AP_MODIFIER",
+              value: 1,
+              attackType: "melee",
+              requiredAttackerKeywords: ["KROOT"],
+            },
+          ],
+        }),
+        createImplementedRuleOption({
+          id: `${stratagem.id}-critical-ap-effect`,
+          name: "Boarding Blades: Critical Wound AP",
+          description:
+            "Critical wounds from Kroot melee attacks improve AP by an additional 1.",
+          phase,
+          modifiers: [
+            {
+              type: "CRITICAL_WOUND_AP_MODIFIER",
+              value: 1,
+              attackType: "melee",
+              requiredAttackerKeywords: ["KROOT"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
       detachment.id === "kauyon" &&
       stratagemName.includes("coordinate to engage")
     ) {
@@ -1444,6 +1583,7 @@ export function mapNormalizedDetachmentToStratagems(
               type: "REROLL_WOUNDS",
               attackType: "ranged",
               requiredAttackerKeywords: ["INFANTRY"],
+              requiresAttackerDisembarkedThisTurn: true,
               requiresTargetIsClosestEligible: true,
             },
           ],
@@ -1541,6 +1681,78 @@ export function mapNormalizedDetachmentToStratagems(
               attackType: "ranged",
               requiredAttackerKeywords: ["BATTLESUIT"],
               requiresTargetModelCountAtLeast: 11,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "starfire_cadre" &&
+      stratagemName.includes("responsive volley")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Responsive Volley Effect",
+          description:
+            "Fire Warrior and Pathfinder ranged attacks score critical hits on 5+ against enemies on the opposite side of a hatchway.",
+          phase,
+          modifiers: [
+            {
+              type: "CRITICAL_HITS_ON",
+              value: 5,
+              attackType: "ranged",
+              requiredAttackerKeywords: ["FIRE WARRIOR", "PATHFINDER TEAM"],
+              requiresTargetOppositeHatchway: true,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "starfire_cadre" &&
+      stratagemName.includes("pulse barrage")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Pulse Barrage Effect",
+          description:
+            "Fire Warrior and Pathfinder Overwatch attacks hit on unmodified 5+.",
+          phase,
+          modifiers: [
+            {
+              type: "FIXED_HIT_ROLL",
+              value: 5,
+              attackType: "ranged",
+              requiredAttackerKeywords: ["FIRE WARRIOR", "PATHFINDER TEAM"],
+              requiresAttackerFiringOverwatch: true,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "starfire_cadre" &&
+      stratagemName.includes("firing line")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Firing Line Effect",
+          description:
+            "Fire Warrior and Pathfinder snapshot attacks within 9\" hit on unmodified 5+.",
+          phase,
+          modifiers: [
+            {
+              type: "FIXED_HIT_ROLL",
+              value: 5,
+              attackType: "ranged",
+              requiredAttackerKeywords: ["FIRE WARRIOR", "PATHFINDER TEAM"],
+              requiresTargetWithinRange: 9,
             },
           ],
         }),

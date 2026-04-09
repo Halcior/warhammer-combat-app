@@ -48,6 +48,7 @@ export function calculateExpectedDamage({
     weapon.type
   );
   const attacksModifier = getAttacksModifier(activeRules, weapon.type);
+  const fixedHitRoll = getFixedHitRoll(activeRules, weapon.type);
   const hitModifier = getHitModifier(activeRules, weapon.type);
   const strengthModifier = getStrengthModifier(activeRules, weapon.type);
   const damageModifier = getDamageModifier(activeRules, weapon.type);
@@ -90,11 +91,16 @@ export function calculateExpectedDamage({
 
   let modifiedHitTarget = weapon.skill;
 
-  if (hasHeavyRule && conditions.remainedStationary) {
+  if (fixedHitRoll !== null) {
+    modifiedHitTarget = fixedHitRoll;
+  } else if (hasHeavyRule && conditions.remainedStationary) {
     modifiedHitTarget = Math.max(2, modifiedHitTarget - 1);
   }
 
-  const hitTarget = Math.max(2, modifiedHitTarget - hitModifier);
+  const hitTarget =
+    fixedHitRoll !== null
+      ? Math.max(2, modifiedHitTarget)
+      : Math.max(2, modifiedHitTarget - hitModifier);
   const hitProbabilities = isTorrent
     ? { successChance: 1, criticalChance: 0 }
     : getRollProbabilities(hitTarget, getCriticalHitThreshold(activeRules), hitRerollMode);
@@ -321,6 +327,23 @@ function getCriticalWoundApModifier(
     if (rule.attackType && rule.attackType !== weaponType) return sum;
     return sum + rule.value;
   }, 0);
+}
+
+function getFixedHitRoll(
+  rules: SpecialRule[],
+  weaponType: "melee" | "ranged"
+): number | null {
+  const candidates = rules
+    .filter(
+      (rule): rule is Extract<SpecialRule, { type: "FIXED_HIT_ROLL" }> =>
+        rule.type === "FIXED_HIT_ROLL" &&
+        (!rule.attackType || rule.attackType === weaponType)
+    )
+    .map((rule) => rule.value);
+
+  if (candidates.length === 0) return null;
+
+  return Math.min(...candidates);
 }
 
 function getHitModifier(
