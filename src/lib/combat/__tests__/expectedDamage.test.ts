@@ -662,6 +662,86 @@ describe("calculateExpectedDamage", () => {
     expect(auraOn.expectedDamage).toBeGreaterThan(auraOff.expectedDamage);
   });
 
+  it("applies defender damage reduction from special rules", () => {
+    const damageTwoWeapon: Weapon = {
+      id: "crusher-weapon",
+      name: "Crusher Weapon",
+      attacks: 4,
+      skill: 3,
+      strength: 6,
+      ap: -1,
+      damage: 2,
+      type: "melee",
+      specialRules: [],
+    };
+
+    const baseline = calculateExpectedDamage({
+      attacker,
+      weapon: damageTwoWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+    });
+
+    const reduced = calculateExpectedDamage({
+      attacker,
+      weapon: damageTwoWeapon,
+      defender: {
+        ...defender,
+        specialRules: [{ type: "DAMAGE_REDUCTION", value: 1 }],
+      },
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+    });
+
+    expect(baseline.damagePerFailedSave).toBe(2);
+    expect(reduced.damagePerFailedSave).toBe(1);
+    expect(reduced.expectedDamage).toBeLessThan(baseline.expectedDamage);
+  });
+
+  it("applies active defender wound penalties", () => {
+    const meleeWeapon: Weapon = {
+      id: "daemon-blade",
+      name: "Daemon Blade",
+      attacks: 5,
+      skill: 3,
+      strength: 6,
+      ap: -1,
+      damage: 2,
+      type: "melee",
+      specialRules: [],
+    };
+
+    const noPenalty = calculateExpectedDamage({
+      attacker,
+      weapon: meleeWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+    });
+
+    const withPenalty = calculateExpectedDamage({
+      attacker,
+      weapon: meleeWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+      activeDefenderModifierRules: [{ type: "WOUND_MODIFIER", value: -1 }],
+    });
+
+    expect(noPenalty.woundTarget).toBe(3);
+    expect(withPenalty.woundTarget).toBe(4);
+    expect(withPenalty.expectedDamage).toBeLessThan(noPenalty.expectedDamage);
+  });
+
   it("applies battle-shock gated wound bonuses only when the target qualifies", () => {
     const rangedWeapon: Weapon = {
       id: "psycannon",

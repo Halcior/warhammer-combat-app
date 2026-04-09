@@ -59,6 +59,26 @@ export function mapNormalizedDetachmentToEnhancements(
     }
 
     if (
+      detachment.id === "khorne_daemonkin" &&
+      enhancementName.includes("blade of endless bloodshed")
+    ) {
+      return createImplementedEnhancement(enhancement, "fight", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Blade of Endless Bloodshed Effect",
+          description:
+            "The bearer's melee weapons gain +1 Attacks, +1 Strength and +1 Damage.",
+          phase: "fight",
+          modifiers: [
+            { type: "ATTACKS_MODIFIER", value: 1, attackType: "melee" },
+            { type: "STRENGTH_MODIFIER", value: 1, attackType: "melee" },
+            { type: "DAMAGE_MODIFIER", value: 1, attackType: "melee" },
+          ],
+        }),
+      ]);
+    }
+
+    if (
       detachment.id === "shield_host" &&
       (enhancementId.includes("hall_of_armouries") ||
         enhancementName.includes("hall of armouries"))
@@ -1371,6 +1391,22 @@ export function mapNormalizedDetachmentToStratagems(
     }
 
     if (
+      detachment.id === "boarding_butchers" &&
+      stratagemName.includes("savage resilience")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedDefenderRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Savage Resilience Effect",
+          description:
+            "Attacks targeting the unit have their Damage reduced by 1.",
+          phase,
+          modifiers: [{ type: "DAMAGE_REDUCTION", value: 1 }],
+        }),
+      ]);
+    }
+
+    if (
       detachment.id === "cult_of_blood" &&
       stratagemName.includes("bloody vengeance")
     ) {
@@ -1476,6 +1512,22 @@ export function mapNormalizedDetachmentToStratagems(
             "Ranged weapons can re-roll the result when determining the number of attacks.",
           phase,
           modifiers: [{ type: "REROLL_ATTACKS", attackType: "ranged" }],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "khorne_daemonkin" &&
+      stratagemName.includes("daemonic fury")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Daemonic Fury Effect",
+          description:
+            "The targeted World Eaters unit gains Lance on melee weapons.",
+          phase,
+          modifiers: [{ type: "LANCE", attackType: "melee" }],
         }),
       ]);
     }
@@ -1810,6 +1862,22 @@ export function mapNormalizedDetachmentToStratagems(
               requiresTargetUnravelling: true,
             },
           ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "possessed_slaughterband" &&
+      stratagemName.includes("daemonic resistance")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedDefenderRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Daemonic Resistance Effect",
+          description:
+            "Attacks targeting the Possessed unit suffer -1 to wound.",
+          phase,
+          modifiers: [{ type: "WOUND_MODIFIER", value: -1 }],
         }),
       ]);
     }
@@ -2249,6 +2317,26 @@ function createImplementedRuleOption(params: {
     name: params.name,
     description: params.description,
     appliesTo: "attacker",
+    phase: params.phase,
+    isToggle: true,
+    supportLevel: "implemented",
+    modifiers: params.modifiers,
+    engineTags: [],
+  };
+}
+
+function createImplementedDefenderRuleOption(params: {
+  id: string;
+  name: string;
+  description: string;
+  phase: RuleOption["phase"];
+  modifiers: RuleOption["modifiers"];
+}): RuleOption {
+  return {
+    id: params.id,
+    name: params.name,
+    description: params.description,
+    appliesTo: "defender",
     phase: params.phase,
     isToggle: true,
     supportLevel: "implemented",

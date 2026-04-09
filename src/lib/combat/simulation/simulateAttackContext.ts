@@ -24,6 +24,7 @@ export type SimulateAttackContextParams = Pick<
   | "defendingModels"
   | "conditions"
   | "activeModifierRules"
+  | "activeDefenderModifierRules"
 > & {
   runs: number;
 };
@@ -46,6 +47,8 @@ function simulateSingleAttackSequence(
   const combinedRules = [
     ...(params.weapon.specialRules ?? []),
     ...(params.activeModifierRules ?? []),
+    ...(params.defender.specialRules ?? []),
+    ...(params.activeDefenderModifierRules ?? []),
   ];
   const activeRules = filterActiveRules(combinedRules, {
     attacker: params.attacker,
@@ -100,6 +103,7 @@ function simulateSingleAttackSequence(
   const criticalHitThreshold = getCriticalHitThreshold(activeRules);
   const hitRerollMode = getHitRerollMode(activeRules);
   const woundRerollMode = getWoundRerollMode(activeRules);
+  const feelNoPain = getFeelNoPain(activeRules);
 
   let totalHits = 0;
   let totalWounds = 0;
@@ -129,7 +133,10 @@ function simulateSingleAttackSequence(
 
       if (!passesSave(saveTarget)) {
         totalFailedSaves++;
-        totalDamage += rollDamage(params.weapon, activeRules, params.conditions);
+        totalDamage += applyFeelNoPain(
+          rollDamage(params.weapon, activeRules, params.conditions),
+          feelNoPain
+        );
       }
 
       continue;
@@ -146,13 +153,19 @@ function simulateSingleAttackSequence(
 
     if (criticalWound && hasDevastating) {
       totalMortals++;
-      totalDamage += rollDamage(params.weapon, activeRules, params.conditions);
+      totalDamage += applyFeelNoPain(
+        rollDamage(params.weapon, activeRules, params.conditions),
+        feelNoPain
+      );
       continue;
     }
 
     if (!passesSave(criticalWound ? criticalSaveTarget : saveTarget)) {
       totalFailedSaves++;
-      totalDamage += rollDamage(params.weapon, activeRules, params.conditions);
+      totalDamage += applyFeelNoPain(
+        rollDamage(params.weapon, activeRules, params.conditions),
+        feelNoPain
+      );
     }
   }
 
@@ -251,12 +264,13 @@ function rollDamage(
 ): number {
   const baseDamage = rollValue(weapon.damage);
   const damageModifier = getDamageModifier(rules, weapon.type);
+  const damageReduction = getDamageReduction(rules);
   const melta =
     hasRule(rules, "MELTA") && conditions.isHalfRange
       ? (getRuleValue(rules, "MELTA") ?? 0)
       : 0;
 
-  return Math.max(0, baseDamage + damageModifier + melta);
+  return applyDamageReduction(baseDamage + damageModifier + melta, damageReduction);
 }
 
 function rollAttackValue(value: number | string, canReroll: boolean): number {
@@ -407,6 +421,55 @@ function getDamageModifier(
     if (rule.attackType && rule.attackType !== weaponType) return sum;
     return sum + rule.value;
   }, 0);
+}
+
+function getDamageReduction(rules: SpecialRule[] | undefined): number {
+  const candidates = (rules ?? [])
+    .filter(
+      (rule): rule is Extract<SpecialRule, { type: "DAMAGE_REDUCTION" }> =>
+        rule.type === "DAMAGE_REDUCTION"
+    )
+    .map((rule) => rule.value);
+
+  if (candidates.length === 0) return 0;
+
+  return Math.max(...candidates);
+}
+
+function getFeelNoPain(rules: SpecialRule[] | undefined): number | null {
+  const candidates = (rules ?? [])
+    .filter(
+      (rule): rule is Extract<SpecialRule, { type: "FEEL_NO_PAIN" }> =>
+        rule.type === "FEEL_NO_PAIN"
+    )
+    .map((rule) => rule.value);
+
+  if (candidates.length === 0) return null;
+
+  return Math.min(...candidates);
+}
+
+function applyDamageReduction(damage: number, damageReduction: number): number {
+  if (damage <= 0) return 0;
+  if (damageReduction <= 0) return damage;
+
+  return Math.max(1, damage - damageReduction);
+}
+
+function applyFeelNoPain(damage: number, feelNoPain: number | null): number {
+  if (damage <= 0 || feelNoPain === null) {
+    return damage;
+  }
+
+  let preventedDamage = 0;
+
+  for (let i = 0; i < damage; i++) {
+    if (rollD6() >= feelNoPain) {
+      preventedDamage += 1;
+    }
+  }
+
+  return Math.max(0, damage - preventedDamage);
 }
 
 function passesSave(target: number | null): boolean {

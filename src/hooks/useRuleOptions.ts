@@ -65,16 +65,20 @@ export function useEnhancementOptions(enhancements: EnhancementConfig[]) {
     );
   };
 
-  const activeEnhancementEffects: SpecialRule[] = useMemo(() => {
+  const activeEnhancementRuleEffects = useMemo(() => {
     return enhancements
       .filter((e) => activeEnhancementIds.includes(e.id))
-      .flatMap((e) => e.effects)
-      .flatMap((effect) => effect.modifiers);
+      .flatMap((e) => e.effects);
   }, [enhancements, activeEnhancementIds]);
+
+  const activeEnhancementEffects: SpecialRule[] = useMemo(() => {
+    return activeEnhancementRuleEffects.flatMap((effect) => effect.modifiers);
+  }, [activeEnhancementRuleEffects]);
 
   return {
     activeEnhancementIds,
     toggleEnhancement,
+    activeEnhancementRuleEffects,
     activeEnhancementEffects,
   };
 }
@@ -88,16 +92,20 @@ export function useStratagemOptions(stratagems: StratagemConfig[]) {
     );
   };
 
-  const activeStratagemEffects: SpecialRule[] = useMemo(() => {
+  const activeStratagemRuleEffects = useMemo(() => {
     return stratagems
       .filter((s) => activeStratagemIds.includes(s.id))
-      .flatMap((s) => s.effects)
-      .flatMap((effect) => effect.modifiers);
+      .flatMap((s) => s.effects);
   }, [stratagems, activeStratagemIds]);
+
+  const activeStratagemEffects: SpecialRule[] = useMemo(() => {
+    return activeStratagemRuleEffects.flatMap((effect) => effect.modifiers);
+  }, [activeStratagemRuleEffects]);
 
   return {
     activeStratagemIds,
     toggleStratagem,
+    activeStratagemRuleEffects,
     activeStratagemEffects,
   };
 }

@@ -25,12 +25,22 @@ export function explainAttackBreakdown(params: {
   defender: Unit;
   conditions: AttackConditions;
   activeModifierRules?: SpecialRule[];
+  activeDefenderModifierRules?: SpecialRule[];
 }): AttackBreakdownExplanation {
-  const { attacker, weapon, defender, conditions, activeModifierRules = [] } = params;
+  const {
+    attacker,
+    weapon,
+    defender,
+    conditions,
+    activeModifierRules = [],
+    activeDefenderModifierRules = [],
+  } = params;
 
   const combinedRules = [
     ...(weapon.specialRules ?? []),
     ...activeModifierRules,
+    ...(defender.specialRules ?? []),
+    ...activeDefenderModifierRules,
   ];
   const activeRules = filterActiveRules(combinedRules, {
     attacker,

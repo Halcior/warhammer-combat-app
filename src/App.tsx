@@ -22,6 +22,7 @@ import {
 
 import type { SimulationSummary } from "./lib/combat/simulation/analyzeSimulation";
 import type { CalculationMode } from "./lib/combat/simulation/runSimulationByMode";
+import type { RuleOption } from "./types/faction";
 
 import { explainAttackBreakdown } from "./lib/combat/explainAttackBreakdown";
 import { AttackBreakdownSourcesPanel } from "./components/AttackBreakdownSourcesPanel";
@@ -69,19 +70,36 @@ function App() {
     fallbackCompareWeaponId,
   ]);
 
-  const allActiveModifierRules = useMemo(() => {
+  const activeRuleEffects = useMemo(() => {
     return [
-      ...attackModifiers.allActiveModifierRules,
-      ...ruleOptions.activeRuleModifiers,
-      ...enhancementOptions.activeEnhancementEffects,
-      ...stratagemOptions.activeStratagemEffects,
+      ...ruleOptions.activeRuleOptions,
+      ...enhancementOptions.activeEnhancementRuleEffects,
+      ...stratagemOptions.activeStratagemRuleEffects,
     ];
   }, [
-    attackModifiers.allActiveModifierRules,
-    ruleOptions.activeRuleModifiers,
-    enhancementOptions.activeEnhancementEffects,
-    stratagemOptions.activeStratagemEffects,
+    ruleOptions.activeRuleOptions,
+    enhancementOptions.activeEnhancementRuleEffects,
+    stratagemOptions.activeStratagemRuleEffects,
   ]);
+
+  const attackerScopedModifierRules = useMemo(() => {
+    return [
+      ...attackModifiers.allActiveModifierRules,
+      ...activeRuleEffects
+        .filter((effect: RuleOption) => effect.appliesTo !== "defender")
+        .flatMap((effect) => effect.modifiers),
+    ];
+  }, [attackModifiers.allActiveModifierRules, activeRuleEffects]);
+
+  const defenderScopedModifierRules = useMemo(() => {
+    return activeRuleEffects
+      .filter((effect: RuleOption) => effect.appliesTo === "defender")
+      .flatMap((effect) => effect.modifiers);
+  }, [activeRuleEffects]);
+
+  const allActiveModifierRules = useMemo(() => {
+    return [...attackerScopedModifierRules, ...defenderScopedModifierRules];
+  }, [attackerScopedModifierRules, defenderScopedModifierRules]);
 
   const expectedResult = useMemo(() => {
     return calculateExpectedDamage({
@@ -91,7 +109,8 @@ function App() {
       attackingModels: battleSetup.attackingModels,
       defendingModels: battleSetup.defendingModels,
       conditions: battleSetup.conditions,
-      activeModifierRules: allActiveModifierRules,
+      activeModifierRules: attackerScopedModifierRules,
+      activeDefenderModifierRules: defenderScopedModifierRules,
     });
   }, [
     battleSetup.attacker,
@@ -100,7 +119,8 @@ function App() {
     battleSetup.attackingModels,
     battleSetup.defendingModels,
     battleSetup.conditions,
-    allActiveModifierRules,
+    attackerScopedModifierRules,
+    defenderScopedModifierRules,
   ]);
 
   const attackBreakdownExplanation = useMemo(() => {
@@ -109,14 +129,16 @@ function App() {
       weapon: battleSetup.selectedWeapon,
       defender: battleSetup.defender,
       conditions: battleSetup.conditions,
-      activeModifierRules: allActiveModifierRules,
+      activeModifierRules: attackerScopedModifierRules,
+      activeDefenderModifierRules: defenderScopedModifierRules,
     });
   }, [
     battleSetup.attacker,
     battleSetup.selectedWeapon,
     battleSetup.defender,
     battleSetup.conditions,
-    allActiveModifierRules,
+    attackerScopedModifierRules,
+    defenderScopedModifierRules,
   ]);
 
   const compareWeapon =
@@ -131,7 +153,8 @@ function App() {
       attackingModels: battleSetup.attackingModels,
       defendingModels: battleSetup.defendingModels,
       conditions: battleSetup.conditions,
-      activeModifierRules: allActiveModifierRules,
+      activeModifierRules: attackerScopedModifierRules,
+      activeDefenderModifierRules: defenderScopedModifierRules,
     });
   }, [
     battleSetup.attacker,
@@ -140,7 +163,8 @@ function App() {
     battleSetup.attackingModels,
     battleSetup.defendingModels,
     battleSetup.conditions,
-    allActiveModifierRules,
+    attackerScopedModifierRules,
+    defenderScopedModifierRules,
   ]);
 
   const handleRunSimulation = () => {
@@ -158,7 +182,8 @@ function App() {
         attackingModels: battleSetup.attackingModels,
         defendingModels: battleSetup.defendingModels,
         conditions: battleSetup.conditions,
-        activeModifierRules: allActiveModifierRules,
+        activeModifierRules: attackerScopedModifierRules,
+        activeDefenderModifierRules: defenderScopedModifierRules,
       },
     });
 

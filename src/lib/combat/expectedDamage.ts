@@ -32,12 +32,15 @@ export function calculateExpectedDamage({
   defendingModels,
   conditions,
   activeModifierRules = [],
+  activeDefenderModifierRules = [],
 }: CalculateExpectedDamageParams): ExpectedDamageResult {
   void attacker;
 
   const combinedWeaponRules = [
     ...(weapon.specialRules ?? []),
     ...(activeModifierRules ?? []),
+    ...(defender.specialRules ?? []),
+    ...(activeDefenderModifierRules ?? []),
   ];
   const activeRules = filterActiveRules(combinedWeaponRules, {
     attacker,
@@ -56,6 +59,8 @@ export function calculateExpectedDamage({
   const hitModifier = getHitModifier(activeRules, weapon.type);
   const strengthModifier = getStrengthModifier(activeRules, weapon.type);
   const damageModifier = getDamageModifier(activeRules, weapon.type);
+  const damageReduction = getDamageReduction(activeRules);
+  const feelNoPain = getFeelNoPain(activeRules);
 
   const effectiveAp = weapon.ap - apModifier;
   const effectiveStrength = weapon.strength + strengthModifier;
@@ -63,8 +68,10 @@ export function calculateExpectedDamage({
   const meltaBonus = conditions.isHalfRange
     ? getMeltaValue(activeRules)
     : 0;
-  const damagePerFailedSave =
-    parseDiceValue(weapon.damage) + damageModifier + meltaBonus;
+  const damagePerFailedSave = applyDamageReduction(
+    parseDiceValue(weapon.damage) + damageModifier + meltaBonus,
+    damageReduction
+  );
 
   const rapidFireBonus = conditions.isHalfRange
     ? getRapidFireValue(activeRules)
@@ -222,12 +229,16 @@ export function calculateExpectedDamage({
   const criticalDamage = hasDevastatingWounds
     ? 0
     : expectedUnsavedCriticalWounds * damagePerFailedSave;
+  const feelNoPainMultiplier = 1 - getSuccessChance(feelNoPain);
   const normalDamage =
-    expectedUnsavedNormalWounds * damagePerFailedSave + criticalDamage;
+    (expectedUnsavedNormalWounds * damagePerFailedSave + criticalDamage) *
+    feelNoPainMultiplier;
+  const mortalWoundsAfterFeelNoPain =
+    mortalWoundsFromDevastating * feelNoPainMultiplier;
   const expectedUnsavedWounds =
     expectedUnsavedNormalWounds + expectedUnsavedCriticalWounds;
 
-  const expectedDamage = normalDamage + mortalWoundsFromDevastating;
+  const expectedDamage = normalDamage + mortalWoundsAfterFeelNoPain;
 
   const normalKillsPerFailedSave = Math.min(
     1,
@@ -235,14 +246,18 @@ export function calculateExpectedDamage({
   );
 
   const slainModelsFromNormal =
-    expectedUnsavedNormalWounds * normalKillsPerFailedSave;
+    expectedUnsavedNormalWounds *
+    normalKillsPerFailedSave *
+    feelNoPainMultiplier;
   const slainModelsFromCritical = hasDevastatingWounds
     ? 0
-    : expectedUnsavedCriticalWounds * normalKillsPerFailedSave;
+    : expectedUnsavedCriticalWounds *
+      normalKillsPerFailedSave *
+      feelNoPainMultiplier;
 
   const slainModelsFromDevastating = hasDevastatingWounds
     ? Math.min(
-        (criticalWoundsFromRolls * damagePerFailedSave) /
+        (criticalWoundsFromRolls * damagePerFailedSave * feelNoPainMultiplier) /
           defender.woundsPerModel,
         criticalWoundsFromRolls
       )
@@ -399,6 +414,39 @@ function getDamageModifier(
     if (rule.attackType && rule.attackType !== weaponType) return sum;
     return sum + rule.value;
   }, 0);
+}
+
+function getDamageReduction(rules: SpecialRule[]): number {
+  const candidates = rules
+    .filter(
+      (rule): rule is Extract<SpecialRule, { type: "DAMAGE_REDUCTION" }> =>
+        rule.type === "DAMAGE_REDUCTION"
+    )
+    .map((rule) => rule.value);
+
+  if (candidates.length === 0) return 0;
+
+  return Math.max(...candidates);
+}
+
+function getFeelNoPain(rules: SpecialRule[]): number | null {
+  const candidates = rules
+    .filter(
+      (rule): rule is Extract<SpecialRule, { type: "FEEL_NO_PAIN" }> =>
+        rule.type === "FEEL_NO_PAIN"
+    )
+    .map((rule) => rule.value);
+
+  if (candidates.length === 0) return null;
+
+  return Math.min(...candidates);
+}
+
+function applyDamageReduction(damage: number, damageReduction: number): number {
+  if (damage <= 0) return 0;
+  if (damageReduction <= 0) return damage;
+
+  return Math.max(1, damage - damageReduction);
 }
 
 function getWoundModifier(

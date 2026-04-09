@@ -13,6 +13,7 @@ export type CalculateExpectedDamageParams = {
   defendingModels: number;
   conditions: AttackConditions;
   activeModifierRules?: SpecialRule[];
+  activeDefenderModifierRules?: SpecialRule[];
 };
 
 export type ExpectedDamageResult = {
