@@ -31,6 +31,8 @@ const baseConditions: AttackConditions = {
   attackerDisembarkedThisTurn: false,
   attackerIsFiringOverwatch: false,
   attackerIsGuided: false,
+  attackerIsVesselOfWrath: false,
+  attackerWithinFriendlyCharacterRange: false,
   attackerWithinPowerMatrix: false,
   attackerSetUpThisTurn: false,
   attackerSetToDefend: false,

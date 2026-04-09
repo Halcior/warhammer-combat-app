@@ -5,7 +5,11 @@ import {
   getSustainedHitsValue,
   hasRule,
 } from "../rules";
-import { parseDiceValue, getSuccessChance } from "./probability";
+import {
+  getExpectedDiceValueWithOptionalReroll,
+  getSuccessChance,
+  parseDiceValue,
+} from "./probability";
 import { getModifiedSave, applyCoverToSave } from "./save";
 import { getWoundTarget } from "./wound";
 import {
@@ -59,8 +63,6 @@ export function calculateExpectedDamage({
   const meltaBonus = conditions.isHalfRange
     ? getMeltaValue(activeRules)
     : 0;
-
-  const baseAttacksPerModel = parseDiceValue(weapon.attacks);
   const damagePerFailedSave =
     parseDiceValue(weapon.damage) + damageModifier + meltaBonus;
 
@@ -72,6 +74,10 @@ export function calculateExpectedDamage({
   const blastBonus = hasBlast
     ? Math.floor(conditions.targetModelCount / 5)
     : 0;
+  const hasAttackRerolls = hasRule(activeRules, "REROLL_ATTACKS");
+  const baseAttacksPerModel = hasAttackRerolls
+    ? getExpectedDiceValueWithOptionalReroll(weapon.attacks)
+    : parseDiceValue(weapon.attacks);
 
   const attacksPerModel = Math.max(
     0,

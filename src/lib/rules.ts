@@ -46,6 +46,8 @@ export function formatSpecialRule(rule: SpecialRule): string {
       return "Re-roll Hits";
     case "REROLL_HITS_ONES":
       return "Re-roll Hit Rolls of 1";
+    case "REROLL_ATTACKS":
+      return "Re-roll Attacks";
     case "REROLL_WOUNDS":
       return "Re-roll Wounds";
     case "REROLL_WOUNDS_ONES":

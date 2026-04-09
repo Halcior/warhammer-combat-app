@@ -46,6 +46,22 @@ export function ruleApplies(
   }
 
   if (
+    "requiresAttackerIsVesselOfWrath" in rule &&
+    rule.requiresAttackerIsVesselOfWrath &&
+    !context.conditions.attackerIsVesselOfWrath
+  ) {
+    return false;
+  }
+
+  if (
+    "requiresAttackerWithinFriendlyCharacterRange" in rule &&
+    rule.requiresAttackerWithinFriendlyCharacterRange &&
+    !context.conditions.attackerWithinFriendlyCharacterRange
+  ) {
+    return false;
+  }
+
+  if (
     "requiresAttackerGuided" in rule &&
     rule.requiresAttackerGuided &&
     !context.conditions.attackerIsGuided
@@ -65,6 +81,14 @@ export function ruleApplies(
     "requiresHalfRange" in rule &&
     rule.requiresHalfRange &&
     !context.conditions.isHalfRange
+  ) {
+    return false;
+  }
+
+  if (
+    "requiresChargeTurn" in rule &&
+    rule.requiresChargeTurn &&
+    !context.conditions.isChargeTurn
   ) {
     return false;
   }

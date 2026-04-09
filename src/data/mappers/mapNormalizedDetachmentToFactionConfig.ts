@@ -40,6 +40,25 @@ export function mapNormalizedDetachmentToEnhancements(
     const enhancementId = enhancement.id.toLowerCase();
 
     if (
+      detachment.id === "berzerker_warband" &&
+      enhancementName.includes("berzerker glaive")
+    ) {
+      return createImplementedEnhancement(enhancement, "fight", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Berzerker Glaive Effect",
+          description:
+            "The bearer's melee weapons gain +1 Attacks and +1 Damage.",
+          phase: "fight",
+          modifiers: [
+            { type: "ATTACKS_MODIFIER", value: 1, attackType: "melee" },
+            { type: "DAMAGE_MODIFIER", value: 1, attackType: "melee" },
+          ],
+        }),
+      ]);
+    }
+
+    if (
       detachment.id === "shield_host" &&
       (enhancementId.includes("hall_of_armouries") ||
         enhancementName.includes("hall of armouries"))
@@ -325,6 +344,27 @@ export function mapNormalizedDetachmentToEnhancements(
     }
 
     if (
+      detachment.id === "possessed_slaughterband" &&
+      enhancementName.includes("frenzied focus")
+    ) {
+      return createImplementedEnhancement(enhancement, "any", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Frenzied Focus Effect",
+          description: "Daemon attacks score critical hits on 5+.",
+          phase: "any",
+          modifiers: [
+            {
+              type: "CRITICAL_HITS_ON",
+              value: 5,
+              requiredAttackerKeywords: ["DAEMON"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
       detachment.id === "solar_spearhead" &&
       enhancementName.includes("adamantine talisman")
     ) {
@@ -339,6 +379,36 @@ export function mapNormalizedDetachmentToEnhancements(
             { type: "ATTACKS_MODIFIER", value: 1, attackType: "melee" },
             { type: "STRENGTH_MODIFIER", value: 1, attackType: "melee" },
             { type: "DAMAGE_MODIFIER", value: 1, attackType: "melee" },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "vessels_of_wrath" &&
+      enhancementName.includes("archslaughterer")
+    ) {
+      return createImplementedEnhancement(enhancement, "fight", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-ap-effect`,
+          name: "Archslaughterer: AP Bonus",
+          description: "The bearer's melee weapons improve AP by 1.",
+          phase: "fight",
+          modifiers: [{ type: "AP_MODIFIER", value: 1, attackType: "melee" }],
+        }),
+        createImplementedRuleOption({
+          id: `${enhancement.id}-damage-effect`,
+          name: "Archslaughterer: Vessel Damage Bonus",
+          description:
+            "While the bearer is a Vessel of Wrath, its melee weapons gain +1 Damage.",
+          phase: "fight",
+          modifiers: [
+            {
+              type: "DAMAGE_MODIFIER",
+              value: 1,
+              attackType: "melee",
+              requiresAttackerIsVesselOfWrath: true,
+            },
           ],
         }),
       ]);
@@ -1278,6 +1348,29 @@ export function mapNormalizedDetachmentToStratagems(
     }
 
     if (
+      detachment.id === "berzerker_warband" &&
+      stratagemName.includes("hack and slash")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Hack and Slash Effect",
+          description:
+            "Charging melee attacks improve AP by 1 until the end of the phase.",
+          phase,
+          modifiers: [
+            {
+              type: "AP_MODIFIER",
+              value: 1,
+              attackType: "melee",
+              requiresChargeTurn: true,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
       detachment.id === "cryptek_conclave" &&
       stratagemName.includes("animus curse")
     ) {
@@ -1309,6 +1402,22 @@ export function mapNormalizedDetachmentToStratagems(
               excludedAttackerKeywords: ["MONSTER", "VEHICLE", "TITANIC"],
             },
           ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "experimental_prototype_cadre" &&
+      stratagemName.includes("experimental weaponry")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Experimental Weaponry Effect",
+          description:
+            "Ranged weapons can re-roll the result when determining the number of attacks.",
+          phase,
+          modifiers: [{ type: "REROLL_ATTACKS", attackType: "ranged" }],
         }),
       ]);
     }
@@ -1648,6 +1757,46 @@ export function mapNormalizedDetachmentToStratagems(
     }
 
     if (
+      detachment.id === "possessed_slaughterband" &&
+      stratagemName.includes("daemonic strength")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-eightbound-effect`,
+          name: "Daemonic Strength: Eightbound Bonus",
+          description:
+            "Eightbound melee attacks gain +1 Damage against non-Monster, non-Vehicle targets.",
+          phase,
+          modifiers: [
+            {
+              type: "DAMAGE_MODIFIER",
+              value: 1,
+              attackType: "melee",
+              requiredAttackerKeywords: ["EIGHTBOUND"],
+              excludedDefenderKeywords: ["MONSTER", "VEHICLE"],
+            },
+          ],
+        }),
+        createImplementedRuleOption({
+          id: `${stratagem.id}-exalted-effect`,
+          name: "Daemonic Strength: Exalted Eightbound Bonus",
+          description:
+            "Exalted Eightbound melee attacks gain +1 Damage against Monster and Vehicle targets.",
+          phase,
+          modifiers: [
+            {
+              type: "DAMAGE_MODIFIER",
+              value: 1,
+              attackType: "melee",
+              requiredAttackerKeywords: ["EXALTED EIGHTBOUND"],
+              requiredDefenderKeywords: ["MONSTER", "VEHICLE"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
       detachment.id === "retaliation_cadre" &&
       stratagemName.includes("arro")
     ) {
@@ -1791,6 +1940,59 @@ export function mapNormalizedDetachmentToStratagems(
               value: 1,
               requiresTargetWithinObjectiveRange: true,
               excludedAttackerKeywords: ["MONSTER", "TITANIC"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "vessels_of_wrath" &&
+      stratagemName.includes("aspire to infamy")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Aspire to Infamy Effect",
+          description:
+            "Khorne Berzerkers and Jakhals within Character support range gain +1 Strength and +1 AP in melee.",
+          phase,
+          modifiers: [
+            {
+              type: "STRENGTH_MODIFIER",
+              value: 1,
+              attackType: "melee",
+              requiredAttackerKeywords: ["KHORNE BERZERKERS", "JAKHALS"],
+              requiresAttackerWithinFriendlyCharacterRange: true,
+            },
+            {
+              type: "AP_MODIFIER",
+              value: 1,
+              attackType: "melee",
+              requiredAttackerKeywords: ["KHORNE BERZERKERS", "JAKHALS"],
+              requiresAttackerWithinFriendlyCharacterRange: true,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "vessels_of_wrath" &&
+      stratagemName.includes("overshadowed by none")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Overshadowed by None Effect",
+          description:
+            "Melee attacks re-roll wounds against Monster and Vehicle targets.",
+          phase,
+          modifiers: [
+            {
+              type: "REROLL_WOUNDS",
+              attackType: "melee",
+              requiredDefenderKeywords: ["MONSTER", "VEHICLE"],
             },
           ],
         }),

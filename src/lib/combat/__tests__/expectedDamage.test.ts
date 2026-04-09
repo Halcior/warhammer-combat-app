@@ -19,6 +19,8 @@ const baseConditions: AttackConditions = {
   attackerDisembarkedThisTurn: false,
   attackerIsFiringOverwatch: false,
   attackerIsGuided: false,
+  attackerIsVesselOfWrath: false,
+  attackerWithinFriendlyCharacterRange: false,
   attackerWithinPowerMatrix: false,
   attackerSetUpThisTurn: false,
   attackerSetToDefend: false,
@@ -469,6 +471,44 @@ describe("calculateExpectedDamage", () => {
     expect(withAttackBonus.attacksPerModel).toBe(7);
     expect(withAttackBonus.totalAttacks).toBe(7);
     expect(withAttackBonus.expectedDamage).toBeGreaterThan(noBonus.expectedDamage);
+  });
+
+  it("re-rolls variable attacks when REROLL_ATTACKS is active", () => {
+    const swingyWeapon: Weapon = {
+      id: "burst-cannon-volley",
+      name: "Burst Cannon Volley",
+      attacks: "D6",
+      skill: 4,
+      strength: 5,
+      ap: 0,
+      damage: 1,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const noBonus = calculateExpectedDamage({
+      attacker,
+      weapon: swingyWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+    });
+
+    const withAttackReroll = calculateExpectedDamage({
+      attacker,
+      weapon: swingyWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [{ type: "REROLL_ATTACKS", attackType: "ranged" }],
+    });
+
+    expect(noBonus.attacksPerModel).toBeCloseTo(3.5, 5);
+    expect(withAttackReroll.attacksPerModel).toBeCloseTo(4.25, 5);
+    expect(withAttackReroll.expectedDamage).toBeGreaterThan(noBonus.expectedDamage);
   });
 
   it("applies full hit rerolls when attacker keyword condition matches", () => {

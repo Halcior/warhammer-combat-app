@@ -7,6 +7,9 @@ export type ConditionalRuleFields = {
   requiresAttackWithinObjectiveRange?: boolean;
   requiresAttackerDisembarkedThisTurn?: boolean;
   requiresAttackerFiringOverwatch?: boolean;
+  requiresAttackerIsVesselOfWrath?: boolean;
+  requiresAttackerWithinFriendlyCharacterRange?: boolean;
+  requiresChargeTurn?: boolean;
   requiresHalfRange?: boolean;
   requiresAttachedUnit?: boolean;
   requiresAttackerGuided?: boolean;
@@ -42,7 +45,7 @@ export type SpecialRule =
   | { type: "TWIN_LINKED" }
   | { type: "TORRENT" }
   | ({ type: "LETHAL_HITS" } & ConditionalRuleFields)
-  | { type: "LANCE" }
+  | ({ type: "LANCE" } & ConditionalRuleFields)
   | { type: "INDIRECT_FIRE" }
   | { type: "PRECISION" }
   | { type: "BLAST" }
@@ -57,6 +60,7 @@ export type SpecialRule =
   | { type: "DAMAGE_REDUCTION"; value: number }
   | ({ type: "REROLL_HITS" } & ConditionalRuleFields)
   | ({ type: "REROLL_HITS_ONES" } & ConditionalRuleFields)
+  | ({ type: "REROLL_ATTACKS" } & ConditionalRuleFields)
   | ({ type: "REROLL_WOUNDS" } & ConditionalRuleFields)
   | ({ type: "REROLL_WOUNDS_ONES" } & ConditionalRuleFields)
   | ({ type: "FIXED_HIT_ROLL"; value: number } & ConditionalRuleFields)
@@ -116,6 +120,8 @@ export type AttackConditions = {
   attackerDisembarkedThisTurn: boolean;
   attackerIsFiringOverwatch: boolean;
   attackerIsGuided: boolean;
+  attackerIsVesselOfWrath: boolean;
+  attackerWithinFriendlyCharacterRange: boolean;
   attackerWithinPowerMatrix: boolean;
   attackerSetUpThisTurn: boolean;
   attackerSetToDefend: boolean;

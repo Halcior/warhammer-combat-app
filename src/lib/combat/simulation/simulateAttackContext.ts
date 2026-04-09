@@ -13,6 +13,7 @@ import {
   type SimulationRunResult,
   type SimulationSummary,
 } from "./analyzeSimulation";
+import { parseDiceValue } from "../probability";
 
 export type SimulateAttackContextParams = Pick<
   CalculateExpectedDamageParams,
@@ -178,10 +179,14 @@ function getTotalAttacks(
   rules: SpecialRule[]
 ): number {
   const attacksModifier = getAttacksModifier(rules, weapon.type);
+  const rerollAttacks = hasRule(rules, "REROLL_ATTACKS");
   let attacks = 0;
 
   for (let i = 0; i < attackingModels; i++) {
-    attacks += Math.max(0, rollValue(weapon.attacks) + attacksModifier);
+    attacks += Math.max(
+      0,
+      rollAttackValue(weapon.attacks, rerollAttacks) + attacksModifier
+    );
   }
 
   if (hasRule(rules, "RAPID_FIRE") && conditions.isHalfRange) {
@@ -252,6 +257,16 @@ function rollDamage(
       : 0;
 
   return Math.max(0, baseDamage + damageModifier + melta);
+}
+
+function rollAttackValue(value: number | string, canReroll: boolean): number {
+  let result = rollValue(value);
+
+  if (canReroll && result < parseDiceValue(value)) {
+    result = rollValue(value);
+  }
+
+  return result;
 }
 
 function rollWithReroll(

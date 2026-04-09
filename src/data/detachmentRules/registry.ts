@@ -18,15 +18,19 @@ import { krootHuntingPackRuleOverride } from "./tau/krootHuntingPack";
 import { montKaRuleOverride } from "./tau/montKa";
 import { retaliationCadreRuleOverride } from "./tau/retaliationCadre";
 import { starfireCadreRuleOverride } from "./tau/starfireCadre";
+import { berzerkerWarbandRuleOverride } from "./worldEaters/berzerkerWarband";
+import { goretrackOnslaughtRuleOverride } from "./worldEaters/goretrackOnslaught";
 
 const detachmentRuleOverrideRegistry: Record<string, DetachmentRuleOverride> = {
   annihilation_legion: annihilationLegionRuleOverride,
   auric_champions: auricChampionsRuleOverride,
   awakened_dynasty: awakenedDynastyRuleOverride,
+  berzerker_warband: berzerkerWarbandRuleOverride,
   black_ship_guardians: blackShipGuardiansRuleOverride,
   canoptek_court: canoptekCourtRuleOverride,
   canoptek_harvesters: canoptekHarvestersRuleOverride,
   cursed_legion: cursedLegionRuleOverride,
+  goretrack_onslaught: goretrackOnslaughtRuleOverride,
   kauyon: kauyonRuleOverride,
   kroot_hunting_pack: krootHuntingPackRuleOverride,
   lions_of_the_emperor: lionsOfTheEmperorRuleOverride,

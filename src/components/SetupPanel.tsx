@@ -284,6 +284,34 @@ export function SetupPanel({
       <label className="checkbox-row">
         <input
           type="checkbox"
+          checked={conditions.attackerIsVesselOfWrath}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              attackerIsVesselOfWrath: e.target.checked,
+            }))
+          }
+        />
+        Attacker is a Vessel of Wrath
+      </label>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
+          checked={conditions.attackerWithinFriendlyCharacterRange}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              attackerWithinFriendlyCharacterRange: e.target.checked,
+            }))
+          }
+        />
+        Attacker within friendly Character range
+      </label>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
           checked={conditions.attackWithinObjectiveRange}
           onChange={(e) =>
             setConditions((prev) => ({

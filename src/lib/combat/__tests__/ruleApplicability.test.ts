@@ -23,6 +23,8 @@ const baseConditions: AttackConditions = {
   attackerDisembarkedThisTurn: false,
   attackerIsFiringOverwatch: false,
   attackerIsGuided: false,
+  attackerIsVesselOfWrath: false,
+  attackerWithinFriendlyCharacterRange: false,
   attackerWithinPowerMatrix: false,
   attackerSetUpThisTurn: false,
   attackerSetToDefend: false,
@@ -106,6 +108,12 @@ describe("ruleApplicability", () => {
         requiresAttachedUnit: true,
       },
       {
+        type: "AP_MODIFIER",
+        value: 1,
+        attackType: "melee",
+        requiresChargeTurn: true,
+      },
+      {
         type: "REROLL_HITS",
         requiredAttackerKeywords: ["CANOPTEK"],
         requiresAttackerWithinPowerMatrix: true,
@@ -149,6 +157,18 @@ describe("ruleApplicability", () => {
         requiresAttackWithinObjectiveRange: true,
       },
       {
+        type: "DAMAGE_MODIFIER",
+        value: 1,
+        attackType: "melee",
+        requiresAttackerIsVesselOfWrath: true,
+      },
+      {
+        type: "STRENGTH_MODIFIER",
+        value: 1,
+        attackType: "melee",
+        requiresAttackerWithinFriendlyCharacterRange: true,
+      },
+      {
         type: "AP_MODIFIER",
         value: 1,
         attackType: "melee",
@@ -168,7 +188,10 @@ describe("ruleApplicability", () => {
         attackerDisembarkedThisTurn: true,
         attackerIsFiringOverwatch: true,
         attackerIsGuided: true,
+        attackerIsVesselOfWrath: true,
+        attackerWithinFriendlyCharacterRange: true,
         isHalfRange: true,
+        isChargeTurn: true,
         isAttachedUnit: true,
         battleRound: 3,
         targetDistanceInches: 9,
@@ -184,25 +207,68 @@ describe("ruleApplicability", () => {
       },
     });
 
-    expect(activeRules).toHaveLength(14);
+    expect(activeRules).toHaveLength(15);
     expect(activeRules.map((rule) => rule.type)).toEqual([
       "REROLL_HITS",
       "REROLL_WOUNDS",
       "REROLL_HITS_ONES",
       "IGNORES_COVER",
       "REROLL_WOUNDS_ONES",
-      "REROLL_HITS",
-      "FIXED_HIT_ROLL",
       "AP_MODIFIER",
       "REROLL_HITS",
-      "LETHAL_HITS",
+      "REROLL_HITS",
+      "FIXED_HIT_ROLL",
       "SUSTAINED_HITS",
       "AP_MODIFIER",
       "CRITICAL_WOUND_AP_MODIFIER",
+      "DAMAGE_MODIFIER",
+      "STRENGTH_MODIFIER",
       "AP_MODIFIER",
     ]);
   });
 
+  it("rejects charge, vessel and character-range rules when state checks fail", () => {
+    const rules: SpecialRule[] = [
+      {
+        type: "AP_MODIFIER",
+        value: 1,
+        requiresChargeTurn: true,
+      },
+      {
+        type: "DAMAGE_MODIFIER",
+        value: 1,
+        requiresAttackerIsVesselOfWrath: true,
+      },
+      {
+        type: "STRENGTH_MODIFIER",
+        value: 1,
+        requiresAttackerWithinFriendlyCharacterRange: true,
+      },
+    ];
+
+    const activeRules = filterActiveRules(rules, {
+      attacker,
+      defender,
+      weapon,
+      conditions: baseConditions,
+    });
+
+    expect(activeRules).toEqual([]);
+  });
+
+  it("derives reroll modes from the active rule set", () => {
+    const rules: SpecialRule[] = [
+      { type: "REROLL_HITS_ONES" },
+      { type: "REROLL_HITS" },
+      { type: "TWIN_LINKED" },
+    ];
+
+    expect(getHitRerollMode(rules)).toBe("full");
+    expect(getWoundRerollMode(rules)).toBe("full");
+  });
+});
+ 
+describe("ruleApplicability negative cases", () => {
   it("rejects rules when exclusion keywords or state checks fail", () => {
     const rules: SpecialRule[] = [
       {
@@ -228,16 +294,5 @@ describe("ruleApplicability", () => {
     });
 
     expect(activeRules).toEqual([]);
-  });
-
-  it("derives reroll modes from the active rule set", () => {
-    const rules: SpecialRule[] = [
-      { type: "REROLL_HITS_ONES" },
-      { type: "REROLL_HITS" },
-      { type: "TWIN_LINKED" },
-    ];
-
-    expect(getHitRerollMode(rules)).toBe("full");
-    expect(getWoundRerollMode(rules)).toBe("full");
   });
 });

@@ -48,6 +48,7 @@ export function explainAttackBreakdown(params: {
     "ATTACKS_MODIFIER",
     weapon.type
   );
+  const hasAttackRerolls = hasRule(activeRules, "REROLL_ATTACKS");
   const hitRerollMode = getHitRerollMode(activeRules);
   const woundRerollMode = getWoundRerollMode(activeRules);
 
@@ -158,6 +159,10 @@ export function explainAttackBreakdown(params: {
       { label: "Final save", value: `${finalSave}+` },
     ],
     damage: [
+      {
+        label: "Attack count rerolls",
+        value: hasAttackRerolls ? "Yes" : "No",
+      },
       {
         label: "Attacks modifier",
         value: attacksModifier ? formatSignedModifier(attacksModifier) : 0,
