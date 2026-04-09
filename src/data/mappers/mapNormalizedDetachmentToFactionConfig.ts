@@ -451,6 +451,316 @@ export function mapNormalizedDetachmentToEnhancements(
       ]);
     }
 
+    if (
+      detachment.id === "experimental_prototype_cadre" &&
+      enhancementName.includes("supernova launcher")
+    ) {
+      return createImplementedEnhancement(enhancement, "shooting", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Supernova Launcher Effect",
+          description:
+            "Improve a ranged weapon's Strength by 3, and its AP and Damage by 1.",
+          phase: "shooting",
+          modifiers: [
+            { type: "STRENGTH_MODIFIER", value: 3, attackType: "ranged" },
+            { type: "AP_MODIFIER", value: 1, attackType: "ranged" },
+            { type: "DAMAGE_MODIFIER", value: 1, attackType: "ranged" },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "experimental_prototype_cadre" &&
+      enhancementName.includes("thermoneutronic projector")
+    ) {
+      return createImplementedEnhancement(enhancement, "shooting", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Thermoneutronic Projector Effect",
+          description:
+            "Improve a ranged weapon's Strength by 2, and its AP and Damage by 1.",
+          phase: "shooting",
+          modifiers: [
+            { type: "STRENGTH_MODIFIER", value: 2, attackType: "ranged" },
+            { type: "AP_MODIFIER", value: 1, attackType: "ranged" },
+            { type: "DAMAGE_MODIFIER", value: 1, attackType: "ranged" },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "experimental_prototype_cadre" &&
+      enhancementName.includes("plasma accelerator rifle")
+    ) {
+      return createImplementedEnhancement(enhancement, "shooting", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Plasma Accelerator Rifle Effect",
+          description:
+            "Improve a ranged weapon's Attacks by 1, Strength by 2, and AP and Damage by 1.",
+          phase: "shooting",
+          modifiers: [
+            { type: "ATTACKS_MODIFIER", value: 1, attackType: "ranged" },
+            { type: "STRENGTH_MODIFIER", value: 2, attackType: "ranged" },
+            { type: "AP_MODIFIER", value: 1, attackType: "ranged" },
+            { type: "DAMAGE_MODIFIER", value: 1, attackType: "ranged" },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "experimental_prototype_cadre" &&
+      enhancementName.includes("fusion blades")
+    ) {
+      return createImplementedEnhancement(enhancement, "shooting", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Fusion Blades Effect",
+          description:
+            "Improve a ranged weapon's Attacks by 1, Strength by 3, and add Melta 4.",
+          phase: "shooting",
+          modifiers: [
+            { type: "ATTACKS_MODIFIER", value: 1, attackType: "ranged" },
+            { type: "STRENGTH_MODIFIER", value: 3, attackType: "ranged" },
+            { type: "MELTA", value: 4, attackType: "ranged" },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "kauyon" &&
+      enhancementName.includes("exemplar of the kauyon")
+    ) {
+      return createImplementedEnhancement(enhancement, "shooting", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Exemplar of the Kauyon Effect",
+          description:
+            "A led unit gains Sustained Hits 1 with ranged weapons from battle round 2 onwards.",
+          phase: "shooting",
+          modifiers: [
+            {
+              type: "SUSTAINED_HITS",
+              value: 1,
+              attackType: "ranged",
+              requiresAttachedUnit: true,
+              requiresBattleRoundAtLeast: 2,
+              requiresBattleRoundAtMost: 5,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "kauyon" &&
+      enhancementName.includes("precision of the patient hunter")
+    ) {
+      return createImplementedEnhancement(enhancement, "shooting", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-hit-effect`,
+          name: "Precision of the Patient Hunter: Hit Bonus",
+          description: "The bearer's ranged attacks gain +1 to hit.",
+          phase: "shooting",
+          modifiers: [{ type: "HIT_MODIFIER", value: 1, attackType: "ranged" }],
+        }),
+        createImplementedRuleOption({
+          id: `${enhancement.id}-wound-effect`,
+          name: "Precision of the Patient Hunter: Wound Bonus",
+          description:
+            "From battle round 3 onwards, the bearer's ranged attacks gain +1 to wound.",
+          phase: "shooting",
+          modifiers: [
+            {
+              type: "WOUND_MODIFIER",
+              value: 1,
+              attackType: "ranged",
+              requiresBattleRoundAtLeast: 3,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "kauyon" &&
+      enhancementName.includes("through unity, devastation")
+    ) {
+      return createImplementedEnhancement(enhancement, "shooting", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Through Unity, Devastation Effect",
+          description:
+            "Guided ranged attacks against a spotted target gain Lethal Hits.",
+          phase: "shooting",
+          modifiers: [
+            {
+              type: "LETHAL_HITS",
+              attackType: "ranged",
+              requiresAttackerGuided: true,
+              requiresTargetSpotted: true,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "kroot_hunting_pack" &&
+      enhancementName.includes("borthrod gland")
+    ) {
+      return createImplementedEnhancement(enhancement, "fight", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Borthrod Gland Effect",
+          description:
+            "A led Kroot unit scores critical hits on 5+ in melee.",
+          phase: "fight",
+          modifiers: [
+            {
+              type: "CRITICAL_HITS_ON",
+              value: 5,
+              attackType: "melee",
+              requiredAttackerKeywords: ["KROOT"],
+              requiresAttachedUnit: true,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "mont_ka" &&
+      enhancementName.includes("coordinated exploitation")
+    ) {
+      return createImplementedEnhancement(enhancement, "shooting", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Coordinated Exploitation Effect",
+          description:
+            "Guided ranged attacks against a spotted target gain Sustained Hits 1.",
+          phase: "shooting",
+          modifiers: [
+            {
+              type: "SUSTAINED_HITS",
+              value: 1,
+              attackType: "ranged",
+              requiresAttackerGuided: true,
+              requiresTargetSpotted: true,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "mont_ka" &&
+      enhancementName.includes("exemplar of the mont")
+    ) {
+      return createImplementedEnhancement(enhancement, "shooting", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-assault-effect`,
+          name: "Exemplar of the Mont'ka: Assault",
+          description:
+            "A led unit gains Assault on ranged weapons in battle round 4.",
+          phase: "shooting",
+          modifiers: [
+            {
+              type: "ASSAULT",
+              attackType: "ranged",
+              requiresAttachedUnit: true,
+              requiresBattleRoundAtLeast: 4,
+              requiresBattleRoundAtMost: 4,
+            },
+          ],
+        }),
+        createImplementedRuleOption({
+          id: `${enhancement.id}-lethal-effect`,
+          name: "Exemplar of the Mont'ka: Lethal Hits",
+          description:
+            "A led Guided unit gains Lethal Hits on ranged attacks in battle round 4.",
+          phase: "shooting",
+          modifiers: [
+            {
+              type: "LETHAL_HITS",
+              attackType: "ranged",
+              requiresAttachedUnit: true,
+              requiresAttackerGuided: true,
+              requiresBattleRoundAtLeast: 4,
+              requiresBattleRoundAtMost: 4,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "retaliation_cadre" &&
+      enhancementName.includes("prototype weapon system")
+    ) {
+      return createImplementedEnhancement(enhancement, "shooting", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-sustained-effect`,
+          name: "Prototype Weapon System: Sustained Hits 1",
+          description: "Battlesuit ranged attacks gain Sustained Hits 1.",
+          phase: "shooting",
+          modifiers: [
+            {
+              type: "SUSTAINED_HITS",
+              value: 1,
+              attackType: "ranged",
+              requiredAttackerKeywords: ["BATTLESUIT"],
+            },
+          ],
+        }),
+        createImplementedRuleOption({
+          id: `${enhancement.id}-lethal-effect`,
+          name: "Prototype Weapon System: Lethal Hits",
+          description: "Battlesuit ranged attacks gain Lethal Hits.",
+          phase: "shooting",
+          modifiers: [
+            {
+              type: "LETHAL_HITS",
+              attackType: "ranged",
+              requiredAttackerKeywords: ["BATTLESUIT"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "starfire_cadre" &&
+      enhancementName.includes("target optimisation microdrones")
+    ) {
+      return createImplementedEnhancement(enhancement, "shooting", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Target Optimisation Microdrones Effect",
+          description:
+            "Fire Warriors, Pathfinder Teams and Cadre Fireblades improve AP by 1 in shooting.",
+          phase: "shooting",
+          modifiers: [
+            {
+              type: "AP_MODIFIER",
+              value: 1,
+              attackType: "ranged",
+              requiredAttackerKeywords: [
+                "FIRE WARRIOR",
+                "PATHFINDER TEAM",
+                "CADRE FIREBLADE",
+              ],
+            },
+          ],
+        }),
+      ]);
+    }
+
     return {
       id: enhancement.id,
       name: enhancement.name,
@@ -817,6 +1127,77 @@ export function mapNormalizedDetachmentToStratagems(
     }
 
     if (
+      detachment.id === "auxiliary_cadre" &&
+      stratagemName.includes("guided fire")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Guided Fire Effect",
+          description:
+            "Non-Kroot, non-Vespid ranged attacks gain +1 Strength.",
+          phase,
+          modifiers: [
+            {
+              type: "STRENGTH_MODIFIER",
+              value: 1,
+              attackType: "ranged",
+              excludedAttackerKeywords: ["KROOT", "VESPID STINGWINGS"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "auxiliary_cadre" &&
+      stratagemName.includes("multisensory scanning")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-reroll-ones-effect`,
+          name: "Multisensory Scanning: Re-roll Wound Rolls of 1",
+          description: "The unit re-rolls wound rolls of 1.",
+          phase,
+          modifiers: [{ type: "REROLL_WOUNDS_ONES" }],
+        }),
+        createImplementedRuleOption({
+          id: `${stratagem.id}-full-reroll-effect`,
+          name: "Multisensory Scanning: Full Wound Re-rolls",
+          description: "Kroot and Vespid Stingwings units re-roll wound rolls.",
+          phase,
+          modifiers: [
+            {
+              type: "REROLL_WOUNDS",
+              requiredAttackerKeywords: ["KROOT", "VESPID STINGWINGS"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "auxiliary_cadre" &&
+      stratagemName.includes("experimental modifications")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Experimental Modifications Effect",
+          description: "Kroot and Vespid Stingwings weapons improve AP by 1.",
+          phase,
+          modifiers: [
+            {
+              type: "AP_MODIFIER",
+              value: 1,
+              requiredAttackerKeywords: ["KROOT", "VESPID STINGWINGS"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
       detachment.id === "cryptek_conclave" &&
       stratagemName.includes("animus curse")
     ) {
@@ -846,6 +1227,224 @@ export function mapNormalizedDetachmentToStratagems(
               type: "SUSTAINED_HITS",
               value: 1,
               excludedAttackerKeywords: ["MONSTER", "VEHICLE", "TITANIC"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "experimental_prototype_cadre" &&
+      stratagemName.includes("threat assessment analyser")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-sustained-effect`,
+          name: "Threat Assessment Analyser: Sustained Hits 1",
+          description: "Ranged weapons gain Sustained Hits 1.",
+          phase,
+          modifiers: [
+            { type: "SUSTAINED_HITS", value: 1, attackType: "ranged" },
+          ],
+        }),
+        createImplementedRuleOption({
+          id: `${stratagem.id}-lethal-effect`,
+          name: "Threat Assessment Analyser: Lethal Hits",
+          description: "Ranged weapons gain Lethal Hits.",
+          phase,
+          modifiers: [{ type: "LETHAL_HITS", attackType: "ranged" }],
+        }),
+        createImplementedRuleOption({
+          id: `${stratagem.id}-hazardous-effect`,
+          name: "Threat Assessment Analyser: Full Risk Mode",
+          description:
+            "Ranged weapons gain Sustained Hits 1, Lethal Hits and Hazardous.",
+          phase,
+          modifiers: [
+            { type: "SUSTAINED_HITS", value: 1, attackType: "ranged" },
+            { type: "LETHAL_HITS", attackType: "ranged" },
+            { type: "HAZARDOUS", attackType: "ranged" },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "experimental_prototype_cadre" &&
+      stratagemName.includes("experimental ammunition")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-strength-effect`,
+          name: "Experimental Ammunition: +1 Strength",
+          description: "Ranged weapons gain +1 Strength.",
+          phase,
+          modifiers: [
+            { type: "STRENGTH_MODIFIER", value: 1, attackType: "ranged" },
+          ],
+        }),
+        createImplementedRuleOption({
+          id: `${stratagem.id}-overcharge-effect`,
+          name: "Experimental Ammunition: Overcharge",
+          description:
+            "Ranged weapons gain +1 Strength, +1 AP and Hazardous.",
+          phase,
+          modifiers: [
+            { type: "STRENGTH_MODIFIER", value: 1, attackType: "ranged" },
+            { type: "AP_MODIFIER", value: 1, attackType: "ranged" },
+            { type: "HAZARDOUS", attackType: "ranged" },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "kauyon" &&
+      stratagemName.includes("coordinate to engage")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-hit-effect`,
+          name: "Coordinate to Engage: Hit Bonus",
+          description:
+            "Attacks against the unit's spotted target gain +1 to hit.",
+          phase,
+          modifiers: [
+            {
+              type: "HIT_MODIFIER",
+              value: 1,
+              attackType: "ranged",
+              requiresTargetSpotted: true,
+            },
+          ],
+        }),
+        createImplementedRuleOption({
+          id: `${stratagem.id}-cover-effect`,
+          name: "Coordinate to Engage: Ignores Cover",
+          description:
+            "Markerlight attacks against the unit's spotted target ignore cover.",
+          phase,
+          modifiers: [
+            {
+              type: "IGNORES_COVER",
+              attackType: "ranged",
+              requiredAttackerKeywords: ["MARKERLIGHT"],
+              requiresTargetSpotted: true,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "kauyon" &&
+      stratagemName.includes("point-blank ambush")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Point-blank Ambush Effect",
+          description:
+            "From battle round 3 onwards, ranged attacks within 9\" improve AP by 1.",
+          phase,
+          modifiers: [
+            {
+              type: "AP_MODIFIER",
+              value: 1,
+              attackType: "ranged",
+              requiresBattleRoundAtLeast: 3,
+              requiresTargetWithinRange: 9,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "kauyon" &&
+      stratagemName.includes("tempting trap")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "A Tempting Trap Effect",
+          description:
+            "From battle round 3 onwards, ranged attacks against enemies in trap objective range gain +1 to wound.",
+          phase,
+          modifiers: [
+            {
+              type: "WOUND_MODIFIER",
+              value: 1,
+              attackType: "ranged",
+              requiresBattleRoundAtLeast: 3,
+              requiresTargetWithinObjectiveRange: true,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "mont_ka" &&
+      stratagemName.includes("focused fire")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Focused Fire Effect",
+          description:
+            "Until battle round 3, ranged attacks improve AP by 1.",
+          phase,
+          modifiers: [
+            {
+              type: "AP_MODIFIER",
+              value: 1,
+              attackType: "ranged",
+              requiresBattleRoundAtMost: 3,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "mont_ka" &&
+      stratagemName.includes("pinpoint counter-offensive")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Pinpoint Counter-offensive Effect",
+          description:
+            "Non-Kroot attacks re-roll hits against the marked enemy unit.",
+          phase,
+          modifiers: [
+            {
+              type: "REROLL_HITS",
+              excludedAttackerKeywords: ["KROOT"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "mont_ka" &&
+      stratagemName.includes("combat debarkation")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Combat Debarkation Effect",
+          description:
+            "Infantry ranged attacks re-roll wounds against the closest eligible target.",
+          phase,
+          modifiers: [
+            {
+              type: "REROLL_WOUNDS",
+              attackType: "ranged",
+              requiredAttackerKeywords: ["INFANTRY"],
+              requiresTargetIsClosestEligible: true,
             },
           ],
         }),
@@ -902,6 +1501,46 @@ export function mapNormalizedDetachmentToStratagems(
               type: "REROLL_WOUNDS_ONES",
               excludedAttackerKeywords: ["MONSTER"],
               requiresTargetUnravelling: true,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "retaliation_cadre" &&
+      stratagemName.includes("arro")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-sustained-1-effect`,
+          name: "The Arro'kon Protocol: Sustained Hits 1",
+          description:
+            "Battlesuit ranged attacks gain Sustained Hits 1 against units with 6+ models.",
+          phase,
+          modifiers: [
+            {
+              type: "SUSTAINED_HITS",
+              value: 1,
+              attackType: "ranged",
+              requiredAttackerKeywords: ["BATTLESUIT"],
+              requiresTargetModelCountAtLeast: 6,
+            },
+          ],
+        }),
+        createImplementedRuleOption({
+          id: `${stratagem.id}-sustained-2-effect`,
+          name: "The Arro'kon Protocol: Sustained Hits 2",
+          description:
+            "Battlesuit ranged attacks gain Sustained Hits 2 against units with 11+ models.",
+          phase,
+          modifiers: [
+            {
+              type: "SUSTAINED_HITS",
+              value: 2,
+              attackType: "ranged",
+              requiredAttackerKeywords: ["BATTLESUIT"],
+              requiresTargetModelCountAtLeast: 11,
             },
           ],
         }),

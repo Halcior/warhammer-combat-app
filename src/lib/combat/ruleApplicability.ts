@@ -30,6 +30,14 @@ export function ruleApplies(
   }
 
   if (
+    "requiresAttackerGuided" in rule &&
+    rule.requiresAttackerGuided &&
+    !context.conditions.attackerIsGuided
+  ) {
+    return false;
+  }
+
+  if (
     "requiresAttackWithinObjectiveRange" in rule &&
     rule.requiresAttackWithinObjectiveRange &&
     !context.conditions.attackWithinObjectiveRange
@@ -78,6 +86,22 @@ export function ruleApplies(
   }
 
   if (
+    "requiresBattleRoundAtLeast" in rule &&
+    typeof rule.requiresBattleRoundAtLeast === "number" &&
+    context.conditions.battleRound < rule.requiresBattleRoundAtLeast
+  ) {
+    return false;
+  }
+
+  if (
+    "requiresBattleRoundAtMost" in rule &&
+    typeof rule.requiresBattleRoundAtMost === "number" &&
+    context.conditions.battleRound > rule.requiresBattleRoundAtMost
+  ) {
+    return false;
+  }
+
+  if (
     "requiresTargetIsClosestEligible" in rule &&
     rule.requiresTargetIsClosestEligible &&
     !context.conditions.targetIsClosestEligible
@@ -86,9 +110,33 @@ export function ruleApplies(
   }
 
   if (
+    "requiresTargetModelCountAtLeast" in rule &&
+    typeof rule.requiresTargetModelCountAtLeast === "number" &&
+    context.conditions.targetModelCount < rule.requiresTargetModelCountAtLeast
+  ) {
+    return false;
+  }
+
+  if (
+    "requiresTargetSpotted" in rule &&
+    rule.requiresTargetSpotted &&
+    !context.conditions.targetIsSpotted
+  ) {
+    return false;
+  }
+
+  if (
     "requiresTargetUnravelling" in rule &&
     rule.requiresTargetUnravelling &&
     !context.conditions.targetIsUnravelling
+  ) {
+    return false;
+  }
+
+  if (
+    "requiresTargetWithinRange" in rule &&
+    typeof rule.requiresTargetWithinRange === "number" &&
+    context.conditions.targetDistanceInches > rule.requiresTargetWithinRange
   ) {
     return false;
   }

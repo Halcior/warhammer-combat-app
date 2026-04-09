@@ -7,11 +7,17 @@ export type ConditionalRuleFields = {
   requiresAttackWithinObjectiveRange?: boolean;
   requiresHalfRange?: boolean;
   requiresAttachedUnit?: boolean;
+  requiresAttackerGuided?: boolean;
   requiresAttackerWithinPowerMatrix?: boolean;
   requiresAttackerSetUpThisTurn?: boolean;
   requiresAttackerSetToDefend?: boolean;
+  requiresBattleRoundAtLeast?: number;
+  requiresBattleRoundAtMost?: number;
   requiresTargetIsClosestEligible?: boolean;
+  requiresTargetModelCountAtLeast?: number;
+  requiresTargetSpotted?: boolean;
   requiresTargetUnravelling?: boolean;
+  requiresTargetWithinRange?: number;
   requiresTargetWithinObjectiveRange?: boolean;
   requiredAttackerKeywords?: string[];
   requiredDefenderKeywords?: string[];
@@ -32,14 +38,14 @@ export type SpecialRule =
   | ({ type: "IGNORES_COVER" } & ConditionalRuleFields)
   | { type: "TWIN_LINKED" }
   | { type: "TORRENT" }
-  | { type: "LETHAL_HITS" }
+  | ({ type: "LETHAL_HITS" } & ConditionalRuleFields)
   | { type: "LANCE" }
   | { type: "INDIRECT_FIRE" }
   | { type: "PRECISION" }
   | { type: "BLAST" }
-  | { type: "MELTA"; value: number }
+  | ({ type: "MELTA"; value: number } & ConditionalRuleFields)
   | { type: "HEAVY" }
-  | { type: "HAZARDOUS" }
+  | ({ type: "HAZARDOUS" } & ConditionalRuleFields)
   | ({ type: "SUSTAINED_HITS"; value: number } & ConditionalRuleFields)
   | { type: "EXTRA_ATTACKS" }
   | ({ type: "DEVASTATING_WOUNDS" } & ConditionalRuleFields)
@@ -90,21 +96,25 @@ export type Unit = {
 };
 
 export type AttackConditions = {
+  battleRound: number;
   isTargetInCover: boolean;
   isHalfRange: boolean;
   remainedStationary: boolean;
   advancedThisTurn: boolean;
   targetVisible: boolean;
+  targetDistanceInches: number;
   targetInEngagementRange: boolean;
   targetModelCount: number;
   targetHasMatchingAntiKeyword: boolean;
   isChargeTurn: boolean;
   isAttachedUnit: boolean;
   attackWithinObjectiveRange: boolean;
+  attackerIsGuided: boolean;
   attackerWithinPowerMatrix: boolean;
   attackerSetUpThisTurn: boolean;
   attackerSetToDefend: boolean;
   targetIsClosestEligible: boolean;
+  targetIsSpotted: boolean;
   targetIsUnravelling: boolean;
   targetWithinObjectiveRange: boolean;
   targetIsBattleShocked: boolean;

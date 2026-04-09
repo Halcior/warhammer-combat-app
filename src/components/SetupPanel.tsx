@@ -137,6 +137,38 @@ export function SetupPanel({
         />
       </label>
 
+      <label>
+        Battle round
+        <input
+          type="number"
+          min={1}
+          max={5}
+          value={conditions.battleRound}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              battleRound: Math.min(5, Math.max(1, Number(e.target.value) || 1)),
+            }))
+          }
+        />
+      </label>
+
+      <label>
+        Target distance (")
+        <input
+          type="number"
+          min={0}
+          step={1}
+          value={conditions.targetDistanceInches}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              targetDistanceInches: Math.max(0, Number(e.target.value) || 0),
+            }))
+          }
+        />
+      </label>
+
       <label className="checkbox-row">
         <input
           type="checkbox"
@@ -205,6 +237,20 @@ export function SetupPanel({
           }
         />
         Unit is attached / led
+      </label>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
+          checked={conditions.attackerIsGuided}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              attackerIsGuided: e.target.checked,
+            }))
+          }
+        />
+        Attacker is Guided
       </label>
 
       <label className="checkbox-row">
@@ -289,6 +335,20 @@ export function SetupPanel({
           }
         />
         Target is closest eligible
+      </label>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
+          checked={conditions.targetIsSpotted}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              targetIsSpotted: e.target.checked,
+            }))
+          }
+        />
+        Target is spotted / markerlit
       </label>
 
       <label className="checkbox-row">
