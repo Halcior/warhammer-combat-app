@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { getFactionRuntimeDetachments } from "../data/factions/runtimeDetachments";
 import type { RuleOption } from "../types/faction";
 import { adeptusCustodesFactionConfig } from "../data/factions/AdeptusCustodes/faction";
@@ -22,17 +22,22 @@ export function useFactionRules(attackerFaction: string) {
 
   const availableDetachments = runtimeData.detachments;
 
-  const [selectedDetachmentId, setSelectedDetachmentId] = useState(
-    availableDetachments[0]?.id ?? ""
-  );
+  const [selectedDetachmentId, setSelectedDetachmentId] = useState("");
 
-  useEffect(() => {
-    setSelectedDetachmentId(availableDetachments[0]?.id ?? "");
-  }, [attackerFaction, availableDetachments]);
+  const effectiveSelectedDetachmentId = useMemo(() => {
+    const hasSelectedDetachment = availableDetachments.some(
+      (detachment) => detachment.id === selectedDetachmentId
+    );
+
+    return hasSelectedDetachment
+      ? selectedDetachmentId
+      : (availableDetachments[0]?.id ?? "");
+  }, [availableDetachments, selectedDetachmentId]);
 
   const selectedDetachment =
-    availableDetachments.find((detachment) => detachment.id === selectedDetachmentId) ??
-    availableDetachments[0];
+    availableDetachments.find(
+      (detachment) => detachment.id === effectiveSelectedDetachmentId
+    ) ?? availableDetachments[0];
 
   const allAvailableRuleOptions: RuleOption[] = useMemo(() => {
     if (attackerFaction === "Adeptus Custodes") {
@@ -47,7 +52,7 @@ export function useFactionRules(attackerFaction: string) {
 
   return {
     availableDetachments,
-    selectedDetachmentId,
+    selectedDetachmentId: effectiveSelectedDetachmentId,
     setSelectedDetachmentId,
     selectedDetachment,
     allAvailableRuleOptions,

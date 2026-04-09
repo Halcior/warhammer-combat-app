@@ -22,7 +22,6 @@ export function calculateExpectedDamage({
   defendingModels,
   conditions,
   activeModifierRules = [],
-  activeEngineTags = [],
 }: CalculateExpectedDamageParams): ExpectedDamageResult {
   void attacker;
 

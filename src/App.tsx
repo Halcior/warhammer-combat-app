@@ -92,7 +92,6 @@ function App() {
       defendingModels: battleSetup.defendingModels,
       conditions: battleSetup.conditions,
       activeModifierRules: allActiveModifierRules,
-      activeEngineTags: ruleOptions.activeEngineTags,
     });
   }, [
     battleSetup.attacker,
@@ -102,7 +101,6 @@ function App() {
     battleSetup.defendingModels,
     battleSetup.conditions,
     allActiveModifierRules,
-    ruleOptions.activeEngineTags,
   ]);
 
   const attackBreakdownExplanation = useMemo(() => {
@@ -132,7 +130,6 @@ function App() {
       defendingModels: battleSetup.defendingModels,
       conditions: battleSetup.conditions,
       activeModifierRules: allActiveModifierRules,
-      activeEngineTags: ruleOptions.activeEngineTags,
     });
   }, [
     battleSetup.attacker,
@@ -142,7 +139,6 @@ function App() {
     battleSetup.defendingModels,
     battleSetup.conditions,
     allActiveModifierRules,
-    ruleOptions.activeEngineTags,
   ]);
 
   const handleRunSimulation = () => {
