@@ -1,126 +1,37 @@
 # Warhammer Combat App
 
+<<<<<<< HEAD
 <<<<<<< ours
 <<<<<<< ours
 Aplikacja webowa do szybkiej analizy skuteczności ataku w **Warhammer 40,000 (10th edition)**.
 Pozwala porównać bronie i jednostki, włączyć wybrane modyfikatory/reguły oraz sprawdzić wynik zarówno analitycznie (expected value), jak i symulacyjnie (Monte Carlo).
-
-## 1) Cel aplikacji i zakres wspieranych zasad
-
-### Cel
-- Skrócić czas liczenia obrażeń i strat modeli dla pojedynczego kontekstu ataku.
-- Umożliwić porównanie dwóch profili broni bez ręcznego przeliczania tabeli Hit/Wound/Save.
-- Dać dwa tryby wyniku:
-  - **Fast** – wynik analityczny (wartości oczekiwane),
-  - **Accurate** – symulacja Monte Carlo (rozkład wyników, min/max, percentyle, szansa wipe).
-
-### Obecnie modelowane elementy mechaniki
-- Sekwencja: liczba ataków → trafienia → rany → save → obrażenia → zabite modele.
-- Modyfikacje i reguły broni/jednostki:
-  - **Rapid Fire**, **Blast**, **Torrent**, **Twin-linked**, **Lethal Hits**, **Sustained Hits**,
-  - **Devastating Wounds**, **Anti-X**, **Melta**, **Heavy**, **Lance**, **Ignores Cover**.
-- Warunki starcia:
-  - cover celu,
-  - half range,
-  - stationary,
-  - charge turn,
-  - zgodność z keywordem Anti,
-  - liczebność atakujących i broniących modeli.
-
----
-
-## 2) Krótki opis architektury
-
-### `src/lib/combat`
-Silnik domenowy obliczeń:
-- funkcje prawdopodobieństwa i przeliczeń (hit/wound/save/damage),
-- kalkulacja wyniku oczekiwanego,
-- moduł symulacji Monte Carlo oraz agregacji statystyk.
-
-### `src/components`
-Warstwa UI React:
-- konfiguracja stron starcia (atakujący, obrońca, broń, warunki),
-- panel modyfikatorów i reguł,
-- prezentacja wyniku expected,
-- prezentacja wyniku symulacyjnego,
-- porównanie dwóch broni.
-
-### `src/data`
-Warstwa danych i mapowania:
-- statyczne dane frakcji/jednostek,
-- wygenerowane dane (`generated/`, `normalized/`),
-- mapery normalizowanych rekordów do modelu combat.
-
----
-
-## 3) Uruchomienie i import danych
-
-## Wymagania
-- Node.js 20+ (zalecane LTS),
-- npm.
-
-## Instalacja
-```bash
-npm install
-```
-
-## Komendy developerskie
-```bash
-npm run dev
-npm run build
-npm run test
-npm run lint
-```
-
-- `dev` – start lokalnego środowiska Vite,
-- `build` – TypeScript build + bundling produkcyjny,
-- `test` – testy jednostkowe (Vitest),
-- `lint` – analiza statyczna ESLint.
-
-## Import / generowanie danych
-
-### `import:custodes`
-```bash
-npm run import:custodes
 =======
-Aplikacja webowa (React + TypeScript + Vite) do analizy starć jednostek Warhammer 40k.
+Aplikacja webowa (React + TypeScript + Vite) do analizy skuteczności ataku w **Warhammer 40,000 (10th edition)**.
+>>>>>>> 84a08e4b37faab1dc06065f90388def063853d67
 
-## Cel na teraz: jedna stabilna baza
+## Co potrafi teraz
 
-Jeśli masz bałagan między gałęziami a `main`, najlepszym podejściem jest najpierw ustabilizować jeden punkt odniesienia, a dopiero potem rozwijać funkcje.
+- szybkie obliczenia analityczne (expected value) dla sekwencji hit → wound → save → damage,
+- tryb symulacji Monte Carlo (dla dokładniejszego rozkładu wyników),
+- porównanie dwóch profili broni w tym samym kontekście celu,
+- podstawowa obsługa reguł specjalnych (np. Rapid Fire, Blast, Torrent, Twin-linked, Lethal Hits, Sustained Hits, Devastating Wounds, Melta, Heavy, Lance, Ignores Cover).
 
-W repozytorium dodałem prosty workflow, który to porządkuje:
+## Stack
 
-1. Ustalenie **jednej gałęzi stabilnej** (`main`).
-2. Zbieranie zmian z innych gałęzi przez PR-y do `main`.
-3. Szybki smoke test (`npm run build`, `npm run test`, `npm run lint`) przed każdym mergem.
-4. Oznaczanie stabilnych punktów tagami (`v0.1.0`, `v0.2.0`, itd.).
-
-Szczegóły procesu (w tym gotowa sekwencja komend do łączenia gałęzi) są opisane w: [`docs/branching-strategy.md`](docs/branching-strategy.md).
+- React 19
+- TypeScript 5
+- Vite 8
+- Vitest
+- ESLint
 
 ## Uruchomienie lokalne
 
 ```bash
 npm install
 npm run dev
->>>>>>> theirs
-```
-<<<<<<< ours
-<<<<<<< ours
-Skrypt uruchamia `scripts/import40k/generateUnits.mjs` i generuje plik:
-- `src/data/generated/units.generated.ts`
-
-<<<<<<< ours
-### Pozostałe skrypty w `scripts/`
-- `scripts/wahapedia-normalizer/normalizeData.mjs` – normalizacja surowych CSV do JSON:
-  - `src/data/normalized/factions.json`
-  - `src/data/normalized/units.json`
-
-Uruchomienie przykładowe:
-```bash
-node scripts/wahapedia-normalizer/normalizeData.mjs
 ```
 
+<<<<<<< HEAD
 <<<<<<< ours
 > Dane wejściowe są czytane z katalogu `CSV/`.
 
@@ -209,16 +120,25 @@ npm run dev
 ```
 
 >>>>>>> theirs
+=======
+>>>>>>> 84a08e4b37faab1dc06065f90388def063853d67
 ## Skrypty
 
-- `npm run dev` — uruchamia aplikację lokalnie
-- `npm run build` — buduje produkcyjny bundle
-- `npm run test` — uruchamia testy (Vitest)
-- `npm run lint` — uruchamia linting
-- `npm run import:custodes` — importuje dane jednostek Adeptus Custodes
+```bash
+npm run dev
+npm run build
+npm run test
+npm run lint
+npm run import:custodes
+```
 
-## Proponowany następny krok
+- `dev` — start lokalnego środowiska
+- `build` — kompilacja TypeScript + build Vite
+- `test` — testy jednostkowe (Vitest)
+- `lint` — linting (ESLint)
+- `import:custodes` — import/generowanie danych Adeptus Custodes
 
+<<<<<<< HEAD
 1. Wybierz gałąź, która ma być bazą stabilną (najczęściej `main`).
 2. Zrób backup aktualnego stanu (tag lub osobna gałąź).
 3. Wyrównaj różnice z aktywnych gałęzi tylko przez PR-y.
@@ -227,3 +147,14 @@ npm run dev
 >>>>>>> theirs
 =======
 >>>>>>> theirs
+=======
+## Workflow gałęzi
+
+Strategia stabilizacji i łączenia zmian jest opisana w:
+
+- [`docs/branching-strategy.md`](docs/branching-strategy.md)
+
+## Ograniczenia
+
+To narzędzie jest kalkulatorem/symulatorem pomocniczym. Nie implementuje pełnego rules arbitration dla wszystkich edge-case’ów WH40k 10e.
+>>>>>>> 84a08e4b37faab1dc06065f90388def063853d67
