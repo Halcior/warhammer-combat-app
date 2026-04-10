@@ -68,7 +68,8 @@ export function ModifiersPanel({
         <p className="panel-eyebrow">Rules Engine</p>
         <h2>Modifiers & Rules</h2>
         <p className="muted-text">
-          Zebrane w sekcje, żeby łatwiej odróżnić aktywne boosty od samych opisów.
+          Keep the active effects visible without turning the sidebar into a wall
+          of text.
         </p>
       </div>
 

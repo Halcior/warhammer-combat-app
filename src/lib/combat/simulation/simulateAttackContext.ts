@@ -253,7 +253,11 @@ function getHitTarget(
     target = Math.max(2, target - 1);
   }
 
-  return Math.max(2, target - getHitModifier(rules, weapon.type));
+  const hitModifier = hasRule(rules, "IGNORE_HIT_MODIFIERS")
+    ? 0
+    : getHitModifier(rules, weapon.type);
+
+  return Math.max(2, target - hitModifier);
 }
 
 function getSaveTarget(

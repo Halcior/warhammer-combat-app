@@ -31,5 +31,29 @@ export const krootHuntingPackRuleOverride: DetachmentRuleOverride = ({
     };
   }
 
+  if (haystack.includes("skirmish fighters")) {
+    return {
+      ...rule,
+      appliesTo: "defender",
+      supportLevel: "implemented",
+      phase: "any",
+      modifiers: [
+        {
+          type: "INVULNERABLE_SAVE",
+          value: 6,
+          attackType: "melee",
+          requiredDefenderKeywords: ["KROOT"],
+        },
+        {
+          type: "INVULNERABLE_SAVE",
+          value: 5,
+          attackType: "ranged",
+          requiredDefenderKeywords: ["KROOT"],
+        },
+      ],
+      engineTags: [],
+    };
+  }
+
   return rule;
 };

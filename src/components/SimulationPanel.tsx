@@ -45,44 +45,47 @@ export function SimulationPanel({
         <p className="panel-eyebrow">Live Preview</p>
         <h2>Simulation</h2>
         <p className="muted-text">
-          Wyniki odświeżają się automatycznie po zmianie setupu lub reguł.
+          Results refresh automatically whenever the setup, unit state or rules
+          change.
         </p>
       </div>
 
-      <div className="mode-toggle">
-        <button
-          type="button"
-          className={`mode-toggle__button ${mode === "fast" ? "mode-toggle__button--active" : ""}`}
-          onClick={() => setMode("fast")}
-        >
-          Fast
-        </button>
-        <button
-          type="button"
-          className={`mode-toggle__button ${mode === "accurate" ? "mode-toggle__button--active" : ""}`}
-          onClick={() => setMode("accurate")}
-        >
-          Accurate
-        </button>
+      <div className="simulation-stack">
+        <div className="mode-toggle">
+          <button
+            type="button"
+            className={`mode-toggle__button ${mode === "fast" ? "mode-toggle__button--active" : ""}`}
+            onClick={() => setMode("fast")}
+          >
+            Fast
+          </button>
+          <button
+            type="button"
+            className={`mode-toggle__button ${mode === "accurate" ? "mode-toggle__button--active" : ""}`}
+            onClick={() => setMode("accurate")}
+          >
+            Accurate
+          </button>
+        </div>
+
+        <p className="muted-text">
+          {mode === "fast"
+            ? "Fast mode uses the analytical path for a quick tactical preview."
+            : "Accurate mode runs the full Monte Carlo attack sequence."}
+        </p>
+
+        <label className="simulation-slider">
+          <span>Simulation runs</span>
+          <input
+            type="range"
+            min={1000}
+            max={20000}
+            step={1000}
+            value={runs}
+            onChange={(e) => setRuns(Number(e.target.value))}
+          />
+        </label>
       </div>
-
-      <p className="muted-text">
-        {mode === "fast"
-          ? "Fast mode uses analytical expected damage for each roll sequence."
-          : "Accurate mode uses full attack sequence Monte Carlo simulation."}
-      </p>
-
-      <label>
-        Simulation runs
-        <input
-          type="range"
-          min={1000}
-          max={20000}
-          step={1000}
-          value={runs}
-          onChange={(e) => setRuns(Number(e.target.value))}
-        />
-      </label>
 
       <div className="simulation-toolbar">
         <span className="simulation-runs">
@@ -96,13 +99,15 @@ export function SimulationPanel({
       {error && <p className="simulation-alert simulation-alert--error">{error}</p>}
 
       {!error && !summary && (
-        <p className="simulation-alert">Simulation summary will appear here.</p>
+        <p className="simulation-alert">
+          Simulation summary will appear here once the selected matchup resolves.
+        </p>
       )}
 
       {summary && (
         <>
           <div className="result-section">
-            <h3>Damage Summary</h3>
+            <h3>Damage summary</h3>
             <div className="stats-grid stats-grid--secondary">
               <StatBox label="Mean damage" value={summary.meanDamage.toFixed(2)} highlight />
               <StatBox label="Median damage" value={summary.medianDamage.toFixed(2)} />
@@ -115,7 +120,7 @@ export function SimulationPanel({
           </div>
 
           <div className="result-section">
-            <h3>Slain Models Summary</h3>
+            <h3>Slain models</h3>
             <div className="stats-grid stats-grid--secondary">
               <StatBox label="Mean slain" value={summary.meanSlainModels.toFixed(2)} highlight />
               <StatBox label="Median slain" value={summary.medianSlainModels.toFixed(2)} />

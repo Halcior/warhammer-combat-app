@@ -56,7 +56,9 @@ export function calculateExpectedDamage({
   );
   const attacksModifier = getAttacksModifier(activeRules, weapon.type);
   const fixedHitRoll = getFixedHitRoll(activeRules, weapon.type);
-  const hitModifier = getHitModifier(activeRules, weapon.type);
+  const hitModifier = hasRule(activeRules, "IGNORE_HIT_MODIFIERS")
+    ? 0
+    : getHitModifier(activeRules, weapon.type);
   const strengthModifier = getStrengthModifier(activeRules, weapon.type);
   const damageModifier = getDamageModifier(activeRules, weapon.type);
   const damageReduction = getDamageReduction(activeRules);

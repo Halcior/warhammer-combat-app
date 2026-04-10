@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import "./App.css";
+import appLogo from "./assets/Nowe_LogoPNG.png";
 import { calculateExpectedDamage } from "./lib/combat";
 import { runSimulationByMode } from "./lib/combat/simulation/runSimulationByMode";
 
@@ -235,11 +236,16 @@ function App() {
     <div className="app">
       <header className="app-hero">
         <div className="app-hero__content">
-          <p className="app-hero__eyebrow">Combat Sandbox</p>
-          <h1>Warhammer Helper</h1>
+          <div className="app-brand">
+            <img className="app-brand__logo" src={appLogo} alt="DamageForge logo" />
+            <div className="app-brand__copy">
+              <p className="app-hero__eyebrow">Damage Sandbox</p>
+              <h1>DamageForge</h1>
+            </div>
+          </div>
           <p className="app-hero__lead">
-            Kalkulator progów, reguł detachmentów i symulacji ataku w
-            czytelniejszej, mniej przytłaczającej formie.
+            Fast attack math, detachment rules and simulation results in a
+            cleaner forge-themed workspace.
           </p>
         </div>
 

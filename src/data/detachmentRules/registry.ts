@@ -16,6 +16,7 @@ import { tombShipComplementRuleOverride } from "./necrons/tombShipComplement";
 import { auxiliaryCadreRuleOverride } from "./tau/auxiliaryCadre";
 import { kauyonRuleOverride } from "./tau/kauyon";
 import { krootHuntingPackRuleOverride } from "./tau/krootHuntingPack";
+import { krootRaidingPartyRuleOverride } from "./tau/krootRaidingParty";
 import { montKaRuleOverride } from "./tau/montKa";
 import { retaliationCadreRuleOverride } from "./tau/retaliationCadre";
 import { starfireCadreRuleOverride } from "./tau/starfireCadre";
@@ -37,6 +38,7 @@ const detachmentRuleOverrideRegistry: Record<string, DetachmentRuleOverride> = {
   goretrack_onslaught: goretrackOnslaughtRuleOverride,
   kauyon: kauyonRuleOverride,
   kroot_hunting_pack: krootHuntingPackRuleOverride,
+  kroot_raiding_party: krootRaidingPartyRuleOverride,
   lions_of_the_emperor: lionsOfTheEmperorRuleOverride,
   mont_ka: montKaRuleOverride,
   obeisance_phalanx: obeisancePhalanxRuleOverride,

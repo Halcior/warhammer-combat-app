@@ -6,6 +6,8 @@ export type ConditionalRuleFields = {
   attackType?: WeaponType;
   limitsTargetingRangeTo?: number;
   requiresAttackWithinObjectiveRange?: boolean;
+  requiresAttackerWithinAuxiliarySupportRange?: boolean;
+  requiresDefenderWithinAuxiliaryStealthRange?: boolean;
   requiresTargetWithinAuxiliarySupportRange?: boolean;
   requiresAttackerDisembarkedThisTurn?: boolean;
   requiresAttackerFiringOverwatch?: boolean;
@@ -71,6 +73,7 @@ export type SpecialRule =
   | ({ type: "REROLL_WOUNDS" } & ConditionalRuleFields)
   | ({ type: "REROLL_WOUNDS_ONES" } & ConditionalRuleFields)
   | ({ type: "FIXED_HIT_ROLL"; value: number } & ConditionalRuleFields)
+  | ({ type: "IGNORE_HIT_MODIFIERS" } & ConditionalRuleFields)
   | ({ type: "HIT_MODIFIER"; value: number } & ConditionalRuleFields)
   | ({ type: "ATTACKS_MODIFIER"; value: number } & ConditionalRuleFields)
   | ({ type: "CRITICAL_WOUND_AP_MODIFIER"; value: number } & ConditionalRuleFields)
@@ -119,6 +122,8 @@ export type AttackConditions = {
   targetVisible: boolean;
   targetDistanceInches: number;
   targetInEngagementRange: boolean;
+  attackerWithinAuxiliarySupportRange: boolean;
+  defenderWithinAuxiliaryStealthRange: boolean;
   targetWithinAuxiliarySupportRange: boolean;
   targetModelCount: number;
   targetHasMatchingAntiKeyword: boolean;

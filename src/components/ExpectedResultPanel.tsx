@@ -26,7 +26,14 @@ export function ExpectedResultPanel({
 }: ExpectedResultPanelProps) {
   return (
     <div className="card">
-      <h2>Combat Breakdown</h2>
+      <div className="panel-heading">
+        <p className="panel-eyebrow">Analytical Pass</p>
+        <h2>Combat Breakdown</h2>
+        <p className="muted-text">
+          A fast read of the current attack profile, thresholds and projected
+          output.
+        </p>
+      </div>
 
       <div className="result-section">
         <h3>Core thresholds</h3>

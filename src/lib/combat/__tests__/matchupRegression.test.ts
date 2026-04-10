@@ -13,6 +13,8 @@ const baseConditions: AttackConditions = {
   targetVisible: true,
   targetDistanceInches: 24,
   targetInEngagementRange: false,
+  attackerWithinAuxiliarySupportRange: false,
+  defenderWithinAuxiliaryStealthRange: false,
   targetWithinAuxiliarySupportRange: false,
   targetModelCount: 1,
   targetHasMatchingAntiKeyword: false,

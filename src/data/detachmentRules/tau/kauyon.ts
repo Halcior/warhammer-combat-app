@@ -16,6 +16,14 @@ export const kauyonRuleOverride: DetachmentRuleOverride = ({ rule }) => {
           requiresBattleRoundAtLeast: 3,
           requiresBattleRoundAtMost: 5,
         },
+        {
+          type: "IGNORE_HIT_MODIFIERS",
+          attackType: "ranged",
+          requiresAttackerGuided: true,
+          requiresTargetSpotted: true,
+          requiresBattleRoundAtLeast: 3,
+          requiresBattleRoundAtMost: 5,
+        },
       ],
       engineTags: [],
     };

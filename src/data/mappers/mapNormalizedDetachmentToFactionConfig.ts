@@ -1379,6 +1379,22 @@ export function mapNormalizedDetachmentToStratagems(
             },
           ],
         }),
+        createImplementedRuleOption({
+          id: `${stratagem.id}-support-effect`,
+          name: "Guided Fire Support Bonus",
+          description:
+            "If the unit is near friendly Kroot or Vespid support, it gains an additional +1 Strength.",
+          phase,
+          modifiers: [
+            {
+              type: "STRENGTH_MODIFIER",
+              value: 1,
+              attackType: "ranged",
+              excludedAttackerKeywords: ["KROOT", "VESPID STINGWINGS"],
+              requiresAttackerWithinAuxiliarySupportRange: true,
+            },
+          ],
+        }),
       ]);
     }
 

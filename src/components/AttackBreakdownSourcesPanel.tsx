@@ -29,9 +29,18 @@ function Section({
 export function AttackBreakdownSourcesPanel({ explanation }: Props) {
   return (
     <div className="card">
+      <div className="panel-heading">
+        <p className="panel-eyebrow">Calculation Trace</p>
+        <h2>Why these numbers?</h2>
+        <p className="muted-text">
+          Expand this panel to inspect how hit, wound, save and damage values are
+          being resolved.
+        </p>
+      </div>
+
       <details className="rules-section rules-section--collapsible" open={false}>
         <summary className="rules-section__summary">
-          <span>Why these numbers?</span>
+          <span>Open breakdown</span>
           <span className="rules-section__chevron" aria-hidden="true">
             +
           </span>

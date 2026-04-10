@@ -60,6 +60,8 @@ export function formatSpecialRule(rule: SpecialRule): string {
       return "Re-roll Wound Rolls of 1";
     case "FIXED_HIT_ROLL":
       return `Hits on ${rule.value}+`;
+    case "IGNORE_HIT_MODIFIERS":
+      return "Ignore Hit Modifiers";
     case "HIT_MODIFIER":
       return rule.attackType
         ? `Hit ${formatSignedValue(rule.value)} (${rule.attackType})`

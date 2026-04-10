@@ -51,14 +51,16 @@ export function SetupPanel({
         <p className="panel-eyebrow">Battle Setup</p>
         <h2>Setup</h2>
         <p className="muted-text">
-          Najpierw ustaw jednostki i broń, a potem tylko dopasuj stan bitwy.
+          Pick the units, weapon and the battle-state flags that actually matter.
         </p>
       </div>
 
       <section className="form-section">
         <div className="form-section__header">
-          <h3>Army selection</h3>
-          <p className="muted-text">Wybierz strony starcia i aktywną broń.</p>
+          <h3>Army</h3>
+          <p className="muted-text">
+            Choose both sides, the attacking weapon and the core matchup context.
+          </p>
         </div>
 
         <div className="setup-fields-grid">
@@ -199,13 +201,12 @@ export function SetupPanel({
         <div className="form-section__header">
           <h3>Battle state</h3>
           <p className="muted-text">
-            Tylko te przełączniki, które faktycznie mają znaczenie dla danego
-            starcia.
+            Toggle only the conditions that meaningfully affect this attack.
           </p>
         </div>
 
         <div className="setup-conditions-grid">
-          <label className="checkbox-row">
+          <label className="checkbox-row" title="The defender benefits from cover.">
         <input
           type="checkbox"
           checked={conditions.isTargetInCover}
@@ -219,7 +220,7 @@ export function SetupPanel({
         Target in cover
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The attacking unit remained stationary this turn.">
         <input
           type="checkbox"
           checked={conditions.remainedStationary}
@@ -233,7 +234,7 @@ export function SetupPanel({
         Remained stationary
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The current attack happens during a charge turn.">
         <input
           type="checkbox"
           checked={conditions.isChargeTurn}
@@ -247,7 +248,7 @@ export function SetupPanel({
         Charge turn
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The target matches the attack's Anti keyword.">
         <input
           type="checkbox"
           checked={conditions.targetHasMatchingAntiKeyword}
@@ -258,10 +259,10 @@ export function SetupPanel({
             }))
           }
         />
-        Target matches Anti keyword
+        Anti keyword match
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The attacking unit is led by a Character or attached.">
         <input
           type="checkbox"
           checked={conditions.isAttachedUnit}
@@ -272,10 +273,10 @@ export function SetupPanel({
             }))
           }
         />
-        Unit is attached / led
+        Led / attached unit
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The attacking unit disembarked from a transport this turn.">
         <input
           type="checkbox"
           checked={conditions.attackerDisembarkedThisTurn}
@@ -286,10 +287,10 @@ export function SetupPanel({
             }))
           }
         />
-        Attacker disembarked this turn
+        Disembarked this turn
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The attacking unit is making Overwatch attacks.">
         <input
           type="checkbox"
           checked={conditions.attackerIsFiringOverwatch}
@@ -300,10 +301,10 @@ export function SetupPanel({
             }))
           }
         />
-        Attacker is firing Overwatch
+        Firing Overwatch
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The attacking unit is Guided.">
         <input
           type="checkbox"
           checked={conditions.attackerIsGuided}
@@ -317,7 +318,7 @@ export function SetupPanel({
         Attacker is Guided
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The attacking unit is currently a Vessel of Wrath.">
         <input
           type="checkbox"
           checked={conditions.attackerIsVesselOfWrath}
@@ -328,10 +329,10 @@ export function SetupPanel({
             }))
           }
         />
-        Attacker is a Vessel of Wrath
+        Vessel of Wrath
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The attacking unit is within friendly Character support range.">
         <input
           type="checkbox"
           checked={conditions.attackerWithinFriendlyCharacterRange}
@@ -342,10 +343,10 @@ export function SetupPanel({
             }))
           }
         />
-        Attacker within friendly Character range
+        Near friendly Character
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The attacking unit is within a friendly Monster or Titanic aura.">
         <input
           type="checkbox"
           checked={conditions.attackerWithinFriendlyMonsterAura}
@@ -356,10 +357,10 @@ export function SetupPanel({
             }))
           }
         />
-        Attacker within friendly Monster/Titanic aura
+        Near Monster/Titanic aura
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The attack targets a unit within objective range.">
         <input
           type="checkbox"
           checked={conditions.attackWithinObjectiveRange}
@@ -370,10 +371,10 @@ export function SetupPanel({
             }))
           }
         />
-        Attack in objective range
+        Attack on objective
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The attacker is inside the Power Matrix.">
         <input
           type="checkbox"
           checked={conditions.attackerWithinPowerMatrix}
@@ -387,7 +388,7 @@ export function SetupPanel({
         Attacker in Power Matrix
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The attacking unit was set up on the battlefield this turn.">
         <input
           type="checkbox"
           checked={conditions.attackerSetUpThisTurn}
@@ -398,10 +399,10 @@ export function SetupPanel({
             }))
           }
         />
-        Attacker set up this turn
+        Set up this turn
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The attacker is in a defensive set-to-defend state.">
         <input
           type="checkbox"
           checked={conditions.attackerSetToDefend}
@@ -415,7 +416,7 @@ export function SetupPanel({
         Attacker set to defend
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The target is inside half range for the active weapon.">
         <input
           type="checkbox"
           checked={conditions.isHalfRange}
@@ -429,7 +430,7 @@ export function SetupPanel({
         Half range
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The defender is the closest eligible target.">
         <input
           type="checkbox"
           checked={conditions.targetIsClosestEligible}
@@ -440,10 +441,10 @@ export function SetupPanel({
             }))
           }
         />
-        Target is closest eligible
+        Closest eligible target
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The defender is the spotted or markerlit target.">
         <input
           type="checkbox"
           checked={conditions.targetIsSpotted}
@@ -454,10 +455,38 @@ export function SetupPanel({
             }))
           }
         />
-        Target is spotted / markerlit
+        Spotted / markerlit
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The attacker is within support range of friendly Kroot or Vespid auxiliaries.">
+        <input
+          type="checkbox"
+          checked={conditions.attackerWithinAuxiliarySupportRange}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              attackerWithinAuxiliarySupportRange: e.target.checked,
+            }))
+          }
+        />
+        Attacker near Kroot/Vespid support
+      </label>
+
+      <label className="checkbox-row" title="A nearby Tau unit is screening the Kroot or Vespid defender.">
+        <input
+          type="checkbox"
+          checked={conditions.defenderWithinAuxiliaryStealthRange}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              defenderWithinAuxiliaryStealthRange: e.target.checked,
+            }))
+          }
+        />
+        Auxiliary stealth screen
+      </label>
+
+      <label className="checkbox-row" title="The target is within range of friendly Kroot or Vespid support.">
         <input
           type="checkbox"
           checked={conditions.targetWithinAuxiliarySupportRange}
@@ -468,10 +497,10 @@ export function SetupPanel({
             }))
           }
         />
-        Target near friendly Kroot/Vespid support
+        Near Kroot/Vespid support
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The defender is on the opposite side of a hatchway.">
         <input
           type="checkbox"
           checked={conditions.targetOppositeHatchway}
@@ -485,7 +514,7 @@ export function SetupPanel({
         Target opposite hatchway
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The target currently counts as unravelling.">
         <input
           type="checkbox"
           checked={conditions.targetIsUnravelling}
@@ -499,7 +528,7 @@ export function SetupPanel({
         Target is unravelling
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The defender is within range of an objective marker.">
         <input
           type="checkbox"
           checked={conditions.targetWithinObjectiveRange}
@@ -510,10 +539,10 @@ export function SetupPanel({
             }))
           }
         />
-        Target within objective range
+        Target on objective
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The defender is Battle-shocked.">
         <input
           type="checkbox"
           checked={conditions.targetIsBattleShocked}
@@ -527,7 +556,7 @@ export function SetupPanel({
         Target is Battle-shocked
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The defender has already lost at least one wound or model.">
         <input
           type="checkbox"
           checked={conditions.targetBelowStartingStrength}
@@ -538,10 +567,10 @@ export function SetupPanel({
             }))
           }
         />
-        Target below starting strength
+        Target damaged
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The defender is below half of its starting strength.">
         <input
           type="checkbox"
           checked={conditions.targetBelowHalfStrength}
@@ -552,10 +581,10 @@ export function SetupPanel({
             }))
           }
         />
-        Target below half strength
+        Target below half
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The attacker has already lost at least one wound or model.">
         <input
           type="checkbox"
           checked={conditions.attackerBelowStartingStrength}
@@ -566,10 +595,10 @@ export function SetupPanel({
             }))
           }
         />
-        Attacker below starting strength
+        Attacker damaged
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The attacker is below half of its starting strength.">
         <input
           type="checkbox"
           checked={conditions.attackerBelowHalfStrength}
@@ -580,10 +609,10 @@ export function SetupPanel({
             }))
           }
         />
-        Attacker below half strength
+        Attacker below half
       </label>
 
-      <label className="checkbox-row">
+      <label className="checkbox-row" title="The attacking unit counts as isolated.">
         <input
           type="checkbox"
           checked={conditions.attackerIsIsolated}

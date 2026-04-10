@@ -11,6 +11,8 @@ const baseConditions: AttackConditions = {
   targetVisible: true,
   targetDistanceInches: 24,
   targetInEngagementRange: false,
+  attackerWithinAuxiliarySupportRange: false,
+  defenderWithinAuxiliaryStealthRange: false,
   targetWithinAuxiliarySupportRange: false,
   targetModelCount: 10,
   targetHasMatchingAntiKeyword: false,
@@ -1278,6 +1280,277 @@ describe("calculateExpectedDamage", () => {
     );
   });
 
+  it("applies Kroot Hunting Pack invulnerable saves by attack type", () => {
+    const rangedWeapon: Weapon = {
+      id: "heavy-burst-cannon",
+      name: "Heavy Burst Cannon",
+      attacks: 6,
+      skill: 4,
+      strength: 6,
+      ap: -2,
+      damage: 2,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const meleeWeapon: Weapon = {
+      id: "chainfist",
+      name: "Chainfist",
+      attacks: 4,
+      skill: 3,
+      strength: 8,
+      ap: -3,
+      damage: 2,
+      type: "melee",
+      specialRules: [],
+    };
+
+    const krootDefender: Unit = {
+      ...defender,
+      keywords: ["KROOT"],
+      save: 6,
+      invulnerableSave: undefined,
+    };
+
+    const rangedResult = calculateExpectedDamage({
+      attacker,
+      weapon: rangedWeapon,
+      defender: krootDefender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+      activeDefenderModifierRules: [
+        {
+          type: "INVULNERABLE_SAVE",
+          value: 5,
+          attackType: "ranged",
+          requiredDefenderKeywords: ["KROOT"],
+        },
+      ],
+    });
+
+    const meleeResult = calculateExpectedDamage({
+      attacker,
+      weapon: meleeWeapon,
+      defender: krootDefender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+      activeDefenderModifierRules: [
+        {
+          type: "INVULNERABLE_SAVE",
+          value: 6,
+          attackType: "melee",
+          requiredDefenderKeywords: ["KROOT"],
+        },
+      ],
+    });
+
+    expect(rangedResult.saveTarget).toBe(5);
+    expect(meleeResult.saveTarget).toBe(6);
+  });
+
+  it("applies Auxiliary Cadre stealth screening only when the defender is screened", () => {
+    const rangedWeapon: Weapon = {
+      id: "pulse-carbine",
+      name: "Pulse Carbine",
+      attacks: 2,
+      skill: 4,
+      strength: 5,
+      ap: 0,
+      damage: 1,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const krootDefender: Unit = {
+      ...defender,
+      keywords: ["KROOT"],
+    };
+
+    const unscreened = calculateExpectedDamage({
+      attacker,
+      weapon: rangedWeapon,
+      defender: krootDefender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        targetDistanceInches: 24,
+      },
+      activeModifierRules: [],
+      activeDefenderModifierRules: [
+        {
+          type: "TARGETING_RANGE_LIMIT",
+          value: 18,
+          attackType: "ranged",
+          requiredDefenderKeywords: ["KROOT", "VESPID STINGWINGS"],
+          requiresDefenderWithinAuxiliaryStealthRange: true,
+        },
+      ],
+    });
+
+    const screened = calculateExpectedDamage({
+      attacker,
+      weapon: rangedWeapon,
+      defender: krootDefender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        targetDistanceInches: 24,
+        defenderWithinAuxiliaryStealthRange: true,
+      },
+      activeModifierRules: [],
+      activeDefenderModifierRules: [
+        {
+          type: "TARGETING_RANGE_LIMIT",
+          value: 18,
+          attackType: "ranged",
+          requiredDefenderKeywords: ["KROOT", "VESPID STINGWINGS"],
+          requiresDefenderWithinAuxiliaryStealthRange: true,
+        },
+      ],
+    });
+
+    expect(unscreened.expectedDamage).toBeGreaterThan(0);
+    expect(screened.expectedDamage).toBe(0);
+  });
+
+  it("upgrades Guided Fire from +1 to +2 Strength when the attacker has nearby support", () => {
+    const rangedWeapon: Weapon = {
+      id: "pulse-blaster",
+      name: "Pulse Blaster",
+      attacks: 2,
+      skill: 4,
+      strength: 5,
+      ap: -1,
+      damage: 1,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const baseBuff = calculateExpectedDamage({
+      attacker: {
+        ...attacker,
+        keywords: ["BATTLESUIT"],
+      },
+      weapon: rangedWeapon,
+      defender: {
+        ...defender,
+        toughness: 7,
+      },
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [
+        {
+          type: "STRENGTH_MODIFIER",
+          value: 1,
+          attackType: "ranged",
+          excludedAttackerKeywords: ["KROOT", "VESPID STINGWINGS"],
+        },
+      ],
+    });
+
+    const supportBuff = calculateExpectedDamage({
+      attacker: {
+        ...attacker,
+        keywords: ["BATTLESUIT"],
+      },
+      weapon: rangedWeapon,
+      defender: {
+        ...defender,
+        toughness: 7,
+      },
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        attackerWithinAuxiliarySupportRange: true,
+      },
+      activeModifierRules: [
+        {
+          type: "STRENGTH_MODIFIER",
+          value: 1,
+          attackType: "ranged",
+          excludedAttackerKeywords: ["KROOT", "VESPID STINGWINGS"],
+        },
+        {
+          type: "STRENGTH_MODIFIER",
+          value: 1,
+          attackType: "ranged",
+          excludedAttackerKeywords: ["KROOT", "VESPID STINGWINGS"],
+          requiresAttackerWithinAuxiliarySupportRange: true,
+        },
+      ],
+    });
+
+    expect(baseBuff.woundTarget).toBe(5);
+    expect(supportBuff.woundTarget).toBe(4);
+    expect(supportBuff.expectedDamage).toBeGreaterThan(baseBuff.expectedDamage);
+  });
+
+  it("can block Overwatch against Kroot when Guerrilla Ambushers is active", () => {
+    const rangedWeapon: Weapon = {
+      id: "burst-cannon",
+      name: "Burst Cannon",
+      attacks: 4,
+      skill: 4,
+      strength: 5,
+      ap: 0,
+      damage: 1,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const krootDefender: Unit = {
+      ...defender,
+      keywords: ["KROOT"],
+    };
+
+    const normalOverwatch = calculateExpectedDamage({
+      attacker,
+      weapon: rangedWeapon,
+      defender: krootDefender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        attackerIsFiringOverwatch: true,
+      },
+      activeModifierRules: [],
+      activeDefenderModifierRules: [],
+    });
+
+    const deniedOverwatch = calculateExpectedDamage({
+      attacker,
+      weapon: rangedWeapon,
+      defender: krootDefender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        attackerIsFiringOverwatch: true,
+      },
+      activeModifierRules: [],
+      activeDefenderModifierRules: [
+        {
+          type: "TARGETING_RANGE_LIMIT",
+          value: 0,
+          attackType: "ranged",
+          requiredDefenderKeywords: ["KROOT"],
+          requiresAttackerFiringOverwatch: true,
+        },
+      ],
+    });
+
+    expect(normalOverwatch.expectedDamage).toBeGreaterThan(0);
+    expect(deniedOverwatch.expectedDamage).toBe(0);
+  });
+
   it("applies Power Matrix full hit rerolls when the attacker qualifies", () => {
     const rangedWeapon: Weapon = {
       id: "particle-beamer",
@@ -1467,6 +1740,58 @@ describe("calculateExpectedDamage", () => {
     expect(normalAttack.hitTarget).toBe(3);
     expect(snapshotAttack.hitTarget).toBe(5);
     expect(snapshotAttack.expectedHits).toBeLessThan(normalAttack.expectedHits);
+  });
+
+  it("ignores hit modifiers when Ignore Hit Modifiers is active", () => {
+    const rangedWeapon: Weapon = {
+      id: "smart-missiles",
+      name: "Smart Missiles",
+      attacks: 4,
+      skill: 4,
+      strength: 5,
+      ap: 0,
+      damage: 1,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const penalized = calculateExpectedDamage({
+      attacker,
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [{ type: "HIT_MODIFIER", value: -1, attackType: "ranged" }],
+    });
+
+    const ignoredPenalty = calculateExpectedDamage({
+      attacker,
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        battleRound: 3,
+        attackerIsGuided: true,
+        targetIsSpotted: true,
+      },
+      activeModifierRules: [
+        { type: "HIT_MODIFIER", value: -1, attackType: "ranged" },
+        {
+          type: "IGNORE_HIT_MODIFIERS",
+          attackType: "ranged",
+          requiresAttackerGuided: true,
+          requiresTargetSpotted: true,
+          requiresBattleRoundAtLeast: 3,
+        },
+      ],
+    });
+
+    expect(penalized.hitTarget).toBe(5);
+    expect(ignoredPenalty.hitTarget).toBe(4);
+    expect(ignoredPenalty.expectedHits).toBeGreaterThan(penalized.expectedHits);
   });
 });
 

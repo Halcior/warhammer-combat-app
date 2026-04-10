@@ -15,6 +15,8 @@ const baseConditions: AttackConditions = {
   targetVisible: true,
   targetDistanceInches: 24,
   targetInEngagementRange: false,
+  attackerWithinAuxiliarySupportRange: false,
+  defenderWithinAuxiliaryStealthRange: false,
   targetWithinAuxiliarySupportRange: false,
   targetModelCount: 10,
   targetHasMatchingAntiKeyword: false,
@@ -101,6 +103,12 @@ describe("ruleApplicability", () => {
         excludedAttackerKeywords: ["VEHICLE"],
       },
       {
+        type: "STRENGTH_MODIFIER",
+        value: 1,
+        attackType: "melee",
+        requiresAttackerWithinAuxiliarySupportRange: true,
+      },
+      {
         type: "IGNORES_COVER",
         requiresTargetWithinObjectiveRange: true,
       },
@@ -142,6 +150,13 @@ describe("ruleApplicability", () => {
         value: 5,
         requiresAttackerFiringOverwatch: true,
         requiresTargetOppositeHatchway: true,
+      },
+      {
+        type: "IGNORE_HIT_MODIFIERS",
+        attackType: "melee",
+        requiresAttackerGuided: true,
+        requiresTargetSpotted: true,
+        requiresBattleRoundAtLeast: 3,
       },
       {
         type: "LETHAL_HITS",
@@ -208,6 +223,7 @@ describe("ruleApplicability", () => {
         attackerIsFiringOverwatch: true,
         attackerIsGuided: true,
         attackerIsVesselOfWrath: true,
+        attackerWithinAuxiliarySupportRange: true,
         attackerWithinFriendlyCharacterRange: true,
         attackerWithinFriendlyMonsterAura: true,
         isHalfRange: true,
@@ -228,17 +244,19 @@ describe("ruleApplicability", () => {
       },
     });
 
-    expect(activeRules).toHaveLength(16);
+    expect(activeRules).toHaveLength(18);
     expect(activeRules.map((rule) => rule.type)).toEqual([
       "REROLL_HITS",
       "REROLL_WOUNDS",
       "REROLL_HITS_ONES",
+      "STRENGTH_MODIFIER",
       "IGNORES_COVER",
       "REROLL_WOUNDS_ONES",
       "AP_MODIFIER",
       "REROLL_HITS",
       "REROLL_HITS",
       "FIXED_HIT_ROLL",
+      "IGNORE_HIT_MODIFIERS",
       "SUSTAINED_HITS",
       "AP_MODIFIER",
       "CRITICAL_WOUND_AP_MODIFIER",
@@ -281,6 +299,128 @@ describe("ruleApplicability", () => {
     });
 
     expect(activeRules).toEqual([]);
+  });
+
+  it("respects Auxiliary Cadre stealth screening conditions", () => {
+    const rules: SpecialRule[] = [
+      {
+        type: "TARGETING_RANGE_LIMIT",
+        value: 18,
+        attackType: "ranged",
+        requiredDefenderKeywords: ["KROOT", "VESPID STINGWINGS"],
+        requiresDefenderWithinAuxiliaryStealthRange: true,
+      },
+    ];
+
+    const rangedWeapon: Weapon = {
+      ...weapon,
+      type: "ranged",
+    };
+
+    const krootDefender: Unit = {
+      ...defender,
+      keywords: ["KROOT"],
+    };
+
+    const inactiveRules = filterActiveRules(rules, {
+      attacker,
+      defender: krootDefender,
+      weapon: rangedWeapon,
+      conditions: baseConditions,
+    });
+
+    const activeRules = filterActiveRules(rules, {
+      attacker,
+      defender: krootDefender,
+      weapon: rangedWeapon,
+      conditions: {
+        ...baseConditions,
+        defenderWithinAuxiliaryStealthRange: true,
+      },
+    });
+
+    expect(inactiveRules).toEqual([]);
+    expect(activeRules).toHaveLength(1);
+    expect(activeRules[0].type).toBe("TARGETING_RANGE_LIMIT");
+  });
+
+  it("applies Kroot Raiding Party overwatch denial only during Overwatch", () => {
+    const rules: SpecialRule[] = [
+      {
+        type: "TARGETING_RANGE_LIMIT",
+        value: 0,
+        attackType: "ranged",
+        requiredDefenderKeywords: ["KROOT"],
+        requiresAttackerFiringOverwatch: true,
+      },
+    ];
+
+    const rangedWeapon: Weapon = {
+      ...weapon,
+      type: "ranged",
+    };
+
+    const krootDefender: Unit = {
+      ...defender,
+      keywords: ["KROOT"],
+    };
+
+    const outsideOverwatch = filterActiveRules(rules, {
+      attacker,
+      defender: krootDefender,
+      weapon: rangedWeapon,
+      conditions: baseConditions,
+    });
+
+    const duringOverwatch = filterActiveRules(rules, {
+      attacker,
+      defender: krootDefender,
+      weapon: rangedWeapon,
+      conditions: {
+        ...baseConditions,
+        attackerIsFiringOverwatch: true,
+      },
+    });
+
+    expect(outsideOverwatch).toEqual([]);
+    expect(duringOverwatch).toHaveLength(1);
+  });
+
+  it("applies attacker-side auxiliary support conditions only when enabled", () => {
+    const rules: SpecialRule[] = [
+      {
+        type: "STRENGTH_MODIFIER",
+        value: 1,
+        attackType: "ranged",
+        requiresAttackerWithinAuxiliarySupportRange: true,
+      },
+    ];
+
+    const rangedWeapon: Weapon = {
+      ...weapon,
+      type: "ranged",
+    };
+
+    const withoutSupport = filterActiveRules(rules, {
+      attacker,
+      defender,
+      weapon: rangedWeapon,
+      conditions: baseConditions,
+    });
+
+    const withSupport = filterActiveRules(rules, {
+      attacker,
+      defender,
+      weapon: rangedWeapon,
+      conditions: {
+        ...baseConditions,
+        attackerWithinAuxiliarySupportRange: true,
+      },
+    });
+
+    expect(withoutSupport).toEqual([]);
+    expect(withSupport).toHaveLength(1);
+    expect(withSupport[0].type).toBe("STRENGTH_MODIFIER");
   });
 
   it("derives reroll modes from the active rule set", () => {

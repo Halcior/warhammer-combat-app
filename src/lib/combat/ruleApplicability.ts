@@ -86,6 +86,22 @@ export function ruleApplies(
   }
 
   if (
+    "requiresAttackerWithinAuxiliarySupportRange" in rule &&
+    rule.requiresAttackerWithinAuxiliarySupportRange &&
+    !context.conditions.attackerWithinAuxiliarySupportRange
+  ) {
+    return false;
+  }
+
+  if (
+    "requiresDefenderWithinAuxiliaryStealthRange" in rule &&
+    rule.requiresDefenderWithinAuxiliaryStealthRange &&
+    !context.conditions.defenderWithinAuxiliaryStealthRange
+  ) {
+    return false;
+  }
+
+  if (
     "requiresTargetWithinAuxiliarySupportRange" in rule &&
     rule.requiresTargetWithinAuxiliarySupportRange &&
     !context.conditions.targetWithinAuxiliarySupportRange

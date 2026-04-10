@@ -9,7 +9,8 @@ export const auxiliaryCadreRuleOverride: DetachmentRuleOverride = ({
     return {
       ...rule,
       supportLevel: "implemented",
-      phase: "shooting",
+      appliesTo: "defender",
+      phase: "any",
       modifiers: [
         {
           type: "AP_MODIFIER",
@@ -17,6 +18,13 @@ export const auxiliaryCadreRuleOverride: DetachmentRuleOverride = ({
           attackType: "ranged",
           excludedAttackerKeywords: ["KROOT", "VESPID STINGWINGS", "TITANIC"],
           requiresTargetWithinAuxiliarySupportRange: true,
+        },
+        {
+          type: "TARGETING_RANGE_LIMIT",
+          value: 18,
+          attackType: "ranged",
+          requiredDefenderKeywords: ["KROOT", "VESPID STINGWINGS"],
+          requiresDefenderWithinAuxiliaryStealthRange: true,
         },
       ],
       engineTags: [],
