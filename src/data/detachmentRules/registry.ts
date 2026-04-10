@@ -20,6 +20,7 @@ import { krootRaidingPartyRuleOverride } from "./tau/krootRaidingParty";
 import { montKaRuleOverride } from "./tau/montKa";
 import { retaliationCadreRuleOverride } from "./tau/retaliationCadre";
 import { starfireCadreRuleOverride } from "./tau/starfireCadre";
+import { flyblownHostRuleOverride } from "./deathGuard/flyblownHost";
 import { berzerkerWarbandRuleOverride } from "./worldEaters/berzerkerWarband";
 import { cultOfBloodRuleOverride } from "./worldEaters/cultOfBlood";
 import { goretrackOnslaughtRuleOverride } from "./worldEaters/goretrackOnslaught";
@@ -35,6 +36,7 @@ const detachmentRuleOverrideRegistry: Record<string, DetachmentRuleOverride> = {
   canoptek_harvesters: canoptekHarvestersRuleOverride,
   cult_of_blood: cultOfBloodRuleOverride,
   cursed_legion: cursedLegionRuleOverride,
+  flyblown_host: flyblownHostRuleOverride,
   goretrack_onslaught: goretrackOnslaughtRuleOverride,
   kauyon: kauyonRuleOverride,
   kroot_hunting_pack: krootHuntingPackRuleOverride,

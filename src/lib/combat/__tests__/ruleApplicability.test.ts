@@ -33,6 +33,8 @@ const baseConditions: AttackConditions = {
   attackerSetUpThisTurn: false,
   attackerSetToDefend: false,
   targetIsClosestEligible: false,
+  targetIsAfflicted: false,
+  targetWithinContagionRange: false,
   targetIsSpotted: false,
   targetOppositeHatchway: false,
   targetIsUnravelling: false,
@@ -421,6 +423,73 @@ describe("ruleApplicability", () => {
     expect(withoutSupport).toEqual([]);
     expect(withSupport).toHaveLength(1);
     expect(withSupport[0].type).toBe("STRENGTH_MODIFIER");
+  });
+
+  it("applies afflicted-target conditions only when the target is afflicted", () => {
+    const rules: SpecialRule[] = [
+      {
+        type: "REROLL_WOUNDS",
+        attackType: "ranged",
+        requiresTargetIsAfflicted: true,
+      },
+    ];
+
+    const rangedWeapon: Weapon = {
+      ...weapon,
+      type: "ranged",
+    };
+
+    const withoutAffliction = filterActiveRules(rules, {
+      attacker,
+      defender,
+      weapon: rangedWeapon,
+      conditions: baseConditions,
+    });
+
+    const withAffliction = filterActiveRules(rules, {
+      attacker,
+      defender,
+      weapon: rangedWeapon,
+      conditions: {
+        ...baseConditions,
+        targetIsAfflicted: true,
+      },
+    });
+
+    expect(withoutAffliction).toEqual([]);
+    expect(withAffliction).toHaveLength(1);
+    expect(withAffliction[0].type).toBe("REROLL_WOUNDS");
+  });
+
+  it("applies contagion-range conditions only when the target is in contagion range", () => {
+    const rules: SpecialRule[] = [
+      {
+        type: "CRITICAL_HITS_ON",
+        value: 5,
+        requiresTargetWithinContagionRange: true,
+      },
+    ];
+
+    const withoutContagion = filterActiveRules(rules, {
+      attacker,
+      defender,
+      weapon,
+      conditions: baseConditions,
+    });
+
+    const withContagion = filterActiveRules(rules, {
+      attacker,
+      defender,
+      weapon,
+      conditions: {
+        ...baseConditions,
+        targetWithinContagionRange: true,
+      },
+    });
+
+    expect(withoutContagion).toEqual([]);
+    expect(withContagion).toHaveLength(1);
+    expect(withContagion[0].type).toBe("CRITICAL_HITS_ON");
   });
 
   it("derives reroll modes from the active rule set", () => {

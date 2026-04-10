@@ -29,6 +29,8 @@ const baseConditions: AttackConditions = {
   attackerSetUpThisTurn: false,
   attackerSetToDefend: false,
   targetIsClosestEligible: false,
+  targetIsAfflicted: false,
+  targetWithinContagionRange: false,
   targetIsSpotted: false,
   targetOppositeHatchway: false,
   targetIsUnravelling: false,
@@ -1865,5 +1867,106 @@ it("does not apply wound modifier below toughness threshold", () => {
   expect(withConditionalBonus.expectedDamage).toBeCloseTo(
     noBonus.expectedDamage,
     5
+  );
+});
+
+it("improves ranged output when attacking an afflicted target with re-roll support", () => {
+  const weapon: Weapon = {
+    id: "affliction-rifle",
+    name: "Affliction Rifle",
+    attacks: 2,
+    skill: 3,
+    strength: 4,
+    ap: -1,
+    damage: 1,
+    type: "ranged",
+    specialRules: [],
+  };
+
+  const baseline = calculateExpectedDamage({
+    attacker,
+    weapon,
+    defender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: baseConditions,
+    activeModifierRules: [],
+  });
+
+  const afflictedTarget = calculateExpectedDamage({
+    attacker,
+    weapon,
+    defender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: {
+      ...baseConditions,
+      targetIsAfflicted: true,
+    },
+    activeModifierRules: [
+      {
+        type: "REROLL_HITS",
+        attackType: "ranged",
+        requiresTargetIsAfflicted: true,
+      },
+      {
+        type: "REROLL_WOUNDS",
+        attackType: "ranged",
+        requiresTargetIsAfflicted: true,
+      },
+    ],
+  });
+
+  expect(afflictedTarget.expectedHits).toBeGreaterThan(baseline.expectedHits);
+  expect(afflictedTarget.expectedDamage).toBeGreaterThan(baseline.expectedDamage);
+});
+
+it("improves critical hit output against targets in contagion range", () => {
+  const weapon: Weapon = {
+    id: "plague-bolter",
+    name: "Plague Bolter",
+    attacks: 4,
+    skill: 3,
+    strength: 4,
+    ap: 0,
+    damage: 1,
+    type: "ranged",
+    specialRules: [{ type: "SUSTAINED_HITS", value: 1, attackType: "ranged" }],
+  };
+
+  const baseline = calculateExpectedDamage({
+    attacker,
+    weapon,
+    defender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: baseConditions,
+    activeModifierRules: [],
+  });
+
+  const withContagionCriticals = calculateExpectedDamage({
+    attacker,
+    weapon,
+    defender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: {
+      ...baseConditions,
+      targetWithinContagionRange: true,
+    },
+    activeModifierRules: [
+      {
+        type: "CRITICAL_HITS_ON",
+        value: 5,
+        requiresTargetWithinContagionRange: true,
+      },
+    ],
+  });
+
+  expect(withContagionCriticals.criticalHits).toBeGreaterThan(
+    baseline.criticalHits
+  );
+  expect(withContagionCriticals.expectedHits).toBeGreaterThan(
+    baseline.expectedHits
   );
 });

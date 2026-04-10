@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 import appLogo from "./assets/Nowe_LogoPNG.png";
+import heroBackground from "./assets/Tło.png";
 import { calculateExpectedDamage } from "./lib/combat";
 import { runSimulationByMode } from "./lib/combat/simulation/runSimulationByMode";
 
@@ -141,6 +142,24 @@ function App() {
     battleSetup.attacker.weapons.find((w) => w.id === activeCompareWeaponId) ??
     battleSetup.selectedWeapon;
 
+  const featureCards = [
+    {
+      title: "Damage simulation",
+      description:
+        "Read average output, variance and wipe potential through fast analytics or full Monte Carlo resolution.",
+    },
+    {
+      title: "Unit interaction analysis",
+      description:
+        "Layer detachments, keywords and battlefield conditions to see what actually changes the combat math.",
+    },
+    {
+      title: "Scenario comparison",
+      description:
+        "Compare weapons, matchup states and active effects without leaving the same tactical workspace.",
+    },
+  ];
+
   const compareResult = useMemo(() => {
     return calculateExpectedDamage({
       attacker: battleSetup.attacker,
@@ -234,122 +253,223 @@ function App() {
 
   return (
     <div className="app">
-      <header className="app-hero">
-        <div className="app-hero__content">
-          <div className="app-brand">
-            <img className="app-brand__logo" src={appLogo} alt="DamageForge logo" />
-            <div className="app-brand__copy">
-              <p className="app-hero__eyebrow">Damage Sandbox</p>
-              <h1>DamageForge</h1>
+      <header
+        className="hero-shell"
+        style={{ backgroundImage: `url(${heroBackground})` }}
+      >
+        <div className="hero-shell__overlay" />
+
+        <div className="page-shell hero-shell__frame">
+          <nav className="hero-nav" aria-label="Primary">
+            <a className="hero-nav__brand" href="#top">
+              <img
+                className="hero-nav__logo"
+                src={appLogo}
+                alt="DamageForge logo"
+              />
+              <span className="hero-nav__brand-name">DamageForge</span>
+            </a>
+
+            <div className="hero-nav__links">
+              <a href="#feature-highlights">Features</a>
+              <a href="#docs">Docs</a>
+              <a href="#pricing">Pricing</a>
+              <a
+                href="https://github.com/Halcior/warhammer-combat-app.git"
+                target="_blank"
+                rel="noreferrer"
+              >
+                GitHub
+              </a>
             </div>
-          </div>
-          <p className="app-hero__lead">
-            Fast attack math, detachment rules and simulation results in a
-            cleaner forge-themed workspace.
-          </p>
-        </div>
 
-        <div className="app-hero__meta">
-          <div className="hero-chip">
-            <span className="hero-chip__label">Attacker</span>
-            <span className="hero-chip__value">{battleSetup.attacker.name}</span>
-          </div>
+            <a className="button-link button-link--ghost" href="#app-shell">
+              Open App
+            </a>
+          </nav>
 
-          <div className="hero-chip">
-            <span className="hero-chip__label">Weapon</span>
-            <span className="hero-chip__value">
-              {battleSetup.selectedWeapon.name}
-            </span>
-          </div>
+          <div className="hero-shell__content" id="top">
+            <div className="hero-copy">
+              <span className="hero-badge">Industrial combat analytics</span>
 
-          {factionRules.selectedDetachment && (
-            <div className="hero-chip">
-              <span className="hero-chip__label">Detachment</span>
-              <span className="hero-chip__value">
-                {factionRules.selectedDetachment.name}
-              </span>
+              <div className="hero-brand">
+                <img
+                  className="hero-brand__logo"
+                  src={appLogo}
+                  alt="DamageForge logo"
+                />
+                <div className="hero-brand__copy">
+                  <p className="hero-brand__eyebrow">DamageForge</p>
+                  <h1>DamageForge</h1>
+                </div>
+              </div>
+
+              <p className="hero-subtitle">
+                Forged precision for combat analysis
+              </p>
+
+              <p className="hero-description">
+                DamageForge is a tactical workspace for damage simulation, unit
+                interaction analysis and scenario comparison, built to keep
+                complex combat math readable without flattening the nuance out of
+                a matchup.
+              </p>
+
+              <div className="hero-actions">
+                <a className="button-link button-link--primary" href="#app-shell">
+                  Launch App
+                </a>
+                <a className="button-link button-link--secondary" href="#feature-highlights">
+                  View Features
+                </a>
+              </div>
             </div>
-          )}
+
+            <aside className="hero-summary" aria-label="Current matchup summary">
+              <div className="hero-chip">
+                <span className="hero-chip__label">Attacker</span>
+                <span className="hero-chip__value">{battleSetup.attacker.name}</span>
+              </div>
+
+              <div className="hero-chip">
+                <span className="hero-chip__label">Weapon</span>
+                <span className="hero-chip__value">
+                  {battleSetup.selectedWeapon.name}
+                </span>
+              </div>
+
+              {factionRules.selectedDetachment && (
+                <div className="hero-chip">
+                  <span className="hero-chip__label">Detachment</span>
+                  <span className="hero-chip__value">
+                    {factionRules.selectedDetachment.name}
+                  </span>
+                </div>
+              )}
+            </aside>
+          </div>
         </div>
       </header>
 
-      <SetupPanel
-        factions={battleSetup.factions}
-        attackerFaction={battleSetup.attackerFaction}
-        defenderFaction={battleSetup.defenderFaction}
-        attackerId={battleSetup.attackerId}
-        defenderId={battleSetup.defenderId}
-        weaponId={battleSetup.weaponId}
-        attackingModels={battleSetup.attackingModels}
-        defendingModels={battleSetup.defendingModels}
-        conditions={battleSetup.conditions}
-        attackerUnits={battleSetup.attackerUnits}
-        defenderUnits={battleSetup.defenderUnits}
-        attacker={battleSetup.attacker}
-        setAttackingModels={battleSetup.setAttackingModels}
-        setDefendingModels={battleSetup.setDefendingModels}
-        setConditions={battleSetup.setConditions}
-        handleAttackerFactionChange={battleSetup.handleAttackerFactionChange}
-        handleAttackerChange={battleSetup.handleAttackerChange}
-        handleWeaponChange={battleSetup.handleWeaponChange}
-        handleDefenderFactionChange={battleSetup.handleDefenderFactionChange}
-        handleDefenderChange={battleSetup.handleDefenderChange}
-      />
+      <section className="page-shell feature-showcase" id="feature-highlights">
+        {featureCards.map((feature) => (
+          <article key={feature.title} className="feature-card">
+            <p className="feature-card__eyebrow">Core capability</p>
+            <h2>{feature.title}</h2>
+            <p className="feature-card__text">{feature.description}</p>
+          </article>
+        ))}
+      </section>
 
-      <div className="workspace-grid">
-        <div className="workspace-main">
-          <SimulationPanel
-            mode={mode}
-            setMode={setMode}
-            runs={runs}
-            setRuns={setRuns}
-            onRun={handleRunSimulation}
-            summary={simulationSummary}
-            error={simulationError}
-            isRunning={isSimulationRunning}
-          />
-
-          <div className="analysis-grid">
-            <ExpectedResultPanel expectedResult={expectedResult} />
-            <AttackBreakdownSourcesPanel explanation={attackBreakdownExplanation} />
+      <main className="page-shell app-shell" id="app-shell">
+        <section className="app-shell__intro">
+          <div className="app-shell__intro-copy">
+            <p className="panel-eyebrow">Operational workspace</p>
+            <h2>Launch the analysis stack</h2>
+            <p className="muted-text">
+              Set the matchup, apply battlefield conditions and work through the
+              damage profile from quick analytical output down to simulation and
+              active rules.
+            </p>
           </div>
 
-          {battleSetup.attacker.weapons.length > 1 && (
-            <CompareWeaponsPanel
-              weaponA={battleSetup.selectedWeapon}
-              weaponB={compareWeapon}
-              compareWeaponId={activeCompareWeaponId}
-              setCompareWeaponId={setCompareWeaponId}
-              availableWeapons={battleSetup.attacker.weapons}
-              resultA={expectedResult}
-              resultB={compareResult}
-            />
-          )}
-        </div>
+          <div className="app-shell__info">
+            <article className="info-card" id="docs">
+              <span className="info-card__label">Docs</span>
+              <p>
+                Breakdown traces and rule tooltips keep the combat logic readable
+                inside the app.
+              </p>
+            </article>
 
-        <div className="workspace-sidebar">
-          <ModifiersPanel
-            activeAttackModifiers={attackModifiers.activeAttackModifiers}
-            setActiveAttackModifiers={attackModifiers.setActiveAttackModifiers}
-            allActiveModifierRules={allActiveModifierRules}
-            selectedWeapon={battleSetup.selectedWeapon}
-            attacker={battleSetup.attacker}
-            availableDetachments={factionRules.availableDetachments}
-            selectedDetachmentId={factionRules.selectedDetachmentId}
-            setSelectedDetachmentId={factionRules.setSelectedDetachmentId}
-            selectedDetachment={factionRules.selectedDetachment}
-            availableRuleOptions={factionRules.allAvailableRuleOptions}
-            activeRuleOptionIds={ruleOptions.activeRuleOptionIds}
-            toggleRuleOption={ruleOptions.toggleRuleOption}
-            stratagems={factionRules.stratagems}
-            enhancements={factionRules.enhancements}
-            activeEnhancementIds={enhancementOptions.activeEnhancementIds}
-            toggleEnhancement={enhancementOptions.toggleEnhancement}
-            activeStratagemIds={stratagemOptions.activeStratagemIds}
-            toggleStratagem={stratagemOptions.toggleStratagem}
-          />
+            <article className="info-card" id="pricing">
+              <span className="info-card__label">Pricing</span>
+              <p>
+                The current focus is a strong core calculator, with room for
+                future premium flows like saved scenarios and team presets.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <SetupPanel
+          factions={battleSetup.factions}
+          attackerFaction={battleSetup.attackerFaction}
+          defenderFaction={battleSetup.defenderFaction}
+          attackerId={battleSetup.attackerId}
+          defenderId={battleSetup.defenderId}
+          weaponId={battleSetup.weaponId}
+          attackingModels={battleSetup.attackingModels}
+          defendingModels={battleSetup.defendingModels}
+          conditions={battleSetup.conditions}
+          attackerUnits={battleSetup.attackerUnits}
+          defenderUnits={battleSetup.defenderUnits}
+          attacker={battleSetup.attacker}
+          setAttackingModels={battleSetup.setAttackingModels}
+          setDefendingModels={battleSetup.setDefendingModels}
+          setConditions={battleSetup.setConditions}
+          handleAttackerFactionChange={battleSetup.handleAttackerFactionChange}
+          handleAttackerChange={battleSetup.handleAttackerChange}
+          handleWeaponChange={battleSetup.handleWeaponChange}
+          handleDefenderFactionChange={battleSetup.handleDefenderFactionChange}
+          handleDefenderChange={battleSetup.handleDefenderChange}
+        />
+
+        <div className="workspace-grid">
+          <div className="workspace-main">
+            <SimulationPanel
+              mode={mode}
+              setMode={setMode}
+              runs={runs}
+              setRuns={setRuns}
+              onRun={handleRunSimulation}
+              summary={simulationSummary}
+              error={simulationError}
+              isRunning={isSimulationRunning}
+            />
+
+            <div className="analysis-grid">
+              <ExpectedResultPanel expectedResult={expectedResult} />
+              <AttackBreakdownSourcesPanel explanation={attackBreakdownExplanation} />
+            </div>
+
+            {battleSetup.attacker.weapons.length > 1 && (
+              <CompareWeaponsPanel
+                weaponA={battleSetup.selectedWeapon}
+                weaponB={compareWeapon}
+                compareWeaponId={activeCompareWeaponId}
+                setCompareWeaponId={setCompareWeaponId}
+                availableWeapons={battleSetup.attacker.weapons}
+                resultA={expectedResult}
+                resultB={compareResult}
+              />
+            )}
+          </div>
+
+          <div className="workspace-sidebar">
+            <ModifiersPanel
+              activeAttackModifiers={attackModifiers.activeAttackModifiers}
+              setActiveAttackModifiers={attackModifiers.setActiveAttackModifiers}
+              allActiveModifierRules={allActiveModifierRules}
+              selectedWeapon={battleSetup.selectedWeapon}
+              attacker={battleSetup.attacker}
+              availableDetachments={factionRules.availableDetachments}
+              selectedDetachmentId={factionRules.selectedDetachmentId}
+              setSelectedDetachmentId={factionRules.setSelectedDetachmentId}
+              selectedDetachment={factionRules.selectedDetachment}
+              availableRuleOptions={factionRules.allAvailableRuleOptions}
+              activeRuleOptionIds={ruleOptions.activeRuleOptionIds}
+              toggleRuleOption={ruleOptions.toggleRuleOption}
+              stratagems={factionRules.stratagems}
+              enhancements={factionRules.enhancements}
+              activeEnhancementIds={enhancementOptions.activeEnhancementIds}
+              toggleEnhancement={enhancementOptions.toggleEnhancement}
+              activeStratagemIds={stratagemOptions.activeStratagemIds}
+              toggleStratagem={stratagemOptions.toggleStratagem}
+            />
+          </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

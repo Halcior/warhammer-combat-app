@@ -198,6 +198,22 @@ export function ruleApplies(
   }
 
   if (
+    "requiresTargetIsAfflicted" in rule &&
+    rule.requiresTargetIsAfflicted &&
+    !context.conditions.targetIsAfflicted
+  ) {
+    return false;
+  }
+
+  if (
+    "requiresTargetWithinContagionRange" in rule &&
+    rule.requiresTargetWithinContagionRange &&
+    !context.conditions.targetWithinContagionRange
+  ) {
+    return false;
+  }
+
+  if (
     "requiresTargetSpotted" in rule &&
     rule.requiresTargetSpotted &&
     !context.conditions.targetIsSpotted

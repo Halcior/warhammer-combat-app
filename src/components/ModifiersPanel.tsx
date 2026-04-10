@@ -112,7 +112,7 @@ export function ModifiersPanel({
       {availableRuleOptions.length > 0 && (
         <CollapsibleSection title="Faction & Detachment Rules">
           <div className="rules-section__content">
-            <div className="option-list">
+            <div className="option-list option-list--stacked">
               {availableRuleOptions.map((rule) => (
                 <label key={rule.id} className="checkbox-row">
                 <input

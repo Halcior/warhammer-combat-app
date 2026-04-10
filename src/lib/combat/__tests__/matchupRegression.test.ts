@@ -31,6 +31,8 @@ const baseConditions: AttackConditions = {
   attackerSetUpThisTurn: false,
   attackerSetToDefend: false,
   targetIsClosestEligible: false,
+  targetIsAfflicted: false,
+  targetWithinContagionRange: false,
   targetIsSpotted: false,
   targetOppositeHatchway: false,
   targetIsUnravelling: false,

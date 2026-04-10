@@ -707,6 +707,24 @@ export function mapNormalizedDetachmentToEnhancements(
             },
           ],
         }),
+        createImplementedRuleOption({
+          id: `${enhancement.id}-ignore-hit-effect`,
+          name: "Exemplar of the Kauyon: Ignore Hit Modifiers",
+          description:
+            "From battle round 2 onwards, a led Guided unit can ignore hit modifiers against its Spotted target.",
+          phase: "shooting",
+          modifiers: [
+            {
+              type: "IGNORE_HIT_MODIFIERS",
+              attackType: "ranged",
+              requiresAttachedUnit: true,
+              requiresAttackerGuided: true,
+              requiresTargetSpotted: true,
+              requiresBattleRoundAtLeast: 2,
+              requiresBattleRoundAtMost: 5,
+            },
+          ],
+        }),
       ]);
     }
 
@@ -963,6 +981,176 @@ export function mapNormalizedDetachmentToEnhancements(
               requiredAttackerKeywords: ["BATTLESUIT"],
             },
           ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "flyblown_host" &&
+      enhancementName.includes("insectile murmuration")
+    ) {
+      return createImplementedEnhancement(enhancement, "any", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Insectile Murmuration Effect",
+          description:
+            "The bearer's unit re-rolls wound rolls of 1 against targets in Contagion Range.",
+          phase: "any",
+          modifiers: [
+            {
+              type: "REROLL_WOUNDS_ONES",
+              requiresTargetWithinContagionRange: true,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "flyblown_host" &&
+      enhancementName.includes("droning chorus")
+    ) {
+      return createImplementedEnhancement(enhancement, "shooting", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Droning Chorus Effect",
+          description: "The bearer's unit gains Assault on ranged weapons.",
+          phase: "shooting",
+          modifiers: [{ type: "ASSAULT", attackType: "ranged" }],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "flyblown_host" &&
+      enhancementName.includes("plagueveil")
+    ) {
+      return createImplementedEnhancement(enhancement, "any", [
+        createImplementedDefenderRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Plagueveil Effect",
+          description:
+            "While the defended unit is on an objective you control, it can only be targeted by ranged attacks from within 18\".",
+          phase: "any",
+          modifiers: [
+            {
+              type: "TARGETING_RANGE_LIMIT",
+              value: 18,
+              attackType: "ranged",
+              requiresTargetWithinObjectiveRange: true,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "mortarion_s_hammer" &&
+      enhancementName.includes("eye of affliction")
+    ) {
+      return createImplementedEnhancement(enhancement, "shooting", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Eye of Affliction Effect",
+          description:
+            "Ranged attacks against Afflicted units gain Ignores Cover.",
+          phase: "shooting",
+          modifiers: [
+            {
+              type: "IGNORES_COVER",
+              attackType: "ranged",
+              requiresTargetIsAfflicted: true,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "vectors_of_decay" &&
+      enhancementName.includes("foul constitution")
+    ) {
+      return createImplementedEnhancement(enhancement, "any", [
+        createImplementedDefenderRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Foul Constitution Effect",
+          description:
+            "Attacks allocated to the bearer have their Damage reduced by 1.",
+          phase: "any",
+          modifiers: [{ type: "DAMAGE_REDUCTION", value: 1 }],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "virulent_vectorium" &&
+      enhancementName.includes("daemon weapon of nurgle")
+    ) {
+      return createImplementedEnhancement(enhancement, "fight", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Daemon Weapon of Nurgle Effect",
+          description: "The bearer's melee attacks score critical hits on 5+.",
+          phase: "fight",
+          modifiers: [
+            { type: "CRITICAL_HITS_ON", value: 5, attackType: "melee" },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "virulent_vectorium" &&
+      enhancementName.includes("furnace of plagues")
+    ) {
+      return createImplementedEnhancement(enhancement, "fight", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Furnace of Plagues Effect",
+          description:
+            "The bearer's melee weapons gain +1 Attacks, +1 Strength and Devastating Wounds.",
+          phase: "fight",
+          modifiers: [
+            { type: "ATTACKS_MODIFIER", value: 1, attackType: "melee" },
+            { type: "STRENGTH_MODIFIER", value: 1, attackType: "melee" },
+            { type: "DEVASTATING_WOUNDS", attackType: "melee" },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "virulent_vectorium" &&
+      enhancementName.includes("arch contaminator")
+    ) {
+      return createImplementedEnhancement(enhancement, "any", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Arch Contaminator Effect",
+          description:
+            "While the bearer's unit is on an objective you control, it re-rolls wound rolls.",
+          phase: "any",
+          modifiers: [
+            {
+              type: "REROLL_WOUNDS",
+              requiresTargetWithinObjectiveRange: true,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "virulent_vectorium" &&
+      enhancementName.includes("revolting regeneration")
+    ) {
+      return createImplementedEnhancement(enhancement, "any", [
+        createImplementedDefenderRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Revolting Regeneration Effect",
+          description: "The bearer has Feel No Pain 5+.",
+          phase: "any",
+          modifiers: [{ type: "FEEL_NO_PAIN", value: 5 }],
         }),
       ]);
     }
@@ -1361,6 +1549,22 @@ export function mapNormalizedDetachmentToStratagems(
 
     if (
       detachment.id === "auxiliary_cadre" &&
+      stratagemName.includes("alien expertise")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Alien Expertise Effect",
+          description:
+            "The targeted unit gains Assault on ranged weapons for the turn.",
+          phase,
+          modifiers: [{ type: "ASSAULT", attackType: "ranged" }],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "auxiliary_cadre" &&
       stratagemName.includes("guided fire")
     ) {
       return createImplementedStratagem(detachment, stratagem, phase, [
@@ -1642,6 +1846,215 @@ export function mapNormalizedDetachmentToStratagems(
               type: "SUSTAINED_HITS",
               value: 1,
               excludedAttackerKeywords: ["MONSTER", "VEHICLE", "TITANIC"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "vectors_of_decay" &&
+      stratagemName.includes("chinks in the armour")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Chinks in the Armour Effect",
+          description:
+            "Attacks against targets in Contagion Range score critical hits on 5+.",
+          phase,
+          modifiers: [
+            {
+              type: "CRITICAL_HITS_ON",
+              value: 5,
+              requiresTargetWithinContagionRange: true,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "flyblown_host" &&
+      stratagemName.includes("droning horror")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-reroll-ones-effect`,
+          name: "Droning Horror: Re-roll Hit Rolls of 1",
+          description: "Ranged attacks re-roll hit rolls of 1.",
+          phase,
+          modifiers: [{ type: "REROLL_HITS_ONES", attackType: "ranged" }],
+        }),
+        createImplementedRuleOption({
+          id: `${stratagem.id}-full-reroll-effect`,
+          name: "Droning Horror: Full Hit Re-rolls",
+          description: "Ranged attacks within half range re-roll hit rolls.",
+          phase,
+          modifiers: [
+            {
+              type: "REROLL_HITS",
+              attackType: "ranged",
+              requiresHalfRange: true,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "flyblown_host" &&
+      stratagemName.includes("eye of the swarm")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Eye of the Swarm Effect",
+          description:
+            "The targeted unit's non-Blast ranged weapons gain Pistol.",
+          phase,
+          modifiers: [{ type: "PISTOL" }],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "mortarion_s_hammer" &&
+      stratagemName.includes("font of filth")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Font of Filth Effect",
+          description: "Death Guard Vehicle ranged weapons gain Assault.",
+          phase,
+          modifiers: [
+            {
+              type: "ASSAULT",
+              attackType: "ranged",
+              requiredAttackerKeywords: ["VEHICLE"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "virulent_vectorium" &&
+      stratagemName.includes("disgustingly resilient")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedDefenderRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Disgustingly Resilient Effect",
+          description:
+            "Attacks allocated to the unit have their Damage reduced by 1.",
+          phase,
+          modifiers: [{ type: "DAMAGE_REDUCTION", value: 1 }],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "virulent_vectorium" &&
+      stratagemName.includes("creeping blight")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Creeping Blight Effect",
+          description:
+            "Death Guard Infantry ranged attacks against Afflicted units re-roll hits and wounds.",
+          phase,
+          modifiers: [
+            {
+              type: "REROLL_HITS",
+              attackType: "ranged",
+              requiredAttackerKeywords: ["INFANTRY"],
+              requiresTargetIsAfflicted: true,
+            },
+            {
+              type: "REROLL_WOUNDS",
+              attackType: "ranged",
+              requiredAttackerKeywords: ["INFANTRY"],
+              requiresTargetIsAfflicted: true,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "virulent_vectorium" &&
+      stratagemName.includes("overwhelming generosity")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Overwhelming Generosity Effect",
+          description:
+            "Death Guard ranged attacks against the selected enemy re-roll attack counts.",
+          phase,
+          modifiers: [{ type: "REROLL_ATTACKS", attackType: "ranged" }],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "arch_contaminators" &&
+      stratagemName.includes("cloud of flies")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedDefenderRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Cloud of Flies Effect",
+          description:
+            "Ranged attacks targeting the unit suffer -1 to hit.",
+          phase,
+          modifiers: [{ type: "HIT_MODIFIER", value: -1, attackType: "ranged" }],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "champions_of_contagion" &&
+      stratagemName.includes("blessings of filth")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Blessings of Filth Effect",
+          description:
+            "Attached Death Guard units score critical hits on 5+.",
+          phase,
+          modifiers: [
+            { type: "CRITICAL_HITS_ON", value: 5, requiresAttachedUnit: true },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "champions_of_contagion" &&
+      stratagemName.includes("malignance magnified")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Malignance Magnified Effect",
+          description:
+            "Attached Death Guard units re-roll hits and wounds against damaged targets.",
+          phase,
+          modifiers: [
+            {
+              type: "REROLL_HITS",
+              requiresAttachedUnit: true,
+              requiresTargetBelowStartingStrength: true,
+            },
+            {
+              type: "REROLL_WOUNDS",
+              requiresAttachedUnit: true,
+              requiresTargetBelowStartingStrength: true,
             },
           ],
         }),
