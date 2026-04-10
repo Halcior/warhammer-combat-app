@@ -228,6 +228,102 @@ describe("matchup regressions", () => {
     expect(fastSummary.meanDamage).toBeGreaterThan(0);
     expect(accurateSummary.meanDamage).toBeGreaterThan(0);
   });
+
+  it("keeps Tau Battlesuit defensive stacks stable for Broadside into Carnifexes", () => {
+    const broadside = units.find((unit) => unit.name === "Broadside Battlesuits");
+    const carnifexes = units.find((unit) => unit.name === "Carnifexes");
+
+    expect(broadside).toBeDefined();
+    expect(carnifexes).toBeDefined();
+
+    const railRifle = broadside?.weapons.find(
+      (weapon) => weapon.name === "Heavy rail rifle"
+    );
+
+    expect(railRifle).toBeDefined();
+
+    const baselineExpected = calculateExpectedDamage({
+      attacker: broadside!,
+      weapon: railRifle!,
+      defender: carnifexes!,
+      attackingModels: 1,
+      defendingModels: 1,
+      conditions: baseConditions,
+      activeModifierRules: [],
+      activeDefenderModifierRules: [],
+    });
+
+    const defensiveRules = [
+      {
+        type: "WOUND_MODIFIER" as const,
+        value: -1,
+        requiresAttackStrengthGreaterThanTargetToughness: true,
+      },
+      {
+        type: "FEEL_NO_PAIN" as const,
+        value: 6,
+      },
+    ];
+
+    const defendedExpected = calculateExpectedDamage({
+      attacker: broadside!,
+      weapon: railRifle!,
+      defender: carnifexes!,
+      attackingModels: 1,
+      defendingModels: 1,
+      conditions: baseConditions,
+      activeModifierRules: [],
+      activeDefenderModifierRules: defensiveRules,
+    });
+
+    expect(defendedExpected.expectedDamage).toBeLessThan(
+      baselineExpected.expectedDamage
+    );
+    expect(Number.isFinite(defendedExpected.expectedDamage)).toBe(true);
+
+    const fastSummary = runSimulationByMode({
+      mode: "fast",
+      expectedResult: defendedExpected,
+      selectedWeapon: railRifle!,
+      targetWounds: carnifexes!.woundsPerModel,
+      defendingModels: 1,
+      runs: 1000,
+      accurateParams: {
+        attacker: broadside!,
+        weapon: railRifle!,
+        defender: carnifexes!,
+        attackingModels: 1,
+        defendingModels: 1,
+        conditions: baseConditions,
+        activeModifierRules: [],
+        activeDefenderModifierRules: defensiveRules,
+      },
+    });
+
+    const accurateSummary = runSimulationByMode({
+      mode: "accurate",
+      expectedResult: defendedExpected,
+      selectedWeapon: railRifle!,
+      targetWounds: carnifexes!.woundsPerModel,
+      defendingModels: 1,
+      runs: 1000,
+      accurateParams: {
+        attacker: broadside!,
+        weapon: railRifle!,
+        defender: carnifexes!,
+        attackingModels: 1,
+        defendingModels: 1,
+        conditions: baseConditions,
+        activeModifierRules: [],
+        activeDefenderModifierRules: defensiveRules,
+      },
+    });
+
+    expectFiniteSummary(fastSummary);
+    expectFiniteSummary(accurateSummary);
+    expect(fastSummary.meanDamage).toBeGreaterThanOrEqual(0);
+    expect(accurateSummary.meanDamage).toBeGreaterThanOrEqual(0);
+  });
 });
 
 function expectFiniteSummary(

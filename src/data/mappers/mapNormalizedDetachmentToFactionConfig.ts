@@ -1746,6 +1746,28 @@ export function mapNormalizedDetachmentToStratagems(
     }
 
     if (
+      detachment.id === "experimental_prototype_cadre" &&
+      stratagemName.includes("reactive impact dampeners")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedDefenderRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Reactive Impact Dampeners Effect",
+          description:
+            "Attacks with Strength greater than the Battlesuit unit's Toughness suffer -1 to wound.",
+          phase,
+          modifiers: [
+            {
+              type: "WOUND_MODIFIER",
+              value: -1,
+              requiresAttackStrengthGreaterThanTargetToughness: true,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
       detachment.id === "kroot_hunting_pack" &&
       stratagemName.includes("trap well laid")
     ) {
@@ -2066,6 +2088,21 @@ export function mapNormalizedDetachmentToStratagems(
               requiredDefenderKeywords: ["MONSTER", "VEHICLE"],
             },
           ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "retaliation_cadre" &&
+      stratagemName.includes("stimm injectors")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedDefenderRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Stimm Injectors Effect",
+          description: "Battlesuit models gain Feel No Pain 6+ while targeted.",
+          phase,
+          modifiers: [{ type: "FEEL_NO_PAIN", value: 6 }],
         }),
       ]);
     }
