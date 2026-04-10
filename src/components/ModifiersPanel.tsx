@@ -350,7 +350,7 @@ function HoverInfo({ label, tooltip }: HoverInfoProps) {
   }
 
   return (
-    <span className="hover-info" tabIndex={0} title={tooltip}>
+    <span className="hover-info" tabIndex={0}>
       <span className="hover-info__label">{label}</span>
       <span className="hover-info__tooltip" role="tooltip">
         {tooltip}

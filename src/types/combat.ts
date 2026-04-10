@@ -6,6 +6,7 @@ export type ConditionalRuleFields = {
   attackType?: WeaponType;
   limitsTargetingRangeTo?: number;
   requiresAttackWithinObjectiveRange?: boolean;
+  requiresTargetWithinAuxiliarySupportRange?: boolean;
   requiresAttackerDisembarkedThisTurn?: boolean;
   requiresAttackerFiringOverwatch?: boolean;
   requiresAttackerIsVesselOfWrath?: boolean;
@@ -118,6 +119,7 @@ export type AttackConditions = {
   targetVisible: boolean;
   targetDistanceInches: number;
   targetInEngagementRange: boolean;
+  targetWithinAuxiliarySupportRange: boolean;
   targetModelCount: number;
   targetHasMatchingAntiKeyword: boolean;
   isChargeTurn: boolean;

@@ -11,6 +11,7 @@ const baseConditions: AttackConditions = {
   targetVisible: true,
   targetDistanceInches: 24,
   targetInEngagementRange: false,
+  targetWithinAuxiliarySupportRange: false,
   targetModelCount: 10,
   targetHasMatchingAntiKeyword: false,
   isChargeTurn: false,
@@ -1209,6 +1210,71 @@ describe("calculateExpectedDamage", () => {
     expect(closestTarget.effectiveAp).toBe(-2);
     expect(closestTarget.expectedDamage).toBeGreaterThan(
       noClosestTarget.expectedDamage
+    );
+  });
+
+  it("applies Auxiliary Cadre AP bonuses when the target is near Kroot/Vespid support", () => {
+    const rangedWeapon: Weapon = {
+      id: "plasma-rifle",
+      name: "Plasma Rifle",
+      attacks: 2,
+      skill: 4,
+      strength: 8,
+      ap: -2,
+      damage: 3,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const outsideSupport = calculateExpectedDamage({
+      attacker: {
+        ...attacker,
+        keywords: ["BATTLESUIT"],
+      },
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [
+        {
+          type: "AP_MODIFIER",
+          value: 1,
+          attackType: "ranged",
+          excludedAttackerKeywords: ["KROOT", "VESPID STINGWINGS", "TITANIC"],
+          requiresTargetWithinAuxiliarySupportRange: true,
+        },
+      ],
+    });
+
+    const insideSupport = calculateExpectedDamage({
+      attacker: {
+        ...attacker,
+        keywords: ["BATTLESUIT"],
+      },
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        targetWithinAuxiliarySupportRange: true,
+      },
+      activeModifierRules: [
+        {
+          type: "AP_MODIFIER",
+          value: 1,
+          attackType: "ranged",
+          excludedAttackerKeywords: ["KROOT", "VESPID STINGWINGS", "TITANIC"],
+          requiresTargetWithinAuxiliarySupportRange: true,
+        },
+      ],
+    });
+
+    expect(outsideSupport.effectiveAp).toBe(-2);
+    expect(insideSupport.effectiveAp).toBe(-3);
+    expect(insideSupport.expectedDamage).toBeGreaterThan(
+      outsideSupport.expectedDamage
     );
   });
 

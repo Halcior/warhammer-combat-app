@@ -12,6 +12,7 @@ export function useBattleSetup() {
     targetVisible: true,
     targetDistanceInches: 24,
     targetInEngagementRange: false,
+    targetWithinAuxiliarySupportRange: false,
     targetModelCount: 10,
     targetHasMatchingAntiKeyword: false,
     isChargeTurn: false,

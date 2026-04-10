@@ -15,6 +15,7 @@ const baseConditions: AttackConditions = {
   targetVisible: true,
   targetDistanceInches: 24,
   targetInEngagementRange: false,
+  targetWithinAuxiliarySupportRange: false,
   targetModelCount: 10,
   targetHasMatchingAntiKeyword: false,
   isChargeTurn: false,
@@ -102,6 +103,12 @@ describe("ruleApplicability", () => {
       {
         type: "IGNORES_COVER",
         requiresTargetWithinObjectiveRange: true,
+      },
+      {
+        type: "AP_MODIFIER",
+        value: 1,
+        attackType: "ranged",
+        requiresTargetWithinAuxiliarySupportRange: true,
       },
       {
         type: "REROLL_WOUNDS_ONES",
@@ -208,6 +215,7 @@ describe("ruleApplicability", () => {
         isAttachedUnit: true,
         battleRound: 3,
         targetDistanceInches: 9,
+        targetWithinAuxiliarySupportRange: true,
         attackerWithinPowerMatrix: true,
         attackerSetUpThisTurn: true,
         attackerSetToDefend: true,

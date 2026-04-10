@@ -460,6 +460,20 @@ export function SetupPanel({
       <label className="checkbox-row">
         <input
           type="checkbox"
+          checked={conditions.targetWithinAuxiliarySupportRange}
+          onChange={(e) =>
+            setConditions((prev) => ({
+              ...prev,
+              targetWithinAuxiliarySupportRange: e.target.checked,
+            }))
+          }
+        />
+        Target near friendly Kroot/Vespid support
+      </label>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
           checked={conditions.targetOppositeHatchway}
           onChange={(e) =>
             setConditions((prev) => ({

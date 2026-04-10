@@ -86,6 +86,14 @@ export function ruleApplies(
   }
 
   if (
+    "requiresTargetWithinAuxiliarySupportRange" in rule &&
+    rule.requiresTargetWithinAuxiliarySupportRange &&
+    !context.conditions.targetWithinAuxiliarySupportRange
+  ) {
+    return false;
+  }
+
+  if (
     "requiresHalfRange" in rule &&
     rule.requiresHalfRange &&
     !context.conditions.isHalfRange

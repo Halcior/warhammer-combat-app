@@ -13,6 +13,7 @@ import { obeisancePhalanxRuleOverride } from "./necrons/obeisancePhalanx";
 import { pantheonOfWoeRuleOverride } from "./necrons/pantheonOfWoe";
 import { starshatterArsenalRuleOverride } from "./necrons/starshatterArsenal";
 import { tombShipComplementRuleOverride } from "./necrons/tombShipComplement";
+import { auxiliaryCadreRuleOverride } from "./tau/auxiliaryCadre";
 import { kauyonRuleOverride } from "./tau/kauyon";
 import { krootHuntingPackRuleOverride } from "./tau/krootHuntingPack";
 import { montKaRuleOverride } from "./tau/montKa";
@@ -26,6 +27,7 @@ const detachmentRuleOverrideRegistry: Record<string, DetachmentRuleOverride> = {
   annihilation_legion: annihilationLegionRuleOverride,
   auric_champions: auricChampionsRuleOverride,
   awakened_dynasty: awakenedDynastyRuleOverride,
+  auxiliary_cadre: auxiliaryCadreRuleOverride,
   berzerker_warband: berzerkerWarbandRuleOverride,
   black_ship_guardians: blackShipGuardiansRuleOverride,
   canoptek_court: canoptekCourtRuleOverride,
