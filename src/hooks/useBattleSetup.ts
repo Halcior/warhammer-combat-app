@@ -2,13 +2,7 @@ import { useMemo, useState } from "react";
 import { units } from "../data/units";
 import type { AttackConditions } from "../types/combat";
 
-type UseBattleSetupParams = {
-  onResetResolveAttack?: () => void;
-};
-
-export function useBattleSetup({
-  onResetResolveAttack,
-}: UseBattleSetupParams = {}) {
+export function useBattleSetup() {
   const initialConditions: AttackConditions = {
     battleRound: 1,
     isTargetInCover: false,
@@ -99,8 +93,6 @@ export function useBattleSetup({
       setAttackerId(newAttacker.id);
       setWeaponId(newAttacker.weapons[0].id);
     }
-
-    onResetResolveAttack?.();
   }
 
   function handleAttackerChange(newAttackerId: string) {
@@ -111,13 +103,10 @@ export function useBattleSetup({
     if (newAttacker) {
       setWeaponId(newAttacker.weapons[0].id);
     }
-
-    onResetResolveAttack?.();
   }
 
   function handleWeaponChange(newWeaponId: string) {
     setWeaponId(newWeaponId);
-    onResetResolveAttack?.();
   }
 
   function handleDefenderFactionChange(newFaction: string) {
@@ -129,13 +118,10 @@ export function useBattleSetup({
     if (newDefender) {
       setDefenderId(newDefender.id);
     }
-
-    onResetResolveAttack?.();
   }
 
   function handleDefenderChange(newDefenderId: string) {
     setDefenderId(newDefenderId);
-    onResetResolveAttack?.();
   }
 
   return {

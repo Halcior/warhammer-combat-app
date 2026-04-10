@@ -73,44 +73,47 @@ export function ModifiersPanel({
       </div>
 
       {availableDetachments.length > 0 && (
-        <div className="rules-section">
-          <h3>Detachment</h3>
+        <CollapsibleSection title="Detachment">
+          <div className="rules-section__content">
+            <label>
+              Active detachment
+              <select
+                value={selectedDetachmentId || selectedDetachment?.id || ""}
+                onChange={(e) => setSelectedDetachmentId(e.target.value)}
+              >
+                {availableDetachments.map((detachment) => (
+                  <option key={detachment.id} value={detachment.id}>
+                    {detachment.name}
+                  </option>
+                ))}
+              </select>
+            </label>
 
-          <label>
-            Active detachment
-            <select
-              value={selectedDetachmentId || selectedDetachment?.id || ""}
-              onChange={(e) => setSelectedDetachmentId(e.target.value)}
-            >
-              {availableDetachments.map((detachment) => (
-                <option key={detachment.id} value={detachment.id}>
-                  {detachment.name}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          {selectedDetachment && (
-            <div className="detachment-summary">
-              <HoverInfo
-                label={<span className="detachment-summary__name">{selectedDetachment.name}</span>}
-                tooltip={buildDetachmentTooltip(selectedDetachment)}
-              />
-              {selectedDetachmentDescription && (
-                <p className="muted-text">{selectedDetachmentDescription}</p>
-              )}
-            </div>
-          )}
-        </div>
+            {selectedDetachment && (
+              <div className="detachment-summary">
+                <HoverInfo
+                  label={
+                    <span className="detachment-summary__name">
+                      {selectedDetachment.name}
+                    </span>
+                  }
+                  tooltip={buildDetachmentTooltip(selectedDetachment)}
+                />
+                {selectedDetachmentDescription && (
+                  <p className="muted-text">{selectedDetachmentDescription}</p>
+                )}
+              </div>
+            )}
+          </div>
+        </CollapsibleSection>
       )}
 
       {availableRuleOptions.length > 0 && (
-        <div className="rules-section">
-          <h3>Faction & Detachment Rules</h3>
-
-          <div className="option-list">
-            {availableRuleOptions.map((rule) => (
-              <label key={rule.id} className="checkbox-row">
+        <CollapsibleSection title="Faction & Detachment Rules">
+          <div className="rules-section__content">
+            <div className="option-list">
+              {availableRuleOptions.map((rule) => (
+                <label key={rule.id} className="checkbox-row">
                 <input
                   type="checkbox"
                   checked={activeRuleOptionIds.includes(rule.id)}
@@ -118,85 +121,84 @@ export function ModifiersPanel({
                 />
                 <HoverInfo
                   label={
-                    <span>
-                      {rule.name}
-                      {rule.supportLevel && (
-                        <span className="muted-text"> ({rule.supportLevel})</span>
-                      )}
-                    </span>
+                    <OptionCardLabel
+                      title={formatUiName(rule.name)}
+                      meta={rule.supportLevel}
+                    />
                   }
                   tooltip={buildRuleOptionTooltip(rule)}
                 />
               </label>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        </CollapsibleSection>
       )}
 
       {enhancements.length > 0 && (
-        <div className="rules-section">
-          <h3>Enhancements</h3>
-          <div className="option-list">
-            {enhancements.map((enhancement) => (
-              <label key={enhancement.id} className="checkbox-row">
-                <input
+        <CollapsibleSection title="Enhancements" defaultOpen={false}>
+          <div className="rules-section__content">
+            <div className="option-list">
+              {enhancements.map((enhancement) => (
+                <label key={enhancement.id} className="checkbox-row">
+                  <input
                   type="checkbox"
                   checked={activeEnhancementIds.includes(enhancement.id)}
                   onChange={() => toggleEnhancement(enhancement.id)}
                 />
                 <HoverInfo
                   label={
-                    <span>
-                      {enhancement.name}
-                      {enhancement.supportLevel && (
-                        <span className="muted-text"> ({enhancement.supportLevel})</span>
-                      )}
-                    </span>
+                    <OptionCardLabel
+                      title={formatUiName(enhancement.name)}
+                      meta={enhancement.supportLevel}
+                    />
                   }
                   tooltip={buildEnhancementTooltip(enhancement)}
                 />
               </label>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        </CollapsibleSection>
       )}
 
       {stratagems.length > 0 && (
-        <div className="rules-section">
-          <h3>Stratagems</h3>
-          <div className="option-list">
-            {stratagems.map((stratagem) => (
-              <label key={stratagem.id} className="checkbox-row">
-                <input
+        <CollapsibleSection title="Stratagems" defaultOpen={false}>
+          <div className="rules-section__content">
+            <div className="option-list">
+              {stratagems.map((stratagem) => (
+                <label key={stratagem.id} className="checkbox-row">
+                  <input
                   type="checkbox"
                   checked={activeStratagemIds.includes(stratagem.id)}
                   onChange={() => toggleStratagem(stratagem.id)}
                 />
                 <HoverInfo
                   label={
-                    <span>
-                      {stratagem.name} ({stratagem.cpCost}CP)
-                      {stratagem.supportLevel && (
-                        <span className="muted-text"> ({stratagem.supportLevel})</span>
-                      )}
-                    </span>
+                    <OptionCardLabel
+                      title={formatUiName(stratagem.name)}
+                      meta={formatOptionMeta([
+                        `${stratagem.cpCost}CP`,
+                        stratagem.supportLevel,
+                      ])}
+                    />
                   }
                   tooltip={buildStratagemTooltip(stratagem)}
                 />
               </label>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        </CollapsibleSection>
       )}
 
-      <div className="rules-section">
-        <h3>Manual attack modifiers</h3>
-
-        <div className="option-list option-list--compact">
-          <label className="checkbox-row">
-            <input
-              type="checkbox"
-              checked={activeAttackModifiers.devastatingWounds}
+      <CollapsibleSection title="Manual attack modifiers" defaultOpen={false}>
+        <div className="rules-section__content">
+          <div className="option-list option-list--compact">
+            <label className="checkbox-row">
+              <input
+                type="checkbox"
+                checked={activeAttackModifiers.devastatingWounds}
               onChange={(e) =>
                 setActiveAttackModifiers((prev) => ({
                   ...prev,
@@ -204,13 +206,13 @@ export function ModifiersPanel({
                 }))
               }
             />
-            Devastating Wounds
-          </label>
+              <OptionCardLabel title="Devastating Wounds" />
+            </label>
 
-          <label className="checkbox-row">
-            <input
-              type="checkbox"
-              checked={activeAttackModifiers.lethalHits}
+            <label className="checkbox-row">
+              <input
+                type="checkbox"
+                checked={activeAttackModifiers.lethalHits}
               onChange={(e) =>
                 setActiveAttackModifiers((prev) => ({
                   ...prev,
@@ -218,13 +220,13 @@ export function ModifiersPanel({
                 }))
               }
             />
-            Lethal Hits
-          </label>
+              <OptionCardLabel title="Lethal Hits" />
+            </label>
 
-          <label className="checkbox-row">
-            <input
-              type="checkbox"
-              checked={activeAttackModifiers.ignoresCover}
+            <label className="checkbox-row">
+              <input
+                type="checkbox"
+                checked={activeAttackModifiers.ignoresCover}
               onChange={(e) =>
                 setActiveAttackModifiers((prev) => ({
                   ...prev,
@@ -232,66 +234,108 @@ export function ModifiersPanel({
                 }))
               }
             />
-            Ignores Cover
-          </label>
+              <OptionCardLabel title="Ignores Cover" />
+            </label>
+          </div>
         </div>
-      </div>
+      </CollapsibleSection>
 
-      <div className="rules-section">
-        <h3>Active modifiers</h3>
-        {allActiveModifierRules.length > 0 ? (
-          <div className="rules-list">
-            {allActiveModifierRules.map((rule, index) => (
-              <span key={`temp-rule-${index}`} className="rule-tag">
-                <HoverInfo
-                  label={<span>{formatSpecialRule(rule)}</span>}
-                  tooltip={buildActiveRuleTooltip(rule)}
-                />
-              </span>
-            ))}
-          </div>
-        ) : (
-          <p className="muted-text">No active modifiers</p>
-        )}
-      </div>
+      <CollapsibleSection title="Active modifiers" defaultOpen={false}>
+        <div className="rules-section__content">
+          {allActiveModifierRules.length > 0 ? (
+            <div className="rules-list">
+              {allActiveModifierRules.map((rule, index) => (
+                <span key={`temp-rule-${index}`} className="rule-tag">
+                  <HoverInfo
+                    label={<span>{formatSpecialRule(rule)}</span>}
+                    tooltip={buildActiveRuleTooltip(rule)}
+                  />
+                </span>
+              ))}
+            </div>
+          ) : (
+            <p className="muted-text">No active modifiers</p>
+          )}
+        </div>
+      </CollapsibleSection>
 
-      <div className="rules-section">
-        <h3>Weapon rules</h3>
-        {selectedWeapon.specialRules && selectedWeapon.specialRules.length > 0 ? (
-          <div className="rules-list">
-            {selectedWeapon.specialRules.map((rule, index) => (
-              <span
-                key={`${selectedWeapon.id}-rule-${index}`}
-                className="rule-tag"
-              >
-                <HoverInfo
-                  label={<span>{formatSpecialRule(rule)}</span>}
-                  tooltip={buildActiveRuleTooltip(rule)}
-                />
-              </span>
-            ))}
-          </div>
-        ) : (
-          <p className="muted-text">No weapon rules</p>
-        )}
+      <CollapsibleSection title="Weapon & Unit Rules" defaultOpen={false}>
+        <div className="rules-section__content">
+          <h3>Weapon rules</h3>
+          {selectedWeapon.specialRules && selectedWeapon.specialRules.length > 0 ? (
+            <div className="rules-list">
+              {selectedWeapon.specialRules.map((rule, index) => (
+                <span
+                  key={`${selectedWeapon.id}-rule-${index}`}
+                  className="rule-tag"
+                >
+                  <HoverInfo
+                    label={<span>{formatSpecialRule(rule)}</span>}
+                    tooltip={buildActiveRuleTooltip(rule)}
+                  />
+                </span>
+              ))}
+            </div>
+          ) : (
+            <p className="muted-text">No weapon rules</p>
+          )}
 
-        <h3>Unit rules</h3>
-        {attacker.specialRules && attacker.specialRules.length > 0 ? (
-          <div className="rules-list">
-            {attacker.specialRules.map((rule, index) => (
-              <span key={`${attacker.id}-rule-${index}`} className="rule-tag">
-                <HoverInfo
-                  label={<span>{formatSpecialRule(rule)}</span>}
-                  tooltip={buildActiveRuleTooltip(rule)}
-                />
-              </span>
-            ))}
-          </div>
-        ) : (
-          <p className="muted-text">No unit rules</p>
-        )}
-      </div>
+          <h3>Unit rules</h3>
+          {attacker.specialRules && attacker.specialRules.length > 0 ? (
+            <div className="rules-list">
+              {attacker.specialRules.map((rule, index) => (
+                <span key={`${attacker.id}-rule-${index}`} className="rule-tag">
+                  <HoverInfo
+                    label={<span>{formatSpecialRule(rule)}</span>}
+                    tooltip={buildActiveRuleTooltip(rule)}
+                  />
+                </span>
+              ))}
+            </div>
+          ) : (
+            <p className="muted-text">No unit rules</p>
+          )}
+        </div>
+      </CollapsibleSection>
     </div>
+  );
+}
+
+type CollapsibleSectionProps = {
+  title: string;
+  defaultOpen?: boolean;
+  children: React.ReactNode;
+};
+
+function CollapsibleSection({
+  title,
+  defaultOpen = true,
+  children,
+}: CollapsibleSectionProps) {
+  return (
+    <details className="rules-section rules-section--collapsible" open={defaultOpen}>
+      <summary className="rules-section__summary">
+        <span>{title}</span>
+        <span className="rules-section__chevron" aria-hidden="true">
+          +
+        </span>
+      </summary>
+      {children}
+    </details>
+  );
+}
+
+type OptionCardLabelProps = {
+  title: string;
+  meta?: string;
+};
+
+function OptionCardLabel({ title, meta }: OptionCardLabelProps) {
+  return (
+    <span className="option-card">
+      <span className="option-card__title">{title}</span>
+      {meta && <span className="option-card__meta">{meta}</span>}
+    </span>
   );
 }
 
@@ -382,6 +426,20 @@ function formatList(title: string, items: string[]): string {
   }
 
   return `${title}:\n${nonEmptyItems.map((item) => `- ${item}`).join("\n")}`;
+}
+
+function formatOptionMeta(parts: Array<string | undefined>): string {
+  return parts.filter(Boolean).join(" • ");
+}
+
+function formatUiName(name: string): string {
+  if (/[a-z]/.test(name)) {
+    return name;
+  }
+
+  return name
+    .toLowerCase()
+    .replace(/\b([a-z])/g, (match) => match.toUpperCase());
 }
 
 function formatDescription(description?: string): string {

@@ -1,18 +1,16 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 import { calculateExpectedDamage } from "./lib/combat";
 import { runSimulationByMode } from "./lib/combat/simulation/runSimulationByMode";
 
 import { SetupPanel } from "./components/SetupPanel";
 import { ModifiersPanel } from "./components/ModifiersPanel";
-import { ResolveAttackPanel } from "./components/ResolveAttackPanel";
 import { ExpectedResultPanel } from "./components/ExpectedResultPanel";
 import { CompareWeaponsPanel } from "./components/CompareWeaponsPanel";
 import { SimulationPanel } from "./components/SimulationPanel";
 
 import { useBattleSetup } from "./hooks/useBattleSetup";
 import { useAttackModifiers } from "./hooks/useAttackModifiers";
-import { useResolver } from "./hooks/useResolver";
 import { useFactionRules } from "./hooks/useFactionRules";
 import {
   useRuleOptions,
@@ -35,17 +33,14 @@ function App() {
   const enhancementOptions = useEnhancementOptions(factionRules.enhancements);
   const stratagemOptions = useStratagemOptions(factionRules.stratagems);
 
-  const resolver = useResolver({
-    weapon: battleSetup.selectedWeapon,
-    defender: battleSetup.defender,
-    defendingModels: battleSetup.defendingModels,
-  });
-
   const [compareWeaponId, setCompareWeaponId] = useState("");
   const [mode, setMode] = useState<CalculationMode>("fast");
   const [runs, setRuns] = useState(5000);
   const [simulationSummary, setSimulationSummary] =
     useState<SimulationSummary | null>(null);
+  const [simulationError, setSimulationError] = useState<string | null>(null);
+  const [isSimulationRunning, setIsSimulationRunning] = useState(false);
+  const [simulationRefreshKey, setSimulationRefreshKey] = useState(0);
 
   const fallbackCompareWeaponId = useMemo(() => {
     const fallbackWeapon =
@@ -168,27 +163,73 @@ function App() {
   ]);
 
   const handleRunSimulation = () => {
-    const summary = runSimulationByMode({
-      mode,
-      expectedResult,
-      selectedWeapon: battleSetup.selectedWeapon,
-      targetWounds: battleSetup.defender.woundsPerModel,
-      defendingModels: battleSetup.defendingModels,
-      runs,
-      accurateParams: {
-        attacker: battleSetup.attacker,
-        weapon: battleSetup.selectedWeapon,
-        defender: battleSetup.defender,
-        attackingModels: battleSetup.attackingModels,
-        defendingModels: battleSetup.defendingModels,
-        conditions: battleSetup.conditions,
-        activeModifierRules: attackerScopedModifierRules,
-        activeDefenderModifierRules: defenderScopedModifierRules,
-      },
-    });
-
-    setSimulationSummary(summary);
+    setSimulationRefreshKey((current) => current + 1);
   };
+
+  useEffect(() => {
+    let isCancelled = false;
+
+    setIsSimulationRunning(true);
+    setSimulationError(null);
+
+    const timeoutId = window.setTimeout(() => {
+      try {
+        const summary = runSimulationByMode({
+          mode,
+          expectedResult,
+          selectedWeapon: battleSetup.selectedWeapon,
+          targetWounds: battleSetup.defender.woundsPerModel,
+          defendingModels: battleSetup.defendingModels,
+          runs,
+          accurateParams: {
+            attacker: battleSetup.attacker,
+            weapon: battleSetup.selectedWeapon,
+            defender: battleSetup.defender,
+            attackingModels: battleSetup.attackingModels,
+            defendingModels: battleSetup.defendingModels,
+            conditions: battleSetup.conditions,
+            activeModifierRules: attackerScopedModifierRules,
+            activeDefenderModifierRules: defenderScopedModifierRules,
+          },
+        });
+
+        validateSimulationSummary(summary);
+
+        if (!isCancelled) {
+          setSimulationSummary(summary);
+          setSimulationError(null);
+        }
+      } catch (error) {
+        if (!isCancelled) {
+          setSimulationSummary(null);
+          setSimulationError(getSimulationErrorMessage(error));
+        }
+      } finally {
+        if (!isCancelled) {
+          setIsSimulationRunning(false);
+        }
+      }
+    }, 0);
+
+    return () => {
+      isCancelled = true;
+      window.clearTimeout(timeoutId);
+    };
+  }, [
+    mode,
+    runs,
+    expectedResult,
+    battleSetup.selectedWeapon,
+    battleSetup.defender.woundsPerModel,
+    battleSetup.defendingModels,
+    battleSetup.attacker,
+    battleSetup.defender,
+    battleSetup.attackingModels,
+    battleSetup.conditions,
+    attackerScopedModifierRules,
+    defenderScopedModifierRules,
+    simulationRefreshKey,
+  ]);
 
   return (
     <div className="app">
@@ -226,103 +267,103 @@ function App() {
         </div>
       </header>
 
-      <div className="top-grid">
-        <SetupPanel
-          factions={battleSetup.factions}
-          attackerFaction={battleSetup.attackerFaction}
-          defenderFaction={battleSetup.defenderFaction}
-          attackerId={battleSetup.attackerId}
-          defenderId={battleSetup.defenderId}
-          weaponId={battleSetup.weaponId}
-          attackingModels={battleSetup.attackingModels}
-          defendingModels={battleSetup.defendingModels}
-          conditions={battleSetup.conditions}
-          attackerUnits={battleSetup.attackerUnits}
-          defenderUnits={battleSetup.defenderUnits}
-          attacker={battleSetup.attacker}
-          setAttackingModels={battleSetup.setAttackingModels}
-          setDefendingModels={battleSetup.setDefendingModels}
-          setConditions={battleSetup.setConditions}
-          handleAttackerFactionChange={(value) => {
-            battleSetup.handleAttackerFactionChange(value);
-            resolver.resetResolveAttack();
-          }}
-          handleAttackerChange={(value) => {
-            battleSetup.handleAttackerChange(value);
-            resolver.resetResolveAttack();
-          }}
-          handleWeaponChange={(value) => {
-            battleSetup.handleWeaponChange(value);
-            resolver.resetResolveAttack();
-          }}
-          handleDefenderFactionChange={(value) => {
-            battleSetup.handleDefenderFactionChange(value);
-            resolver.resetResolveAttack();
-          }}
-          handleDefenderChange={(value) => {
-            battleSetup.handleDefenderChange(value);
-            resolver.resetResolveAttack();
-          }}
-        />
-
-        <ModifiersPanel
-          activeAttackModifiers={attackModifiers.activeAttackModifiers}
-          setActiveAttackModifiers={attackModifiers.setActiveAttackModifiers}
-          allActiveModifierRules={allActiveModifierRules}
-          selectedWeapon={battleSetup.selectedWeapon}
-          attacker={battleSetup.attacker}
-          availableDetachments={factionRules.availableDetachments}
-          selectedDetachmentId={factionRules.selectedDetachmentId}
-          setSelectedDetachmentId={factionRules.setSelectedDetachmentId}
-          selectedDetachment={factionRules.selectedDetachment}
-          availableRuleOptions={factionRules.allAvailableRuleOptions}
-          activeRuleOptionIds={ruleOptions.activeRuleOptionIds}
-          toggleRuleOption={ruleOptions.toggleRuleOption}
-          stratagems={factionRules.stratagems}
-          enhancements={factionRules.enhancements}
-          activeEnhancementIds={enhancementOptions.activeEnhancementIds}
-          toggleEnhancement={enhancementOptions.toggleEnhancement}
-          activeStratagemIds={stratagemOptions.activeStratagemIds}
-          toggleStratagem={stratagemOptions.toggleStratagem}
-        />
-
-        <ResolveAttackPanel
-          expectedTotalAttacks={expectedResult.totalAttacks}
-          rolledHits={resolver.rolledHits}
-          rolledWounds={resolver.rolledWounds}
-          successfulSaves={resolver.successfulSaves}
-          setRolledHits={resolver.setRolledHits}
-          setRolledWounds={resolver.setRolledWounds}
-          setSuccessfulSaves={resolver.setSuccessfulSaves}
-          resolvedResult={resolver.resolvedResult}
-        />
-      </div>
-
-      <ExpectedResultPanel expectedResult={expectedResult} />
-      <AttackBreakdownSourcesPanel explanation={attackBreakdownExplanation} />
-
-      <SimulationPanel
-        mode={mode}
-        setMode={setMode}
-        runs={runs}
-        setRuns={setRuns}
-        onRun={handleRunSimulation}
-        summary={simulationSummary}
+      <SetupPanel
+        factions={battleSetup.factions}
+        attackerFaction={battleSetup.attackerFaction}
+        defenderFaction={battleSetup.defenderFaction}
+        attackerId={battleSetup.attackerId}
+        defenderId={battleSetup.defenderId}
+        weaponId={battleSetup.weaponId}
+        attackingModels={battleSetup.attackingModels}
+        defendingModels={battleSetup.defendingModels}
+        conditions={battleSetup.conditions}
+        attackerUnits={battleSetup.attackerUnits}
+        defenderUnits={battleSetup.defenderUnits}
+        attacker={battleSetup.attacker}
+        setAttackingModels={battleSetup.setAttackingModels}
+        setDefendingModels={battleSetup.setDefendingModels}
+        setConditions={battleSetup.setConditions}
+        handleAttackerFactionChange={battleSetup.handleAttackerFactionChange}
+        handleAttackerChange={battleSetup.handleAttackerChange}
+        handleWeaponChange={battleSetup.handleWeaponChange}
+        handleDefenderFactionChange={battleSetup.handleDefenderFactionChange}
+        handleDefenderChange={battleSetup.handleDefenderChange}
       />
 
-      {battleSetup.attacker.weapons.length > 1 && (
-        <CompareWeaponsPanel
-          weaponA={battleSetup.selectedWeapon}
-          weaponB={compareWeapon}
-          compareWeaponId={activeCompareWeaponId}
-          setCompareWeaponId={setCompareWeaponId}
-          availableWeapons={battleSetup.attacker.weapons}
-          resultA={expectedResult}
-          resultB={compareResult}
-        />
-      )}
+      <div className="workspace-grid">
+        <div className="workspace-main">
+          <SimulationPanel
+            mode={mode}
+            setMode={setMode}
+            runs={runs}
+            setRuns={setRuns}
+            onRun={handleRunSimulation}
+            summary={simulationSummary}
+            error={simulationError}
+            isRunning={isSimulationRunning}
+          />
+
+          <div className="analysis-grid">
+            <ExpectedResultPanel expectedResult={expectedResult} />
+            <AttackBreakdownSourcesPanel explanation={attackBreakdownExplanation} />
+          </div>
+
+          {battleSetup.attacker.weapons.length > 1 && (
+            <CompareWeaponsPanel
+              weaponA={battleSetup.selectedWeapon}
+              weaponB={compareWeapon}
+              compareWeaponId={activeCompareWeaponId}
+              setCompareWeaponId={setCompareWeaponId}
+              availableWeapons={battleSetup.attacker.weapons}
+              resultA={expectedResult}
+              resultB={compareResult}
+            />
+          )}
+        </div>
+
+        <div className="workspace-sidebar">
+          <ModifiersPanel
+            activeAttackModifiers={attackModifiers.activeAttackModifiers}
+            setActiveAttackModifiers={attackModifiers.setActiveAttackModifiers}
+            allActiveModifierRules={allActiveModifierRules}
+            selectedWeapon={battleSetup.selectedWeapon}
+            attacker={battleSetup.attacker}
+            availableDetachments={factionRules.availableDetachments}
+            selectedDetachmentId={factionRules.selectedDetachmentId}
+            setSelectedDetachmentId={factionRules.setSelectedDetachmentId}
+            selectedDetachment={factionRules.selectedDetachment}
+            availableRuleOptions={factionRules.allAvailableRuleOptions}
+            activeRuleOptionIds={ruleOptions.activeRuleOptionIds}
+            toggleRuleOption={ruleOptions.toggleRuleOption}
+            stratagems={factionRules.stratagems}
+            enhancements={factionRules.enhancements}
+            activeEnhancementIds={enhancementOptions.activeEnhancementIds}
+            toggleEnhancement={enhancementOptions.toggleEnhancement}
+            activeStratagemIds={stratagemOptions.activeStratagemIds}
+            toggleStratagem={stratagemOptions.toggleStratagem}
+          />
+        </div>
+      </div>
     </div>
   );
 }
 
 export default App;
+
+function validateSimulationSummary(summary: SimulationSummary) {
+  const values = Object.entries(summary);
+
+  for (const [key, value] of values) {
+    if (typeof value === "number" && !Number.isFinite(value)) {
+      throw new Error(`Simulation produced a non-finite value for "${key}".`);
+    }
+  }
+}
+
+function getSimulationErrorMessage(error: unknown): string {
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  return "Simulation failed for this setup.";
+}

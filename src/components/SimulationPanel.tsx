@@ -8,6 +8,8 @@ type SimulationPanelProps = {
   setRuns: (runs: number) => void;
   onRun: () => void;
   summary: SimulationSummary | null;
+  error: string | null;
+  isRunning: boolean;
 };
 
 function StatBox({
@@ -34,10 +36,18 @@ export function SimulationPanel({
   setRuns,
   onRun,
   summary,
+  error,
+  isRunning,
 }: SimulationPanelProps) {
   return (
     <div className="card">
-      <h2>Simulation</h2>
+      <div className="panel-heading">
+        <p className="panel-eyebrow">Live Preview</p>
+        <h2>Simulation</h2>
+        <p className="muted-text">
+          Wyniki odświeżają się automatycznie po zmianie setupu lub reguł.
+        </p>
+      </div>
 
       <div className="mode-toggle">
         <button
@@ -75,11 +85,19 @@ export function SimulationPanel({
       </label>
 
       <div className="simulation-toolbar">
-        <span className="simulation-runs">{runs} runs</span>
+        <span className="simulation-runs">
+          {isRunning ? "Updating simulation..." : `${runs} runs`}
+        </span>
         <button type="button" onClick={onRun}>
-          Run simulation
+          Re-roll sample
         </button>
       </div>
+
+      {error && <p className="simulation-alert simulation-alert--error">{error}</p>}
+
+      {!error && !summary && (
+        <p className="simulation-alert">Simulation summary will appear here.</p>
+      )}
 
       {summary && (
         <>
