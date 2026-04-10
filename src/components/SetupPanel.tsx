@@ -23,6 +23,7 @@ type BattleStateToggleKey =
   | "targetIsSpotted"
   | "targetIsAfflicted"
   | "targetWithinContagionRange"
+  | "targetInOpponentDeploymentZone"
   | "attackerWithinAuxiliarySupportRange"
   | "defenderWithinAuxiliaryStealthRange"
   | "targetWithinAuxiliarySupportRange"
@@ -72,6 +73,7 @@ const battleStateToggles: BattleStateToggle[] = [
   { key: "attackerSetToDefend", label: "Attacker set to defend", title: "The attacker is in a defensive set-to-defend state.", group: "advanced" },
   { key: "targetIsAfflicted", label: "Target is Afflicted", title: "The defender currently counts as Afflicted for Death Guard rules.", group: "advanced", factions: ["Death Guard"] },
   { key: "targetWithinContagionRange", label: "Target in Contagion Range", title: "The defender is currently within Contagion Range of one or more Death Guard units.", group: "advanced", factions: ["Death Guard"] },
+  { key: "targetInOpponentDeploymentZone", label: "Target in enemy deployment", title: "The defender is within its controller's deployment zone.", group: "advanced", factions: ["Death Guard"] },
   { key: "attackerWithinAuxiliarySupportRange", label: "Attacker near Kroot/Vespid support", title: "The attacker is within support range of friendly Kroot or Vespid auxiliaries.", group: "advanced", factions: ["Tau Empire"] },
   { key: "defenderWithinAuxiliaryStealthRange", label: "Auxiliary stealth screen", title: "A nearby Tau unit is screening the Kroot or Vespid defender.", group: "advanced", factions: ["Tau Empire"] },
   { key: "targetWithinAuxiliarySupportRange", label: "Near Kroot/Vespid support", title: "The target is within range of friendly Kroot or Vespid support.", group: "advanced", factions: ["Tau Empire"] },

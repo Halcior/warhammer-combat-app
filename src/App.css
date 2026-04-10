@@ -404,6 +404,28 @@ select {
   line-height: 1.56;
 }
 
+.info-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.inline-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #ffd4ba;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.14s ease;
+}
+
+.inline-link:hover {
+  color: #fff2e7;
+}
+
 .workspace-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.42fr) 370px;

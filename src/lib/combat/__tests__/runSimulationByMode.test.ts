@@ -43,6 +43,7 @@ const baseConditions: AttackConditions = {
   targetIsClosestEligible: false,
   targetIsAfflicted: false,
   targetWithinContagionRange: false,
+  targetInOpponentDeploymentZone: false,
   targetIsSpotted: false,
   targetOppositeHatchway: false,
   targetIsUnravelling: false,

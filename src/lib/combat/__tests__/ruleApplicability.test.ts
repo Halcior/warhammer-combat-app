@@ -35,6 +35,7 @@ const baseConditions: AttackConditions = {
   targetIsClosestEligible: false,
   targetIsAfflicted: false,
   targetWithinContagionRange: false,
+  targetInOpponentDeploymentZone: false,
   targetIsSpotted: false,
   targetOppositeHatchway: false,
   targetIsUnravelling: false,
@@ -490,6 +491,42 @@ describe("ruleApplicability", () => {
     expect(withoutContagion).toEqual([]);
     expect(withContagion).toHaveLength(1);
     expect(withContagion[0].type).toBe("CRITICAL_HITS_ON");
+  });
+
+  it("applies deployment-zone conditions only when the target is in the opponent deployment zone", () => {
+    const rules: SpecialRule[] = [
+      {
+        type: "REROLL_HITS",
+        attackType: "ranged",
+        requiresTargetInOpponentDeploymentZone: true,
+      },
+    ];
+
+    const rangedWeapon: Weapon = {
+      ...weapon,
+      type: "ranged",
+    };
+
+    const withoutDeploymentZone = filterActiveRules(rules, {
+      attacker,
+      defender,
+      weapon: rangedWeapon,
+      conditions: baseConditions,
+    });
+
+    const withDeploymentZone = filterActiveRules(rules, {
+      attacker,
+      defender,
+      weapon: rangedWeapon,
+      conditions: {
+        ...baseConditions,
+        targetInOpponentDeploymentZone: true,
+      },
+    });
+
+    expect(withoutDeploymentZone).toEqual([]);
+    expect(withDeploymentZone).toHaveLength(1);
+    expect(withDeploymentZone[0].type).toBe("REROLL_HITS");
   });
 
   it("derives reroll modes from the active rule set", () => {

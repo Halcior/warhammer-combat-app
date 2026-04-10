@@ -28,6 +28,7 @@ export type ConditionalRuleFields = {
   requiresTargetOppositeHatchway?: boolean;
   requiresTargetIsAfflicted?: boolean;
   requiresTargetWithinContagionRange?: boolean;
+  requiresTargetInOpponentDeploymentZone?: boolean;
   requiresTargetSpotted?: boolean;
   requiresTargetUnravelling?: boolean;
   requiresTargetWithinRange?: number;
@@ -144,6 +145,7 @@ export type AttackConditions = {
   targetIsClosestEligible: boolean;
   targetIsAfflicted: boolean;
   targetWithinContagionRange: boolean;
+  targetInOpponentDeploymentZone: boolean;
   targetIsSpotted: boolean;
   targetOppositeHatchway: boolean;
   targetIsUnravelling: boolean;

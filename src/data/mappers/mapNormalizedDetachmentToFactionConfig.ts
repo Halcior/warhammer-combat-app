@@ -1067,6 +1067,21 @@ export function mapNormalizedDetachmentToEnhancements(
     }
 
     if (
+      detachment.id === "tallyband_summoners" &&
+      enhancementName.includes("fell harvester")
+    ) {
+      return createImplementedEnhancement(enhancement, "fight", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Fell Harvester Effect",
+          description: "The bearer's melee weapons gain +2 Attacks.",
+          phase: "fight",
+          modifiers: [{ type: "ATTACKS_MODIFIER", value: 2, attackType: "melee" }],
+        }),
+      ]);
+    }
+
+    if (
       detachment.id === "vectors_of_decay" &&
       enhancementName.includes("foul constitution")
     ) {
@@ -1920,6 +1935,28 @@ export function mapNormalizedDetachmentToStratagems(
 
     if (
       detachment.id === "mortarion_s_hammer" &&
+      stratagemName.includes("drawn to despair")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Drawn to Despair Effect",
+          description:
+            "Attacks against visible enemies in the opponent's deployment zone re-roll hit rolls.",
+          phase,
+          modifiers: [
+            {
+              type: "REROLL_HITS",
+              attackType: "ranged",
+              requiresTargetInOpponentDeploymentZone: true,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "mortarion_s_hammer" &&
       stratagemName.includes("font of filth")
     ) {
       return createImplementedStratagem(detachment, stratagem, phase, [
@@ -1933,6 +1970,35 @@ export function mapNormalizedDetachmentToStratagems(
               type: "ASSAULT",
               attackType: "ranged",
               requiredAttackerKeywords: ["VEHICLE"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "shamblerot_vectorium" &&
+      stratagemName.includes("gnawing hunger")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Gnawing Hunger Effect",
+          description:
+            "Poxwalkers melee weapons gain +1 Attacks and +1 Strength.",
+          phase,
+          modifiers: [
+            {
+              type: "ATTACKS_MODIFIER",
+              value: 1,
+              attackType: "melee",
+              requiredAttackerKeywords: ["POXWALKERS"],
+            },
+            {
+              type: "STRENGTH_MODIFIER",
+              value: 1,
+              attackType: "melee",
+              requiredAttackerKeywords: ["POXWALKERS"],
             },
           ],
         }),

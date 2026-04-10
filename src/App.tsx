@@ -382,6 +382,24 @@ function App() {
               </p>
             </article>
 
+            <article className="info-card">
+              <span className="info-card__label">Sources</span>
+              <p>
+                Use Wahapedia as a quick external rules reference when you want to
+                cross-check wording while building a matchup.
+              </p>
+              <div className="info-card__actions">
+                <a
+                  className="inline-link"
+                  href="https://wahapedia.ru/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Open Wahapedia
+                </a>
+              </div>
+            </article>
+
             <article className="info-card" id="pricing">
               <span className="info-card__label">Pricing</span>
               <p>

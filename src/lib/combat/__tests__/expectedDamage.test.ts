@@ -31,6 +31,7 @@ const baseConditions: AttackConditions = {
   targetIsClosestEligible: false,
   targetIsAfflicted: false,
   targetWithinContagionRange: false,
+  targetInOpponentDeploymentZone: false,
   targetIsSpotted: false,
   targetOppositeHatchway: false,
   targetIsUnravelling: false,
@@ -1968,5 +1969,55 @@ it("improves critical hit output against targets in contagion range", () => {
   );
   expect(withContagionCriticals.expectedHits).toBeGreaterThan(
     baseline.expectedHits
+  );
+});
+
+it("improves ranged output for targets caught in the opponent deployment zone", () => {
+  const weapon: Weapon = {
+    id: "mortarion-hammer-battery",
+    name: "Mortarion Hammer Battery",
+    attacks: 3,
+    skill: 4,
+    strength: 8,
+    ap: -2,
+    damage: 2,
+    type: "ranged",
+    specialRules: [],
+  };
+
+  const baseline = calculateExpectedDamage({
+    attacker,
+    weapon,
+    defender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: baseConditions,
+    activeModifierRules: [],
+  });
+
+  const withDeploymentZoneRerolls = calculateExpectedDamage({
+    attacker,
+    weapon,
+    defender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: {
+      ...baseConditions,
+      targetInOpponentDeploymentZone: true,
+    },
+    activeModifierRules: [
+      {
+        type: "REROLL_HITS",
+        attackType: "ranged",
+        requiresTargetInOpponentDeploymentZone: true,
+      },
+    ],
+  });
+
+  expect(withDeploymentZoneRerolls.expectedHits).toBeGreaterThan(
+    baseline.expectedHits
+  );
+  expect(withDeploymentZoneRerolls.expectedDamage).toBeGreaterThan(
+    baseline.expectedDamage
   );
 });

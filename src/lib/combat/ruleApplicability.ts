@@ -214,6 +214,14 @@ export function ruleApplies(
   }
 
   if (
+    "requiresTargetInOpponentDeploymentZone" in rule &&
+    rule.requiresTargetInOpponentDeploymentZone &&
+    !context.conditions.targetInOpponentDeploymentZone
+  ) {
+    return false;
+  }
+
+  if (
     "requiresTargetSpotted" in rule &&
     rule.requiresTargetSpotted &&
     !context.conditions.targetIsSpotted
