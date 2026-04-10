@@ -782,6 +782,66 @@ describe("calculateExpectedDamage", () => {
     expect(withSuppression.expectedDamage).toBeLessThan(baseline.expectedDamage);
   });
 
+  it("applies active defender hit penalties only against matching attacker keywords", () => {
+    const rangedWeapon: Weapon = {
+      id: "battle-cannon",
+      name: "Battle Cannon",
+      attacks: 4,
+      skill: 4,
+      strength: 10,
+      ap: -1,
+      damage: 3,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const nonVehicleAttacker = calculateExpectedDamage({
+      attacker: {
+        ...attacker,
+        keywords: ["INFANTRY"],
+      },
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+      activeDefenderModifierRules: [
+        {
+          type: "HIT_MODIFIER",
+          value: -1,
+          requiredAttackerKeywords: ["VEHICLE"],
+        },
+      ],
+    });
+
+    const vehicleAttacker = calculateExpectedDamage({
+      attacker: {
+        ...attacker,
+        keywords: ["VEHICLE"],
+      },
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+      activeDefenderModifierRules: [
+        {
+          type: "HIT_MODIFIER",
+          value: -1,
+          requiredAttackerKeywords: ["VEHICLE"],
+        },
+      ],
+    });
+
+    expect(nonVehicleAttacker.hitTarget).toBe(4);
+    expect(vehicleAttacker.hitTarget).toBe(5);
+    expect(vehicleAttacker.expectedDamage).toBeLessThan(
+      nonVehicleAttacker.expectedDamage
+    );
+  });
+
   it("applies active defender feel no pain rules", () => {
     const damageTwoWeapon: Weapon = {
       id: "sawblade",
@@ -820,6 +880,66 @@ describe("calculateExpectedDamage", () => {
     expect(withFeelNoPain.expectedSlainModels).toBeLessThan(
       baseline.expectedSlainModels
     );
+  });
+
+  it("blocks ranged attacks outside a defender targeting range limit", () => {
+    const rangedWeapon: Weapon = {
+      id: "pulse-carbine",
+      name: "Pulse Carbine",
+      attacks: 2,
+      skill: 4,
+      strength: 5,
+      ap: 0,
+      damage: 1,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const withinRange = calculateExpectedDamage({
+      attacker,
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        targetDistanceInches: 18,
+      },
+      activeModifierRules: [],
+      activeDefenderModifierRules: [
+        {
+          type: "TARGETING_RANGE_LIMIT",
+          value: 18,
+          attackType: "ranged",
+        },
+      ],
+    });
+
+    const outsideRange = calculateExpectedDamage({
+      attacker,
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        targetDistanceInches: 24,
+      },
+      activeModifierRules: [],
+      activeDefenderModifierRules: [
+        {
+          type: "TARGETING_RANGE_LIMIT",
+          value: 18,
+          attackType: "ranged",
+        },
+      ],
+    });
+
+    expect(withinRange.expectedDamage).toBeGreaterThan(0);
+    expect(outsideRange.totalAttacks).toBe(0);
+    expect(outsideRange.expectedHits).toBe(0);
+    expect(outsideRange.expectedDamage).toBe(0);
+    expect(outsideRange.expectedSlainModels).toBe(0);
   });
 
   it("uses the best feel no pain value when multiple defender rules are active", () => {

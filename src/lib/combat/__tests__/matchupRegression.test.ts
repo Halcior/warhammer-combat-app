@@ -324,6 +324,105 @@ describe("matchup regressions", () => {
     expect(fastSummary.meanDamage).toBeGreaterThanOrEqual(0);
     expect(accurateSummary.meanDamage).toBeGreaterThanOrEqual(0);
   });
+
+  it("keeps Tau targeting-range defence stable for Broadside into Carnifexes", () => {
+    const broadside = units.find((unit) => unit.name === "Broadside Battlesuits");
+    const carnifexes = units.find((unit) => unit.name === "Carnifexes");
+
+    expect(broadside).toBeDefined();
+    expect(carnifexes).toBeDefined();
+
+    const railRifle = broadside?.weapons.find(
+      (weapon) => weapon.name === "Heavy rail rifle"
+    );
+
+    expect(railRifle).toBeDefined();
+
+    const blockedExpected = calculateExpectedDamage({
+      attacker: broadside!,
+      weapon: railRifle!,
+      defender: carnifexes!,
+      attackingModels: 1,
+      defendingModels: 1,
+      conditions: {
+        ...baseConditions,
+        targetDistanceInches: 24,
+      },
+      activeModifierRules: [],
+      activeDefenderModifierRules: [
+        {
+          type: "TARGETING_RANGE_LIMIT",
+          value: 18,
+          attackType: "ranged",
+        },
+      ],
+    });
+
+    expect(blockedExpected.expectedDamage).toBe(0);
+
+    const fastSummary = runSimulationByMode({
+      mode: "fast",
+      expectedResult: blockedExpected,
+      selectedWeapon: railRifle!,
+      targetWounds: carnifexes!.woundsPerModel,
+      defendingModels: 1,
+      runs: 1000,
+      accurateParams: {
+        attacker: broadside!,
+        weapon: railRifle!,
+        defender: carnifexes!,
+        attackingModels: 1,
+        defendingModels: 1,
+        conditions: {
+          ...baseConditions,
+          targetDistanceInches: 24,
+        },
+        activeModifierRules: [],
+        activeDefenderModifierRules: [
+          {
+            type: "TARGETING_RANGE_LIMIT",
+            value: 18,
+            attackType: "ranged",
+          },
+        ],
+      },
+    });
+
+    const accurateSummary = runSimulationByMode({
+      mode: "accurate",
+      expectedResult: blockedExpected,
+      selectedWeapon: railRifle!,
+      targetWounds: carnifexes!.woundsPerModel,
+      defendingModels: 1,
+      runs: 1000,
+      accurateParams: {
+        attacker: broadside!,
+        weapon: railRifle!,
+        defender: carnifexes!,
+        attackingModels: 1,
+        defendingModels: 1,
+        conditions: {
+          ...baseConditions,
+          targetDistanceInches: 24,
+        },
+        activeModifierRules: [],
+        activeDefenderModifierRules: [
+          {
+            type: "TARGETING_RANGE_LIMIT",
+            value: 18,
+            attackType: "ranged",
+          },
+        ],
+      },
+    });
+
+    expectFiniteSummary(fastSummary);
+    expectFiniteSummary(accurateSummary);
+    expect(fastSummary.meanDamage).toBe(0);
+    expect(accurateSummary.meanDamage).toBe(0);
+    expect(fastSummary.maxDamage).toBe(0);
+    expect(accurateSummary.maxDamage).toBe(0);
+  });
 });
 
 function expectFiniteSummary(

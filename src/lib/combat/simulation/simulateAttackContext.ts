@@ -57,6 +57,26 @@ function simulateSingleAttackSequence(
     conditions: params.conditions,
   });
 
+  const targetingRangeLimit = getTargetingRangeLimit(
+    activeRules,
+    params.weapon.type
+  );
+
+  if (
+    params.weapon.type === "ranged" &&
+    targetingRangeLimit !== null &&
+    params.conditions.targetDistanceInches > targetingRangeLimit
+  ) {
+    return {
+      damage: 0,
+      slainModels: 0,
+      hits: 0,
+      wounds: 0,
+      failedSaves: 0,
+      mortals: 0,
+    };
+  }
+
   const attackCount = getTotalAttacks(
     params.weapon,
     params.attackingModels,
@@ -435,6 +455,23 @@ function getDamageReduction(rules: SpecialRule[] | undefined): number {
   if (candidates.length === 0) return 0;
 
   return Math.max(...candidates);
+}
+
+function getTargetingRangeLimit(
+  rules: SpecialRule[] | undefined,
+  weaponType: "melee" | "ranged"
+): number | null {
+  const candidates = (rules ?? [])
+    .filter(
+      (rule): rule is Extract<SpecialRule, { type: "TARGETING_RANGE_LIMIT" }> =>
+        rule.type === "TARGETING_RANGE_LIMIT" &&
+        (!rule.attackType || rule.attackType === weaponType)
+    )
+    .map((rule) => rule.value);
+
+  if (candidates.length === 0) return null;
+
+  return Math.min(...candidates);
 }
 
 function getInvulnerableSave(

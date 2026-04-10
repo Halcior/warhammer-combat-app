@@ -62,6 +62,34 @@ export function calculateExpectedDamage({
   const damageReduction = getDamageReduction(activeRules);
   const feelNoPain = getFeelNoPain(activeRules);
   const effectiveSave = getSaveCharacteristic(activeRules, defender.save);
+  const targetingRangeLimit = getTargetingRangeLimit(activeRules, weapon.type);
+
+  if (
+    weapon.type === "ranged" &&
+    targetingRangeLimit !== null &&
+    conditions.targetDistanceInches > targetingRangeLimit
+  ) {
+    return {
+      totalAttacks: 0,
+      hitTarget: weapon.skill,
+      woundTarget: getWoundTarget(weapon.strength, defender.toughness),
+      saveTarget: defender.save,
+      expectedHits: 0,
+      expectedWounds: 0,
+      expectedUnsavedWounds: 0,
+      expectedDamage: 0,
+      expectedSlainModels: 0,
+      attacksPerModel: 0,
+      damagePerFailedSave: 0,
+      blastBonus: 0,
+      criticalHits: 0,
+      extraHitsFromSustained: 0,
+      autoWoundsFromLethalHits: 0,
+      criticalWoundsFromRolls: 0,
+      mortalWoundsFromDevastating: 0,
+      effectiveAp: weapon.ap,
+    };
+  }
 
   const effectiveAp = weapon.ap - apModifier;
   const effectiveStrength = weapon.strength + strengthModifier;
@@ -428,6 +456,23 @@ function getDamageReduction(rules: SpecialRule[]): number {
   if (candidates.length === 0) return 0;
 
   return Math.max(...candidates);
+}
+
+function getTargetingRangeLimit(
+  rules: SpecialRule[],
+  weaponType: "melee" | "ranged"
+): number | null {
+  const candidates = rules
+    .filter(
+      (rule): rule is Extract<SpecialRule, { type: "TARGETING_RANGE_LIMIT" }> =>
+        rule.type === "TARGETING_RANGE_LIMIT" &&
+        (!rule.attackType || rule.attackType === weaponType)
+    )
+    .map((rule) => rule.value);
+
+  if (candidates.length === 0) return null;
+
+  return Math.min(...candidates);
 }
 
 function getInvulnerableSave(

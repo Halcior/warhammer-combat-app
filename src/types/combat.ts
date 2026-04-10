@@ -4,6 +4,7 @@ export type WeaponType = "melee" | "ranged";
 
 export type ConditionalRuleFields = {
   attackType?: WeaponType;
+  limitsTargetingRangeTo?: number;
   requiresAttackWithinObjectiveRange?: boolean;
   requiresAttackerDisembarkedThisTurn?: boolean;
   requiresAttackerFiringOverwatch?: boolean;
@@ -62,6 +63,7 @@ export type SpecialRule =
   | ({ type: "INVULNERABLE_SAVE"; value: number } & ConditionalRuleFields)
   | ({ type: "FEEL_NO_PAIN"; value: number } & ConditionalRuleFields)
   | ({ type: "DAMAGE_REDUCTION"; value: number } & ConditionalRuleFields)
+  | ({ type: "TARGETING_RANGE_LIMIT"; value: number } & ConditionalRuleFields)
   | ({ type: "REROLL_HITS" } & ConditionalRuleFields)
   | ({ type: "REROLL_HITS_ONES" } & ConditionalRuleFields)
   | ({ type: "REROLL_ATTACKS" } & ConditionalRuleFields)

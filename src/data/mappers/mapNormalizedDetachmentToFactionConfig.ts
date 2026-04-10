@@ -25,7 +25,7 @@ export function mapNormalizedDetachmentToDetachmentConfig(
   return {
     id: detachment.id,
     name: detachment.name,
-    description: detachment.description ?? "",
+    description: summarizeDetachmentDescription(detachment),
     ruleOptions,
     stratagems: mapNormalizedDetachmentToStratagems(detachment),
     enhancements: mapNormalizedDetachmentToEnhancements(detachment),
@@ -1768,6 +1768,28 @@ export function mapNormalizedDetachmentToStratagems(
     }
 
     if (
+      detachment.id === "experimental_prototype_cadre" &&
+      stratagemName.includes("neuroweb system jammer")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedDefenderRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Neuroweb System Jammer Effect",
+          description:
+            "The targeted Crisis unit can only be selected as the target of ranged attacks from within 18\".",
+          phase,
+          modifiers: [
+            {
+              type: "TARGETING_RANGE_LIMIT",
+              value: 18,
+              attackType: "ranged",
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
       detachment.id === "kroot_hunting_pack" &&
       stratagemName.includes("trap well laid")
     ) {
@@ -1783,6 +1805,50 @@ export function mapNormalizedDetachmentToStratagems(
               type: "AP_MODIFIER",
               value: 1,
               requiredAttackerKeywords: ["KROOT"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "kroot_hunting_pack" &&
+      stratagemName.includes("hidden hunters")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedDefenderRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Hidden Hunters Effect",
+          description:
+            "The targeted Kroot unit can only be selected as the target of ranged attacks from within 18\".",
+          phase,
+          modifiers: [
+            {
+              type: "TARGETING_RANGE_LIMIT",
+              value: 18,
+              attackType: "ranged",
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "kroot_hunting_pack" &&
+      stratagemName.includes("emp grenades")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedDefenderRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "EMP Grenades Effect",
+          description:
+            "Enemy Vehicle attacks suffer -1 to hit while the interference lasts.",
+          phase,
+          modifiers: [
+            {
+              type: "HIT_MODIFIER",
+              value: -1,
+              requiredAttackerKeywords: ["VEHICLE"],
             },
           ],
         }),
@@ -1976,6 +2042,22 @@ export function mapNormalizedDetachmentToStratagems(
               requiresTargetIsClosestEligible: true,
             },
           ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "mont_ka" &&
+      stratagemName.includes("counterfire defence systems")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedDefenderRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Counterfire Defence Systems Effect",
+          description:
+            "Attacks allocated to the unit have their Damage reduced by 1.",
+          phase,
+          modifiers: [{ type: "DAMAGE_REDUCTION", value: 1 }],
         }),
       ]);
     }
@@ -2459,6 +2541,66 @@ function mapAbilityToRuleOption(
     engineTags: [],
     isToggle: true,
   };
+}
+
+function summarizeDetachmentDescription(
+  detachment: NormalizedDetachment
+): string {
+  const explicitDescription = cleanShortText(detachment.description);
+
+  if (explicitDescription) {
+    return explicitDescription;
+  }
+
+  const firstAbility = detachment.abilities[0];
+  if (!firstAbility) {
+    return "";
+  }
+
+  const cleanedAbilityDescription = cleanShortText(firstAbility.description);
+  if (!cleanedAbilityDescription) {
+    return firstAbility.name;
+  }
+
+  const firstSentence = getFirstSentence(cleanedAbilityDescription);
+  return firstSentence
+    ? `${firstAbility.name}: ${firstSentence}`
+    : `${firstAbility.name}: ${cleanedAbilityDescription}`;
+}
+
+function cleanShortText(value?: string): string {
+  if (!value) {
+    return "";
+  }
+
+  return value
+    .replace(/<br\s*\/?>/gi, " ")
+    .replace(/<\/li>/gi, " ")
+    .replace(/<li>/gi, " ")
+    .replace(/<\/(ul|ol|p|div|table|tr|td|tbody)>/gi, " ")
+    .replace(/<[^>]+>/g, "")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function getFirstSentence(value: string): string {
+  const normalized = value.trim();
+  if (!normalized) {
+    return "";
+  }
+
+  const match = normalized.match(/(.+?[.!?])(?:\s|$)/);
+  const sentence = match ? match[1] : normalized;
+
+  if (sentence.length <= 180) {
+    return sentence;
+  }
+
+  return `${sentence.slice(0, 177).trimEnd()}...`;
 }
 
 function normalizePhase(phase?: string): StratagemConfig["phase"] {

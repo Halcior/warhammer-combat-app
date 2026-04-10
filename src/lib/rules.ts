@@ -46,6 +46,8 @@ export function formatSpecialRule(rule: SpecialRule): string {
       return `Feel No Pain ${rule.value}+`;
     case "DAMAGE_REDUCTION":
       return `Damage Reduction ${rule.value}`;
+    case "TARGETING_RANGE_LIMIT":
+      return `Can only be targeted within ${rule.value}"`;
     case "REROLL_HITS":
       return "Re-roll Hits";
     case "REROLL_HITS_ONES":
