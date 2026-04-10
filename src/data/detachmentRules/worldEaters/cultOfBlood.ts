@@ -21,6 +21,12 @@ export const cultOfBloodRuleOverride: DetachmentRuleOverride = ({ rule }) => {
           requiredAttackerKeywords: ["JAKHALS", "GOREMONGERS"],
           requiresAttackerWithinFriendlyMonsterAura: true,
         },
+        {
+          type: "INVULNERABLE_SAVE",
+          value: 4,
+          requiredDefenderKeywords: ["JAKHALS", "GOREMONGERS"],
+          requiresAttackerWithinFriendlyMonsterAura: true,
+        },
       ],
       engineTags: [],
     };

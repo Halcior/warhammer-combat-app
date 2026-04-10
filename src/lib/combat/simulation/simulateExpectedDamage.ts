@@ -95,7 +95,7 @@ function rollValue(value: number | string): number {
     return plainNumber;
   }
 
-  const match = normalized.match(/^(?:(\d+)D)?(3|6)([+-]\d+)?$/);
+  const match = normalized.match(/^(\d*)D(\d+)([+-]\d+)?$/);
   if (!match) {
     return 0;
   }
@@ -106,8 +106,13 @@ function rollValue(value: number | string): number {
 
   let total = modifier;
   for (let i = 0; i < diceCount; i++) {
-    total += sides === 3 ? Math.ceil(rollD6() / 2) : rollD6();
+    total += sides === 3 ? Math.ceil(rollD6() / 2) : rollDie(sides);
   }
 
   return total;
+}
+
+function rollDie(sides: number): number {
+  if (sides <= 0) return 0;
+  return Math.floor(Math.random() * sides) + 1;
 }

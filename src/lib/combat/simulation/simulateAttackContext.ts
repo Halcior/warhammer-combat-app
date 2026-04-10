@@ -244,9 +244,10 @@ function getSaveTarget(
   apBonus = 0
 ): number | null {
   const ignoresCover = hasRule(rules, "IGNORES_COVER");
-  const invul = defender.invulnerableSave ?? null;
+  const invul = getInvulnerableSave(rules, defender.invulnerableSave ?? null);
+  const effectiveSave = getSaveCharacteristic(rules, defender.save);
   const effectiveAp = weapon.ap - getApModifier(rules, weapon.type) - apBonus;
-  const modified = getModifiedSave(defender.save, effectiveAp, invul);
+  const modified = getModifiedSave(effectiveSave, effectiveAp, invul);
   const covered = ignoresCover
     ? modified
     : applyCoverToSave(modified, weapon.type, conditions.isTargetInCover);
@@ -436,6 +437,42 @@ function getDamageReduction(rules: SpecialRule[] | undefined): number {
   return Math.max(...candidates);
 }
 
+function getInvulnerableSave(
+  rules: SpecialRule[] | undefined,
+  baseInvulnerableSave: number | null
+): number | null {
+  const candidates = (rules ?? [])
+    .filter(
+      (rule): rule is Extract<SpecialRule, { type: "INVULNERABLE_SAVE" }> =>
+        rule.type === "INVULNERABLE_SAVE"
+    )
+    .map((rule) => rule.value);
+
+  if (baseInvulnerableSave !== null) {
+    candidates.push(baseInvulnerableSave);
+  }
+
+  if (candidates.length === 0) return null;
+
+  return Math.min(...candidates);
+}
+
+function getSaveCharacteristic(
+  rules: SpecialRule[] | undefined,
+  baseSave: number
+): number {
+  const candidates = (rules ?? [])
+    .filter(
+      (rule): rule is Extract<SpecialRule, { type: "SET_SAVE_CHARACTERISTIC" }> =>
+        rule.type === "SET_SAVE_CHARACTERISTIC"
+    )
+    .map((rule) => rule.value);
+
+  if (candidates.length === 0) return baseSave;
+
+  return Math.min(baseSave, ...candidates);
+}
+
 function getFeelNoPain(rules: SpecialRule[] | undefined): number | null {
   const candidates = (rules ?? [])
     .filter(
@@ -503,7 +540,7 @@ function rollValue(value: number | string): number {
     return plainNumber;
   }
 
-  const match = normalized.match(/^(?:(\d+)D)?(3|6)([+-]\d+)?$/);
+  const match = normalized.match(/^(\d*)D(\d+)([+-]\d+)?$/);
   if (!match) {
     return 0;
   }
@@ -514,10 +551,15 @@ function rollValue(value: number | string): number {
 
   let total = modifier;
   for (let i = 0; i < diceCount; i++) {
-    total += sides === 3 ? Math.ceil(rollD6() / 2) : rollD6();
+    total += sides === 3 ? Math.ceil(rollD6() / 2) : rollDie(sides);
   }
 
   return total;
+}
+
+function rollDie(sides: number): number {
+  if (sides <= 0) return 0;
+  return Math.floor(Math.random() * sides) + 1;
 }
 
 function getWoundModifier(

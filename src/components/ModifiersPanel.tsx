@@ -240,7 +240,7 @@ export function ModifiersPanel({
         </div>
       </CollapsibleSection>
 
-      <CollapsibleSection title="Active modifiers" defaultOpen={false}>
+      <CollapsibleSection title="Active modifiers">
         <div className="rules-section__content">
           {allActiveModifierRules.length > 0 ? (
             <div className="rules-list">
@@ -259,7 +259,7 @@ export function ModifiersPanel({
         </div>
       </CollapsibleSection>
 
-      <CollapsibleSection title="Weapon & Unit Rules" defaultOpen={false}>
+      <CollapsibleSection title="Weapon & Unit Rules">
         <div className="rules-section__content">
           <h3>Weapon rules</h3>
           {selectedWeapon.specialRules && selectedWeapon.specialRules.length > 0 ? (

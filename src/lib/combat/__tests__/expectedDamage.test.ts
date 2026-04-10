@@ -742,6 +742,46 @@ describe("calculateExpectedDamage", () => {
     expect(withPenalty.expectedDamage).toBeLessThan(noPenalty.expectedDamage);
   });
 
+  it("applies active defender hit penalties", () => {
+    const rangedWeapon: Weapon = {
+      id: "suppression-cannon",
+      name: "Suppression Cannon",
+      attacks: 4,
+      skill: 3,
+      strength: 6,
+      ap: -1,
+      damage: 2,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const baseline = calculateExpectedDamage({
+      attacker,
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+    });
+
+    const withSuppression = calculateExpectedDamage({
+      attacker,
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+      activeDefenderModifierRules: [{ type: "HIT_MODIFIER", value: -1 }],
+    });
+
+    expect(baseline.hitTarget).toBe(3);
+    expect(withSuppression.hitTarget).toBe(4);
+    expect(withSuppression.expectedHits).toBeLessThan(baseline.expectedHits);
+    expect(withSuppression.expectedDamage).toBeLessThan(baseline.expectedDamage);
+  });
+
   it("applies active defender feel no pain rules", () => {
     const damageTwoWeapon: Weapon = {
       id: "sawblade",
@@ -780,6 +820,146 @@ describe("calculateExpectedDamage", () => {
     expect(withFeelNoPain.expectedSlainModels).toBeLessThan(
       baseline.expectedSlainModels
     );
+  });
+
+  it("uses the best feel no pain value when multiple defender rules are active", () => {
+    const damageTwoWeapon: Weapon = {
+      id: "chain-cleaver",
+      name: "Chain Cleaver",
+      attacks: 4,
+      skill: 3,
+      strength: 6,
+      ap: -1,
+      damage: 2,
+      type: "melee",
+      specialRules: [],
+    };
+
+    const feelNoPainSix = calculateExpectedDamage({
+      attacker,
+      weapon: damageTwoWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+      activeDefenderModifierRules: [{ type: "FEEL_NO_PAIN", value: 6 }],
+    });
+
+    const feelNoPainFiveAndSix = calculateExpectedDamage({
+      attacker,
+      weapon: damageTwoWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+      activeDefenderModifierRules: [
+        { type: "FEEL_NO_PAIN", value: 6 },
+        { type: "FEEL_NO_PAIN", value: 5 },
+      ],
+    });
+
+    expect(feelNoPainFiveAndSix.expectedDamage).toBeLessThan(
+      feelNoPainSix.expectedDamage
+    );
+    expect(feelNoPainFiveAndSix.expectedSlainModels).toBeLessThan(
+      feelNoPainSix.expectedSlainModels
+    );
+  });
+
+  it("applies defender invulnerable save modifiers", () => {
+    const highApWeapon: Weapon = {
+      id: "annihilator",
+      name: "Annihilator",
+      attacks: 2,
+      skill: 3,
+      strength: 10,
+      ap: -4,
+      damage: 3,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const noInvul = calculateExpectedDamage({
+      attacker,
+      weapon: highApWeapon,
+      defender: {
+        ...defender,
+        save: 3,
+        invulnerableSave: undefined,
+      },
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+    });
+
+    const withInvul = calculateExpectedDamage({
+      attacker,
+      weapon: highApWeapon,
+      defender: {
+        ...defender,
+        save: 3,
+        invulnerableSave: undefined,
+      },
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+      activeDefenderModifierRules: [{ type: "INVULNERABLE_SAVE", value: 5 }],
+    });
+
+    expect(noInvul.saveTarget).toBe(7);
+    expect(withInvul.saveTarget).toBe(5);
+    expect(withInvul.expectedDamage).toBeLessThan(noInvul.expectedDamage);
+  });
+
+  it("applies defender set save characteristic rules", () => {
+    const apTwoWeapon: Weapon = {
+      id: "tank-buster",
+      name: "Tank Buster",
+      attacks: 2,
+      skill: 3,
+      strength: 8,
+      ap: -2,
+      damage: 3,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const baseline = calculateExpectedDamage({
+      attacker,
+      weapon: apTwoWeapon,
+      defender: {
+        ...defender,
+        save: 3,
+        invulnerableSave: undefined,
+      },
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+    });
+
+    const improvedSave = calculateExpectedDamage({
+      attacker,
+      weapon: apTwoWeapon,
+      defender: {
+        ...defender,
+        save: 3,
+        invulnerableSave: undefined,
+      },
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+      activeDefenderModifierRules: [{ type: "SET_SAVE_CHARACTERISTIC", value: 2 }],
+    });
+
+    expect(baseline.saveTarget).toBe(5);
+    expect(improvedSave.saveTarget).toBe(4);
+    expect(improvedSave.expectedDamage).toBeLessThan(baseline.expectedDamage);
   });
 
   it("applies battle-shock gated wound bonuses only when the target qualifies", () => {

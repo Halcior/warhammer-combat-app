@@ -26,6 +26,7 @@ export type ConditionalRuleFields = {
   requiresTargetUnravelling?: boolean;
   requiresTargetWithinRange?: number;
   requiresTargetWithinObjectiveRange?: boolean;
+  requiresAttackStrengthGreaterThanTargetToughness?: boolean;
   requiredAttackerKeywords?: string[];
   requiredDefenderKeywords?: string[];
   excludedAttackerKeywords?: string[];
@@ -57,8 +58,10 @@ export type SpecialRule =
   | { type: "EXTRA_ATTACKS" }
   | ({ type: "DEVASTATING_WOUNDS" } & ConditionalRuleFields)
   | { type: "ANTI"; keyword: string; value: number }
-  | { type: "FEEL_NO_PAIN"; value: number }
-  | { type: "DAMAGE_REDUCTION"; value: number }
+  | ({ type: "SET_SAVE_CHARACTERISTIC"; value: number } & ConditionalRuleFields)
+  | ({ type: "INVULNERABLE_SAVE"; value: number } & ConditionalRuleFields)
+  | ({ type: "FEEL_NO_PAIN"; value: number } & ConditionalRuleFields)
+  | ({ type: "DAMAGE_REDUCTION"; value: number } & ConditionalRuleFields)
   | ({ type: "REROLL_HITS" } & ConditionalRuleFields)
   | ({ type: "REROLL_HITS_ONES" } & ConditionalRuleFields)
   | ({ type: "REROLL_ATTACKS" } & ConditionalRuleFields)

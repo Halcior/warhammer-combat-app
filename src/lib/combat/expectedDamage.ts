@@ -61,6 +61,7 @@ export function calculateExpectedDamage({
   const damageModifier = getDamageModifier(activeRules, weapon.type);
   const damageReduction = getDamageReduction(activeRules);
   const feelNoPain = getFeelNoPain(activeRules);
+  const effectiveSave = getSaveCharacteristic(activeRules, defender.save);
 
   const effectiveAp = weapon.ap - apModifier;
   const effectiveStrength = weapon.strength + strengthModifier;
@@ -164,9 +165,9 @@ export function calculateExpectedDamage({
   );
 
   const baseSaveTarget = getModifiedSave(
-    defender.save,
+    effectiveSave,
     effectiveAp,
-    defender.invulnerableSave ?? null
+    getInvulnerableSave(activeRules, defender.invulnerableSave ?? null)
   );
 
   const saveTarget = applyCoverToSave(
@@ -176,9 +177,9 @@ export function calculateExpectedDamage({
   );
   const criticalSaveTarget = applyCoverToSave(
     getModifiedSave(
-      defender.save,
+      effectiveSave,
       effectiveAp - criticalWoundApModifier,
-      defender.invulnerableSave ?? null
+      getInvulnerableSave(activeRules, defender.invulnerableSave ?? null)
     ),
     weapon.type,
     conditions.isTargetInCover && !ignoresCover
@@ -427,6 +428,42 @@ function getDamageReduction(rules: SpecialRule[]): number {
   if (candidates.length === 0) return 0;
 
   return Math.max(...candidates);
+}
+
+function getInvulnerableSave(
+  rules: SpecialRule[],
+  baseInvulnerableSave: number | null
+): number | null {
+  const candidates = rules
+    .filter(
+      (rule): rule is Extract<SpecialRule, { type: "INVULNERABLE_SAVE" }> =>
+        rule.type === "INVULNERABLE_SAVE"
+    )
+    .map((rule) => rule.value);
+
+  if (baseInvulnerableSave !== null) {
+    candidates.push(baseInvulnerableSave);
+  }
+
+  if (candidates.length === 0) return null;
+
+  return Math.min(...candidates);
+}
+
+function getSaveCharacteristic(
+  rules: SpecialRule[],
+  baseSave: number
+): number {
+  const candidates = rules
+    .filter(
+      (rule): rule is Extract<SpecialRule, { type: "SET_SAVE_CHARACTERISTIC" }> =>
+        rule.type === "SET_SAVE_CHARACTERISTIC"
+    )
+    .map((rule) => rule.value);
+
+  if (candidates.length === 0) return baseSave;
+
+  return Math.min(baseSave, ...candidates);
 }
 
 function getFeelNoPain(rules: SpecialRule[]): number | null {

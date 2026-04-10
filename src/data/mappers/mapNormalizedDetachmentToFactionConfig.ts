@@ -59,6 +59,53 @@ export function mapNormalizedDetachmentToEnhancements(
     }
 
     if (
+      detachment.id === "berzerker_warband" &&
+      enhancementName.includes("helm of brazen ire")
+    ) {
+      return createImplementedEnhancement(enhancement, "any", [
+        createImplementedDefenderRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Helm of Brazen Ire Effect",
+          description:
+            "Attacks allocated to the bearer have their Damage reduced by 1.",
+          phase: "any",
+          modifiers: [{ type: "DAMAGE_REDUCTION", value: 1 }],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "goretrack_onslaught" &&
+      enhancementName.includes("unleash hell")
+    ) {
+      return createImplementedEnhancement(enhancement, "any", [
+        createImplementedDefenderRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Unleash Hell Effect",
+          description:
+            "A suppressed enemy unit suffers -1 to hit when it attacks the bearer or its allies.",
+          phase: "any",
+          modifiers: [{ type: "HIT_MODIFIER", value: -1 }],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "khorne_daemonkin" &&
+      enhancementName.includes("blood-forged armour")
+    ) {
+      return createImplementedEnhancement(enhancement, "any", [
+        createImplementedDefenderRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Blood-forged Armour Effect",
+          description: "The bearer has a Save characteristic of 2+.",
+          phase: "any",
+          modifiers: [{ type: "SET_SAVE_CHARACTERISTIC", value: 2 }],
+        }),
+      ]);
+    }
+
+    if (
       detachment.id === "khorne_daemonkin" &&
       enhancementName.includes("blade of endless bloodshed")
     ) {
@@ -1407,6 +1454,22 @@ export function mapNormalizedDetachmentToStratagems(
     }
 
     if (
+      detachment.id === "berzerker_warband" &&
+      stratagemName.includes("frenzied resilience")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedDefenderRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Frenzied Resilience Effect",
+          description:
+            "Attacks targeting the unit have their Damage reduced by 1.",
+          phase,
+          modifiers: [{ type: "DAMAGE_REDUCTION", value: 1 }],
+        }),
+      ]);
+    }
+
+    if (
       detachment.id === "boarding_butchers" &&
       stratagemName.includes("savage resilience")
     ) {
@@ -1418,6 +1481,22 @@ export function mapNormalizedDetachmentToStratagems(
             "Attacks targeting the unit have their Damage reduced by 1.",
           phase,
           modifiers: [{ type: "DAMAGE_REDUCTION", value: 1 }],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "boarding_butchers" &&
+      stratagemName.includes("unstoppable rage")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedDefenderRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Unstoppable Rage Effect",
+          description:
+            "Stunned enemy units suffer -1 to hit while they attack this turn.",
+          phase,
+          modifiers: [{ type: "HIT_MODIFIER", value: -1 }],
         }),
       ]);
     }
@@ -1473,6 +1552,43 @@ export function mapNormalizedDetachmentToStratagems(
               type: "REROLL_HITS",
               attackType: "melee",
               requiredAttackerKeywords: ["JAKHALS", "GOREMONGERS"],
+              requiresAttackerWithinFriendlyMonsterAura: true,
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "cult_of_blood" &&
+      stratagemName.includes("shadow of brass idols")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedDefenderRuleOption({
+          id: `${stratagem.id}-base-effect`,
+          name: "In the Shadow of Brass Idols: Feel No Pain 6+",
+          description:
+            "Jakhals and Goremongers gain Feel No Pain 6+ while targeted.",
+          phase,
+          modifiers: [
+            {
+              type: "FEEL_NO_PAIN",
+              value: 6,
+              requiredDefenderKeywords: ["JAKHALS", "GOREMONGERS"],
+            },
+          ],
+        }),
+        createImplementedDefenderRuleOption({
+          id: `${stratagem.id}-aura-effect`,
+          name: "In the Shadow of Brass Idols: Feel No Pain 5+",
+          description:
+            "Jakhals and Goremongers within Monster or Titanic support gain Feel No Pain 5+ instead.",
+          phase,
+          modifiers: [
+            {
+              type: "FEEL_NO_PAIN",
+              value: 5,
+              requiredDefenderKeywords: ["JAKHALS", "GOREMONGERS"],
               requiresAttackerWithinFriendlyMonsterAura: true,
             },
           ],
@@ -1544,6 +1660,22 @@ export function mapNormalizedDetachmentToStratagems(
             "The targeted World Eaters unit gains Lance on melee weapons.",
           phase,
           modifiers: [{ type: "LANCE", attackType: "melee" }],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "khorne_daemonkin" &&
+      stratagemName.includes("burning blood")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedDefenderRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Blessing of Burning Blood: Invulnerable Save 5+",
+          description:
+            "The targeted World Eaters unit gains a 5+ invulnerable save. The stronger 4+ mode still needs explicit support for mode selection.",
+          phase,
+          modifiers: [{ type: "INVULNERABLE_SAVE", value: 5 }],
         }),
       ]);
     }
@@ -2082,6 +2214,28 @@ export function mapNormalizedDetachmentToStratagems(
               value: 1,
               requiresTargetWithinObjectiveRange: true,
               excludedAttackerKeywords: ["MONSTER", "TITANIC"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "vessels_of_wrath" &&
+      stratagemName.includes("brazen contempt")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedDefenderRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Brazen Contempt Effect",
+          description:
+            "Attacks with Strength greater than the unit's Toughness suffer -1 to wound.",
+          phase,
+          modifiers: [
+            {
+              type: "WOUND_MODIFIER",
+              value: -1,
+              requiresAttackStrengthGreaterThanTargetToughness: true,
             },
           ],
         }),

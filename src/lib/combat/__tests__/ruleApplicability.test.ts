@@ -183,6 +183,11 @@ describe("ruleApplicability", () => {
         requiresTargetWithinRange: 12,
         requiresTargetSpotted: true,
       },
+      {
+        type: "WOUND_MODIFIER",
+        value: -1,
+        requiresAttackStrengthGreaterThanTargetToughness: true,
+      },
     ];
 
     const activeRules = filterActiveRules(rules, {
@@ -215,7 +220,7 @@ describe("ruleApplicability", () => {
       },
     });
 
-    expect(activeRules).toHaveLength(15);
+    expect(activeRules).toHaveLength(16);
     expect(activeRules.map((rule) => rule.type)).toEqual([
       "REROLL_HITS",
       "REROLL_WOUNDS",
@@ -232,6 +237,7 @@ describe("ruleApplicability", () => {
       "DAMAGE_MODIFIER",
       "STRENGTH_MODIFIER",
       "AP_MODIFIER",
+      "WOUND_MODIFIER",
     ]);
   });
 

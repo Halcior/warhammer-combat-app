@@ -29,11 +29,21 @@ function Section({
 export function AttackBreakdownSourcesPanel({ explanation }: Props) {
   return (
     <div className="card">
-      <h2>Why these numbers?</h2>
-      <Section title="Hit calculation" rows={explanation.hit} />
-      <Section title="Wound calculation" rows={explanation.wound} />
-      <Section title="Save calculation" rows={explanation.save} />
-      <Section title="Damage calculation" rows={explanation.damage} />
+      <details className="rules-section rules-section--collapsible" open={false}>
+        <summary className="rules-section__summary">
+          <span>Why these numbers?</span>
+          <span className="rules-section__chevron" aria-hidden="true">
+            +
+          </span>
+        </summary>
+
+        <div className="rules-section__content">
+          <Section title="Hit calculation" rows={explanation.hit} />
+          <Section title="Wound calculation" rows={explanation.wound} />
+          <Section title="Save calculation" rows={explanation.save} />
+          <Section title="Damage calculation" rows={explanation.damage} />
+        </div>
+      </details>
     </div>
   );
 }

@@ -206,6 +206,14 @@ export function ruleApplies(
   }
 
   if (
+    "requiresAttackStrengthGreaterThanTargetToughness" in rule &&
+    rule.requiresAttackStrengthGreaterThanTargetToughness &&
+    context.weapon.strength <= context.defender.toughness
+  ) {
+    return false;
+  }
+
+  if (
     "requiredAttackerKeywords" in rule &&
     rule.requiredAttackerKeywords &&
     !hasAnyKeyword(context.attacker.keywords, rule.requiredAttackerKeywords)

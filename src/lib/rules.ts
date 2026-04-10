@@ -38,6 +38,10 @@ export function formatSpecialRule(rule: SpecialRule): string {
       return "Devastating Wounds";
     case "ANTI":
       return `Anti-${rule.keyword} ${rule.value}+`;
+    case "SET_SAVE_CHARACTERISTIC":
+      return `Save ${rule.value}+`;
+    case "INVULNERABLE_SAVE":
+      return `Invulnerable Save ${rule.value}+`;
     case "FEEL_NO_PAIN":
       return `Feel No Pain ${rule.value}+`;
     case "DAMAGE_REDUCTION":

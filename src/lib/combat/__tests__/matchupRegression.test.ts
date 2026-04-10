@@ -109,6 +109,124 @@ describe("matchup regressions", () => {
 
     expectFiniteSummary(fastSummary);
     expectFiniteSummary(accurateSummary);
+    expect(fastSummary.meanDamage).toBeGreaterThan(0);
+    expect(fastSummary.maxDamage).toBeGreaterThan(0);
+    expect(accurateSummary.meanDamage).toBeGreaterThan(0);
+    expect(accurateSummary.maxDamage).toBeGreaterThan(0);
+  });
+
+  it("keeps World Eaters melee stacks stable for Exalted Eightbound into Carnifexes", () => {
+    const exaltedEightbound = units.find(
+      (unit) => unit.name === "Exalted Eightbound"
+    );
+    const carnifexes = units.find((unit) => unit.name === "Carnifexes");
+
+    expect(exaltedEightbound).toBeDefined();
+    expect(carnifexes).toBeDefined();
+
+    const chainblades = exaltedEightbound?.weapons.find(
+      (weapon) => weapon.name === "Chainblades"
+    );
+
+    expect(chainblades).toBeDefined();
+
+    const baselineExpected = calculateExpectedDamage({
+      attacker: exaltedEightbound!,
+      weapon: chainblades!,
+      defender: carnifexes!,
+      attackingModels: 1,
+      defendingModels: 1,
+      conditions: {
+        ...baseConditions,
+        isChargeTurn: true,
+      },
+      activeModifierRules: [],
+      activeDefenderModifierRules: [],
+    });
+
+    const buffedRules = [
+      {
+        type: "DAMAGE_MODIFIER" as const,
+        value: 1,
+        attackType: "melee" as const,
+        requiredAttackerKeywords: ["EXALTED EIGHTBOUND"],
+        requiredDefenderKeywords: ["MONSTER", "VEHICLE"],
+      },
+      {
+        type: "REROLL_WOUNDS" as const,
+        attackType: "melee" as const,
+        requiredDefenderKeywords: ["MONSTER", "VEHICLE"],
+      },
+    ];
+
+    const buffedExpected = calculateExpectedDamage({
+      attacker: exaltedEightbound!,
+      weapon: chainblades!,
+      defender: carnifexes!,
+      attackingModels: 1,
+      defendingModels: 1,
+      conditions: {
+        ...baseConditions,
+        isChargeTurn: true,
+      },
+      activeModifierRules: buffedRules,
+      activeDefenderModifierRules: [],
+    });
+
+    expect(buffedExpected.expectedDamage).toBeGreaterThan(
+      baselineExpected.expectedDamage
+    );
+    expect(Number.isFinite(buffedExpected.expectedDamage)).toBe(true);
+    expect(Number.isFinite(buffedExpected.expectedSlainModels)).toBe(true);
+
+    const fastSummary = runSimulationByMode({
+      mode: "fast",
+      expectedResult: buffedExpected,
+      selectedWeapon: chainblades!,
+      targetWounds: carnifexes!.woundsPerModel,
+      defendingModels: 1,
+      runs: 1000,
+      accurateParams: {
+        attacker: exaltedEightbound!,
+        weapon: chainblades!,
+        defender: carnifexes!,
+        attackingModels: 1,
+        defendingModels: 1,
+        conditions: {
+          ...baseConditions,
+          isChargeTurn: true,
+        },
+        activeModifierRules: buffedRules,
+        activeDefenderModifierRules: [],
+      },
+    });
+
+    const accurateSummary = runSimulationByMode({
+      mode: "accurate",
+      expectedResult: buffedExpected,
+      selectedWeapon: chainblades!,
+      targetWounds: carnifexes!.woundsPerModel,
+      defendingModels: 1,
+      runs: 1000,
+      accurateParams: {
+        attacker: exaltedEightbound!,
+        weapon: chainblades!,
+        defender: carnifexes!,
+        attackingModels: 1,
+        defendingModels: 1,
+        conditions: {
+          ...baseConditions,
+          isChargeTurn: true,
+        },
+        activeModifierRules: buffedRules,
+        activeDefenderModifierRules: [],
+      },
+    });
+
+    expectFiniteSummary(fastSummary);
+    expectFiniteSummary(accurateSummary);
+    expect(fastSummary.meanDamage).toBeGreaterThan(0);
+    expect(accurateSummary.meanDamage).toBeGreaterThan(0);
   });
 });
 
