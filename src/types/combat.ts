@@ -8,6 +8,7 @@ export type ConditionalRuleFields = {
   requiresAttackWithinObjectiveRange?: boolean;
   requiresAttackerWithinObjectiveRange?: boolean;
   requiresAttackerWithinAuxiliarySupportRange?: boolean;
+  requiresDefenderWithinFriendlyVehicleSupportRange?: boolean;
   requiresDefenderWithinAuxiliaryStealthRange?: boolean;
   requiresTargetWithinAuxiliarySupportRange?: boolean;
   requiresAttackerDisembarkedThisTurn?: boolean;
@@ -141,6 +142,7 @@ export type AttackConditions = {
   targetDistanceInches: number;
   targetInEngagementRange: boolean;
   attackerWithinAuxiliarySupportRange: boolean;
+  defenderWithinFriendlyVehicleSupportRange: boolean;
   defenderWithinAuxiliaryStealthRange: boolean;
   targetWithinAuxiliarySupportRange: boolean;
   targetModelCount: number;

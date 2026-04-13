@@ -20,7 +20,8 @@ type ModifiersPanelProps = {
       ignoresCover: boolean;
     }>
   >;
-  allActiveModifierRules: SpecialRule[];
+  attackerActiveModifierRules: SpecialRule[];
+  defenderActiveModifierRules: SpecialRule[];
   selectedWeapon: Weapon;
   attacker: Unit;
   defender: Unit;
@@ -48,7 +49,8 @@ type ModifiersPanelProps = {
 export function ModifiersPanel({
   activeAttackModifiers,
   setActiveAttackModifiers,
-  allActiveModifierRules,
+  attackerActiveModifierRules,
+  defenderActiveModifierRules,
   selectedWeapon,
   attacker,
   defender,
@@ -75,12 +77,12 @@ export function ModifiersPanel({
   const selectedDetachmentDescription = selectedDetachment?.description
     ? formatDescription(selectedDetachment.description)
     : "";
-  const visibleAttackerAbilities = (attacker.abilities ?? []).filter(
-    (ability) => ability.modifiers.length > 0
-  );
-  const visibleDefenderAbilities = (defender.abilities ?? []).filter(
-    (ability) => ability.modifiers.length > 0
-  );
+  const visibleAttackerAbilities = (attacker.abilities ?? []).filter(isDisplayableAbility);
+  const visibleDefenderAbilities = (defender.abilities ?? []).filter(isDisplayableAbility);
+  const attackerCoreRules = getCoreUnitRules(attacker);
+  const defenderCoreRules = getCoreUnitRules(defender);
+  const hasAnyActiveModifiers =
+    attackerActiveModifierRules.length > 0 || defenderActiveModifierRules.length > 0;
 
   return (
     <div className="card card--modifiers">
@@ -263,16 +265,43 @@ export function ModifiersPanel({
 
       <CollapsibleSection title="Active modifiers">
         <div className="rules-section__content">
-          {allActiveModifierRules.length > 0 ? (
-            <div className="rules-list">
-              {allActiveModifierRules.map((rule, index) => (
-                <span key={`temp-rule-${index}`} className="rule-tag">
-                  <HoverInfo
-                    label={<span>{formatSpecialRule(rule)}</span>}
-                    tooltip={buildActiveRuleTooltip(rule)}
-                  />
-                </span>
-              ))}
+          {hasAnyActiveModifiers ? (
+            <div className="active-modifier-groups">
+              <div className="active-modifier-group">
+                <h3>Attacker active modifiers</h3>
+                {attackerActiveModifierRules.length > 0 ? (
+                  <div className="rules-list">
+                    {attackerActiveModifierRules.map((rule, index) => (
+                      <span key={`attacker-active-rule-${index}`} className="rule-tag">
+                        <HoverInfo
+                          label={<span>{formatSpecialRule(rule)}</span>}
+                          tooltip={buildActiveRuleTooltip(rule)}
+                        />
+                      </span>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="muted-text">No active attacker modifiers</p>
+                )}
+              </div>
+
+              <div className="active-modifier-group">
+                <h3>Defender active modifiers</h3>
+                {defenderActiveModifierRules.length > 0 ? (
+                  <div className="rules-list">
+                    {defenderActiveModifierRules.map((rule, index) => (
+                      <span key={`defender-active-rule-${index}`} className="rule-tag">
+                        <HoverInfo
+                          label={<span>{formatSpecialRule(rule)}</span>}
+                          tooltip={buildActiveRuleTooltip(rule)}
+                        />
+                      </span>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="muted-text">No active defender modifiers</p>
+                )}
+              </div>
             </div>
           ) : (
             <p className="muted-text">No active modifiers</p>
@@ -302,9 +331,18 @@ export function ModifiersPanel({
           )}
 
           <h3>Attacker unit rules</h3>
-          {attacker.specialRules && attacker.specialRules.length > 0 ? (
+          {attackerCoreRules.length > 0 ||
+          (attacker.specialRules && attacker.specialRules.length > 0) ? (
             <div className="rules-list">
-              {attacker.specialRules.map((rule, index) => (
+              {attackerCoreRules.map((rule, index) => (
+                <span key={`${attacker.id}-core-rule-${index}`} className="rule-tag">
+                  <HoverInfo
+                    label={<span>{formatSpecialRule(rule)}</span>}
+                    tooltip={buildCoreRuleTooltip(rule)}
+                  />
+                </span>
+              ))}
+              {(attacker.specialRules ?? []).map((rule, index) => (
                 <span key={`${attacker.id}-rule-${index}`} className="rule-tag">
                   <HoverInfo
                     label={<span>{formatSpecialRule(rule)}</span>}
@@ -326,7 +364,19 @@ export function ModifiersPanel({
                 );
 
                 if (!toggledOption) {
-                  return null;
+                  return (
+                    <div key={ability.id} className="checkbox-row checkbox-row--info">
+                      <HoverInfo
+                        label={
+                          <OptionCardLabel
+                            title={formatUiName(ability.name)}
+                            meta={ability.supportLevel ?? "info-only"}
+                          />
+                        }
+                        tooltip={buildUnitAbilityTooltip(ability)}
+                      />
+                    </div>
+                  );
                 }
 
                 return (
@@ -354,9 +404,18 @@ export function ModifiersPanel({
           )}
 
           <h3>Defender unit rules</h3>
-          {defender.specialRules && defender.specialRules.length > 0 ? (
+          {defenderCoreRules.length > 0 ||
+          (defender.specialRules && defender.specialRules.length > 0) ? (
             <div className="rules-list">
-              {defender.specialRules.map((rule, index) => (
+              {defenderCoreRules.map((rule, index) => (
+                <span key={`${defender.id}-core-rule-${index}`} className="rule-tag">
+                  <HoverInfo
+                    label={<span>{formatSpecialRule(rule)}</span>}
+                    tooltip={buildCoreRuleTooltip(rule)}
+                  />
+                </span>
+              ))}
+              {(defender.specialRules ?? []).map((rule, index) => (
                 <span key={`${defender.id}-rule-${index}`} className="rule-tag">
                   <HoverInfo
                     label={<span>{formatSpecialRule(rule)}</span>}
@@ -378,7 +437,19 @@ export function ModifiersPanel({
                 );
 
                 if (!toggledOption) {
-                  return null;
+                  return (
+                    <div key={ability.id} className="checkbox-row checkbox-row--info">
+                      <HoverInfo
+                        label={
+                          <OptionCardLabel
+                            title={formatUiName(ability.name)}
+                            meta={ability.supportLevel ?? "info-only"}
+                          />
+                        }
+                        tooltip={buildUnitAbilityTooltip(ability)}
+                      />
+                    </div>
+                  );
                 }
 
                 return (
@@ -539,6 +610,34 @@ function buildUnitAbilityTooltip(ability: UnitAbility): string {
   ];
 
   return lines.filter(Boolean).join("\n\n");
+}
+
+function isDisplayableAbility(ability: UnitAbility): boolean {
+  const normalizedName = ability.name.trim().toLowerCase();
+  const hasRealName =
+    normalizedName.length > 0 && !/^ability \d+$/.test(normalizedName);
+  const hasDescription = Boolean(ability.description?.trim());
+
+  return hasRealName || hasDescription || ability.modifiers.length > 0;
+}
+
+function getCoreUnitRules(unit: Unit): SpecialRule[] {
+  const rules: SpecialRule[] = [];
+
+  if (unit.invulnerableSave) {
+    rules.push({ type: "INVULNERABLE_SAVE", value: unit.invulnerableSave });
+  }
+
+  return rules;
+}
+
+function buildCoreRuleTooltip(rule: SpecialRule): string {
+  switch (rule.type) {
+    case "INVULNERABLE_SAVE":
+      return `Core unit profile\n\nThis unit has a native ${formatSpecialRule(rule)} from its datasheet profile.`;
+    default:
+      return formatSpecialRule(rule);
+  }
 }
 
 function formatList(title: string, items: string[]): string {

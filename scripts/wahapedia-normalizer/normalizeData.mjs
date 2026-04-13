@@ -138,6 +138,30 @@ function buildFactionMap(factions) {
   return factionById;
 }
 
+function buildAbilityMap(abilities) {
+  const abilityById = new Map();
+
+  for (const ability of abilities) {
+    if (!ability.id) continue;
+
+    const existing = abilityById.get(ability.id);
+
+    if (!existing) {
+      abilityById.set(ability.id, ability);
+      continue;
+    }
+
+    const existingDescriptionLength = String(existing.description || "").length;
+    const nextDescriptionLength = String(ability.description || "").length;
+
+    if (nextDescriptionLength > existingDescriptionLength) {
+      abilityById.set(ability.id, ability);
+    }
+  }
+
+  return abilityById;
+}
+
 function buildModelProfile(datasheetName, row, index) {
   const rawInvul =
     row.inv_sv && String(row.inv_sv).trim() !== ""
@@ -178,11 +202,19 @@ function buildWeaponProfile(datasheetName, row, index) {
   };
 }
 
-function buildAbilityProfile(datasheetName, row, index) {
+function buildAbilityProfile(datasheetName, row, abilityById, index) {
+  const resolvedAbility = row.ability_id ? abilityById.get(row.ability_id) : null;
+  const baseName = row.name || resolvedAbility?.name || `Ability ${index + 1}`;
+  const parameter = String(row.parameter || "").trim();
+  const name =
+    parameter && !baseName.toLowerCase().includes(parameter.toLowerCase())
+      ? `${baseName} ${parameter}`
+      : baseName;
+
   return {
     id: `${sanitizeId(datasheetName)}_ability_${index + 1}`,
-    name: row.name || `Ability ${index + 1}`,
-    description: row.description || "",
+    name,
+    description: row.description || resolvedAbility?.description || "",
     type: row.type || undefined,
   };
 }
@@ -194,8 +226,10 @@ function main() {
   const wargear = readPipeCsv("Datasheets_wargear.csv");
   const keywords = readPipeCsv("Datasheets_keywords.csv");
   const abilities = readPipeCsv("Datasheets_abilities.csv");
+  const abilitiesIndex = readPipeCsv("Abilities.csv");
 
   const factionById = buildFactionMap(factions);
+  const abilityById = buildAbilityMap(abilitiesIndex);
   const modelsByDatasheet = groupBy(models, "datasheet_id");
   const wargearByDatasheet = groupBy(wargear, "datasheet_id");
   const keywordsByDatasheet = groupBy(keywords, "datasheet_id");
@@ -226,7 +260,9 @@ function main() {
         keywords: dedupeStrings(
           keywordRows.map((row) => String(row.keyword || "").toUpperCase().trim())
         ),
-        abilities: abilityRows.map((row, index) => buildAbilityProfile(sheet.name, row, index)),
+        abilities: abilityRows.map((row, index) =>
+          buildAbilityProfile(sheet.name, row, abilityById, index)
+        ),
       };
     })
     .filter((unit) => unit.models.length > 0)

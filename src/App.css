@@ -775,6 +775,12 @@ button:focus-visible,
   z-index: 7;
 }
 
+.checkbox-row--info {
+  display: block;
+  min-height: 0;
+  padding-left: 15px;
+}
+
 .checkbox-row input {
   width: 18px;
   height: 18px;
@@ -1013,6 +1019,25 @@ button:focus-visible,
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+}
+
+.active-modifier-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.active-modifier-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.active-modifier-group h3 {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: rgba(232, 230, 227, 0.9);
 }
 
 .rule-tag {

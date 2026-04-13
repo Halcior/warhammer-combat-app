@@ -14,6 +14,7 @@ const baseConditions: AttackConditions = {
   targetDistanceInches: 24,
   targetInEngagementRange: false,
   attackerWithinAuxiliarySupportRange: false,
+  defenderWithinFriendlyVehicleSupportRange: false,
   defenderWithinAuxiliaryStealthRange: false,
   targetWithinAuxiliarySupportRange: false,
   targetModelCount: 1,

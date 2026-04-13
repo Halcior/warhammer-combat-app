@@ -13,6 +13,7 @@ export function useBattleSetup() {
     targetDistanceInches: 24,
     targetInEngagementRange: false,
     attackerWithinAuxiliarySupportRange: false,
+    defenderWithinFriendlyVehicleSupportRange: false,
     defenderWithinAuxiliaryStealthRange: false,
     targetWithinAuxiliarySupportRange: false,
     targetModelCount: 10,

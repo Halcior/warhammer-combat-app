@@ -135,10 +135,6 @@ function App() {
       .flatMap((effect) => effect.modifiers);
   }, [activeRuleEffects]);
 
-  const allActiveModifierRules = useMemo(() => {
-    return [...attackerScopedModifierRules, ...defenderScopedModifierRules];
-  }, [attackerScopedModifierRules, defenderScopedModifierRules]);
-
   const expectedResult = useMemo(() => {
     return calculateExpectedDamage({
       attacker: battleSetup.attacker,
@@ -506,13 +502,14 @@ function App() {
           </div>
 
           <div className="workspace-sidebar">
-            <ModifiersPanel
-              activeAttackModifiers={attackModifiers.activeAttackModifiers}
-              setActiveAttackModifiers={attackModifiers.setActiveAttackModifiers}
-              allActiveModifierRules={allActiveModifierRules}
-              selectedWeapon={battleSetup.selectedWeapon}
-              attacker={battleSetup.attacker}
-              defender={battleSetup.defender}
+        <ModifiersPanel
+          activeAttackModifiers={attackModifiers.activeAttackModifiers}
+          setActiveAttackModifiers={attackModifiers.setActiveAttackModifiers}
+          attackerActiveModifierRules={attackerScopedModifierRules}
+          defenderActiveModifierRules={defenderScopedModifierRules}
+          selectedWeapon={battleSetup.selectedWeapon}
+          attacker={battleSetup.attacker}
+          defender={battleSetup.defender}
               availableDetachments={factionRules.availableDetachments}
               selectedDetachmentId={factionRules.selectedDetachmentId}
               setSelectedDetachmentId={factionRules.setSelectedDetachmentId}

@@ -110,6 +110,14 @@ export function ruleApplies(
   }
 
   if (
+    "requiresDefenderWithinFriendlyVehicleSupportRange" in rule &&
+    rule.requiresDefenderWithinFriendlyVehicleSupportRange &&
+    !context.conditions.defenderWithinFriendlyVehicleSupportRange
+  ) {
+    return false;
+  }
+
+  if (
     "requiresDefenderWithinAuxiliaryStealthRange" in rule &&
     rule.requiresDefenderWithinAuxiliaryStealthRange &&
     !context.conditions.defenderWithinAuxiliaryStealthRange

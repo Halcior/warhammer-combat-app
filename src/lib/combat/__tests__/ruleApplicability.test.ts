@@ -16,6 +16,7 @@ const baseConditions: AttackConditions = {
   targetDistanceInches: 24,
   targetInEngagementRange: false,
   attackerWithinAuxiliarySupportRange: false,
+  defenderWithinFriendlyVehicleSupportRange: false,
   defenderWithinAuxiliaryStealthRange: false,
   targetWithinAuxiliarySupportRange: false,
   targetModelCount: 10,
@@ -349,6 +350,43 @@ describe("ruleApplicability", () => {
       conditions: {
         ...baseConditions,
         defenderWithinAuxiliaryStealthRange: true,
+      },
+    });
+
+    expect(inactiveRules).toEqual([]);
+    expect(activeRules).toHaveLength(1);
+    expect(activeRules[0].type).toBe("TARGETING_RANGE_LIMIT");
+  });
+
+  it("respects Death Guard vehicle screening conditions", () => {
+    const rules: SpecialRule[] = [
+      {
+        type: "TARGETING_RANGE_LIMIT",
+        value: 12,
+        attackType: "ranged",
+        requiresDefenderWithinFriendlyVehicleSupportRange: true,
+      },
+    ];
+
+    const rangedWeapon: Weapon = {
+      ...weapon,
+      type: "ranged",
+    };
+
+    const inactiveRules = filterActiveRules(rules, {
+      attacker,
+      defender,
+      weapon: rangedWeapon,
+      conditions: baseConditions,
+    });
+
+    const activeRules = filterActiveRules(rules, {
+      attacker,
+      defender,
+      weapon: rangedWeapon,
+      conditions: {
+        ...baseConditions,
+        defenderWithinFriendlyVehicleSupportRange: true,
       },
     });
 

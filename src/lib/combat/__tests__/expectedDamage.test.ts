@@ -12,6 +12,7 @@ const baseConditions: AttackConditions = {
   targetDistanceInches: 24,
   targetInEngagementRange: false,
   attackerWithinAuxiliarySupportRange: false,
+  defenderWithinFriendlyVehicleSupportRange: false,
   defenderWithinAuxiliaryStealthRange: false,
   targetWithinAuxiliarySupportRange: false,
   targetModelCount: 10,
@@ -1456,6 +1457,66 @@ describe("calculateExpectedDamage", () => {
           attackType: "ranged",
           requiredDefenderKeywords: ["KROOT", "VESPID STINGWINGS"],
           requiresDefenderWithinAuxiliaryStealthRange: true,
+        },
+      ],
+    });
+
+    expect(unscreened.expectedDamage).toBeGreaterThan(0);
+    expect(screened.expectedDamage).toBe(0);
+  });
+
+  it("applies Death Guard vehicle screening only when the defender is screened by a vehicle", () => {
+    const rangedWeapon: Weapon = {
+      id: "lascannon",
+      name: "Lascannon",
+      attacks: 1,
+      skill: 3,
+      strength: 12,
+      ap: -3,
+      damage: "D6+1",
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const unscreened = calculateExpectedDamage({
+      attacker,
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 1,
+      conditions: {
+        ...baseConditions,
+        targetDistanceInches: 18,
+      },
+      activeModifierRules: [],
+      activeDefenderModifierRules: [
+        {
+          type: "TARGETING_RANGE_LIMIT",
+          value: 12,
+          attackType: "ranged",
+          requiresDefenderWithinFriendlyVehicleSupportRange: true,
+        },
+      ],
+    });
+
+    const screened = calculateExpectedDamage({
+      attacker,
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 1,
+      conditions: {
+        ...baseConditions,
+        targetDistanceInches: 18,
+        defenderWithinFriendlyVehicleSupportRange: true,
+      },
+      activeModifierRules: [],
+      activeDefenderModifierRules: [
+        {
+          type: "TARGETING_RANGE_LIMIT",
+          value: 12,
+          attackType: "ranged",
+          requiresDefenderWithinFriendlyVehicleSupportRange: true,
         },
       ],
     });

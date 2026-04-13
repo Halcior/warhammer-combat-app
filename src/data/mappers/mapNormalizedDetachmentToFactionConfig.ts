@@ -1085,6 +1085,21 @@ export function mapNormalizedDetachmentToEnhancements(
             },
           ],
         }),
+        createImplementedDefenderRuleOption({
+          id: `${enhancement.id}-lone-operative-effect`,
+          name: "Tendrilous Emissions: Lone Operative",
+          description:
+            "While the bearer is screened by a friendly Death Guard Vehicle, ranged attacks can only target it from within 12 inches.",
+          phase: "shooting",
+          modifiers: [
+            {
+              type: "TARGETING_RANGE_LIMIT",
+              value: 12,
+              attackType: "ranged",
+              requiresDefenderWithinFriendlyVehicleSupportRange: true,
+            },
+          ],
+        }),
       ]);
     }
 
