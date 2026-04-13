@@ -19,8 +19,10 @@ const baseConditions: AttackConditions = {
   isChargeTurn: false,
   isAttachedUnit: false,
   attackWithinObjectiveRange: false,
+  attackerWithinObjectiveRange: false,
   attackerDisembarkedThisTurn: false,
   attackerIsFiringOverwatch: false,
+  attackerIsAfflicted: false,
   attackerIsGuided: false,
   attackerIsVesselOfWrath: false,
   attackerWithinFriendlyCharacterRange: false,
@@ -29,6 +31,7 @@ const baseConditions: AttackConditions = {
   attackerSetUpThisTurn: false,
   attackerSetToDefend: false,
   targetIsClosestEligible: false,
+  targetWithinPlagueLegionsEngagementRange: false,
   targetIsAfflicted: false,
   targetWithinContagionRange: false,
   targetInOpponentDeploymentZone: false,
@@ -1088,6 +1091,45 @@ describe("calculateExpectedDamage", () => {
     expect(improvedSave.expectedDamage).toBeLessThan(baseline.expectedDamage);
   });
 
+  it("applies defender toughness modifiers", () => {
+    const strengthFiveWeapon: Weapon = {
+      id: "blight-burst",
+      name: "Blight Burst",
+      attacks: 4,
+      skill: 3,
+      strength: 5,
+      ap: -1,
+      damage: 2,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const baseline = calculateExpectedDamage({
+      attacker,
+      weapon: strengthFiveWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+      activeDefenderModifierRules: [],
+    });
+
+    const tougherDefender = calculateExpectedDamage({
+      attacker,
+      weapon: strengthFiveWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [],
+      activeDefenderModifierRules: [{ type: "TOUGHNESS_MODIFIER", value: 2 }],
+    });
+
+    expect(tougherDefender.woundTarget).toBeGreaterThan(baseline.woundTarget);
+    expect(tougherDefender.expectedDamage).toBeLessThan(baseline.expectedDamage);
+  });
+
   it("applies battle-shock gated wound bonuses only when the target qualifies", () => {
     const rangedWeapon: Weapon = {
       id: "psycannon",
@@ -1660,6 +1702,55 @@ describe("calculateExpectedDamage", () => {
     );
   });
 
+  it("applies wound re-rolls only when the attacker is on an objective", () => {
+    const weapon: Weapon = {
+      id: "plague-bolter",
+      name: "Plague Bolter",
+      attacks: 4,
+      skill: 3,
+      strength: 4,
+      ap: 0,
+      damage: 1,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const offObjective = calculateExpectedDamage({
+      attacker,
+      weapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [
+        {
+          type: "REROLL_WOUNDS",
+          requiresAttackerWithinObjectiveRange: true,
+        },
+      ],
+    });
+
+    const onObjective = calculateExpectedDamage({
+      attacker,
+      weapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        attackerWithinObjectiveRange: true,
+      },
+      activeModifierRules: [
+        {
+          type: "REROLL_WOUNDS",
+          requiresAttackerWithinObjectiveRange: true,
+        },
+      ],
+    });
+
+    expect(onObjective.expectedDamage).toBeGreaterThan(offObjective.expectedDamage);
+  });
+
   it("applies Lance on charge", () => {
     const toughDefender: Unit = {
       ...defender,
@@ -2020,4 +2111,165 @@ it("improves ranged output for targets caught in the opponent deployment zone", 
   expect(withDeploymentZoneRerolls.expectedDamage).toBeGreaterThan(
     baseline.expectedDamage
   );
+});
+
+it("applies weapon-specific damage bonuses only to the matching profile", () => {
+  const plagueWind: Weapon = {
+    id: "plague-wind",
+    name: "Plague Wind",
+    attacks: 2,
+    skill: 3,
+    strength: 5,
+    ap: -1,
+    damage: 2,
+    type: "ranged",
+    specialRules: [],
+  };
+
+  const rotwind: Weapon = {
+    ...plagueWind,
+    id: "rotwind",
+    name: "Rotwind",
+  };
+
+  const modifiers = [
+    {
+      type: "DAMAGE_MODIFIER" as const,
+      value: 1,
+      attackType: "ranged" as const,
+      requiresWeaponNameIncludes: ["plague wind"],
+    },
+  ];
+
+  const plagueWindResult = calculateExpectedDamage({
+    attacker,
+    weapon: plagueWind,
+    defender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: baseConditions,
+    activeModifierRules: modifiers,
+  });
+
+  const rotwindResult = calculateExpectedDamage({
+    attacker,
+    weapon: rotwind,
+    defender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: baseConditions,
+    activeModifierRules: modifiers,
+  });
+
+  expect(plagueWindResult.damagePerFailedSave).toBe(3);
+  expect(rotwindResult.damagePerFailedSave).toBe(2);
+  expect(plagueWindResult.expectedDamage).toBeGreaterThan(
+    rotwindResult.expectedDamage
+  );
+});
+
+it("applies attacker unit special rules in the combat engine", () => {
+  const meleeWeapon: Weapon = {
+    id: "plague-scythe",
+    name: "Plague Scythe",
+    attacks: 4,
+    skill: 3,
+    strength: 6,
+    ap: -2,
+    damage: 2,
+    type: "melee",
+    specialRules: [],
+  };
+
+  const toughDefender: Unit = {
+    ...defender,
+    toughness: 8,
+  };
+
+  const baseline = calculateExpectedDamage({
+    attacker,
+    weapon: meleeWeapon,
+    defender: toughDefender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: {
+      ...baseConditions,
+      isChargeTurn: true,
+    },
+    activeModifierRules: [],
+  });
+
+  const withAttackerRule = calculateExpectedDamage({
+    attacker: {
+      ...attacker,
+      specialRules: [{ type: "LANCE", attackType: "melee" }],
+    },
+    weapon: meleeWeapon,
+    defender: toughDefender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: {
+      ...baseConditions,
+      isChargeTurn: true,
+    },
+    activeModifierRules: [],
+  });
+
+  expect(baseline.woundTarget).toBe(5);
+  expect(withAttackerRule.woundTarget).toBe(4);
+  expect(withAttackerRule.expectedDamage).toBeGreaterThan(
+    baseline.expectedDamage
+  );
+});
+
+it("applies Tallyband Summoners hit rerolls only when the target is tied down by Plague Legions", () => {
+  const meleeWeapon: Weapon = {
+    id: "plague-knife",
+    name: "Plague Knife",
+    attacks: 4,
+    skill: 4,
+    strength: 5,
+    ap: -1,
+    damage: 1,
+    type: "melee",
+    specialRules: [],
+  };
+
+  const noSupport = calculateExpectedDamage({
+    attacker,
+    weapon: meleeWeapon,
+    defender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: baseConditions,
+    activeModifierRules: [
+      {
+        type: "REROLL_HITS",
+        attackType: "melee",
+        requiresTargetWithinPlagueLegionsEngagementRange: true,
+      },
+    ],
+  });
+
+  const withSupport = calculateExpectedDamage({
+    attacker,
+    weapon: meleeWeapon,
+    defender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: {
+      ...baseConditions,
+      targetWithinPlagueLegionsEngagementRange: true,
+    },
+    activeModifierRules: [
+      {
+        type: "REROLL_HITS",
+        attackType: "melee",
+        requiresTargetWithinPlagueLegionsEngagementRange: true,
+      },
+    ],
+  });
+
+  expect(withSupport.expectedHits).toBeGreaterThan(noSupport.expectedHits);
+  expect(withSupport.expectedDamage).toBeGreaterThan(noSupport.expectedDamage);
 });

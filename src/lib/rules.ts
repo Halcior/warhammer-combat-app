@@ -84,6 +84,8 @@ export function formatSpecialRule(rule: SpecialRule): string {
       return rule.attackType
         ? `Strength ${formatSignedValue(rule.value)} (${rule.attackType})`
         : `Strength ${formatSignedValue(rule.value)}`;
+    case "TOUGHNESS_MODIFIER":
+      return `Toughness ${formatSignedValue(rule.value)}`;
     case "DAMAGE_MODIFIER":
       return rule.attackType
         ? `Damage ${formatSignedValue(rule.value)} (${rule.attackType})`

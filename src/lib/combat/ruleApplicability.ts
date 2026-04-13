@@ -46,6 +46,14 @@ export function ruleApplies(
   }
 
   if (
+    "requiresAttackerIsAfflicted" in rule &&
+    rule.requiresAttackerIsAfflicted &&
+    !context.conditions.attackerIsAfflicted
+  ) {
+    return false;
+  }
+
+  if (
     "requiresAttackerIsVesselOfWrath" in rule &&
     rule.requiresAttackerIsVesselOfWrath &&
     !context.conditions.attackerIsVesselOfWrath
@@ -81,6 +89,14 @@ export function ruleApplies(
     "requiresAttackWithinObjectiveRange" in rule &&
     rule.requiresAttackWithinObjectiveRange &&
     !context.conditions.attackWithinObjectiveRange
+  ) {
+    return false;
+  }
+
+  if (
+    "requiresAttackerWithinObjectiveRange" in rule &&
+    rule.requiresAttackerWithinObjectiveRange &&
+    !context.conditions.attackerWithinObjectiveRange
   ) {
     return false;
   }
@@ -174,9 +190,25 @@ export function ruleApplies(
   }
 
   if (
+    "requiresWeaponNameIncludes" in rule &&
+    rule.requiresWeaponNameIncludes &&
+    !matchesWeaponName(context.weapon.name, rule.requiresWeaponNameIncludes)
+  ) {
+    return false;
+  }
+
+  if (
     "requiresTargetIsClosestEligible" in rule &&
     rule.requiresTargetIsClosestEligible &&
     !context.conditions.targetIsClosestEligible
+  ) {
+    return false;
+  }
+
+  if (
+    "requiresTargetWithinPlagueLegionsEngagementRange" in rule &&
+    rule.requiresTargetWithinPlagueLegionsEngagementRange &&
+    !context.conditions.targetWithinPlagueLegionsEngagementRange
   ) {
     return false;
   }
@@ -378,4 +410,25 @@ function hasAnyKeyword(
 
 function normalizeKeyword(keyword: string): string {
   return keyword.trim().toUpperCase();
+}
+
+function matchesWeaponName(
+  weaponName: string,
+  requiredSnippets: string[]
+): boolean {
+  const normalizedWeaponName = normalizeWeaponName(weaponName);
+
+  return requiredSnippets
+    .map(normalizeWeaponName)
+    .some((snippet) => normalizedWeaponName.includes(snippet));
+}
+
+function normalizeWeaponName(value: string): string {
+  return value
+    .toUpperCase()
+    .normalize("NFKD")
+    .replace(/[’'"]/g, "")
+    .replace(/[^A-Z0-9\s]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }

@@ -6,11 +6,13 @@ export type ConditionalRuleFields = {
   attackType?: WeaponType;
   limitsTargetingRangeTo?: number;
   requiresAttackWithinObjectiveRange?: boolean;
+  requiresAttackerWithinObjectiveRange?: boolean;
   requiresAttackerWithinAuxiliarySupportRange?: boolean;
   requiresDefenderWithinAuxiliaryStealthRange?: boolean;
   requiresTargetWithinAuxiliarySupportRange?: boolean;
   requiresAttackerDisembarkedThisTurn?: boolean;
   requiresAttackerFiringOverwatch?: boolean;
+  requiresAttackerIsAfflicted?: boolean;
   requiresAttackerIsVesselOfWrath?: boolean;
   requiresAttackerWithinFriendlyCharacterRange?: boolean;
   requiresAttackerWithinFriendlyMonsterAura?: boolean;
@@ -23,7 +25,9 @@ export type ConditionalRuleFields = {
   requiresAttackerSetToDefend?: boolean;
   requiresBattleRoundAtLeast?: number;
   requiresBattleRoundAtMost?: number;
+  requiresWeaponNameIncludes?: string[];
   requiresTargetIsClosestEligible?: boolean;
+  requiresTargetWithinPlagueLegionsEngagementRange?: boolean;
   requiresTargetModelCountAtLeast?: number;
   requiresTargetOppositeHatchway?: boolean;
   requiresTargetIsAfflicted?: boolean;
@@ -59,7 +63,7 @@ export type SpecialRule =
   | { type: "PRECISION" }
   | { type: "BLAST" }
   | ({ type: "MELTA"; value: number } & ConditionalRuleFields)
-  | { type: "HEAVY" }
+  | ({ type: "HEAVY" } & ConditionalRuleFields)
   | ({ type: "HAZARDOUS" } & ConditionalRuleFields)
   | ({ type: "SUSTAINED_HITS"; value: number } & ConditionalRuleFields)
   | { type: "EXTRA_ATTACKS" }
@@ -83,6 +87,7 @@ export type SpecialRule =
   | ({ type: "CRITICAL_HITS_ON"; value: number } & ConditionalRuleFields)
   | ({ type: "AP_MODIFIER"; value: number } & ConditionalRuleFields)
   | ({ type: "STRENGTH_MODIFIER"; value: number } & ConditionalRuleFields)
+  | ({ type: "TOUGHNESS_MODIFIER"; value: number } & ConditionalRuleFields)
   | ({ type: "DAMAGE_MODIFIER"; value: number } & ConditionalRuleFields)
   | ({
       type: "WOUND_MODIFIER";
@@ -103,6 +108,15 @@ export type Weapon = {
   specialRules?: SpecialRule[];
 };
 
+export type UnitAbility = {
+  id: string;
+  name: string;
+  description?: string;
+  modifiers: SpecialRule[];
+  supportLevel?: "implemented" | "planned" | "info-only";
+  selectionGroup?: string;
+};
+
 export type Unit = {
   id: string;
   name: string;
@@ -113,6 +127,7 @@ export type Unit = {
   woundsPerModel: number;
   weapons: Weapon[];
   specialRules?: SpecialRule[];
+  abilities?: UnitAbility[];
   keywords?: string[];
 };
 
@@ -133,8 +148,10 @@ export type AttackConditions = {
   isChargeTurn: boolean;
   isAttachedUnit: boolean;
   attackWithinObjectiveRange: boolean;
+  attackerWithinObjectiveRange: boolean;
   attackerDisembarkedThisTurn: boolean;
   attackerIsFiringOverwatch: boolean;
+  attackerIsAfflicted: boolean;
   attackerIsGuided: boolean;
   attackerIsVesselOfWrath: boolean;
   attackerWithinFriendlyCharacterRange: boolean;
@@ -143,6 +160,7 @@ export type AttackConditions = {
   attackerSetUpThisTurn: boolean;
   attackerSetToDefend: boolean;
   targetIsClosestEligible: boolean;
+  targetWithinPlagueLegionsEngagementRange: boolean;
   targetIsAfflicted: boolean;
   targetWithinContagionRange: boolean;
   targetInOpponentDeploymentZone: boolean;

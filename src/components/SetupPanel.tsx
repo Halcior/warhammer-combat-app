@@ -8,8 +8,10 @@ type BattleStateToggleKey =
   | "isChargeTurn"
   | "targetHasMatchingAntiKeyword"
   | "isAttachedUnit"
+  | "attackerWithinObjectiveRange"
   | "attackerDisembarkedThisTurn"
   | "attackerIsFiringOverwatch"
+  | "attackerIsAfflicted"
   | "attackerIsGuided"
   | "attackerIsVesselOfWrath"
   | "attackerWithinFriendlyCharacterRange"
@@ -20,6 +22,7 @@ type BattleStateToggleKey =
   | "attackerSetToDefend"
   | "isHalfRange"
   | "targetIsClosestEligible"
+  | "targetWithinPlagueLegionsEngagementRange"
   | "targetIsSpotted"
   | "targetIsAfflicted"
   | "targetWithinContagionRange"
@@ -52,11 +55,14 @@ const battleStateToggles: BattleStateToggle[] = [
   { key: "isChargeTurn", label: "Charge turn", title: "The current attack happens during a charge turn.", group: "core", attackTypes: ["melee"] },
   { key: "targetHasMatchingAntiKeyword", label: "Anti keyword match", title: "The target matches the attack's Anti keyword.", group: "core" },
   { key: "isAttachedUnit", label: "Led / attached unit", title: "The attacking unit is led by a Character or attached.", group: "core" },
+  { key: "attackerWithinObjectiveRange", label: "Attacker on objective", title: "The attacking unit is within range of an objective marker you control.", group: "advanced" },
   { key: "attackerDisembarkedThisTurn", label: "Disembarked this turn", title: "The attacking unit disembarked from a transport this turn.", group: "core" },
   { key: "attackerIsFiringOverwatch", label: "Firing Overwatch", title: "The attacking unit is making Overwatch attacks.", group: "core", attackTypes: ["ranged"] },
+  { key: "attackerIsAfflicted", label: "Attacker is Afflicted", title: "The attacking unit currently counts as Afflicted for Death Guard interactions.", group: "advanced", factions: ["Death Guard"] },
   { key: "attackerIsGuided", label: "Attacker is Guided", title: "The attacking unit is Guided.", group: "core", factions: ["Tau Empire"] },
   { key: "isHalfRange", label: "Half range", title: "The target is inside half range for the active weapon.", group: "core", attackTypes: ["ranged"] },
   { key: "targetIsClosestEligible", label: "Closest eligible target", title: "The defender is the closest eligible target.", group: "core" },
+  { key: "targetWithinPlagueLegionsEngagementRange", label: "Near Plague Legions", title: "The defender is within Engagement Range of one or more friendly Plague Legions units.", group: "advanced", factions: ["Death Guard"] },
   { key: "targetIsSpotted", label: "Spotted / markerlit", title: "The defender is the spotted or markerlit target.", group: "core", factions: ["Tau Empire"] },
   { key: "targetWithinObjectiveRange", label: "Target on objective", title: "The defender is within range of an objective marker.", group: "core" },
   { key: "targetIsBattleShocked", label: "Target is Battle-shocked", title: "The defender is Battle-shocked.", group: "core" },

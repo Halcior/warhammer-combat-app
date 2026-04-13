@@ -45,6 +45,7 @@ function simulateSingleAttackSequence(
   params: SimulateAttackContextParams
 ): SimulationRunResult {
   const combinedRules = [
+    ...(params.attacker.specialRules ?? []),
     ...(params.weapon.specialRules ?? []),
     ...(params.activeModifierRules ?? []),
     ...(params.defender.specialRules ?? []),
@@ -89,8 +90,12 @@ function simulateSingleAttackSequence(
   const effectiveStrength =
     params.weapon.strength +
     getStrengthModifier(activeRules, params.weapon.type);
+  const effectiveToughness = Math.max(
+    1,
+    params.defender.toughness + getToughnessModifier(activeRules)
+  );
 
-  let woundTarget = getWoundTarget(effectiveStrength, params.defender.toughness);
+  let woundTarget = getWoundTarget(effectiveStrength, effectiveToughness);
 
   if (hasRule(activeRules, "LANCE") && params.conditions.isChargeTurn) {
     woundTarget = Math.max(2, woundTarget - 1);
@@ -99,7 +104,7 @@ function simulateSingleAttackSequence(
   const woundModifier = getWoundModifier(
     activeRules,
     params.weapon.type,
-    params.defender.toughness
+    effectiveToughness
   );
 
   woundTarget = Math.max(2, woundTarget - woundModifier);
@@ -444,6 +449,13 @@ function getDamageModifier(
   return (rules ?? []).reduce((sum, rule) => {
     if (rule.type !== "DAMAGE_MODIFIER") return sum;
     if (rule.attackType && rule.attackType !== weaponType) return sum;
+    return sum + rule.value;
+  }, 0);
+}
+
+function getToughnessModifier(rules: SpecialRule[] | undefined): number {
+  return (rules ?? []).reduce((sum, rule) => {
+    if (rule.type !== "TOUGHNESS_MODIFIER") return sum;
     return sum + rule.value;
   }, 0);
 }

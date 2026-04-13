@@ -37,6 +37,7 @@ export function explainAttackBreakdown(params: {
   } = params;
 
   const combinedRules = [
+    ...(attacker.specialRules ?? []),
     ...(weapon.specialRules ?? []),
     ...activeModifierRules,
     ...(defender.specialRules ?? []),
@@ -77,8 +78,10 @@ export function explainAttackBreakdown(params: {
     weapon.type
   );
   const effectiveStrength = weapon.strength + strengthModifier;
+  const toughnessModifier = getToughnessModifier(activeRules);
+  const effectiveToughness = Math.max(1, defender.toughness + toughnessModifier);
 
-  const baseWoundTarget = getWoundTarget(effectiveStrength, defender.toughness);
+  const baseWoundTarget = getWoundTarget(effectiveStrength, effectiveToughness);
 
   const lanceBonus =
     hasRule(activeRules, "LANCE") && conditions.isChargeTurn ? 1 : 0;
@@ -86,7 +89,7 @@ export function explainAttackBreakdown(params: {
   const woundModifier = getConditionalWoundModifier(
     activeRules,
     weapon.type,
-    defender.toughness
+    effectiveToughness
   );
 
   const finalWound = Math.max(2, baseWoundTarget - lanceBonus - woundModifier);
@@ -144,6 +147,11 @@ export function explainAttackBreakdown(params: {
         value: strengthModifier ? formatSignedModifier(strengthModifier) : 0,
       },
       { label: "Defender toughness", value: defender.toughness },
+      {
+        label: "Toughness modifier",
+        value: toughnessModifier ? formatSignedModifier(toughnessModifier) : 0,
+      },
+      { label: "Effective toughness", value: effectiveToughness },
       { label: "Base wound target", value: `${baseWoundTarget}+` },
       { label: "Lance bonus", value: lanceBonus ? `-${lanceBonus}` : 0 },
       {
@@ -194,6 +202,13 @@ function hasRule(rules: SpecialRule[], type: SpecialRule["type"]): boolean {
 function getMeltaValue(rules: SpecialRule[]): number {
   const meltaRule = rules.find((rule) => rule.type === "MELTA");
   return meltaRule?.type === "MELTA" ? meltaRule.value : 0;
+}
+
+function getToughnessModifier(rules: SpecialRule[]): number {
+  return rules.reduce((sum, rule) => {
+    if (rule.type !== "TOUGHNESS_MODIFIER") return sum;
+    return sum + rule.value;
+  }, 0);
 }
 
 function getRuleModifier(

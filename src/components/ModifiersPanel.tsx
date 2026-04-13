@@ -1,5 +1,5 @@
 import { formatSpecialRule } from "../lib/rules";
-import type { SpecialRule, Unit, Weapon } from "../types/combat";
+import type { SpecialRule, Unit, UnitAbility, Weapon } from "../types/combat";
 import type {
   RuleOption,
   StratagemConfig,
@@ -23,6 +23,7 @@ type ModifiersPanelProps = {
   allActiveModifierRules: SpecialRule[];
   selectedWeapon: Weapon;
   attacker: Unit;
+  defender: Unit;
   availableDetachments: DetachmentConfig[];
   selectedDetachmentId: string;
   setSelectedDetachmentId: React.Dispatch<React.SetStateAction<string>>;
@@ -36,6 +37,12 @@ type ModifiersPanelProps = {
   toggleEnhancement: (id: string) => void;
   activeStratagemIds: string[];
   toggleStratagem: (id: string) => void;
+  attackerUnitAbilityOptions: RuleOption[];
+  activeAttackerUnitAbilityIds: string[];
+  toggleAttackerUnitAbility: (id: string) => void;
+  defenderUnitAbilityOptions: RuleOption[];
+  activeDefenderUnitAbilityIds: string[];
+  toggleDefenderUnitAbility: (id: string) => void;
 };
 
 export function ModifiersPanel({
@@ -44,6 +51,7 @@ export function ModifiersPanel({
   allActiveModifierRules,
   selectedWeapon,
   attacker,
+  defender,
   availableDetachments,
   selectedDetachmentId,
   setSelectedDetachmentId,
@@ -57,10 +65,22 @@ export function ModifiersPanel({
   toggleEnhancement,
   activeStratagemIds = [],
   toggleStratagem,
+  attackerUnitAbilityOptions,
+  activeAttackerUnitAbilityIds,
+  toggleAttackerUnitAbility,
+  defenderUnitAbilityOptions,
+  activeDefenderUnitAbilityIds,
+  toggleDefenderUnitAbility,
 }: ModifiersPanelProps) {
   const selectedDetachmentDescription = selectedDetachment?.description
     ? formatDescription(selectedDetachment.description)
     : "";
+  const visibleAttackerAbilities = (attacker.abilities ?? []).filter(
+    (ability) => ability.modifiers.length > 0
+  );
+  const visibleDefenderAbilities = (defender.abilities ?? []).filter(
+    (ability) => ability.modifiers.length > 0
+  );
 
   return (
     <div className="card card--modifiers">
@@ -281,7 +301,7 @@ export function ModifiersPanel({
             <p className="muted-text">No weapon rules</p>
           )}
 
-          <h3>Unit rules</h3>
+          <h3>Attacker unit rules</h3>
           {attacker.specialRules && attacker.specialRules.length > 0 ? (
             <div className="rules-list">
               {attacker.specialRules.map((rule, index) => (
@@ -294,7 +314,95 @@ export function ModifiersPanel({
               ))}
             </div>
           ) : (
-            <p className="muted-text">No unit rules</p>
+            <p className="muted-text">No passive attacker unit rules</p>
+          )}
+
+          <h3>Attacker abilities</h3>
+          {visibleAttackerAbilities.length > 0 ? (
+            <div className="option-list option-list--stacked">
+              {visibleAttackerAbilities.map((ability) => {
+                const toggledOption = attackerUnitAbilityOptions.find(
+                  (option) => option.id === `attacker-ability-${ability.id}`
+                );
+
+                if (!toggledOption) {
+                  return null;
+                }
+
+                return (
+                  <label key={ability.id} className="checkbox-row">
+                    <input
+                      type="checkbox"
+                      checked={activeAttackerUnitAbilityIds.includes(toggledOption.id)}
+                      onChange={() => toggleAttackerUnitAbility(toggledOption.id)}
+                    />
+                    <HoverInfo
+                      label={
+                        <OptionCardLabel
+                          title={formatUiName(ability.name)}
+                          meta={ability.supportLevel}
+                        />
+                      }
+                      tooltip={buildUnitAbilityTooltip(ability)}
+                    />
+                  </label>
+                );
+              })}
+            </div>
+          ) : (
+            <p className="muted-text">No attacker abilities</p>
+          )}
+
+          <h3>Defender unit rules</h3>
+          {defender.specialRules && defender.specialRules.length > 0 ? (
+            <div className="rules-list">
+              {defender.specialRules.map((rule, index) => (
+                <span key={`${defender.id}-rule-${index}`} className="rule-tag">
+                  <HoverInfo
+                    label={<span>{formatSpecialRule(rule)}</span>}
+                    tooltip={buildActiveRuleTooltip(rule)}
+                  />
+                </span>
+              ))}
+            </div>
+          ) : (
+            <p className="muted-text">No passive defender unit rules</p>
+          )}
+
+          <h3>Defender abilities</h3>
+          {visibleDefenderAbilities.length > 0 ? (
+            <div className="option-list option-list--stacked">
+              {visibleDefenderAbilities.map((ability) => {
+                const toggledOption = defenderUnitAbilityOptions.find(
+                  (option) => option.id === `defender-ability-${ability.id}`
+                );
+
+                if (!toggledOption) {
+                  return null;
+                }
+
+                return (
+                  <label key={ability.id} className="checkbox-row">
+                    <input
+                      type="checkbox"
+                      checked={activeDefenderUnitAbilityIds.includes(toggledOption.id)}
+                      onChange={() => toggleDefenderUnitAbility(toggledOption.id)}
+                    />
+                    <HoverInfo
+                      label={
+                        <OptionCardLabel
+                          title={formatUiName(ability.name)}
+                          meta={ability.supportLevel}
+                        />
+                      }
+                      tooltip={buildUnitAbilityTooltip(ability)}
+                    />
+                  </label>
+                );
+              })}
+            </div>
+          ) : (
+            <p className="muted-text">No defender abilities</p>
           )}
         </div>
       </CollapsibleSection>
@@ -417,6 +525,20 @@ function buildStratagemTooltip(stratagem: StratagemConfig): string {
 
 function buildActiveRuleTooltip(rule: SpecialRule): string {
   return formatSpecialRule(rule);
+}
+
+function buildUnitAbilityTooltip(ability: UnitAbility): string {
+  const lines = [
+    ability.name,
+    ability.supportLevel ? `Support: ${ability.supportLevel}` : "",
+    formatDescription(ability.description),
+    formatList(
+      "Calculated effects",
+      ability.modifiers.map((modifier) => formatSpecialRule(modifier))
+    ),
+  ];
+
+  return lines.filter(Boolean).join("\n\n");
 }
 
 function formatList(title: string, items: string[]): string {

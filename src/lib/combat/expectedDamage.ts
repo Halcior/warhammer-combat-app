@@ -34,9 +34,8 @@ export function calculateExpectedDamage({
   activeModifierRules = [],
   activeDefenderModifierRules = [],
 }: CalculateExpectedDamageParams): ExpectedDamageResult {
-  void attacker;
-
   const combinedWeaponRules = [
+    ...(attacker.specialRules ?? []),
     ...(weapon.specialRules ?? []),
     ...(activeModifierRules ?? []),
     ...(defender.specialRules ?? []),
@@ -63,6 +62,10 @@ export function calculateExpectedDamage({
   const damageModifier = getDamageModifier(activeRules, weapon.type);
   const damageReduction = getDamageReduction(activeRules);
   const feelNoPain = getFeelNoPain(activeRules);
+  const effectiveToughness = Math.max(
+    1,
+    defender.toughness + getToughnessModifier(activeRules)
+  );
   const effectiveSave = getSaveCharacteristic(activeRules, defender.save);
   const targetingRangeLimit = getTargetingRangeLimit(activeRules, weapon.type);
 
@@ -74,7 +77,7 @@ export function calculateExpectedDamage({
     return {
       totalAttacks: 0,
       hitTarget: weapon.skill,
-      woundTarget: getWoundTarget(weapon.strength, defender.toughness),
+      woundTarget: getWoundTarget(weapon.strength, effectiveToughness),
       saveTarget: defender.save,
       expectedHits: 0,
       expectedWounds: 0,
@@ -152,9 +155,9 @@ export function calculateExpectedDamage({
 
   const hasLanceRule = hasRule(activeRules, "LANCE");
 
-   let modifiedWoundTarget = getWoundTarget(
+  let modifiedWoundTarget = getWoundTarget(
     effectiveStrength,
-    defender.toughness
+    effectiveToughness
   );
 
   if (hasLanceRule && conditions.isChargeTurn) {
@@ -164,7 +167,7 @@ export function calculateExpectedDamage({
   const woundModifier = getWoundModifier(
     activeRules,
     weapon.type,
-    defender.toughness
+    effectiveToughness
   );
 
   modifiedWoundTarget = Math.max(2, modifiedWoundTarget - woundModifier);
@@ -443,6 +446,13 @@ function getDamageModifier(
   return rules.reduce((sum, rule) => {
     if (rule.type !== "DAMAGE_MODIFIER") return sum;
     if (rule.attackType && rule.attackType !== weaponType) return sum;
+    return sum + rule.value;
+  }, 0);
+}
+
+function getToughnessModifier(rules: SpecialRule[]): number {
+  return rules.reduce((sum, rule) => {
+    if (rule.type !== "TOUGHNESS_MODIFIER") return sum;
     return sum + rule.value;
   }, 0);
 }

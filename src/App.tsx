@@ -67,16 +67,57 @@ function App() {
     fallbackCompareWeaponId,
   ]);
 
+  const attackerUnitAbilityRuleOptions = useMemo(() => {
+    return (battleSetup.attacker.abilities ?? [])
+      .filter((ability) => ability.modifiers.length > 0)
+      .map((ability) => ({
+        id: `attacker-ability-${ability.id}`,
+        name: ability.name,
+        description: ability.description,
+        appliesTo: "attacker" as const,
+        phase: "any" as const,
+        modifiers: ability.modifiers,
+        isToggle: true,
+        supportLevel: ability.supportLevel,
+        engineTags: [],
+        selectionGroup: ability.selectionGroup,
+      }));
+  }, [battleSetup.attacker.abilities]);
+
+  const defenderUnitAbilityRuleOptions = useMemo(() => {
+    return (battleSetup.defender.abilities ?? [])
+      .filter((ability) => ability.modifiers.length > 0)
+      .map((ability) => ({
+        id: `defender-ability-${ability.id}`,
+        name: ability.name,
+        description: ability.description,
+        appliesTo: "defender" as const,
+        phase: "any" as const,
+        modifiers: ability.modifiers,
+        isToggle: true,
+        supportLevel: ability.supportLevel,
+        engineTags: [],
+        selectionGroup: ability.selectionGroup,
+      }));
+  }, [battleSetup.defender.abilities]);
+
+  const attackerUnitAbilityOptions = useRuleOptions(attackerUnitAbilityRuleOptions);
+  const defenderUnitAbilityOptions = useRuleOptions(defenderUnitAbilityRuleOptions);
+
   const activeRuleEffects = useMemo(() => {
     return [
       ...ruleOptions.activeRuleOptions,
       ...enhancementOptions.activeEnhancementRuleEffects,
       ...stratagemOptions.activeStratagemRuleEffects,
+      ...attackerUnitAbilityOptions.activeRuleOptions,
+      ...defenderUnitAbilityOptions.activeRuleOptions,
     ];
   }, [
     ruleOptions.activeRuleOptions,
     enhancementOptions.activeEnhancementRuleEffects,
     stratagemOptions.activeStratagemRuleEffects,
+    attackerUnitAbilityOptions.activeRuleOptions,
+    defenderUnitAbilityOptions.activeRuleOptions,
   ]);
 
   const attackerScopedModifierRules = useMemo(() => {
@@ -471,6 +512,7 @@ function App() {
               allActiveModifierRules={allActiveModifierRules}
               selectedWeapon={battleSetup.selectedWeapon}
               attacker={battleSetup.attacker}
+              defender={battleSetup.defender}
               availableDetachments={factionRules.availableDetachments}
               selectedDetachmentId={factionRules.selectedDetachmentId}
               setSelectedDetachmentId={factionRules.setSelectedDetachmentId}
@@ -484,6 +526,20 @@ function App() {
               toggleEnhancement={enhancementOptions.toggleEnhancement}
               activeStratagemIds={stratagemOptions.activeStratagemIds}
               toggleStratagem={stratagemOptions.toggleStratagem}
+              attackerUnitAbilityOptions={attackerUnitAbilityRuleOptions}
+              activeAttackerUnitAbilityIds={
+                attackerUnitAbilityOptions.activeRuleOptionIds
+              }
+              toggleAttackerUnitAbility={
+                attackerUnitAbilityOptions.toggleRuleOption
+              }
+              defenderUnitAbilityOptions={defenderUnitAbilityRuleOptions}
+              activeDefenderUnitAbilityIds={
+                defenderUnitAbilityOptions.activeRuleOptionIds
+              }
+              toggleDefenderUnitAbility={
+                defenderUnitAbilityOptions.toggleRuleOption
+              }
             />
           </div>
         </div>

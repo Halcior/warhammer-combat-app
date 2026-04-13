@@ -23,8 +23,10 @@ const baseConditions: AttackConditions = {
   isChargeTurn: false,
   isAttachedUnit: false,
   attackWithinObjectiveRange: false,
+  attackerWithinObjectiveRange: false,
   attackerDisembarkedThisTurn: false,
   attackerIsFiringOverwatch: false,
+  attackerIsAfflicted: false,
   attackerIsGuided: false,
   attackerIsVesselOfWrath: false,
   attackerWithinFriendlyCharacterRange: false,
@@ -33,6 +35,7 @@ const baseConditions: AttackConditions = {
   attackerSetUpThisTurn: false,
   attackerSetToDefend: false,
   targetIsClosestEligible: false,
+  targetWithinPlagueLegionsEngagementRange: false,
   targetIsAfflicted: false,
   targetWithinContagionRange: false,
   targetInOpponentDeploymentZone: false,
@@ -146,6 +149,11 @@ describe("ruleApplicability", () => {
       },
       {
         type: "REROLL_HITS",
+        attackType: "melee",
+        requiresTargetWithinPlagueLegionsEngagementRange: true,
+      },
+      {
+        type: "REROLL_HITS",
         requiresAttackerSetUpThisTurn: true,
       },
       {
@@ -239,6 +247,7 @@ describe("ruleApplicability", () => {
         attackerSetUpThisTurn: true,
         attackerSetToDefend: true,
         targetIsClosestEligible: true,
+        targetWithinPlagueLegionsEngagementRange: true,
         targetOppositeHatchway: true,
         targetIsSpotted: true,
         targetIsUnravelling: true,
@@ -247,7 +256,7 @@ describe("ruleApplicability", () => {
       },
     });
 
-    expect(activeRules).toHaveLength(18);
+    expect(activeRules).toHaveLength(19);
     expect(activeRules.map((rule) => rule.type)).toEqual([
       "REROLL_HITS",
       "REROLL_WOUNDS",
@@ -256,6 +265,7 @@ describe("ruleApplicability", () => {
       "IGNORES_COVER",
       "REROLL_WOUNDS_ONES",
       "AP_MODIFIER",
+      "REROLL_HITS",
       "REROLL_HITS",
       "REROLL_HITS",
       "FIXED_HIT_ROLL",
@@ -345,6 +355,36 @@ describe("ruleApplicability", () => {
     expect(inactiveRules).toEqual([]);
     expect(activeRules).toHaveLength(1);
     expect(activeRules[0].type).toBe("TARGETING_RANGE_LIMIT");
+  });
+
+  it("applies attacker-on-objective conditions only when the attacker is on an objective", () => {
+    const rules: SpecialRule[] = [
+      {
+        type: "REROLL_WOUNDS",
+        requiresAttackerWithinObjectiveRange: true,
+      },
+    ];
+
+    const inactiveRules = filterActiveRules(rules, {
+      attacker,
+      defender,
+      weapon,
+      conditions: baseConditions,
+    });
+
+    const activeRules = filterActiveRules(rules, {
+      attacker,
+      defender,
+      weapon,
+      conditions: {
+        ...baseConditions,
+        attackerWithinObjectiveRange: true,
+      },
+    });
+
+    expect(inactiveRules).toEqual([]);
+    expect(activeRules).toHaveLength(1);
+    expect(activeRules[0].type).toBe("REROLL_WOUNDS");
   });
 
   it("applies Kroot Raiding Party overwatch denial only during Overwatch", () => {
@@ -462,6 +502,37 @@ describe("ruleApplicability", () => {
     expect(withAffliction[0].type).toBe("REROLL_WOUNDS");
   });
 
+  it("applies afflicted-attacker conditions only when the attacker is afflicted", () => {
+    const rules: SpecialRule[] = [
+      {
+        type: "HIT_MODIFIER",
+        value: -1,
+        requiresAttackerIsAfflicted: true,
+      },
+    ];
+
+    const withoutAffliction = filterActiveRules(rules, {
+      attacker,
+      defender,
+      weapon,
+      conditions: baseConditions,
+    });
+
+    const withAffliction = filterActiveRules(rules, {
+      attacker,
+      defender,
+      weapon,
+      conditions: {
+        ...baseConditions,
+        attackerIsAfflicted: true,
+      },
+    });
+
+    expect(withoutAffliction).toEqual([]);
+    expect(withAffliction).toHaveLength(1);
+    expect(withAffliction[0].type).toBe("HIT_MODIFIER");
+  });
+
   it("applies contagion-range conditions only when the target is in contagion range", () => {
     const rules: SpecialRule[] = [
       {
@@ -527,6 +598,78 @@ describe("ruleApplicability", () => {
     expect(withoutDeploymentZone).toEqual([]);
     expect(withDeploymentZone).toHaveLength(1);
     expect(withDeploymentZone[0].type).toBe("REROLL_HITS");
+  });
+
+  it("applies weapon-name conditions only to matching weapon profiles", () => {
+    const rules: SpecialRule[] = [
+      {
+        type: "DAMAGE_MODIFIER",
+        value: 1,
+        attackType: "ranged",
+        requiresWeaponNameIncludes: ["plague wind"],
+      },
+    ];
+
+    const matchingWeapon: Weapon = {
+      ...weapon,
+      type: "ranged",
+      name: "Plague Wind",
+    };
+
+    const nonMatchingWeapon: Weapon = {
+      ...weapon,
+      type: "ranged",
+      name: "Rotwind",
+    };
+
+    const withoutMatch = filterActiveRules(rules, {
+      attacker,
+      defender,
+      weapon: nonMatchingWeapon,
+      conditions: baseConditions,
+    });
+
+    const withMatch = filterActiveRules(rules, {
+      attacker,
+      defender,
+      weapon: matchingWeapon,
+      conditions: baseConditions,
+    });
+
+    expect(withoutMatch).toEqual([]);
+    expect(withMatch).toHaveLength(1);
+    expect(withMatch[0].type).toBe("DAMAGE_MODIFIER");
+  });
+
+  it("applies Plague Legions engagement conditions only when the target is tied down", () => {
+    const rules: SpecialRule[] = [
+      {
+        type: "REROLL_HITS",
+        attackType: "melee",
+        requiresTargetWithinPlagueLegionsEngagementRange: true,
+      },
+    ];
+
+    const inactiveRules = filterActiveRules(rules, {
+      attacker,
+      defender,
+      weapon,
+      conditions: baseConditions,
+    });
+
+    const activeRules = filterActiveRules(rules, {
+      attacker,
+      defender,
+      weapon,
+      conditions: {
+        ...baseConditions,
+        targetWithinPlagueLegionsEngagementRange: true,
+      },
+    });
+
+    expect(inactiveRules).toEqual([]);
+    expect(activeRules).toHaveLength(1);
+    expect(activeRules[0].type).toBe("REROLL_HITS");
   });
 
   it("derives reroll modes from the active rule set", () => {

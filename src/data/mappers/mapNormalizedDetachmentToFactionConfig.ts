@@ -1067,6 +1067,50 @@ export function mapNormalizedDetachmentToEnhancements(
     }
 
     if (
+      detachment.id === "mortarion_s_hammer" &&
+      enhancementName.includes("tendrilous emissions")
+    ) {
+      return createImplementedEnhancement(enhancement, "shooting", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Tendrilous Emissions Effect",
+          description:
+            "Death Guard Vehicle ranged attacks re-roll wound rolls of 1 while the bearer is coordinating their fire.",
+          phase: "shooting",
+          modifiers: [
+            {
+              type: "REROLL_WOUNDS_ONES",
+              attackType: "ranged",
+              requiredAttackerKeywords: ["VEHICLE"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "death_lord_s_chosen" &&
+      enhancementName.includes("helm of the fly king")
+    ) {
+      return createImplementedEnhancement(enhancement, "any", [
+        createImplementedDefenderRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Helm of the Fly King Effect",
+          description:
+            "The bearer's unit can only be targeted by ranged attacks from within 18\".",
+          phase: "any",
+          modifiers: [
+            {
+              type: "TARGETING_RANGE_LIMIT",
+              value: 18,
+              attackType: "ranged",
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
       detachment.id === "tallyband_summoners" &&
       enhancementName.includes("fell harvester")
     ) {
@@ -1077,6 +1121,52 @@ export function mapNormalizedDetachmentToEnhancements(
           description: "The bearer's melee weapons gain +2 Attacks.",
           phase: "fight",
           modifiers: [{ type: "ATTACKS_MODIFIER", value: 2, attackType: "melee" }],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "shamblerot_vectorium" &&
+      enhancementName.includes("sorrowsyphon")
+    ) {
+      return createImplementedEnhancement(enhancement, "shooting", [
+        createImplementedRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Sorrowsyphon Effect",
+          description:
+            "The bearer's Plague Wind weapon gains +1 Damage.",
+          phase: "shooting",
+          modifiers: [
+            {
+              type: "DAMAGE_MODIFIER",
+              value: 1,
+              attackType: "ranged",
+              requiresWeaponNameIncludes: ["plague wind"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "shamblerot_vectorium" &&
+      enhancementName.includes("talisman of burgeoning")
+    ) {
+      return createImplementedEnhancement(enhancement, "any", [
+        createImplementedDefenderRuleOption({
+          id: `${enhancement.id}-effect`,
+          name: "Talisman of Burgeoning Effect",
+          description:
+            "While the bearer leads Poxwalkers, that unit gains +1 Toughness.",
+          phase: "any",
+          modifiers: [
+            {
+              type: "TOUGHNESS_MODIFIER",
+              value: 1,
+              requiresAttachedUnit: true,
+              requiredDefenderKeywords: ["POXWALKERS"],
+            },
+          ],
         }),
       ]);
     }
@@ -1148,7 +1238,7 @@ export function mapNormalizedDetachmentToEnhancements(
           modifiers: [
             {
               type: "REROLL_WOUNDS",
-              requiresTargetWithinObjectiveRange: true,
+              requiresAttackerWithinObjectiveRange: true,
             },
           ],
         }),
@@ -1891,6 +1981,29 @@ export function mapNormalizedDetachmentToStratagems(
 
     if (
       detachment.id === "flyblown_host" &&
+      stratagemName.includes("myphitic invigoration")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedDefenderRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Myphitic Invigoration Effect",
+          description:
+            "Death Guard Infantry defended by Myphitic support impose -1 to wound against attacks whose Strength exceeds their Toughness.",
+          phase,
+          modifiers: [
+            {
+              type: "WOUND_MODIFIER",
+              value: -1,
+              requiresAttackStrengthGreaterThanTargetToughness: true,
+              requiredDefenderKeywords: ["INFANTRY"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "flyblown_host" &&
       stratagemName.includes("droning horror")
     ) {
       return createImplementedStratagem(detachment, stratagem, phase, [
@@ -1956,6 +2069,63 @@ export function mapNormalizedDetachmentToStratagems(
     }
 
     if (
+      detachment.id === "death_lord_s_chosen" &&
+      stratagemName.includes("grim reapers")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Grim Reapers Effect",
+          description:
+            "Terminator melee attacks re-roll hit rolls against non-Monster, non-Vehicle targets.",
+          phase,
+          modifiers: [
+            {
+              type: "REROLL_HITS",
+              attackType: "melee",
+              requiredAttackerKeywords: ["TERMINATOR"],
+              excludedDefenderKeywords: ["MONSTER", "VEHICLE"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "death_lord_s_chosen" &&
+      stratagemName.includes("mortarion")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-assault-effect`,
+          name: "Mortarion's Teachings: Assault",
+          description: "Terminator ranged weapons gain Assault.",
+          phase,
+          modifiers: [
+            {
+              type: "ASSAULT",
+              attackType: "ranged",
+              requiredAttackerKeywords: ["TERMINATOR"],
+            },
+          ],
+        }),
+        createImplementedRuleOption({
+          id: `${stratagem.id}-heavy-effect`,
+          name: "Mortarion's Teachings: Heavy",
+          description: "Terminator ranged weapons gain Heavy.",
+          phase,
+          modifiers: [
+            {
+              type: "HEAVY",
+              attackType: "ranged",
+              requiredAttackerKeywords: ["TERMINATOR"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
       detachment.id === "mortarion_s_hammer" &&
       stratagemName.includes("font of filth")
     ) {
@@ -1970,6 +2140,28 @@ export function mapNormalizedDetachmentToStratagems(
               type: "ASSAULT",
               attackType: "ranged",
               requiredAttackerKeywords: ["VEHICLE"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "tallyband_summoners" &&
+      stratagemName.includes("clutching corruption")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Clutching Corruption Effect",
+          description:
+            "Death Guard melee attacks re-roll hits against enemies entangled by nearby Plague Legions.",
+          phase,
+          modifiers: [
+            {
+              type: "REROLL_HITS",
+              attackType: "melee",
+              requiresTargetWithinPlagueLegionsEngagementRange: true,
             },
           ],
         }),
@@ -1996,6 +2188,29 @@ export function mapNormalizedDetachmentToStratagems(
             },
             {
               type: "STRENGTH_MODIFIER",
+              value: 1,
+              attackType: "melee",
+              requiredAttackerKeywords: ["POXWALKERS"],
+            },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "unclean_uprising" &&
+      stratagemName.includes("pox flare")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Pox Flare Effect",
+          description:
+            "Poxwalkers melee weapons improve AP by 1 until the end of the phase.",
+          phase,
+          modifiers: [
+            {
+              type: "AP_MODIFIER",
               value: 1,
               attackType: "melee",
               requiredAttackerKeywords: ["POXWALKERS"],
@@ -2095,6 +2310,28 @@ export function mapNormalizedDetachmentToStratagems(
           phase,
           modifiers: [
             { type: "CRITICAL_HITS_ON", value: 5, requiresAttachedUnit: true },
+          ],
+        }),
+      ]);
+    }
+
+    if (
+      detachment.id === "champions_of_contagion" &&
+      stratagemName.includes("grotesque fortitude")
+    ) {
+      return createImplementedStratagem(detachment, stratagem, phase, [
+        createImplementedDefenderRuleOption({
+          id: `${stratagem.id}-effect`,
+          name: "Grotesque Fortitude Effect",
+          description:
+            "Attached Death Guard units gain +2 Toughness while they are being attacked.",
+          phase,
+          modifiers: [
+            {
+              type: "TOUGHNESS_MODIFIER",
+              value: 2,
+              requiresAttachedUnit: true,
+            },
           ],
         }),
       ]);

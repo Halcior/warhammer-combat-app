@@ -728,6 +728,8 @@ button:focus-visible,
 }
 
 .checkbox-row {
+  position: relative;
+  z-index: 0;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -746,9 +748,11 @@ button:focus-visible,
     background 0.14s ease,
     box-shadow 0.14s ease,
     color 0.14s ease;
+  overflow: visible;
 }
 
 .checkbox-row:hover {
+  z-index: 6;
   transform: translateY(-1px);
   border-color: rgba(242, 106, 27, 0.22);
   background: rgba(242, 106, 27, 0.055);
@@ -756,6 +760,7 @@ button:focus-visible,
 }
 
 .checkbox-row:has(input:checked) {
+  z-index: 4;
   border-color: rgba(242, 106, 27, 0.36);
   background:
     linear-gradient(180deg, rgba(242, 106, 27, 0.16), rgba(242, 106, 27, 0.06)),
@@ -764,6 +769,10 @@ button:focus-visible,
   box-shadow:
     inset 0 0 0 1px rgba(242, 106, 27, 0.08),
     0 12px 22px rgba(0, 0, 0, 0.18);
+}
+
+.checkbox-row:focus-within {
+  z-index: 7;
 }
 
 .checkbox-row input {
@@ -923,6 +932,8 @@ button:focus-visible,
   position: relative;
   display: inline-flex;
   min-width: 0;
+  isolation: isolate;
+  z-index: 2;
 }
 
 .hover-info__label {
@@ -937,7 +948,7 @@ button:focus-visible,
   position: absolute;
   left: 0;
   top: calc(100% + 10px);
-  z-index: 20;
+  z-index: 999;
   width: min(440px, 78vw);
   padding: 13px 14px;
   border-radius: 16px;
