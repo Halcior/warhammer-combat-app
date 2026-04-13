@@ -129,6 +129,9 @@ function ArmyBuilder({
   );
 
   function handleFactionChange(faction: string) {
+    if (state.units.length > 0) {
+      if (!confirm(`Changing faction will remove ${state.units.length} unit(s). Continue?`)) return;
+    }
     const newFactionUnits = unitsByFaction(faction);
     const firstUnit = newFactionUnits[0];
     setState((s) => ({
@@ -227,9 +230,21 @@ function ArmyBuilder({
               return (
                 <div key={idx} className="army-builder__unit-row">
                   <div className="army-builder__unit-info">
-                    <span className="army-builder__unit-name">
-                      {unit?.name ?? su.unitId}
-                    </span>
+                    <input
+                      className="army-builder__nickname-input"
+                      type="text"
+                      placeholder={unit?.name ?? su.unitId}
+                      value={su.nickname ?? ""}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setState((s) => ({
+                          ...s,
+                          units: s.units.map((u, i) =>
+                            i === idx ? { ...u, nickname: val || undefined } : u
+                          ),
+                        }));
+                      }}
+                    />
                     <span className="army-builder__unit-weapon">
                       {weapon?.name ?? su.selectedWeaponId}
                     </span>
@@ -245,6 +260,10 @@ function ArmyBuilder({
               );
             })}
           </div>
+        )}
+
+        {state.units.length === 0 && (
+          <p className="army-builder__units-hint">Add at least one unit to save this army.</p>
         )}
 
         <div className="army-builder__add-row">
@@ -301,7 +320,7 @@ function ArmyBuilder({
         <button
           className="army-builder__save-btn"
           onClick={handleSave}
-          disabled={!state.name.trim()}
+          disabled={!state.name.trim() || state.units.length === 0}
         >
           {initial ? "Save Changes" : "Create Army"}
         </button>

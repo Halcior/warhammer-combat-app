@@ -1,0 +1,267 @@
+import { useState, useRef } from "react";
+import { PageHeader } from "../PageHeader";
+import { SetupPanel } from "../SetupPanel";
+import { SimulationPanel } from "../SimulationPanel";
+import { ExpectedResultPanel } from "../ExpectedResultPanel";
+import { AttackBreakdownSourcesPanel } from "../AttackBreakdownSourcesPanel";
+import { CompareWeaponsPanel } from "../CompareWeaponsPanel";
+import { ModifiersPanel } from "../ModifiersPanel";
+import { StepIndicator } from "../onboarding/StepIndicator";
+import { QuickStart } from "../onboarding/QuickStart";
+import { ExampleResult } from "../onboarding/ExampleResult";
+import { WhatYouGet } from "../onboarding/WhatYouGet";
+import type { SimulationSummary } from "../../lib/combat/simulation/analyzeSimulation";
+import type { CalculationMode } from "../../lib/combat/simulation/runSimulationByMode";
+import type { DamageResult } from "../../types/combat";
+import type { BattleSetup } from "../../hooks/useBattleSetup";
+import type { AttackModifiers } from "../../hooks/useAttackModifiers";
+import type { FactionRules } from "../../hooks/useFactionRules";
+import type {
+  RuleOptionHook,
+  EnhancementOptionHook,
+  StratagemOptionHook,
+} from "../../hooks/useRuleOptions";
+import type { RuleOption } from "../../types/faction";
+import type { AttackBreakdownExplanation } from "../../lib/combat/explainAttackBreakdown";
+
+interface CalculatorPageProps {
+  battleSetup: BattleSetup;
+  attackModifiers: AttackModifiers;
+  factionRules: FactionRules;
+  ruleOptions: RuleOptionHook;
+  enhancementOptions: EnhancementOptionHook;
+  stratagemOptions: StratagemOptionHook;
+  expectedResult: DamageResult;
+  attackBreakdownExplanation: AttackBreakdownExplanation;
+  compareWeapon: typeof battleSetup.selectedWeapon;
+  compareResult: DamageResult;
+  attackerUnitAbilityRuleOptions: RuleOption[];
+  attackerUnitAbilityOptions: RuleOptionHook;
+  defenderUnitAbilityRuleOptions: RuleOption[];
+  defenderUnitAbilityOptions: RuleOptionHook;
+  attackerScopedModifierRules: ReturnType<typeof import("../../lib/combat").calculateExpectedDamage>;
+  defenderScopedModifierRules: ReturnType<typeof import("../../lib/combat").calculateExpectedDamage>;
+  mode: CalculationMode;
+  setMode: (mode: CalculationMode) => void;
+  runs: number;
+  setRuns: (runs: number) => void;
+  onRunSimulation: () => void;
+  simulationSummary: SimulationSummary | null;
+  simulationError: string | null;
+  isSimulationRunning: boolean;
+  compareWeaponId: string;
+  setCompareWeaponId: (id: string) => void;
+}
+
+export function CalculatorPage({
+  battleSetup,
+  factionRules,
+  expectedResult,
+  attackBreakdownExplanation,
+  compareWeapon,
+  compareResult,
+  attackModifiers,
+  ruleOptions,
+  enhancementOptions,
+  stratagemOptions,
+  attackerScopedModifierRules,
+  defenderScopedModifierRules,
+  mode,
+  setMode,
+  runs,
+  setRuns,
+  onRunSimulation,
+  simulationSummary,
+  simulationError,
+  isSimulationRunning,
+  compareWeaponId,
+  setCompareWeaponId,
+  attackerUnitAbilityOptions,
+  defenderUnitAbilityOptions,
+}: CalculatorPageProps) {
+  const [isLoadingExample, setIsLoadingExample] = useState(false);
+  const resultsRef = useRef<HTMLDivElement>(null);
+
+  const handleLoadExample = async () => {
+    setIsLoadingExample(true);
+    
+    // Simulate loading delay
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    
+    // Load example: Necron Warriors vs Space Marine Tactical Squad
+    const necronWarriors = battleSetup.attackerUnits.find(
+      (u) => u.name.includes("Necron") && u.name.includes("Warrior")
+    );
+    const spaceMarines = battleSetup.defenderUnits.find(
+      (u) => u.name.includes("Tactical")
+    );
+
+    if (necronWarriors && spaceMarines) {
+      battleSetup.handleAttackerChange(necronWarriors.id);
+      battleSetup.handleDefenderChange(spaceMarines.id);
+      
+      if (necronWarriors.weapons.length > 0) {
+        battleSetup.handleWeaponChange(necronWarriors.weapons[0].id);
+      }
+    }
+
+    setIsLoadingExample(false);
+
+    // Scroll to results
+    setTimeout(() => {
+      resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
+  };
+
+  // Determine current step based on selections
+  const currentStep = battleSetup.attackerId ? (battleSetup.conditions.battleRound ? 3 : 2) : (1 as const);
+
+  return (
+    <div className="calculator-page">
+      <PageHeader
+        title="Combat Calculator"
+        subtitle="Set up a matchup and analyze damage output"
+      />
+
+      {/* Quick Start & Example Preview */}
+      <div className="calculator-page__intro">
+        <QuickStart onLoadExample={handleLoadExample} isLoading={isLoadingExample} />
+        <ExampleResult />
+      </div>
+
+      {/* Step Indicator */}
+      <StepIndicator currentStep={currentStep} />
+
+      {/* Setup Form */}
+      <div className="calculator-page__setup-wrapper">
+        <SetupPanel
+        factions={battleSetup.factions}
+        attackerFaction={battleSetup.attackerFaction}
+        defenderFaction={battleSetup.defenderFaction}
+        attackerId={battleSetup.attackerId}
+        defenderId={battleSetup.defenderId}
+        weaponId={battleSetup.weaponId}
+        attackingModels={battleSetup.attackingModels}
+        defendingModels={battleSetup.defendingModels}
+        conditions={battleSetup.conditions}
+        attackerUnits={battleSetup.attackerUnits}
+        defenderUnits={battleSetup.defenderUnits}
+        attacker={battleSetup.attacker}
+        setAttackingModels={battleSetup.setAttackingModels}
+        setDefendingModels={battleSetup.setDefendingModels}
+        setConditions={battleSetup.setConditions}
+        handleAttackerFactionChange={battleSetup.handleAttackerFactionChange}
+        handleAttackerChange={battleSetup.handleAttackerChange}
+        handleWeaponChange={battleSetup.handleWeaponChange}
+        handleDefenderFactionChange={battleSetup.handleDefenderFactionChange}
+        handleDefenderChange={battleSetup.handleDefenderChange}
+      />
+      </div>
+
+      {/* What You Get Section */}
+      <WhatYouGet />
+
+      {/* Results Grid */}
+      <div className="calculator-page__results" ref={resultsRef}>
+        <div className="workspace-grid">
+        <div className="workspace-main">
+          <SimulationPanel
+            mode={mode}
+            setMode={setMode}
+            runs={runs}
+            setRuns={setRuns}
+            onRun={onRunSimulation}
+            summary={simulationSummary}
+            error={simulationError}
+            isRunning={isSimulationRunning}
+          />
+
+          <div className="analysis-grid">
+            <ExpectedResultPanel expectedResult={expectedResult} />
+            <AttackBreakdownSourcesPanel explanation={attackBreakdownExplanation} />
+          </div>
+
+          {battleSetup.attacker.weapons.length > 1 && (
+            <CompareWeaponsPanel
+              weaponA={battleSetup.selectedWeapon}
+              weaponB={compareWeapon}
+              compareWeaponId={compareWeaponId}
+              setCompareWeaponId={setCompareWeaponId}
+              availableWeapons={battleSetup.attacker.weapons}
+              resultA={expectedResult}
+              resultB={compareResult}
+            />
+          )}
+        </div>
+
+        <div className="workspace-sidebar">
+          <ModifiersPanel
+            activeAttackModifiers={attackModifiers.activeAttackModifiers}
+            setActiveAttackModifiers={attackModifiers.setActiveAttackModifiers}
+            attackerActiveModifierRules={attackerScopedModifierRules}
+            defenderActiveModifierRules={defenderScopedModifierRules}
+            selectedWeapon={battleSetup.selectedWeapon}
+            attacker={battleSetup.attacker}
+            defender={battleSetup.defender}
+            availableDetachments={factionRules.availableDetachments}
+            selectedDetachmentId={factionRules.selectedDetachmentId}
+            setSelectedDetachmentId={factionRules.setSelectedDetachmentId}
+            selectedDetachment={factionRules.selectedDetachment}
+            availableRuleOptions={factionRules.allAvailableRuleOptions}
+            activeRuleOptionIds={ruleOptions.activeRuleOptionIds}
+            toggleRuleOption={ruleOptions.toggleRuleOption}
+            stratagems={factionRules.stratagems}
+            enhancements={factionRules.enhancements}
+            activeEnhancementIds={enhancementOptions.activeEnhancementIds}
+            toggleEnhancement={enhancementOptions.toggleEnhancement}
+            activeStratagemIds={stratagemOptions.activeStratagemIds}
+            toggleStratagem={stratagemOptions.toggleStratagem}
+            attackerUnitAbilityOptions={[]}
+            activeAttackerUnitAbilityIds={attackerUnitAbilityOptions.activeRuleOptionIds}
+            toggleAttackerUnitAbility={attackerUnitAbilityOptions.toggleRuleOption}
+            defenderUnitAbilityOptions={[]}
+            activeDefenderUnitAbilityIds={defenderUnitAbilityOptions.activeRuleOptionIds}
+            toggleDefenderUnitAbility={defenderUnitAbilityOptions.toggleRuleOption}
+          />
+        </div>
+      </div>
+      </div>
+
+      <section className="calculator-page__info">
+        <article className="info-card" id="docs">
+          <span className="info-card__label">Docs</span>
+          <p>
+            Breakdown traces and rule tooltips keep the combat logic readable
+            inside the app.
+          </p>
+        </article>
+
+        <article className="info-card">
+          <span className="info-card__label">Sources</span>
+          <p>
+            Use Wahapedia as a quick external rules reference when you want to
+            cross-check wording while building a matchup.
+          </p>
+          <div className="info-card__actions">
+            <a
+              className="inline-link"
+              href="https://wahapedia.ru/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open Wahapedia
+            </a>
+          </div>
+        </article>
+
+        <article className="info-card" id="pricing">
+          <span className="info-card__label">Pricing</span>
+          <p>
+            The current focus is a strong core calculator, with room for
+            future premium flows like saved scenarios and team presets.
+          </p>
+        </article>
+      </section>
+    </div>
+  );
+}

@@ -1,6 +1,7 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { units } from "../data/units";
 import type { AttackConditions } from "../types/combat";
+import { loadBattleSetup, saveBattleSetup } from "../lib/storage/uiStorage";
 
 export function useBattleSetup() {
   const initialConditions: AttackConditions = {
@@ -49,31 +50,87 @@ export function useBattleSetup() {
     attackerIsIsolated: false,
   };
 
+  const saved = loadBattleSetup();
+
   const factions = [...new Set(units.map((unit) => unit.faction))];
 
-  const initialAttackerFaction = units[0].faction;
-  const initialAttackerUnits = units.filter(
-    (unit) => unit.faction === initialAttackerFaction
-  );
-  const initialAttacker = initialAttackerUnits[0];
+  // ── Attacker initial values ───────────────────────────────────────────────
 
-  const initialDefenderFaction = units[1]?.faction ?? units[0].faction;
-  const initialDefenderUnits = units.filter(
-    (unit) => unit.faction === initialDefenderFaction
-  );
-  const initialDefender = initialDefenderUnits[0];
+  const initialAttackerFaction = (() => {
+    if (saved.attackerFaction && units.some(u => u.faction === saved.attackerFaction)) {
+      return saved.attackerFaction;
+    }
+    return units[0].faction;
+  })();
+
+  const initialAttackerUnits = units.filter(u => u.faction === initialAttackerFaction);
+
+  const initialAttackerId = (() => {
+    if (saved.attackerId) {
+      const match = initialAttackerUnits.find(u => u.id === saved.attackerId);
+      if (match) return match.id;
+    }
+    return initialAttackerUnits[0].id;
+  })();
+
+  const initialAttacker = initialAttackerUnits.find(u => u.id === initialAttackerId) ?? initialAttackerUnits[0];
+
+  const initialWeaponId = (() => {
+    if (saved.weaponId) {
+      const match = initialAttacker.weapons.find(w => w.id === saved.weaponId);
+      if (match) return match.id;
+    }
+    return initialAttacker.weapons[0].id;
+  })();
+
+  // ── Defender initial values ───────────────────────────────────────────────
+
+  const initialDefenderFaction = (() => {
+    if (saved.defenderFaction && units.some(u => u.faction === saved.defenderFaction)) {
+      return saved.defenderFaction;
+    }
+    return units[1]?.faction ?? units[0].faction;
+  })();
+
+  const initialDefenderUnits = units.filter(u => u.faction === initialDefenderFaction);
+
+  const initialDefenderId = (() => {
+    if (saved.defenderId) {
+      const match = initialDefenderUnits.find(u => u.id === saved.defenderId);
+      if (match) return match.id;
+    }
+    return initialDefenderUnits[0].id;
+  })();
+
+  // ── State ─────────────────────────────────────────────────────────────────
 
   const [attackerFaction, setAttackerFaction] = useState(initialAttackerFaction);
   const [defenderFaction, setDefenderFaction] = useState(initialDefenderFaction);
 
-  const [attackerId, setAttackerId] = useState(initialAttacker.id);
-  const [defenderId, setDefenderId] = useState(initialDefender.id);
-  const [weaponId, setWeaponId] = useState(initialAttacker.weapons[0].id);
+  const [attackerId, setAttackerId] = useState(initialAttackerId);
+  const [defenderId, setDefenderId] = useState(initialDefenderId);
+  const [weaponId, setWeaponId] = useState(initialWeaponId);
 
-  const [attackingModels, setAttackingModels] = useState(1);
-  const [defendingModels, setDefendingModels] = useState(10);
+  const [attackingModels, setAttackingModels] = useState(saved.attackingModels ?? 1);
+  const [defendingModels, setDefendingModels] = useState(saved.defendingModels ?? 10);
 
   const [conditions, setConditions] = useState<AttackConditions>(initialConditions);
+
+  // ── Persist on change ─────────────────────────────────────────────────────
+
+  useEffect(() => {
+    saveBattleSetup({
+      attackerFaction,
+      attackerId,
+      weaponId,
+      defenderFaction,
+      defenderId,
+      attackingModels,
+      defendingModels,
+    });
+  }, [attackerFaction, attackerId, weaponId, defenderFaction, defenderId, attackingModels, defendingModels]);
+
+  // ── Derived ───────────────────────────────────────────────────────────────
 
   const attackerUnits = useMemo(() => {
     return units.filter((unit) => unit.faction === attackerFaction);
@@ -92,6 +149,8 @@ export function useBattleSetup() {
   const selectedWeapon =
     attacker.weapons.find((weapon) => weapon.id === weaponId) ??
     attacker.weapons[0];
+
+  // ── Handlers ──────────────────────────────────────────────────────────────
 
   function handleAttackerFactionChange(newFaction: string) {
     const newAttackerUnits = units.filter((unit) => unit.faction === newFaction);

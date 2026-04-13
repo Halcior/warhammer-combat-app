@@ -55,6 +55,23 @@ export function deleteArmy(id: string): void {
   persistAll(loadArmies().filter((a) => a.id !== id));
 }
 
+function makeCopyName(name: string): string {
+  // Strip existing " (copy)" or " (copy N)" suffix
+  const base = name.replace(/ \(copy(?: \d+)?\)$/, "").trim();
+  // Check if any army already uses this base to pick the right number
+  const armies = loadArmies();
+  const pattern = new RegExp(`^${base.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")} \\(copy(?: (\\d+))?\\)$`);
+  const existingNumbers = armies
+    .map((a) => {
+      const m = a.name.match(pattern);
+      return m ? (m[1] ? parseInt(m[1]) : 1) : null;
+    })
+    .filter((n): n is number => n !== null);
+  if (existingNumbers.length === 0) return `${base} (copy)`;
+  const max = Math.max(...existingNumbers);
+  return `${base} (copy ${max + 1})`;
+}
+
 export function duplicateArmy(id: string): ArmyPreset | null {
   const armies = loadArmies();
   const source = armies.find((a) => a.id === id);
@@ -63,7 +80,7 @@ export function duplicateArmy(id: string): ArmyPreset | null {
   const copy: ArmyPreset = {
     ...source,
     id: `army_${now}_${Math.random().toString(36).slice(2, 7)}`,
-    name: `${source.name} (copy)`,
+    name: makeCopyName(source.name),
     createdAt: now,
     updatedAt: now,
   };

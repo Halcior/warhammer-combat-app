@@ -90,7 +90,7 @@ function WorkspaceArmyPanel({
         </div>
       ) : (
         <div className="workspace-army-panel__no-army">
-          <p>Load an army preset above, or use the dropdowns below.</p>
+          <p>Load an army preset from the dropdown, or go to <strong>My Armies</strong> to create one.</p>
         </div>
       )}
     </div>
