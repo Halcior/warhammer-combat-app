@@ -79,6 +79,17 @@ function dedupeStrings(values) {
   return [...new Set(values.filter(Boolean))];
 }
 
+function inferModelCountFromCostDescription(description) {
+  const matches = String(description || "").match(/\d+/g);
+
+  if (!matches || matches.length === 0) {
+    return undefined;
+  }
+
+  const total = matches.reduce((sum, value) => sum + Number(value), 0);
+  return total > 0 ? total : undefined;
+}
+
 function normalizeWeaponType(rangeValue, typeValue) {
   const range = String(rangeValue || "").toLowerCase();
   const type = String(typeValue || "").toLowerCase();
@@ -227,6 +238,7 @@ function main() {
   const keywords = readPipeCsv("Datasheets_keywords.csv");
   const abilities = readPipeCsv("Datasheets_abilities.csv");
   const abilitiesIndex = readPipeCsv("Abilities.csv");
+  const unitCosts = readPipeCsv("Datasheets_models_cost.csv");
 
   const factionById = buildFactionMap(factions);
   const abilityById = buildAbilityMap(abilitiesIndex);
@@ -234,6 +246,7 @@ function main() {
   const wargearByDatasheet = groupBy(wargear, "datasheet_id");
   const keywordsByDatasheet = groupBy(keywords, "datasheet_id");
   const abilitiesByDatasheet = groupBy(abilities, "datasheet_id");
+  const costsByDatasheet = groupBy(unitCosts, "datasheet_id");
 
   const normalizedFactions = [...factionById.values()].sort((a, b) =>
     a.name.localeCompare(b.name)
@@ -249,6 +262,15 @@ function main() {
       );
       const keywordRows = keywordsByDatasheet.get(sheet.id) ?? [];
       const abilityRows = abilitiesByDatasheet.get(sheet.id) ?? [];
+      const costRows = costsByDatasheet.get(sheet.id) ?? [];
+      const pointsOptions = costRows
+        .map((row) => ({
+          description: row.description || "",
+          cost: toNumber(row.cost, 0),
+          modelCount: inferModelCountFromCostDescription(row.description),
+        }))
+        .filter((row) => row.cost > 0);
+      const primaryPointsOption = pointsOptions[0];
 
       return {
         id: sanitizeId(sheet.name),
@@ -263,6 +285,9 @@ function main() {
         abilities: abilityRows.map((row, index) =>
           buildAbilityProfile(sheet.name, row, abilityById, index)
         ),
+        points: primaryPointsOption?.cost,
+        pointsDescription: primaryPointsOption?.description,
+        pointsOptions,
       };
     })
     .filter((unit) => unit.models.length > 0)

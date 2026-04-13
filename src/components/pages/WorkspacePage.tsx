@@ -8,8 +8,8 @@ import type { ArmyPreset } from "../../types/army";
 import type { AttackConditions } from "../../types/combat";
 import type { SimulationSummary } from "../../lib/combat/simulation/analyzeSimulation";
 import type { CalculationMode } from "../../lib/combat/simulation/runSimulationByMode";
-import type { DamageResult } from "../../types/combat";
 import type { AttackBreakdownExplanation } from "../../lib/combat/explainAttackBreakdown";
+import type { ExpectedDamageResult } from "../../lib/combat/types";
 
 interface WorkspacePageProps {
   armies: ArmyPreset[];
@@ -24,7 +24,7 @@ interface WorkspacePageProps {
   selectAttacker: (faction: string, unitId: string, weaponId: string) => void;
   selectDefender: (faction: string, unitId: string) => void;
   // Calculation props
-  expectedResult: DamageResult;
+  expectedResult: ExpectedDamageResult;
   attackBreakdownExplanation: AttackBreakdownExplanation;
   mode: CalculationMode;
   setMode: (mode: CalculationMode) => void;
@@ -43,8 +43,8 @@ interface WorkspacePageProps {
   attacker: any;
   defender: any;
   availableDetachments: any;
-  selectedDetachmentId: string | null;
-  setSelectedDetachmentId: (id: string | null) => void;
+  selectedDetachmentId: string;
+  setSelectedDetachmentId: React.Dispatch<React.SetStateAction<string>>;
   selectedDetachment: any;
   availableRuleOptions: any;
   activeRuleOptionIds: string[];

@@ -4,12 +4,6 @@ import appLogo from "./assets/Nowe_LogoPNG.png";
 import { calculateExpectedDamage } from "./lib/combat";
 import { runSimulationByMode } from "./lib/combat/simulation/runSimulationByMode";
 
-import { SetupPanel } from "./components/SetupPanel";
-import { ModifiersPanel } from "./components/ModifiersPanel";
-import { ExpectedResultPanel } from "./components/ExpectedResultPanel";
-import { CompareWeaponsPanel } from "./components/CompareWeaponsPanel";
-import { SimulationPanel } from "./components/SimulationPanel";
-
 import { useBattleSetup } from "./hooks/useBattleSetup";
 import { useAttackModifiers } from "./hooks/useAttackModifiers";
 import { useFactionRules } from "./hooks/useFactionRules";
@@ -24,12 +18,7 @@ import type { CalculationMode } from "./lib/combat/simulation/runSimulationByMod
 import type { RuleOption } from "./types/faction";
 
 import { explainAttackBreakdown } from "./lib/combat/explainAttackBreakdown";
-import { AttackBreakdownSourcesPanel } from "./components/AttackBreakdownSourcesPanel";
-
-import { AppNav } from "./components/AppNav";
 import type { AppView } from "./components/AppNav";
-import { ArmiesView } from "./components/ArmiesView";
-import { WorkspaceView } from "./components/WorkspaceView";
 import { useArmyPresets } from "./hooks/useArmyPresets";
 import { loadUISession, saveUISession } from "./lib/storage/uiStorage";
 
@@ -222,6 +211,57 @@ function App() {
     defenderScopedModifierRules,
   ]);
 
+  const simulationInputSignature = useMemo(() => {
+    return JSON.stringify({
+      mode,
+      runs,
+      attackerId: battleSetup.attacker.id,
+      defenderId: battleSetup.defender.id,
+      weaponId: battleSetup.selectedWeapon.id,
+      compareWeaponId: compareWeapon.id,
+      attackingModels: battleSetup.attackingModels,
+      defendingModels: battleSetup.defendingModels,
+      defenderWoundsPerModel: battleSetup.defender.woundsPerModel,
+      conditions: battleSetup.conditions,
+      attackerRules: attackerScopedModifierRules,
+      defenderRules: defenderScopedModifierRules,
+      expectedDamage: {
+        totalAttacks: expectedResult.totalAttacks,
+        hitTarget: expectedResult.hitTarget,
+        woundTarget: expectedResult.woundTarget,
+        saveTarget: expectedResult.saveTarget,
+        expectedHits: expectedResult.expectedHits,
+        expectedWounds: expectedResult.expectedWounds,
+        expectedUnsavedWounds: expectedResult.expectedUnsavedWounds,
+        expectedDamage: expectedResult.expectedDamage,
+        expectedSlainModels: expectedResult.expectedSlainModels,
+        attacksPerModel: expectedResult.attacksPerModel,
+        damagePerFailedSave: expectedResult.damagePerFailedSave,
+        blastBonus: expectedResult.blastBonus,
+        criticalHits: expectedResult.criticalHits,
+        extraHitsFromSustained: expectedResult.extraHitsFromSustained,
+        autoWoundsFromLethalHits: expectedResult.autoWoundsFromLethalHits,
+        criticalWoundsFromRolls: expectedResult.criticalWoundsFromRolls,
+        mortalWoundsFromDevastating: expectedResult.mortalWoundsFromDevastating,
+        effectiveAp: expectedResult.effectiveAp,
+      },
+    });
+  }, [
+    mode,
+    runs,
+    battleSetup.attacker.id,
+    battleSetup.defender.id,
+    battleSetup.selectedWeapon.id,
+    compareWeapon.id,
+    battleSetup.attackingModels,
+    battleSetup.defendingModels,
+    battleSetup.defender.woundsPerModel,
+    battleSetup.conditions,
+    attackerScopedModifierRules,
+    defenderScopedModifierRules,
+    expectedResult,
+  ]);
+
   const handleRunSimulation = () => {
     setSimulationRefreshKey((current) => current + 1);
   };
@@ -275,21 +315,7 @@ function App() {
       isCancelled = true;
       window.clearTimeout(timeoutId);
     };
-  }, [
-    mode,
-    runs,
-    expectedResult,
-    battleSetup.selectedWeapon,
-    battleSetup.defender.woundsPerModel,
-    battleSetup.defendingModels,
-    battleSetup.attacker,
-    battleSetup.defender,
-    battleSetup.attackingModels,
-    battleSetup.conditions,
-    attackerScopedModifierRules,
-    defenderScopedModifierRules,
-    simulationRefreshKey,
-  ]);
+  }, [simulationInputSignature, simulationRefreshKey]);
 
   return (
     <div className="app">

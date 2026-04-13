@@ -1,10 +1,10 @@
 import { useState } from "react";
-import type { ArmyPresetV2 } from "../../types/armyPreset";
+import type { ArmyPresetV2, PointsBreakdownItem } from "../../types/armyPreset";
 import { getPointsStatusColor, formatPoints } from "../../lib/presetUtils";
 
 interface PointsSummarySectionProps {
   preset: ArmyPresetV2;
-  breakdown: Array<{ unitName: string; points: number }>;
+  breakdown: PointsBreakdownItem[];
 }
 
 export function PointsSummarySection({ preset, breakdown }: PointsSummarySectionProps) {
@@ -59,7 +59,13 @@ export function PointsSummarySection({ preset, breakdown }: PointsSummarySection
               {breakdown.map((item, idx) => (
                 <div key={idx} className="points-summary__item">
                   <span className="points-summary__item-name">{item.unitName}</span>
-                  <span className="points-summary__item-points">{formatPoints(item.points)}</span>
+                  <span className="points-summary__item-points">
+                    {formatPoints(
+                      item.unitTotalPoints +
+                        (item.leaderPoints ?? 0) +
+                        (item.enhancementPoints ?? 0)
+                    )}
+                  </span>
                 </div>
               ))}
               <div className="points-summary__divider" />

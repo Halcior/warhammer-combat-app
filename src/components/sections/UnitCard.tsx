@@ -1,6 +1,10 @@
 import { useState } from "react";
 import type { SavedUnitInPreset } from "../../types/armyPreset";
 import type { Unit } from "../../types/combat";
+import {
+  calculateUnitTotalPointsFromDefinition,
+  getEstimatedPointsPerModel,
+} from "../../lib/presetUtils";
 
 interface UnitCardProps {
   unit: SavedUnitInPreset;
@@ -23,6 +27,25 @@ export function UnitCard({
 }: UnitCardProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [localUnit, setLocalUnit] = useState<SavedUnitInPreset>(unit);
+  const rangedWeapons = unitDefinition.weapons.filter((weapon) => weapon.type === "ranged");
+  const meleeWeapons = unitDefinition.weapons.filter((weapon) => weapon.type === "melee");
+  const selectedRangedWeapon =
+    rangedWeapons.find((weapon) => weapon.id === unit.selectedRangedWeaponId) ?? rangedWeapons[0];
+  const selectedMeleeWeapon =
+    meleeWeapons.find((weapon) => weapon.id === unit.selectedMeleeWeaponId) ?? meleeWeapons[0];
+
+  function syncLocalUnit(
+    updates: Partial<SavedUnitInPreset>,
+    nextModelCount = updates.modelCount ?? localUnit.modelCount
+  ) {
+    const nextUnit: SavedUnitInPreset = {
+      ...localUnit,
+      ...updates,
+      pointsPerModel: getEstimatedPointsPerModel(unitDefinition),
+      unitTotalPoints: calculateUnitTotalPointsFromDefinition(unitDefinition, nextModelCount),
+    };
+    setLocalUnit(nextUnit);
+  }
 
   if (isEditing) {
     return (
@@ -49,33 +72,61 @@ export function UnitCard({
               value={localUnit.modelCount}
               onChange={(e) => {
                 const count = Math.max(1, Math.min(100, parseInt(e.target.value) || 1));
-                setLocalUnit({
-                  ...localUnit,
-                  modelCount: count,
-                  unitTotalPoints: count * localUnit.pointsPerModel,
-                });
+                syncLocalUnit({ modelCount: count }, count);
               }}
               className="form-input"
             />
           </div>
 
-          {/* Weapon */}
-          <div className="form-field">
-            <label className="form-label">Weapon *</label>
-            <select
-              value={localUnit.selectedWeaponId}
-              onChange={(e) =>
-                setLocalUnit({ ...localUnit, selectedWeaponId: e.target.value })
-              }
-              className="form-select"
-            >
-              {unitDefinition.weapons.map((weapon) => (
-                <option key={weapon.id} value={weapon.id}>
-                  {weapon.name}
-                </option>
-              ))}
-            </select>
-          </div>
+          {rangedWeapons.length > 0 && (
+            <div className="form-field">
+              <label className="form-label">Ranged Weapon</label>
+              <select
+                value={localUnit.selectedRangedWeaponId ?? rangedWeapons[0]?.id ?? ""}
+                onChange={(e) =>
+                  syncLocalUnit({
+                    selectedRangedWeaponId: e.target.value || undefined,
+                    selectedWeaponId:
+                      e.target.value ||
+                      localUnit.selectedMeleeWeaponId ||
+                      localUnit.selectedWeaponId,
+                  })
+                }
+                className="form-select"
+              >
+                {rangedWeapons.map((weapon) => (
+                  <option key={weapon.id} value={weapon.id}>
+                    {weapon.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {meleeWeapons.length > 0 && (
+            <div className="form-field">
+              <label className="form-label">Melee Weapon</label>
+              <select
+                value={localUnit.selectedMeleeWeaponId ?? meleeWeapons[0]?.id ?? ""}
+                onChange={(e) =>
+                  syncLocalUnit({
+                    selectedMeleeWeaponId: e.target.value || undefined,
+                    selectedWeaponId:
+                      localUnit.selectedRangedWeaponId ||
+                      e.target.value ||
+                      localUnit.selectedWeaponId,
+                  })
+                }
+                className="form-select"
+              >
+                {meleeWeapons.map((weapon) => (
+                  <option key={weapon.id} value={weapon.id}>
+                    {weapon.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           {/* Leader */}
           <div className="form-field">
@@ -125,7 +176,7 @@ export function UnitCard({
           <div className="unit-card__points-display">
             <div className="unit-card__points-row">
               <span>Unit Points:</span>
-              <span>{localUnit.unitTotalPoints} pts</span>
+              <span>{localUnit.unitTotalPoints > 0 ? `${localUnit.unitTotalPoints} pts` : "Unavailable"}</span>
             </div>
             {localUnit.leaderAttachedId && (
               <div className="unit-card__points-row">
@@ -182,7 +233,7 @@ export function UnitCard({
     );
   }
 
-  const selectedWeapon = unitDefinition.weapons.find((w) => w.id === unit.selectedWeaponId);
+  const fallbackWeapon = unitDefinition.weapons.find((w) => w.id === unit.selectedWeaponId);
 
   return (
     <div className="unit-card">
@@ -190,13 +241,16 @@ export function UnitCard({
         <div className="unit-card__info">
           <h4 className="unit-card__title">{unit.nickname || unitDefinition.name}</h4>
           <p className="unit-card__subtitle">
-            {unit.modelCount} Models | {unit.unitTotalPoints} pts
+            {unit.modelCount} Models | {unit.unitTotalPoints > 0 ? `${unit.unitTotalPoints} pts` : unitDefinition.points ? `Starts at ${unitDefinition.points} pts` : "Points unavailable"}
           </p>
         </div>
         <div className="unit-card__actions-compact">
           <button
             className="unit-card__btn unit-card__btn--compact"
-            onClick={() => setIsEditing(true)}
+            onClick={() => {
+              setLocalUnit(unit);
+              setIsEditing(true);
+            }}
             title="Edit unit"
           >
             Edit
@@ -219,10 +273,32 @@ export function UnitCard({
       </div>
 
       <div className="unit-card__details">
-        <p className="unit-card__detail">
-          <span className="unit-card__detail-label">Weapon:</span>
-          <span className="unit-card__detail-value">{selectedWeapon?.name ?? "Unknown"}</span>
-        </p>
+        {selectedRangedWeapon && (
+          <p className="unit-card__detail">
+            <span className="unit-card__detail-label">Ranged:</span>
+            <span className="unit-card__detail-value">{selectedRangedWeapon.name}</span>
+          </p>
+        )}
+        {selectedMeleeWeapon && (
+          <p className="unit-card__detail">
+            <span className="unit-card__detail-label">Melee:</span>
+            <span className="unit-card__detail-value">{selectedMeleeWeapon.name}</span>
+          </p>
+        )}
+        {!selectedRangedWeapon && !selectedMeleeWeapon && (
+          <p className="unit-card__detail">
+            <span className="unit-card__detail-label">Weapon:</span>
+            <span className="unit-card__detail-value">{fallbackWeapon?.name ?? "Unknown"}</span>
+          </p>
+        )}
+        {unitDefinition.points && (
+          <p className="unit-card__detail">
+            <span className="unit-card__detail-label">Datasheet cost:</span>
+            <span className="unit-card__detail-value">
+              {unitDefinition.points} pts{unitDefinition.pointsDescription ? ` (${unitDefinition.pointsDescription})` : ""}
+            </span>
+          </p>
+        )}
         {unit.leaderAttachedId && (
           <p className="unit-card__detail">
             <span className="unit-card__detail-label">Leader:</span>

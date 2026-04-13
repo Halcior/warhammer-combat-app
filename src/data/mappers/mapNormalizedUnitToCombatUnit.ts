@@ -25,6 +25,9 @@ export function mapNormalizedUnitToCombatUnit(unit: NormalizedUnit): Unit {
     specialRules: [],
     abilities: unit.abilities.flatMap((ability) => mapAbility(unit, ability)),
     keywords: unit.keywords,
+    points: unit.points,
+    pointsDescription: unit.pointsDescription,
+    pointsOptions: unit.pointsOptions,
   };
 }
 
@@ -313,6 +316,50 @@ function parseContextualAbilityRules(
         rules.push({
           type: "ATTACKS_MODIFIER",
           value: targetAttacks - baseAttacks,
+          attackType: referencedWeapon.type,
+          requiresWeaponNameIncludes: getWeaponNameSnippets(referencedWeapon.name),
+        });
+      }
+    }
+  }
+
+  const strengthCharacteristicMatch = normalizedDescription.match(
+    /strength characteristic of (\d+)/
+  );
+
+  if (strengthCharacteristicMatch) {
+    const targetStrength = Number(strengthCharacteristicMatch[1]);
+    const referencedWeapon = findReferencedWeapon(unit, normalizedDescription);
+
+    if (referencedWeapon) {
+      const delta = targetStrength - referencedWeapon.strength;
+
+      if (delta !== 0) {
+        rules.push({
+          type: "STRENGTH_MODIFIER",
+          value: delta,
+          attackType: referencedWeapon.type,
+          requiresWeaponNameIncludes: getWeaponNameSnippets(referencedWeapon.name),
+        });
+      }
+    }
+  }
+
+  const damageCharacteristicMatch = normalizedDescription.match(
+    /damage characteristic of (\d+)/
+  );
+
+  if (damageCharacteristicMatch) {
+    const targetDamage = Number(damageCharacteristicMatch[1]);
+    const referencedWeapon = findReferencedWeapon(unit, normalizedDescription);
+
+    if (referencedWeapon && typeof referencedWeapon.damage === "number") {
+      const delta = targetDamage - referencedWeapon.damage;
+
+      if (delta !== 0) {
+        rules.push({
+          type: "DAMAGE_MODIFIER",
+          value: delta,
           attackType: referencedWeapon.type,
           requiresWeaponNameIncludes: getWeaponNameSnippets(referencedWeapon.name),
         });

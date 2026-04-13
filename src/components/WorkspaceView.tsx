@@ -9,7 +9,6 @@ function unitById(unitId: string) {
   return units.find((u) => u.id === unitId) ?? null;
 }
 
-const allFactions = [...new Set(units.map((u) => u.faction))].sort();
 
 // ── Army Panel ────────────────────────────────────────────────────────────────
 

@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import type { ArmyPresetV2, SavedUnitInPreset } from "../../types/armyPreset";
 import type { Unit } from "../../types/combat";
 import {
@@ -9,6 +9,9 @@ import {
   removeUnitFromPreset,
   updateUnitInPreset,
   duplicateUnitInPreset,
+  calculateUnitTotalPointsFromDefinition,
+  getEstimatedPointsPerModel,
+  formatUnitPointsOptionsSummary,
 } from "../../lib/presetUtils";
 import { ArmyHeaderSection } from "./ArmyHeaderSection";
 import { PointsSummarySection } from "./PointsSummarySection";
@@ -30,6 +33,18 @@ interface ArmyBuilderProps {
   availableUnits: Unit[];
   availableLeaders: Unit[];
   availableEnhancements: Enhancement[];
+}
+
+function getDefaultWeaponSelections(unitDefinition: Unit) {
+  const rangedWeapon = unitDefinition.weapons.find((weapon) => weapon.type === "ranged");
+  const meleeWeapon = unitDefinition.weapons.find((weapon) => weapon.type === "melee");
+  const primaryWeaponId = rangedWeapon?.id ?? meleeWeapon?.id ?? unitDefinition.weapons[0]?.id ?? "";
+
+  return {
+    selectedWeaponId: primaryWeaponId,
+    selectedRangedWeaponId: rangedWeapon?.id,
+    selectedMeleeWeaponId: meleeWeapon?.id,
+  };
 }
 
 export function ArmyBuilder({
@@ -55,12 +70,31 @@ export function ArmyBuilder({
       updatedAt: Date.now(),
     }
   );
+  const [unitToAddId, setUnitToAddId] = useState("");
+  const factionScopedUnits = useMemo(
+    () => availableUnits.filter((unit) => !preset.faction || unit.faction === preset.faction),
+    [availableUnits, preset.faction]
+  );
+
+  useEffect(() => {
+    if (factionScopedUnits.length === 0) {
+      if (unitToAddId !== "") {
+        setUnitToAddId("");
+      }
+      return;
+    }
+
+    if (!unitToAddId || !factionScopedUnits.some((unit) => unit.id === unitToAddId)) {
+      setUnitToAddId(factionScopedUnits[0].id);
+    }
+  }, [factionScopedUnits, unitToAddId]);
 
   const validation = useMemo(() => validateArmyPreset(preset), [preset]);
   const breakdown = useMemo(
     () => generatePointsBreakdown(preset, unitDefinitions),
     [preset, unitDefinitions]
   );
+  const unitToAdd = factionScopedUnits.find((unit) => unit.id === unitToAddId);
 
   const handleSave = () => {
     if (validation.isValid) {
@@ -76,16 +110,19 @@ export function ArmyBuilder({
   const handleAddUnit = (unitId: string) => {
     const unitDef = unitDefinitions.get(unitId);
     if (!unitDef) return;
+    const weaponSelections = getDefaultWeaponSelections(unitDef);
+    const modelCount = unitDef.pointsOptions?.[0]?.modelCount ?? 1;
+    const pointsPerModel = getEstimatedPointsPerModel(unitDef);
 
     const newUnit: SavedUnitInPreset = {
       unitId,
       nickname: unitDef.name,
-      modelCount: 1,
-      selectedWeaponId: unitDef.weapons[0]?.id || "",
+      modelCount,
+      ...weaponSelections,
       leaderAttachedId: undefined,
       enhancementId: undefined,
-      pointsPerModel: unitDef.cost || 0,
-      unitTotalPoints: unitDef.cost || 0,
+      pointsPerModel,
+      unitTotalPoints: calculateUnitTotalPointsFromDefinition(unitDef, modelCount),
       leaderPointsCost: 0,
       enhancementPointsCost: 0,
       notes: "",
@@ -169,9 +206,11 @@ export function ArmyBuilder({
           <button
             className="button-link button-link--primary"
             onClick={() => {
-              // For now, show available units dropdown
-              // This will be replaced with a proper unit picker modal
+              if (unitToAddId) {
+                handleAddUnit(unitToAddId);
+              }
             }}
+            disabled={!unitToAddId}
           >
             + Add Unit
           </button>
@@ -180,7 +219,17 @@ export function ArmyBuilder({
         {preset.units.length === 0 ? (
           <div className="army-builder__empty">
             <p className="army-builder__empty-text">No units added yet</p>
-            <button className="button-link button-link--primary">Add Units to Start</button>
+            <button
+              className="button-link button-link--primary"
+              onClick={() => {
+                if (unitToAddId) {
+                  handleAddUnit(unitToAddId);
+                }
+              }}
+              disabled={!unitToAddId}
+            >
+              Add Units to Start
+            </button>
           </div>
         ) : (
           <div className="army-builder__units-list">
@@ -202,6 +251,41 @@ export function ArmyBuilder({
               );
             })}
           </div>
+        )}
+
+        {factionScopedUnits.length > 0 && (
+          <div className="army-builder__add-row">
+            <select
+              className="army-builder__select army-builder__select--grow"
+              value={unitToAddId}
+              onChange={(event) => setUnitToAddId(event.target.value)}
+            >
+              {factionScopedUnits.map((unit) => (
+                <option key={unit.id} value={unit.id}>
+                  {unit.name}
+                  {unit.points ? ` · ${unit.points} pts` : ""}
+                </option>
+              ))}
+            </select>
+
+            <button
+              className="army-builder__add-btn"
+              onClick={() => {
+                if (unitToAddId) {
+                  handleAddUnit(unitToAddId);
+                }
+              }}
+              disabled={!unitToAddId}
+            >
+              Add Selected
+            </button>
+          </div>
+        )}
+
+        {unitToAdd && (
+          <p className="army-builder__units-hint">
+            {formatUnitPointsOptionsSummary(unitToAdd)}
+          </p>
         )}
       </div>
 

@@ -279,6 +279,59 @@ describe("mapNormalizedUnitToCombatUnit primary model selection", () => {
     ]);
   });
 
+  it("parses exact weapon strength and damage characteristic overrides", () => {
+    const unit = buildUnit([
+      {
+        id: "m1",
+        name: "Malignant Plaguecaster",
+        toughness: 5,
+        save: 3,
+        wounds: 4,
+      },
+    ]);
+
+    unit.weapons = [
+      {
+        id: "w1",
+        name: "Plague Wind",
+        range: "18",
+        type: "ranged",
+        attacks: 1,
+        skill: 3,
+        strength: 5,
+        ap: -1,
+        damage: 1,
+        keywords: [],
+      },
+    ];
+
+    unit.abilities = [
+      {
+        id: "a1",
+        name: "Bilemaw Surge",
+        description:
+          "Until the end of the phase, this model's Plague Wind weapon has a Strength characteristic of 8 and a Damage characteristic of 3.",
+      },
+    ];
+
+    const mapped = mapNormalizedUnitToCombatUnit(unit);
+
+    expect(mapped.abilities?.[0].modifiers).toEqual([
+      {
+        type: "STRENGTH_MODIFIER",
+        value: 3,
+        attackType: "ranged",
+        requiresWeaponNameIncludes: ["plague wind"],
+      },
+      {
+        type: "DAMAGE_MODIFIER",
+        value: 2,
+        attackType: "ranged",
+        requiresWeaponNameIncludes: ["plague wind"],
+      },
+    ]);
+  });
+
   it("parses ranged targeting limit defensive text into toggles", () => {
     const unit = buildUnit([
       {

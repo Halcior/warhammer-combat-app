@@ -7,7 +7,6 @@
  * Maintains backward compatibility with existing SavedUnit structure.
  */
 
-import type { Weapon, Unit } from "./combat";
 
 // ── Types for Enhanced Preset System ──────────────────────────────
 
@@ -28,7 +27,9 @@ export type SavedUnitInPreset = {
 
   // ── Practical setup ──
   modelCount: number;       // How many models in this unit (required, ≥ 1)
-  selectedWeaponId: string; // Primary weapon choice
+  selectedWeaponId: string; // Primary/default weapon choice
+  selectedRangedWeaponId?: string;
+  selectedMeleeWeaponId?: string;
   leaderAttachedId?: string;      // Optional leader unit ID attached to this unit
   enhancementId?: string;         // Optional enhancement from detachment
   wargearUpgrades?: string[];     // Future: wargear/upgrade IDs

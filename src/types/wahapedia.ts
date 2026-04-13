@@ -42,6 +42,13 @@ export type NormalizedUnit = {
   weapons: NormalizedWeaponProfile[];
   keywords: string[];
   abilities: NormalizedAbility[];
+  points?: number;
+  pointsDescription?: string;
+  pointsOptions?: Array<{
+    description: string;
+    cost: number;
+    modelCount?: number;
+  }>;
 };
 
 export type NormalizedDetachmentAbility = {

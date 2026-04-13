@@ -40,6 +40,86 @@ export function calculateUnitPoints(unit: SavedUnitInPreset): number {
   return total;
 }
 
+function getSortedPointsOptions(unitDefinition: Unit | undefined) {
+  return [...(unitDefinition?.pointsOptions ?? [])]
+    .filter((option) => option.cost > 0)
+    .sort((left, right) => (left.modelCount ?? Number.MAX_SAFE_INTEGER) - (right.modelCount ?? Number.MAX_SAFE_INTEGER));
+}
+
+export function getBestPointsOptionForModelCount(
+  unitDefinition: Unit | undefined,
+  modelCount: number
+) {
+  const options = getSortedPointsOptions(unitDefinition);
+
+  if (options.length === 0) {
+    return undefined;
+  }
+
+  const exact = options.find((option) => option.modelCount === modelCount);
+  if (exact) {
+    return exact;
+  }
+
+  const nextLargest = options.find(
+    (option) => option.modelCount !== undefined && option.modelCount >= modelCount
+  );
+  if (nextLargest) {
+    return nextLargest;
+  }
+
+  return options[options.length - 1];
+}
+
+export function getEstimatedPointsPerModel(unitDefinition: Unit | undefined): number {
+  if (!unitDefinition) {
+    return 0;
+  }
+
+  const primaryOption = getSortedPointsOptions(unitDefinition).find(
+    (option) => option.modelCount && option.modelCount > 0
+  );
+
+  if (primaryOption?.modelCount) {
+    return Math.round(primaryOption.cost / primaryOption.modelCount);
+  }
+
+  return unitDefinition.points ?? 0;
+}
+
+export function calculateUnitTotalPointsFromDefinition(
+  unitDefinition: Unit | undefined,
+  modelCount: number
+): number {
+  if (!unitDefinition) {
+    return 0;
+  }
+
+  const bestOption = getBestPointsOptionForModelCount(unitDefinition, modelCount);
+  if (bestOption) {
+    return bestOption.cost;
+  }
+
+  const estimatedPointsPerModel = getEstimatedPointsPerModel(unitDefinition);
+  return estimatedPointsPerModel > 0 ? estimatedPointsPerModel * modelCount : 0;
+}
+
+export function formatUnitPointsOptionsSummary(unitDefinition: Unit | undefined): string {
+  const options = getSortedPointsOptions(unitDefinition);
+
+  if (options.length === 0) {
+    return unitDefinition?.points ? `${unitDefinition.points} pts` : "Points unavailable";
+  }
+
+  return options
+    .map((option) =>
+      option.modelCount
+        ? `${option.modelCount}: ${option.cost} pts`
+        : `${option.description}: ${option.cost} pts`
+    )
+    .join(" • ");
+}
+
 /**
  * Calculate total points for entire army
  */
@@ -132,10 +212,9 @@ export function validateArmyPreset(preset: ArmyPresetV2): ValidationResult {
  * Migrate old preset format (SavedUnit) to new format (SavedUnitInPreset)
  */
 export function migrateUnitToPreset(
-  oldUnit: SavedUnit,
-  unitDefinition: Unit | undefined
+  oldUnit: SavedUnit
 ): SavedUnitInPreset {
-  const pointsPerModel = unitDefinition?.weapons[0]?.points ?? 0;
+  const pointsPerModel = 0;
 
   return {
     unitId: oldUnit.unitId,
@@ -151,14 +230,12 @@ export function migrateUnitToPreset(
  * Migrate old preset format (ArmyPresetOld) to new format (ArmyPresetV2)
  */
 export function migratePresetToV2(
-  oldPreset: ArmyPresetOld,
-  unitDefinitions: Map<string, Unit>
+  oldPreset: ArmyPresetOld
 ): MigrationResult {
   const changesApplied: string[] = [];
 
   const newUnits: SavedUnitInPreset[] = oldPreset.units.map((oldUnit) => {
-    const unitDef = unitDefinitions.get(oldUnit.unitId);
-    const migrated = migrateUnitToPreset(oldUnit, unitDef);
+    const migrated = migrateUnitToPreset(oldUnit);
     changesApplied.push(`Migrated unit ${migrated.nickname || migrated.unitId} with default model count (1)`);
     return migrated;
   });
@@ -187,10 +264,7 @@ export function migratePresetToV2(
 /**
  * Load a preset and auto-migrate if old format
  */
-export function loadAndMigratePreset(
-  preset: ArmyPreset,
-  unitDefinitions: Map<string, Unit>
-): ArmyPresetV2 {
+export function loadAndMigratePreset(preset: ArmyPreset): ArmyPresetV2 {
   // Check if it's the old format
   if ("units" in preset && preset.units.length > 0 && "modelCount" in preset.units[0]) {
     // Already new format
@@ -198,7 +272,7 @@ export function loadAndMigratePreset(
   }
 
   // Migrate old format
-  const migration = migratePresetToV2(preset as ArmyPresetOld, unitDefinitions);
+  const migration = migratePresetToV2(preset as ArmyPresetOld);
   console.info(`Migrated preset "${preset.name}" to new format`, migration.changesApplied);
 
   return migration.migratedPreset;

@@ -12,35 +12,47 @@ import { ExampleResult } from "../onboarding/ExampleResult";
 import { WhatYouGet } from "../onboarding/WhatYouGet";
 import type { SimulationSummary } from "../../lib/combat/simulation/analyzeSimulation";
 import type { CalculationMode } from "../../lib/combat/simulation/runSimulationByMode";
-import type { DamageResult } from "../../types/combat";
-import type { BattleSetup } from "../../hooks/useBattleSetup";
-import type { AttackModifiers } from "../../hooks/useAttackModifiers";
-import type { FactionRules } from "../../hooks/useFactionRules";
-import type {
-  RuleOptionHook,
-  EnhancementOptionHook,
-  StratagemOptionHook,
-} from "../../hooks/useRuleOptions";
+import type { SpecialRule } from "../../types/combat";
 import type { RuleOption } from "../../types/faction";
 import type { AttackBreakdownExplanation } from "../../lib/combat/explainAttackBreakdown";
+import type { ExpectedDamageResult } from "../../lib/combat/types";
+
+type BattleSetupState = ReturnType<
+  typeof import("../../hooks/useBattleSetup").useBattleSetup
+>;
+type AttackModifiersState = ReturnType<
+  typeof import("../../hooks/useAttackModifiers").useAttackModifiers
+>;
+type FactionRulesState = ReturnType<
+  typeof import("../../hooks/useFactionRules").useFactionRules
+>;
+type RuleOptionsState = ReturnType<
+  typeof import("../../hooks/useRuleOptions").useRuleOptions
+>;
+type EnhancementOptionsState = ReturnType<
+  typeof import("../../hooks/useRuleOptions").useEnhancementOptions
+>;
+type StratagemOptionsState = ReturnType<
+  typeof import("../../hooks/useRuleOptions").useStratagemOptions
+>;
 
 interface CalculatorPageProps {
-  battleSetup: BattleSetup;
-  attackModifiers: AttackModifiers;
-  factionRules: FactionRules;
-  ruleOptions: RuleOptionHook;
-  enhancementOptions: EnhancementOptionHook;
-  stratagemOptions: StratagemOptionHook;
-  expectedResult: DamageResult;
+  battleSetup: BattleSetupState;
+  attackModifiers: AttackModifiersState;
+  factionRules: FactionRulesState;
+  ruleOptions: RuleOptionsState;
+  enhancementOptions: EnhancementOptionsState;
+  stratagemOptions: StratagemOptionsState;
+  expectedResult: ExpectedDamageResult;
   attackBreakdownExplanation: AttackBreakdownExplanation;
-  compareWeapon: typeof battleSetup.selectedWeapon;
-  compareResult: DamageResult;
+  compareWeapon: BattleSetupState["selectedWeapon"];
+  compareResult: ExpectedDamageResult;
   attackerUnitAbilityRuleOptions: RuleOption[];
-  attackerUnitAbilityOptions: RuleOptionHook;
+  attackerUnitAbilityOptions: RuleOptionsState;
   defenderUnitAbilityRuleOptions: RuleOption[];
-  defenderUnitAbilityOptions: RuleOptionHook;
-  attackerScopedModifierRules: ReturnType<typeof import("../../lib/combat").calculateExpectedDamage>;
-  defenderScopedModifierRules: ReturnType<typeof import("../../lib/combat").calculateExpectedDamage>;
+  defenderUnitAbilityOptions: RuleOptionsState;
+  attackerScopedModifierRules: SpecialRule[];
+  defenderScopedModifierRules: SpecialRule[];
   mode: CalculationMode;
   setMode: (mode: CalculationMode) => void;
   runs: number;
@@ -50,7 +62,7 @@ interface CalculatorPageProps {
   simulationError: string | null;
   isSimulationRunning: boolean;
   compareWeaponId: string;
-  setCompareWeaponId: (id: string) => void;
+  setCompareWeaponId: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export function CalculatorPage({
@@ -76,7 +88,9 @@ export function CalculatorPage({
   isSimulationRunning,
   compareWeaponId,
   setCompareWeaponId,
+  attackerUnitAbilityRuleOptions,
   attackerUnitAbilityOptions,
+  defenderUnitAbilityRuleOptions,
   defenderUnitAbilityOptions,
 }: CalculatorPageProps) {
   const [isLoadingExample, setIsLoadingExample] = useState(false);
@@ -216,10 +230,10 @@ export function CalculatorPage({
             toggleEnhancement={enhancementOptions.toggleEnhancement}
             activeStratagemIds={stratagemOptions.activeStratagemIds}
             toggleStratagem={stratagemOptions.toggleStratagem}
-            attackerUnitAbilityOptions={[]}
+            attackerUnitAbilityOptions={attackerUnitAbilityRuleOptions}
             activeAttackerUnitAbilityIds={attackerUnitAbilityOptions.activeRuleOptionIds}
             toggleAttackerUnitAbility={attackerUnitAbilityOptions.toggleRuleOption}
-            defenderUnitAbilityOptions={[]}
+            defenderUnitAbilityOptions={defenderUnitAbilityRuleOptions}
             activeDefenderUnitAbilityIds={defenderUnitAbilityOptions.activeRuleOptionIds}
             toggleDefenderUnitAbility={defenderUnitAbilityOptions.toggleRuleOption}
           />

@@ -109,6 +109,12 @@ export type Weapon = {
   specialRules?: SpecialRule[];
 };
 
+export type UnitPointsOption = {
+  description: string;
+  cost: number;
+  modelCount?: number;
+};
+
 export type UnitAbility = {
   id: string;
   name: string;
@@ -130,6 +136,9 @@ export type Unit = {
   specialRules?: SpecialRule[];
   abilities?: UnitAbility[];
   keywords?: string[];
+  points?: number;
+  pointsDescription?: string;
+  pointsOptions?: UnitPointsOption[];
 };
 
 export type AttackConditions = {
