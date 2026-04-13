@@ -5,6 +5,7 @@
 This project is a Warhammer 40k combat and decision-support application.
 
 It is **not** just a toy calculator.
+
 The long-term goal is to build a useful player tool with:
 
 - free core calculator features
@@ -40,6 +41,28 @@ Premium should provide convenience and workflow value, not basic access.
 
 ---
 
+## Emerging feature layer: Army & Session workflow
+
+The app is evolving from single-scenario calculation into:
+
+- saved army presets
+- two-army battle workspace
+- session-based analysis (possibly shared via link)
+
+This layer should:
+
+- reduce repeated setup
+- improve real gameplay usability
+- support faster matchup analysis
+
+Important:
+
+- do not turn this into a full roster builder or game tracker
+- keep interactions fast and lightweight
+- prioritize usability over strict rules validation
+
+---
+
 ## What the app should help users do
 
 - calculate expected damage
@@ -62,18 +85,42 @@ Premium should provide convenience and workflow value, not basic access.
 
 ### Premium should include
 
-- save/load scenarios
-- saved presets
-- history
-- export
-- advanced comparison workflows
-- deeper workflow/convenience features
+- saved army presets
+- saved battle sessions
+- matchup workspace (two-army analysis)
+- scenario history
+- export/share-ready outputs
+- advanced workflow features
+
+Premium should focus on:
+
+- saving time
+- reducing setup repetition
+- improving in-game usability
 
 ### Do not
 
 - hide the basic calculator behind premium
 - cripple the free version
 - add monetization-first features before product usefulness
+
+---
+
+## Scope guardrails for army/session features
+
+Do NOT:
+
+- build a full tournament-legal roster validator at MVP stage
+- implement full game tracking (turns, CP, scoring, missions)
+- replicate full tabletop gameplay systems
+
+This feature is a:
+
+- workflow tool
+- analysis assistant
+- setup reduction layer
+
+Not a full game engine.
 
 ---
 
@@ -164,9 +211,10 @@ Main goals:
 
 Main goals:
 
+- saved army presets
+- basic battle workspace (two-army setup)
+- quick matchup selection
 - saved scenarios
-- saved presets
-- favorites
 - history
 - export/share-ready outputs
 
@@ -174,11 +222,12 @@ Main goals:
 
 Main goals:
 
-- roster-aware analysis
+- roster-aware calculations
+- session-based workflows
+- shared battle sessions (link-based)
 - batch simulation
 - best target suggestions
 - best weapon recommendations
-- multi-scenario comparison workflows
 
 ---
 

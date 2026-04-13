@@ -134,6 +134,19 @@ export function useBattleSetup() {
     setDefenderId(newDefenderId);
   }
 
+  // Directly select attacker from an army preset unit (sets faction + unit + weapon atomically)
+  function selectAttacker(faction: string, unitId: string, weaponId: string) {
+    setAttackerFaction(faction);
+    setAttackerId(unitId);
+    setWeaponId(weaponId);
+  }
+
+  // Directly select defender from an army preset unit
+  function selectDefender(faction: string, unitId: string) {
+    setDefenderFaction(faction);
+    setDefenderId(unitId);
+  }
+
   return {
     factions,
     attackerFaction,
@@ -157,5 +170,7 @@ export function useBattleSetup() {
     handleWeaponChange,
     handleDefenderFactionChange,
     handleDefenderChange,
+    selectAttacker,
+    selectDefender,
   };
 }

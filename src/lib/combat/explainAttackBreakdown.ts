@@ -7,16 +7,22 @@ import {
 } from "./ruleApplicability";
 import { getWoundTarget } from "./wound";
 
-type BreakdownLine = {
+export type BreakdownLine = {
   label: string;
   value: string | number;
+  type: "input" | "modifier" | "final" | "inactive";
+};
+
+export type StageBreakdown = {
+  resolved: string;
+  rows: BreakdownLine[];
 };
 
 export type AttackBreakdownExplanation = {
-  hit: BreakdownLine[];
-  wound: BreakdownLine[];
-  save: BreakdownLine[];
-  damage: BreakdownLine[];
+  hit: StageBreakdown;
+  wound: StageBreakdown;
+  save: StageBreakdown;
+  damage: StageBreakdown;
 };
 
 export function explainAttackBreakdown(params: {
@@ -50,28 +56,20 @@ export function explainAttackBreakdown(params: {
     conditions,
   });
 
+  // ── Hit ─────────────────────────────────────────────────────────────────────
   const hitModifier = getRuleModifier(activeRules, "HIT_MODIFIER", weapon.type);
   const fixedHitRoll = getRuleModifier(activeRules, "FIXED_HIT_ROLL", weapon.type);
   const heavyBonus =
     hasRule(activeRules, "HEAVY") && conditions.remainedStationary ? 1 : 0;
-  const attacksModifier = getRuleModifier(
-    activeRules,
-    "ATTACKS_MODIFIER",
-    weapon.type
-  );
-  const hasAttackRerolls = hasRule(activeRules, "REROLL_ATTACKS");
   const hitRerollMode = getHitRerollMode(activeRules);
-  const woundRerollMode = getWoundRerollMode(activeRules);
+  const isTorrent = hasRule(combinedRules, "TORRENT");
 
   const baseHit = weapon.skill;
-  const finalHit =
-    hasRule(combinedRules, "TORRENT")
-      ? "Auto"
-      : `${Math.max(
-          2,
-          fixedHitRoll || weapon.skill - heavyBonus - hitModifier
-        )}+`;
+  const finalHit = isTorrent
+    ? "Auto"
+    : `${Math.max(2, fixedHitRoll || weapon.skill - heavyBonus - hitModifier)}+`;
 
+  // ── Wound ────────────────────────────────────────────────────────────────────
   const strengthModifier = getRuleModifier(
     activeRules,
     "STRENGTH_MODIFIER",
@@ -80,20 +78,19 @@ export function explainAttackBreakdown(params: {
   const effectiveStrength = weapon.strength + strengthModifier;
   const toughnessModifier = getToughnessModifier(activeRules);
   const effectiveToughness = Math.max(1, defender.toughness + toughnessModifier);
-
   const baseWoundTarget = getWoundTarget(effectiveStrength, effectiveToughness);
 
   const lanceBonus =
     hasRule(activeRules, "LANCE") && conditions.isChargeTurn ? 1 : 0;
-
   const woundModifier = getConditionalWoundModifier(
     activeRules,
     weapon.type,
     effectiveToughness
   );
-
+  const woundRerollMode = getWoundRerollMode(activeRules);
   const finalWound = Math.max(2, baseWoundTarget - lanceBonus - woundModifier);
 
+  // ── Save ─────────────────────────────────────────────────────────────────────
   const apModifier = getRuleModifier(activeRules, "AP_MODIFIER", weapon.type);
   const criticalWoundApModifier = getRuleModifier(
     activeRules,
@@ -101,20 +98,22 @@ export function explainAttackBreakdown(params: {
     weapon.type
   );
   const effectiveAp = weapon.ap - apModifier;
-
   const ignoresCover = hasRule(activeRules, "IGNORES_COVER");
+  const inCover = conditions.isTargetInCover && !ignoresCover;
   const baseSaveTarget = getModifiedSave(
     defender.save,
     effectiveAp,
     defender.invulnerableSave ?? null
   );
+  const finalSave = applyCoverToSave(baseSaveTarget, weapon.type, inCover);
 
-  const finalSave = applyCoverToSave(
-    baseSaveTarget,
-    weapon.type,
-    conditions.isTargetInCover && !ignoresCover
+  // ── Damage ───────────────────────────────────────────────────────────────────
+  const attacksModifier = getRuleModifier(
+    activeRules,
+    "ATTACKS_MODIFIER",
+    weapon.type
   );
-
+  const hasAttackRerolls = hasRule(activeRules, "REROLL_ATTACKS");
   const damageModifier = getRuleModifier(
     activeRules,
     "DAMAGE_MODIFIER",
@@ -125,73 +124,146 @@ export function explainAttackBreakdown(params: {
       ? getMeltaValue(activeRules)
       : 0;
 
+  const totalDamageBonus = damageModifier + meltaBonus;
+  let damageResolved: string;
+  if (totalDamageBonus === 0) {
+    damageResolved = String(weapon.damage);
+  } else if (typeof weapon.damage === "number") {
+    damageResolved = String(weapon.damage + totalDamageBonus);
+  } else {
+    damageResolved =
+      totalDamageBonus > 0
+        ? `${weapon.damage}+${totalDamageBonus}`
+        : `${weapon.damage}${totalDamageBonus}`;
+  }
+
   return {
-    hit: [
-      { label: "Base skill", value: `${baseHit}+` },
-      { label: "Fixed hit roll", value: fixedHitRoll ? `${fixedHitRoll}+` : 0 },
-      { label: "Heavy bonus", value: heavyBonus ? `-${heavyBonus}` : 0 },
-      {
-        label: "Hit modifier",
-        value: hitModifier ? formatSignedModifier(hitModifier) : 0,
-      },
-      {
-        label: "Hit rerolls",
-        value: formatRerollMode(hitRerollMode),
-      },
-      { label: "Final hit", value: finalHit },
-    ],
-    wound: [
-      { label: "Base strength", value: weapon.strength },
-      {
-        label: "Strength modifier",
-        value: strengthModifier ? formatSignedModifier(strengthModifier) : 0,
-      },
-      { label: "Defender toughness", value: defender.toughness },
-      {
-        label: "Toughness modifier",
-        value: toughnessModifier ? formatSignedModifier(toughnessModifier) : 0,
-      },
-      { label: "Effective toughness", value: effectiveToughness },
-      { label: "Base wound target", value: `${baseWoundTarget}+` },
-      { label: "Lance bonus", value: lanceBonus ? `-${lanceBonus}` : 0 },
-      {
-        label: "Wound modifier",
-        value: woundModifier ? formatSignedModifier(woundModifier) : 0,
-      },
-      {
-        label: "Wound rerolls",
-        value: formatRerollMode(woundRerollMode),
-      },
-      { label: "Final wound", value: `${finalWound}+` },
-    ],
-    save: [
-      { label: "Base save", value: `${defender.save}+` },
-      { label: "Effective AP", value: effectiveAp },
-      {
-        label: "Critical wound AP",
-        value: criticalWoundApModifier
-          ? formatSignedModifier(criticalWoundApModifier)
-          : 0,
-      },
-      { label: "In cover", value: conditions.isTargetInCover && !ignoresCover ? "Yes" : "No" },
-      { label: "Final save", value: `${finalSave}+` },
-    ],
-    damage: [
-      {
-        label: "Attack count rerolls",
-        value: hasAttackRerolls ? "Yes" : "No",
-      },
-      {
-        label: "Attacks modifier",
-        value: attacksModifier ? formatSignedModifier(attacksModifier) : 0,
-      },
-      { label: "Base damage", value: weapon.damage },
-      {
-        label: "Damage modifier",
-        value: damageModifier ? formatSignedModifier(damageModifier) : 0,
-      },
-      { label: "Melta bonus", value: meltaBonus ? `+${meltaBonus}` : 0 },
-    ],
+    hit: {
+      resolved: finalHit,
+      rows: isTorrent
+        ? [{ label: "Hit roll", value: "Auto (Torrent)", type: "final" }]
+        : [
+            { label: "Base skill", value: `${baseHit}+`, type: "input" },
+            {
+              label: "Fixed hit roll",
+              value: fixedHitRoll ? `${fixedHitRoll}+` : "—",
+              type: fixedHitRoll ? "modifier" : "inactive",
+            },
+            {
+              label: "Heavy bonus",
+              value: heavyBonus ? `-${heavyBonus}` : "—",
+              type: heavyBonus ? "modifier" : "inactive",
+            },
+            {
+              label: "Hit modifier",
+              value: hitModifier ? formatSignedModifier(hitModifier) : "—",
+              type: hitModifier ? "modifier" : "inactive",
+            },
+            {
+              label: "Hit rerolls",
+              value: formatRerollMode(hitRerollMode),
+              type: hitRerollMode !== "none" ? "modifier" : "inactive",
+            },
+            { label: "Final hit", value: finalHit, type: "final" },
+          ],
+    },
+
+    wound: {
+      resolved: `${finalWound}+`,
+      rows: [
+        { label: "Base strength", value: weapon.strength, type: "input" },
+        {
+          label: "Strength modifier",
+          value: strengthModifier ? formatSignedModifier(strengthModifier) : "—",
+          type: strengthModifier ? "modifier" : "inactive",
+        },
+        { label: "Defender toughness", value: defender.toughness, type: "input" },
+        {
+          label: "Toughness modifier",
+          value: toughnessModifier ? formatSignedModifier(toughnessModifier) : "—",
+          type: toughnessModifier ? "modifier" : "inactive",
+        },
+        ...(toughnessModifier
+          ? [
+              {
+                label: "Effective toughness",
+                value: effectiveToughness,
+                type: "input" as const,
+              },
+            ]
+          : []),
+        { label: "Base wound target", value: `${baseWoundTarget}+`, type: "input" },
+        {
+          label: "Lance bonus",
+          value: lanceBonus ? `-${lanceBonus}` : "—",
+          type: lanceBonus ? "modifier" : "inactive",
+        },
+        {
+          label: "Wound modifier",
+          value: woundModifier ? formatSignedModifier(woundModifier) : "—",
+          type: woundModifier ? "modifier" : "inactive",
+        },
+        {
+          label: "Wound rerolls",
+          value: formatRerollMode(woundRerollMode),
+          type: woundRerollMode !== "none" ? "modifier" : "inactive",
+        },
+        { label: "Final wound", value: `${finalWound}+`, type: "final" },
+      ],
+    },
+
+    save: {
+      resolved: `${finalSave}+`,
+      rows: [
+        { label: "Base save", value: `${defender.save}+`, type: "input" },
+        { label: "Effective AP", value: effectiveAp, type: "input" },
+        {
+          label: "Critical wound AP",
+          value: criticalWoundApModifier
+            ? formatSignedModifier(criticalWoundApModifier)
+            : "—",
+          type: criticalWoundApModifier ? "modifier" : "inactive",
+        },
+        {
+          label: "In cover",
+          value: inCover ? "Yes" : "No",
+          type: inCover ? "modifier" : "inactive",
+        },
+        { label: "Final save", value: `${finalSave}+`, type: "final" },
+      ],
+    },
+
+    damage: {
+      resolved: damageResolved,
+      rows: [
+        {
+          label: "Attack count rerolls",
+          value: hasAttackRerolls ? "Yes" : "No",
+          type: hasAttackRerolls ? "modifier" : "inactive",
+        },
+        {
+          label: "Attacks modifier",
+          value: attacksModifier ? formatSignedModifier(attacksModifier) : "—",
+          type: attacksModifier ? "modifier" : "inactive",
+        },
+        { label: "Base damage", value: weapon.damage, type: "input" },
+        {
+          label: "Damage modifier",
+          value: damageModifier ? formatSignedModifier(damageModifier) : "—",
+          type: damageModifier ? "modifier" : "inactive",
+        },
+        {
+          label: "Melta bonus",
+          value: meltaBonus ? `+${meltaBonus}` : "—",
+          type: meltaBonus ? "modifier" : "inactive",
+        },
+        {
+          label: "Final damage",
+          value: damageResolved,
+          type: totalDamageBonus !== 0 ? "final" : "inactive",
+        },
+      ],
+    },
   };
 }
 

@@ -27,6 +27,12 @@ import type { RuleOption } from "./types/faction";
 import { explainAttackBreakdown } from "./lib/combat/explainAttackBreakdown";
 import { AttackBreakdownSourcesPanel } from "./components/AttackBreakdownSourcesPanel";
 
+import { AppNav } from "./components/AppNav";
+import type { AppView } from "./components/AppNav";
+import { ArmiesView } from "./components/ArmiesView";
+import { WorkspaceView } from "./components/WorkspaceView";
+import { useArmyPresets } from "./hooks/useArmyPresets";
+
 function App() {
   const battleSetup = useBattleSetup();
   const attackModifiers = useAttackModifiers();
@@ -34,6 +40,11 @@ function App() {
   const ruleOptions = useRuleOptions(factionRules.allAvailableRuleOptions);
   const enhancementOptions = useEnhancementOptions(factionRules.enhancements);
   const stratagemOptions = useStratagemOptions(factionRules.stratagems);
+
+  const armyPresets = useArmyPresets();
+  const [view, setView] = useState<AppView>("calculator");
+  const [workspaceArmyA, setWorkspaceArmyA] = useState<string | null>(null);
+  const [workspaceArmyB, setWorkspaceArmyB] = useState<string | null>(null);
 
   const [compareWeaponId, setCompareWeaponId] = useState("");
   const [mode, setMode] = useState<CalculationMode>("fast");
@@ -398,6 +409,8 @@ function App() {
         ))}
       </section>
 
+      <AppNav view={view} setView={setView} />
+
       <main className="page-shell app-shell" id="app-shell">
         <section className="app-shell__intro">
           <div className="app-shell__intro-copy">
@@ -447,30 +460,67 @@ function App() {
           </div>
         </section>
 
-        <SetupPanel
-          factions={battleSetup.factions}
-          attackerFaction={battleSetup.attackerFaction}
-          defenderFaction={battleSetup.defenderFaction}
-          attackerId={battleSetup.attackerId}
-          defenderId={battleSetup.defenderId}
-          weaponId={battleSetup.weaponId}
-          attackingModels={battleSetup.attackingModels}
-          defendingModels={battleSetup.defendingModels}
-          conditions={battleSetup.conditions}
-          attackerUnits={battleSetup.attackerUnits}
-          defenderUnits={battleSetup.defenderUnits}
-          attacker={battleSetup.attacker}
-          setAttackingModels={battleSetup.setAttackingModels}
-          setDefendingModels={battleSetup.setDefendingModels}
-          setConditions={battleSetup.setConditions}
-          handleAttackerFactionChange={battleSetup.handleAttackerFactionChange}
-          handleAttackerChange={battleSetup.handleAttackerChange}
-          handleWeaponChange={battleSetup.handleWeaponChange}
-          handleDefenderFactionChange={battleSetup.handleDefenderFactionChange}
-          handleDefenderChange={battleSetup.handleDefenderChange}
-        />
+        {view === "armies" && (
+          <ArmiesView
+            armies={armyPresets.armies}
+            canCreate={armyPresets.canCreate}
+            freeLimit={armyPresets.freeLimit}
+            onAdd={armyPresets.addArmy}
+            onEdit={armyPresets.editArmy}
+            onDelete={armyPresets.removeArmy}
+            onDuplicate={armyPresets.dupeArmy}
+            setView={setView}
+            onOpenWorkspace={(armyId, sv) => {
+              setWorkspaceArmyA(armyId);
+              sv("workspace");
+            }}
+          />
+        )}
 
-        <div className="workspace-grid">
+        {view !== "armies" && (
+          <>
+            {view === "calculator" && (
+              <SetupPanel
+                factions={battleSetup.factions}
+                attackerFaction={battleSetup.attackerFaction}
+                defenderFaction={battleSetup.defenderFaction}
+                attackerId={battleSetup.attackerId}
+                defenderId={battleSetup.defenderId}
+                weaponId={battleSetup.weaponId}
+                attackingModels={battleSetup.attackingModels}
+                defendingModels={battleSetup.defendingModels}
+                conditions={battleSetup.conditions}
+                attackerUnits={battleSetup.attackerUnits}
+                defenderUnits={battleSetup.defenderUnits}
+                attacker={battleSetup.attacker}
+                setAttackingModels={battleSetup.setAttackingModels}
+                setDefendingModels={battleSetup.setDefendingModels}
+                setConditions={battleSetup.setConditions}
+                handleAttackerFactionChange={battleSetup.handleAttackerFactionChange}
+                handleAttackerChange={battleSetup.handleAttackerChange}
+                handleWeaponChange={battleSetup.handleWeaponChange}
+                handleDefenderFactionChange={battleSetup.handleDefenderFactionChange}
+                handleDefenderChange={battleSetup.handleDefenderChange}
+              />
+            )}
+
+            {view === "workspace" && (
+              <WorkspaceView
+                armies={armyPresets.armies}
+                workspaceArmyA={workspaceArmyA}
+                workspaceArmyB={workspaceArmyB}
+                setWorkspaceArmyA={setWorkspaceArmyA}
+                setWorkspaceArmyB={setWorkspaceArmyB}
+                attackerId={battleSetup.attackerId}
+                defenderId={battleSetup.defenderId}
+                conditions={battleSetup.conditions}
+                setConditions={battleSetup.setConditions}
+                selectAttacker={battleSetup.selectAttacker}
+                selectDefender={battleSetup.selectDefender}
+              />
+            )}
+
+            <div className="workspace-grid">
           <div className="workspace-main">
             <SimulationPanel
               mode={mode}
@@ -540,6 +590,8 @@ function App() {
             />
           </div>
         </div>
+          </>
+        )}
       </main>
     </div>
   );
