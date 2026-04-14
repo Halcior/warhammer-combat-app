@@ -616,7 +616,11 @@ function dedupeDisplayRules(rules: DisplayRule[]): DisplayRule[] {
   const seen = new Set<string>();
 
   return rules.filter((rule) => {
-    const key = `${rule.kind}|${rule.side}|${rule.group}|${rule.source ?? ""}|${rule.label}|${rule.tooltip}`;
+    // Include rule.id so two distinct rules that happen to share a label/tooltip
+    // are never silently collapsed (e.g. two "+1 to wound" effects from different
+    // sources). The kind|side|group|source suffix still prevents the same rule
+    // appearing as both an "active" and "auto" entry simultaneously.
+    const key = `${rule.id}|${rule.kind}|${rule.side}|${rule.group}|${rule.source ?? ""}`;
     if (seen.has(key)) {
       return false;
     }

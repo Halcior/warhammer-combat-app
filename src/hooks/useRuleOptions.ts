@@ -1,9 +1,16 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { RuleOption, EnhancementConfig, StratagemConfig } from "../types/faction";
 import type { SpecialRule } from "../types/combat";
 
 export function useRuleOptions(ruleOptions: RuleOption[]) {
   const [activeRuleOptionIds, setActiveRuleOptionIds] = useState<string[]>([]);
+
+  // Reset selections when the available rule pool changes (faction or detachment
+  // switch). Without this, a rule ID active in Faction A could silently activate
+  // a different rule with the same ID in Faction B.
+  useEffect(() => {
+    setActiveRuleOptionIds([]);
+  }, [ruleOptions]);
 
   const toggleRuleOption = (ruleId: string) => {
     const option = ruleOptions.find((o) => o.id === ruleId);
@@ -57,6 +64,10 @@ export function useRuleOptions(ruleOptions: RuleOption[]) {
 export function useEnhancementOptions(enhancements: EnhancementConfig[]) {
   const [activeEnhancementIds, setActiveEnhancementIds] = useState<string[]>([]);
 
+  useEffect(() => {
+    setActiveEnhancementIds([]);
+  }, [enhancements]);
+
   const toggleEnhancement = (id: string) => {
     setActiveEnhancementIds((prev) =>
       prev.includes(id)
@@ -85,6 +96,10 @@ export function useEnhancementOptions(enhancements: EnhancementConfig[]) {
 
 export function useStratagemOptions(stratagems: StratagemConfig[]) {
   const [activeStratagemIds, setActiveStratagemIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    setActiveStratagemIds([]);
+  }, [stratagems]);
 
   const toggleStratagem = (id: string) => {
     setActiveStratagemIds((prev) =>

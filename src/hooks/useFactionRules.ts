@@ -50,13 +50,26 @@ export function useFactionRules(attackerFaction: string) {
     return selectedDetachment?.ruleOptions ?? [];
   }, [attackerFaction, selectedDetachment]);
 
+  // Stable references — only change when selectedDetachment changes.
+  // Without memoization these would be new array instances on every render,
+  // which would cause useEffect reset hooks in useRuleOptions-family hooks
+  // to fire on every render instead of only on faction/detachment change.
+  const stratagems = useMemo(
+    () => selectedDetachment?.stratagems ?? [],
+    [selectedDetachment]
+  );
+  const enhancements = useMemo(
+    () => selectedDetachment?.enhancements ?? [],
+    [selectedDetachment]
+  );
+
   return {
     availableDetachments,
     selectedDetachmentId: effectiveSelectedDetachmentId,
     setSelectedDetachmentId,
     selectedDetachment,
     allAvailableRuleOptions,
-    stratagems: selectedDetachment?.stratagems ?? [],
-    enhancements: selectedDetachment?.enhancements ?? [],
+    stratagems,
+    enhancements,
   };
 }
