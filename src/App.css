@@ -3895,6 +3895,35 @@ button:focus-visible,
   margin-bottom: 32px;
 }
 
+.calculator-page__army-modal {
+  padding: 20px;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  margin-bottom: 24px;
+}
+
+.calculator-page__load-army-button {
+  padding: 10px 16px;
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.calculator-page__load-army-button:hover {
+  background: var(--accent);
+  color: #000;
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
 .calculator-page__setup-wrapper {
   padding: 32px;
   background: var(--surface);
@@ -5051,3 +5080,164 @@ button:focus-visible,
     margin-top: 4px;
   }
 }
+
+/* ──────────────────────────────────────────────────────────────────────
+   LoadArmySelector - Load units from saved armies into calculator
+   ────────────────────────────────────────────────────────────────────── */
+
+.load-army-selector {
+  padding: 20px 0;
+}
+
+.load-army-selector__container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  background: var(--surface-strong);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+.load-army-selector__title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.load-army-selector__section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.load-army-selector__label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.load-army-selector__select {
+  padding: 10px 12px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.load-army-selector__select:hover {
+  border-color: var(--border-strong);
+  background: rgba(23, 26, 30, 0.5);
+}
+
+.load-army-selector__select:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--bg-elevated);
+}
+
+/* Preview Section */
+.load-army-selector__preview {
+  padding: 12px;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.load-army-selector__preview-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+}
+
+.load-army-selector__preview-label {
+  font-weight: 500;
+  color: var(--text-muted);
+  min-width: 80px;
+}
+
+.load-army-selector__preview-value {
+  color: var(--text);
+  text-align: right;
+  flex: 1;
+}
+
+/* Actions */
+.load-army-selector__actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.load-army-selector__button {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.load-army-selector__button--primary {
+  background: var(--accent);
+  color: #000;
+}
+
+.load-army-selector__button--primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 16px rgba(242, 106, 27, 0.25);
+}
+
+.load-army-selector__button--primary:disabled {
+  background: var(--text-muted);
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.load-army-selector__button--secondary {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.load-army-selector__button--secondary:hover {
+  background: var(--surface-strong);
+  border-color: var(--border-strong);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .load-army-selector__container {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .load-army-selector__actions {
+    flex-direction: column;
+  }
+
+  .load-army-selector__button {
+    width: 100%;
+  }
+}
+

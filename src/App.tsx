@@ -3,6 +3,7 @@ import "./App.css";
 import appLogo from "./assets/Nowe_LogoPNG.png";
 import { calculateExpectedDamage } from "./lib/combat";
 import { runSimulationByMode } from "./lib/combat/simulation/runSimulationByMode";
+import { units } from "./data/units";
 
 import { useBattleSetup } from "./hooks/useBattleSetup";
 import { useAttackModifiers } from "./hooks/useAttackModifiers";
@@ -426,6 +427,8 @@ function App() {
             isSimulationRunning={isSimulationRunning}
             compareWeaponId={compareWeaponId}
             setCompareWeaponId={setCompareWeaponId}
+            armies={armyPresets.armies}
+            unitDefinitions={units}
           />
         )}
 

@@ -6,6 +6,7 @@ import { ExpectedResultPanel } from "../ExpectedResultPanel";
 import { AttackBreakdownSourcesPanel } from "../AttackBreakdownSourcesPanel";
 import { CompareWeaponsPanel } from "../CompareWeaponsPanel";
 import { ModifiersPanel } from "../ModifiersPanel";
+import { LoadArmySelector } from "../LoadArmySelector";
 import { StepIndicator } from "../onboarding/StepIndicator";
 import { QuickStart } from "../onboarding/QuickStart";
 import { ExampleResult } from "../onboarding/ExampleResult";
@@ -16,6 +17,8 @@ import type { SpecialRule } from "../../types/combat";
 import type { RuleOption } from "../../types/faction";
 import type { AttackBreakdownExplanation } from "../../lib/combat/explainAttackBreakdown";
 import type { ExpectedDamageResult } from "../../lib/combat/types";
+import type { ArmyPresetV2 } from "../../types/armyPreset";
+import type { CombatUnit } from "../../types/combat";
 
 type BattleSetupState = ReturnType<
   typeof import("../../hooks/useBattleSetup").useBattleSetup
@@ -67,6 +70,8 @@ interface CalculatorPageProps {
   isSimulationRunning: boolean;
   compareWeaponId: string;
   setCompareWeaponId: React.Dispatch<React.SetStateAction<string>>;
+  armies: ArmyPresetV2[];
+  unitDefinitions: CombatUnit[];
 }
 
 export function CalculatorPage({
@@ -100,8 +105,11 @@ export function CalculatorPage({
   attackerUnitAbilityOptions,
   defenderUnitAbilityRuleOptions,
   defenderUnitAbilityOptions,
+  armies,
+  unitDefinitions,
 }: CalculatorPageProps) {
   const [isLoadingExample, setIsLoadingExample] = useState(false);
+  const [isLoadingArmyModal, setIsLoadingArmyModal] = useState(false);
   const resultsRef = useRef<HTMLDivElement>(null);
 
   const handleLoadExample = async () => {
@@ -135,6 +143,16 @@ export function CalculatorPage({
     }, 100);
   };
 
+  const handleLoadUnitFromArmy = (faction: string, unitId: string, weaponId: string) => {
+    battleSetup.selectAttacker(faction, unitId, weaponId);
+    setIsLoadingArmyModal(false);
+
+    // Scroll to results to show the loaded setup
+    setTimeout(() => {
+      resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
+  };
+
   // Determine current step based on selections
   const currentStep = battleSetup.attackerId ? (battleSetup.conditions.battleRound ? 3 : 2) : (1 as const);
 
@@ -145,9 +163,30 @@ export function CalculatorPage({
         subtitle="Set up a matchup and analyze damage output"
       />
 
+      {/* Load from Army Modal */}
+      {isLoadingArmyModal && armies.length > 0 && (
+        <div className="calculator-page__army-modal">
+          <LoadArmySelector
+            armies={armies}
+            unitDefinitions={unitDefinitions}
+            onLoadUnit={handleLoadUnitFromArmy}
+            onClose={() => setIsLoadingArmyModal(false)}
+          />
+        </div>
+      )}
+
       {/* Quick Start & Example Preview */}
       <div className="calculator-page__intro">
         <QuickStart onLoadExample={handleLoadExample} isLoading={isLoadingExample} />
+        {armies.length > 0 && !isLoadingArmyModal && (
+          <button
+            className="calculator-page__load-army-button"
+            onClick={() => setIsLoadingArmyModal(true)}
+            title="Load a unit from one of your saved armies"
+          >
+            Load from Saved Army
+          </button>
+        )}
         <ExampleResult />
       </div>
 
