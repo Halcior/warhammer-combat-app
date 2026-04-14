@@ -28,7 +28,7 @@ export interface ArmyPresetExport {
   detachmentName?: string;
   notes?: string;
   totalPoints: number;
-  pointsLimit: number;
+  pointsLimit?: number;
   purpose?: string;
   tags?: string[];
   units: SerializedUnit[];

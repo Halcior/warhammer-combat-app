@@ -7,6 +7,7 @@ interface ArmyHeaderSectionProps {
   onFactionChange: (faction: string) => void;
   onDetachmentChange: (detachmentId: string | undefined) => void;
   onNotesChange?: (notes: string) => void;
+  onPointsLimitChange?: (limit: number | undefined) => void;
   factions: string[];
   detachmentsByFaction: Record<string, Array<{ id: string; name: string }>>;
   validationErrors?: Record<string, string>;
@@ -18,6 +19,7 @@ export function ArmyHeaderSection({
   onFactionChange,
   onDetachmentChange,
   onNotesChange,
+  onPointsLimitChange,
   factions,
   detachmentsByFaction,
   validationErrors,
@@ -104,6 +106,26 @@ export function ArmyHeaderSection({
           <span className="form-hint">Optional, but recommended</span>
         </div>
       </div>
+
+      {/* Points Limit */}
+      {onPointsLimitChange && (
+        <div className="form-field">
+          <label className="form-label" htmlFor="points-limit">
+            Points Limit (Optional)
+          </label>
+          <input
+            id="points-limit"
+            className="form-input"
+            type="number"
+            placeholder="e.g., 2000"
+            value={preset.pointsLimit ?? ""}
+            onChange={(e) => onPointsLimitChange(e.target.value ? parseInt(e.target.value) : undefined)}
+            min="1"
+            max="50000"
+          />
+          <span className="form-hint">Leave empty for unlimited</span>
+        </div>
+      )}
 
       {/* Army Notes */}
       {onNotesChange && (

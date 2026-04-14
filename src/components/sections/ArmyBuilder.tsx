@@ -283,6 +283,7 @@ export function ArmyBuilder({
         onFactionChange={handleFactionChange}
         onDetachmentChange={handleDetachmentChange}
         onNotesChange={(notes) => setPreset((current) => ({ ...current, notes }))}
+        onPointsLimitChange={(limit) => setPreset((current) => ({ ...current, pointsLimit: limit }))}
         factions={factions}
         detachmentsByFaction={detachmentsByFaction}
         validationErrors={
