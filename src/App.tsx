@@ -17,6 +17,7 @@ import type { SimulationSummary } from "./lib/combat/simulation/analyzeSimulatio
 import type { CalculationMode } from "./lib/combat/simulation/runSimulationByMode";
 import type { RuleOption } from "./types/faction";
 
+import { guardAttackerModifiers, guardDefenderModifiers } from "./lib/combat/combatRoleGuards";
 import { explainAttackBreakdown } from "./lib/combat/explainAttackBreakdown";
 import type { AppView } from "./components/AppNav";
 import { useArmyPresets } from "./hooks/useArmyPresets";
@@ -33,6 +34,11 @@ function App() {
   const ruleOptions = useRuleOptions(factionRules.allAvailableRuleOptions);
   const enhancementOptions = useEnhancementOptions(factionRules.enhancements);
   const stratagemOptions = useStratagemOptions(factionRules.stratagems);
+
+  const defenderFactionRules = useFactionRules(battleSetup.defenderFaction);
+  const defenderDetachmentRuleOptions = useRuleOptions(defenderFactionRules.allAvailableRuleOptions);
+  const defenderDetachmentEnhancementOptions = useEnhancementOptions(defenderFactionRules.enhancements);
+  const defenderDetachmentStratagemOptions = useStratagemOptions(defenderFactionRules.stratagems);
 
   const armyPresets = useArmyPresets();
   
@@ -114,36 +120,64 @@ function App() {
   const attackerUnitAbilityOptions = useRuleOptions(attackerUnitAbilityRuleOptions);
   const defenderUnitAbilityOptions = useRuleOptions(defenderUnitAbilityRuleOptions);
 
-  const activeRuleEffects = useMemo(() => {
+  // Attacker-side active rule effects: detachment rules, enhancements,
+  // stratagems, and attacker unit abilities — all from the ATTACKER panel.
+  // Kept separate from defender effects so guards can be applied cleanly.
+  const attackerActiveRuleEffects = useMemo(() => {
     return [
       ...ruleOptions.activeRuleOptions,
       ...enhancementOptions.activeEnhancementRuleEffects,
       ...stratagemOptions.activeStratagemRuleEffects,
       ...attackerUnitAbilityOptions.activeRuleOptions,
-      ...defenderUnitAbilityOptions.activeRuleOptions,
     ];
   }, [
     ruleOptions.activeRuleOptions,
     enhancementOptions.activeEnhancementRuleEffects,
     stratagemOptions.activeStratagemRuleEffects,
     attackerUnitAbilityOptions.activeRuleOptions,
-    defenderUnitAbilityOptions.activeRuleOptions,
   ]);
 
+  // Attacker modifier rules fed to the engine.
+  // Guard strips any defender-exclusive types (FEEL_NO_PAIN, INVULNERABLE_SAVE,
+  // etc.) that could accidentally appear here due to miscategorised data.
   const attackerScopedModifierRules = useMemo(() => {
-    return [
+    const raw = [
       ...attackModifiers.allActiveModifierRules,
-      ...activeRuleEffects
+      ...attackerActiveRuleEffects
         .filter((effect: RuleOption) => effect.appliesTo !== "defender")
         .flatMap((effect) => effect.modifiers),
     ];
-  }, [attackModifiers.allActiveModifierRules, activeRuleEffects]);
+    return guardAttackerModifiers(raw);
+  }, [attackModifiers.allActiveModifierRules, attackerActiveRuleEffects]);
 
+  // Defender modifier rules fed to the engine.
+  // Sources (in order):
+  //   1. Attacker detachment rules explicitly tagged appliesTo:"defender"
+  //      (e.g. rules that penalise the target, like ranged range limits)
+  //   2. Defender unit ability modifiers
+  //   3. Defender detachment / enhancement / stratagem modifiers
+  // Guard strips attacker-exclusive types (REROLL_HITS, LETHAL_HITS, etc.)
+  // from all sources — the engine is blind to rule origin and would apply
+  // them to the attacker's rolls if they reached the combined rule list.
   const defenderScopedModifierRules = useMemo(() => {
-    return activeRuleEffects
-      .filter((effect: RuleOption) => effect.appliesTo === "defender")
-      .flatMap((effect) => effect.modifiers);
-  }, [activeRuleEffects]);
+    const raw = [
+      ...attackerActiveRuleEffects
+        .filter((effect: RuleOption) => effect.appliesTo === "defender")
+        .flatMap((effect) => effect.modifiers),
+      ...defenderUnitAbilityOptions.activeRuleOptions
+        .flatMap((effect) => effect.modifiers),
+      ...defenderDetachmentRuleOptions.activeRuleModifiers,
+      ...defenderDetachmentEnhancementOptions.activeEnhancementEffects,
+      ...defenderDetachmentStratagemOptions.activeStratagemEffects,
+    ];
+    return guardDefenderModifiers(raw);
+  }, [
+    attackerActiveRuleEffects,
+    defenderUnitAbilityOptions.activeRuleOptions,
+    defenderDetachmentRuleOptions.activeRuleModifiers,
+    defenderDetachmentEnhancementOptions.activeEnhancementEffects,
+    defenderDetachmentStratagemOptions.activeStratagemEffects,
+  ]);
 
   const expectedResult = useMemo(() => {
     return calculateExpectedDamage({
@@ -368,6 +402,10 @@ function App() {
             ruleOptions={ruleOptions}
             enhancementOptions={enhancementOptions}
             stratagemOptions={stratagemOptions}
+            defenderFactionRules={defenderFactionRules}
+            defenderDetachmentRuleOptions={defenderDetachmentRuleOptions}
+            defenderDetachmentEnhancementOptions={defenderDetachmentEnhancementOptions}
+            defenderDetachmentStratagemOptions={defenderDetachmentStratagemOptions}
             expectedResult={expectedResult}
             attackBreakdownExplanation={attackBreakdownExplanation}
             compareWeapon={compareWeapon}
@@ -451,6 +489,18 @@ function App() {
             toggleEnhancement={enhancementOptions.toggleEnhancement}
             activeStratagemIds={stratagemOptions.activeStratagemIds}
             toggleStratagem={stratagemOptions.toggleStratagem}
+            defenderAvailableDetachments={defenderFactionRules.availableDetachments}
+            defenderSelectedDetachmentId={defenderFactionRules.selectedDetachmentId}
+            setDefenderSelectedDetachmentId={defenderFactionRules.setSelectedDetachmentId}
+            defenderAvailableRuleOptions={defenderFactionRules.allAvailableRuleOptions}
+            activeDefenderDetachmentRuleOptionIds={defenderDetachmentRuleOptions.activeRuleOptionIds}
+            toggleDefenderDetachmentRuleOption={defenderDetachmentRuleOptions.toggleRuleOption}
+            defenderDetachmentStratagems={defenderFactionRules.stratagems}
+            defenderDetachmentEnhancements={defenderFactionRules.enhancements}
+            activeDefenderDetachmentEnhancementIds={defenderDetachmentEnhancementOptions.activeEnhancementIds}
+            toggleDefenderDetachmentEnhancement={defenderDetachmentEnhancementOptions.toggleEnhancement}
+            activeDefenderDetachmentStratagemIds={defenderDetachmentStratagemOptions.activeStratagemIds}
+            toggleDefenderDetachmentStratagem={defenderDetachmentStratagemOptions.toggleStratagem}
             attackerUnitAbilityOptions={attackerUnitAbilityRuleOptions}
             activeAttackerUnitAbilityIds={attackerUnitAbilityOptions.activeRuleOptionIds}
             toggleAttackerUnitAbility={attackerUnitAbilityOptions.toggleRuleOption}

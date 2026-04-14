@@ -1,32 +1,44 @@
-import type { ArmyPreset } from "../../types/army";
+import type { ArmyPresetV2 } from "../../types/armyPreset";
+import { loadAndMigratePreset } from "../presetUtils";
 
-const STORAGE_KEY = "df_army_presets_v1";
+const STORAGE_KEY = "df_army_presets_v2";
+const LEGACY_STORAGE_KEY = "df_army_presets_v1";
 export const FREE_LIMIT = 3;
 
-export function loadArmies(): ArmyPreset[] {
+export type ArmyDraft = Omit<ArmyPresetV2, "id" | "createdAt" | "updatedAt">;
+
+export function loadArmies(): ArmyPresetV2[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as ArmyPreset[]) : [];
+    if (raw) {
+      return (JSON.parse(raw) as ArmyPresetV2[]).map(loadAndMigratePreset);
+    }
+
+    const legacyRaw = localStorage.getItem(LEGACY_STORAGE_KEY);
+    if (!legacyRaw) {
+      return [];
+    }
+
+    const migrated = (JSON.parse(legacyRaw) as Array<ArmyPresetV2>).map(
+      loadAndMigratePreset
+    );
+    persistAll(migrated);
+    return migrated;
   } catch {
     return [];
   }
 }
 
-function persistAll(armies: ArmyPreset[]): void {
+function persistAll(armies: ArmyPresetV2[]): void {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(armies));
 }
 
-type ArmyData = Pick<ArmyPreset, "name" | "faction" | "units" | "notes">;
-
-export function createArmy(data: ArmyData): ArmyPreset {
+export function createArmy(data: ArmyDraft): ArmyPresetV2 {
   const armies = loadArmies();
   const now = Date.now();
-  const army: ArmyPreset = {
+  const army: ArmyPresetV2 = {
+    ...data,
     id: `army_${now}_${Math.random().toString(36).slice(2, 7)}`,
-    name: data.name,
-    faction: data.faction,
-    units: data.units,
-    notes: data.notes,
     createdAt: now,
     updatedAt: now,
   };
@@ -34,56 +46,65 @@ export function createArmy(data: ArmyData): ArmyPreset {
   return army;
 }
 
-export function updateArmy(id: string, data: ArmyData): ArmyPreset | null {
+export function updateArmy(id: string, data: ArmyDraft): ArmyPresetV2 | null {
   const armies = loadArmies();
-  const idx = armies.findIndex((a) => a.id === id);
-  if (idx === -1) return null;
-  const updated: ArmyPreset = {
+  const idx = armies.findIndex((army) => army.id === id);
+  if (idx === -1) {
+    return null;
+  }
+
+  const updated: ArmyPresetV2 = {
     ...armies[idx],
-    name: data.name,
-    faction: data.faction,
-    units: data.units,
-    notes: data.notes,
+    ...data,
+    id,
     updatedAt: Date.now(),
   };
+
   armies[idx] = updated;
   persistAll(armies);
   return updated;
 }
 
 export function deleteArmy(id: string): void {
-  persistAll(loadArmies().filter((a) => a.id !== id));
+  persistAll(loadArmies().filter((army) => army.id !== id));
 }
 
 function makeCopyName(name: string): string {
-  // Strip existing " (copy)" or " (copy N)" suffix
   const base = name.replace(/ \(copy(?: \d+)?\)$/, "").trim();
-  // Check if any army already uses this base to pick the right number
   const armies = loadArmies();
-  const pattern = new RegExp(`^${base.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")} \\(copy(?: (\\d+))?\\)$`);
+  const pattern = new RegExp(
+    `^${base.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")} \\(copy(?: (\\d+))?\\)$`
+  );
   const existingNumbers = armies
-    .map((a) => {
-      const m = a.name.match(pattern);
-      return m ? (m[1] ? parseInt(m[1]) : 1) : null;
+    .map((army) => {
+      const match = army.name.match(pattern);
+      return match ? (match[1] ? parseInt(match[1], 10) : 1) : null;
     })
-    .filter((n): n is number => n !== null);
-  if (existingNumbers.length === 0) return `${base} (copy)`;
-  const max = Math.max(...existingNumbers);
-  return `${base} (copy ${max + 1})`;
+    .filter((value): value is number => value !== null);
+
+  if (existingNumbers.length === 0) {
+    return `${base} (copy)`;
+  }
+
+  return `${base} (copy ${Math.max(...existingNumbers) + 1})`;
 }
 
-export function duplicateArmy(id: string): ArmyPreset | null {
+export function duplicateArmy(id: string): ArmyPresetV2 | null {
   const armies = loadArmies();
-  const source = armies.find((a) => a.id === id);
-  if (!source) return null;
+  const source = armies.find((army) => army.id === id);
+  if (!source) {
+    return null;
+  }
+
   const now = Date.now();
-  const copy: ArmyPreset = {
+  const copy: ArmyPresetV2 = {
     ...source,
     id: `army_${now}_${Math.random().toString(36).slice(2, 7)}`,
     name: makeCopyName(source.name),
     createdAt: now,
     updatedAt: now,
   };
+
   persistAll([...armies, copy]);
   return copy;
 }

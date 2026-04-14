@@ -1,3 +1,5 @@
+import { useState, useRef, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { formatSpecialRule } from "../lib/rules";
 import type { SpecialRule, Unit, UnitAbility, Weapon } from "../types/combat";
 import type {
@@ -25,6 +27,7 @@ type ModifiersPanelProps = {
   selectedWeapon: Weapon;
   attacker: Unit;
   defender: Unit;
+  // Attacker detachment
   availableDetachments: DetachmentConfig[];
   selectedDetachmentId: string;
   setSelectedDetachmentId: React.Dispatch<React.SetStateAction<string>>;
@@ -38,6 +41,20 @@ type ModifiersPanelProps = {
   toggleEnhancement: (id: string) => void;
   activeStratagemIds: string[];
   toggleStratagem: (id: string) => void;
+  // Defender detachment
+  defenderAvailableDetachments: DetachmentConfig[];
+  defenderSelectedDetachmentId: string;
+  setDefenderSelectedDetachmentId: React.Dispatch<React.SetStateAction<string>>;
+  defenderAvailableRuleOptions: RuleOption[];
+  activeDefenderDetachmentRuleOptionIds: string[];
+  toggleDefenderDetachmentRuleOption: (id: string) => void;
+  defenderDetachmentStratagems: StratagemConfig[];
+  defenderDetachmentEnhancements: EnhancementConfig[];
+  activeDefenderDetachmentEnhancementIds: string[];
+  toggleDefenderDetachmentEnhancement: (id: string) => void;
+  activeDefenderDetachmentStratagemIds: string[];
+  toggleDefenderDetachmentStratagem: (id: string) => void;
+  // Unit abilities
   attackerUnitAbilityOptions: RuleOption[];
   activeAttackerUnitAbilityIds: string[];
   toggleAttackerUnitAbility: (id: string) => void;
@@ -83,76 +100,41 @@ type ModifiersPanelModel = {
 export function ModifiersPanel(props: ModifiersPanelProps) {
   const {
     availableDetachments,
-    selectedDetachment,
     selectedDetachmentId,
     setSelectedDetachmentId,
+    defenderAvailableDetachments,
+    defenderSelectedDetachmentId,
+    setDefenderSelectedDetachmentId,
     attacker,
     defender,
   } = props;
-  const selectedDetachmentDescription = selectedDetachment?.description
-    ? formatDescription(selectedDetachment.description)
-    : "";
   const model = buildModifiersPanelModel(props);
 
   return (
     <div className="card card--modifiers">
       <div className="panel-heading">
         <p className="panel-eyebrow">Rules Engine</p>
-        <h2>Modifiers & Rules</h2>
-        <p className="muted-text">
-          See what affects the attacking unit, what protects the defender, and
-          what stays informational for this matchup.
-        </p>
+        <h2>Modifiers &amp; Rules</h2>
       </div>
-
-      {availableDetachments.length > 0 && (
-        <CollapsibleSection title="Detachment">
-          <div className="rules-section__content">
-            <label>
-              Active detachment
-              <select
-                value={selectedDetachmentId || selectedDetachment?.id || ""}
-                onChange={(e) => setSelectedDetachmentId(e.target.value)}
-              >
-                {availableDetachments.map((detachment) => (
-                  <option key={detachment.id} value={detachment.id}>
-                    {detachment.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-
-            {selectedDetachment && (
-              <div className="detachment-summary">
-                <HoverInfo
-                  label={
-                    <span className="detachment-summary__name">
-                      {selectedDetachment.name}
-                    </span>
-                  }
-                  tooltip={buildDetachmentTooltip(selectedDetachment)}
-                />
-                {selectedDetachmentDescription && (
-                  <p className="muted-text">{selectedDetachmentDescription}</p>
-                )}
-              </div>
-            )}
-          </div>
-        </CollapsibleSection>
-      )}
 
       <div className="combat-role-layout">
         <CombatRoleSection
           role="Attacker"
           unitName={attacker.name}
-          summary="Affects the attacking unit, its weapon profile, and the final output of the attack."
+          summary="Weapon profile, hit/wound modifiers, active buffs."
           panel={model.attacker}
+          availableDetachments={availableDetachments}
+          selectedDetachmentId={selectedDetachmentId}
+          onDetachmentChange={setSelectedDetachmentId}
         />
         <CombatRoleSection
           role="Defender"
           unitName={defender.name}
-          summary="Affects the defending unit, its saves, durability, and targeting protection."
+          summary="Saves, feel no pain, durability, cover effects."
           panel={model.defender}
+          availableDetachments={defenderAvailableDetachments}
+          selectedDetachmentId={defenderSelectedDetachmentId}
+          onDetachmentChange={setDefenderSelectedDetachmentId}
         />
       </div>
     </div>
@@ -171,11 +153,50 @@ export function buildModifiersPanelModel(
   const attackerCoreRules = getCoreUnitRules(props.attacker);
   const defenderCoreRules = getCoreUnitRules(props.defender);
 
+  const defenderDetachmentActiveRules = dedupeDisplayRules([
+    ...props.defenderAvailableRuleOptions.map((rule) =>
+      createToggleRule({
+        id: `defender-det-rule-${rule.id}`,
+        label: rule.displayLabel ?? formatUiName(rule.name),
+        tooltip: buildRuleOptionTooltip(rule),
+        source: "Faction / Detachment",
+        side: "defender",
+        checked: props.activeDefenderDetachmentRuleOptionIds.includes(rule.id),
+        onToggle: () => props.toggleDefenderDetachmentRuleOption(rule.id),
+        group: inferRuleOptionGroup(rule),
+      })
+    ),
+    ...props.defenderDetachmentEnhancements.map((enhancement) =>
+      createToggleRule({
+        id: `defender-det-enhancement-${enhancement.id}`,
+        label: formatUiName(enhancement.name),
+        tooltip: buildEnhancementTooltip(enhancement),
+        source: "Enhancement",
+        side: "defender",
+        checked: props.activeDefenderDetachmentEnhancementIds.includes(enhancement.id),
+        onToggle: () => props.toggleDefenderDetachmentEnhancement(enhancement.id),
+        group: inferRuleCollectionGroup(enhancement.effects),
+      })
+    ),
+    ...props.defenderDetachmentStratagems.map((stratagem) =>
+      createToggleRule({
+        id: `defender-det-stratagem-${stratagem.id}`,
+        label: formatUiName(stratagem.name),
+        tooltip: buildStratagemTooltip(stratagem),
+        source: "Stratagem",
+        side: "defender",
+        checked: props.activeDefenderDetachmentStratagemIds.includes(stratagem.id),
+        onToggle: () => props.toggleDefenderDetachmentStratagem(stratagem.id),
+        group: inferRuleCollectionGroup(stratagem.effects),
+      })
+    ),
+  ]);
+
   const activeRules = dedupeDisplayRules([
     ...props.availableRuleOptions.map((rule) =>
       createToggleRule({
         id: `rule-option-${rule.id}`,
-        label: formatUiName(rule.name),
+        label: rule.displayLabel ?? formatUiName(rule.name),
         tooltip: buildRuleOptionTooltip(rule),
         source: "Faction / Detachment",
         side: inferRuleOptionSide(rule),
@@ -208,7 +229,6 @@ export function buildModifiersPanelModel(
         group: inferRuleCollectionGroup(stratagem.effects),
       })
     ),
-    ...buildManualModifierRules(props),
     ...visibleAttackerAbilities
       .map((ability) => {
         const toggledOption = props.attackerUnitAbilityOptions.find(
@@ -221,7 +241,7 @@ export function buildModifiersPanelModel(
 
         return createToggleRule({
           id: `attacker-ability-${ability.id}`,
-          label: formatUiName(ability.name),
+          label: ability.displayLabel ?? toggledOption.displayLabel ?? formatUiName(ability.name),
           tooltip: buildUnitAbilityTooltip(ability),
           source: "Attacker ability",
           side: "attacker",
@@ -243,7 +263,7 @@ export function buildModifiersPanelModel(
 
         return createToggleRule({
           id: `defender-ability-${ability.id}`,
-          label: formatUiName(ability.name),
+          label: ability.displayLabel ?? toggledOption.displayLabel ?? formatUiName(ability.name),
           tooltip: buildUnitAbilityTooltip(ability),
           source: "Defender ability",
           side: "defender",
@@ -342,7 +362,7 @@ export function buildModifiersPanelModel(
       .map((ability) =>
         createInfoRule({
           id: `attacker-info-${ability.id}`,
-          label: formatUiName(ability.name),
+          label: ability.displayLabel ?? formatUiName(ability.name),
           tooltip: buildUnitAbilityTooltip(ability),
           source: "Attacker ability",
           side: "attacker",
@@ -358,7 +378,7 @@ export function buildModifiersPanelModel(
       .map((ability) =>
         createInfoRule({
           id: `defender-info-${ability.id}`,
-          label: formatUiName(ability.name),
+          label: ability.displayLabel ?? formatUiName(ability.name),
           tooltip: buildUnitAbilityTooltip(ability),
           source: "Defender ability",
           side: "defender",
@@ -378,7 +398,10 @@ export function buildModifiersPanelModel(
       ),
     },
     defender: {
-      activeRules: activeRules.filter((rule) => rule.side === "defender"),
+      activeRules: dedupeDisplayRules([
+        ...activeRules.filter((rule) => rule.side === "defender"),
+        ...defenderDetachmentActiveRules,
+      ]),
       derivedRows: derivedRows.filter((rule) => rule.side === "defender"),
       derivedBuckets: buildDerivedBuckets(
         derivedRules.filter((rule) => rule.side === "defender")
@@ -439,58 +462,6 @@ export function classifyRuleGroup(rule: SpecialRule): DisplayRuleGroup {
   }
 }
 
-function buildManualModifierRules(
-  props: Pick<
-    ModifiersPanelProps,
-    "activeAttackModifiers" | "setActiveAttackModifiers"
-  >
-): DisplayRule[] {
-  return [
-    createToggleRule({
-      id: "manual-devastating-wounds",
-      label: "Devastating Wounds",
-      tooltip: "Apply Devastating Wounds as a manual attack modifier.",
-      source: "Manual",
-      side: "attacker",
-      checked: props.activeAttackModifiers.devastatingWounds,
-      onToggle: () =>
-        props.setActiveAttackModifiers((prev) => ({
-          ...prev,
-          devastatingWounds: !prev.devastatingWounds,
-        })),
-      group: "offense",
-    }),
-    createToggleRule({
-      id: "manual-lethal-hits",
-      label: "Lethal Hits",
-      tooltip: "Apply Lethal Hits as a manual attack modifier.",
-      source: "Manual",
-      side: "attacker",
-      checked: props.activeAttackModifiers.lethalHits,
-      onToggle: () =>
-        props.setActiveAttackModifiers((prev) => ({
-          ...prev,
-          lethalHits: !prev.lethalHits,
-        })),
-      group: "offense",
-    }),
-    createToggleRule({
-      id: "manual-ignores-cover",
-      label: "Ignores Cover",
-      tooltip: "Apply Ignores Cover as a manual attack modifier.",
-      source: "Manual",
-      side: "attacker",
-      checked: props.activeAttackModifiers.ignoresCover,
-      onToggle: () =>
-        props.setActiveAttackModifiers((prev) => ({
-          ...prev,
-          ignoresCover: !prev.ignoresCover,
-        })),
-      group: "offense",
-    }),
-  ];
-}
-
 function buildDerivedBuckets(rules: DisplayRule[]): RuleBucket[] {
   const order: Array<[DisplayRuleGroup, string]> = [
     ["offense", "Offense"],
@@ -508,8 +479,11 @@ function buildDerivedBuckets(rules: DisplayRule[]): RuleBucket[] {
 }
 
 function inferRuleOptionSide(
-  rule: Pick<RuleOption, "appliesTo" | "modifiers">
+  rule: Pick<RuleOption, "appliesTo" | "modifiers" | "combatRole">
 ): DisplayRuleSide {
+  if (rule.combatRole === "attacker") return "attacker";
+  if (rule.combatRole === "defender") return "defender";
+
   if (rule.appliesTo === "attacker") {
     return "attacker";
   }
@@ -523,7 +497,7 @@ function inferRuleOptionSide(
 }
 
 function inferRuleCollectionSide(
-  rules: Array<Pick<RuleOption, "appliesTo" | "modifiers">>
+  rules: Array<Pick<RuleOption, "appliesTo" | "modifiers" | "combatRole">>
 ): DisplayRuleSide {
   const counts = { attacker: 0, defender: 0 };
 
@@ -651,35 +625,53 @@ function dedupeDisplayRules(rules: DisplayRule[]): DisplayRule[] {
   });
 }
 
-type CollapsibleSectionProps = {
+// ── Portal tooltip ────────────────────────────────────────────────────────
+
+function usePortalTooltip() {
+  const [visible, setVisible] = useState(false);
+  const [coords, setCoords] = useState({ top: 0, left: 0 });
+
+  const show = useCallback((el: HTMLElement) => {
+    const rect = el.getBoundingClientRect();
+    const left = Math.max(
+      8,
+      Math.min(rect.left + window.scrollX, window.innerWidth - 468)
+    );
+    setCoords({ top: rect.bottom + window.scrollY + 6, left });
+    setVisible(true);
+  }, []);
+
+  const hide = useCallback(() => setVisible(false), []);
+
+  return { visible, coords, show, hide };
+}
+
+// ── Sub-section header (no <details> to avoid flex/block conflicts) ──────
+
+type CrpSubSectionProps = {
   title: string;
-  defaultOpen?: boolean;
   children: React.ReactNode;
 };
 
-function CollapsibleSection({
-  title,
-  defaultOpen = true,
-  children,
-}: CollapsibleSectionProps) {
+function CrpSubSection({ title, children }: CrpSubSectionProps) {
   return (
-    <details className="rules-section rules-section--collapsible" open={defaultOpen}>
-      <summary className="rules-section__summary">
-        <span>{title}</span>
-        <span className="rules-section__chevron" aria-hidden="true">
-          +
-        </span>
-      </summary>
+    <div className="crp-sub">
+      <p className="crp-sub__title">{title}</p>
       {children}
-    </details>
+    </div>
   );
 }
+
+// ── Combat role panel ─────────────────────────────────────────────────────
 
 type CombatRoleSectionProps = {
   role: "Attacker" | "Defender";
   unitName: string;
   summary: string;
   panel: CombatRolePanelModel;
+  availableDetachments?: DetachmentConfig[];
+  selectedDetachmentId?: string;
+  onDetachmentChange?: (id: string) => void;
 };
 
 function CombatRoleSection({
@@ -687,202 +679,220 @@ function CombatRoleSection({
   unitName,
   summary,
   panel,
+  availableDetachments,
+  selectedDetachmentId,
+  onDetachmentChange,
 }: CombatRoleSectionProps) {
+  const selectedDetachment = availableDetachments?.find(
+    (d) => d.id === selectedDetachmentId
+  );
+  const { visible: detTooltipVisible, coords: detCoords, show: detShow, hide: detHide } =
+    usePortalTooltip();
+  const detSelectRef = useRef<HTMLSelectElement>(null);
+
+  const detachmentRules = panel.activeRules.filter(
+    (r) => r.source === "Faction / Detachment"
+  );
+  const enhancementRules = panel.activeRules.filter(
+    (r) => r.source === "Enhancement"
+  );
+  const stratagemRules = panel.activeRules.filter(
+    (r) => r.source === "Stratagem"
+  );
+  const abilityRules = panel.activeRules.filter(
+    (r) => r.source === "Attacker ability" || r.source === "Defender ability"
+  );
+
+  // Flatten all derived effects into a single chip list
+  const allDerivedChips: Array<{ id: string; label: string; tooltip: string }> = [
+    ...panel.derivedRows.map((r) => ({
+      id: r.id,
+      label: getCompactRuleLabel(r),
+      tooltip: r.tooltip,
+    })),
+    ...panel.derivedBuckets.flatMap((bucket) =>
+      bucket.rules.map((r) => ({
+        id: r.id,
+        label: getCompactRuleLabel(r),
+        tooltip: r.tooltip,
+      }))
+    ),
+  ];
+
+  const passiveChips = panel.passiveInfoRules.map((r) => ({
+    id: r.id,
+    label: r.label,
+    tooltip: r.tooltip,
+  }));
+
+  const hasAnyToggles =
+    detachmentRules.length > 0 ||
+    enhancementRules.length > 0 ||
+    stratagemRules.length > 0 ||
+    abilityRules.length > 0;
+
   return (
-    <section className="combat-role-panel">
-      <div className="combat-role-panel__header">
-        <p className="combat-role-panel__eyebrow">{role}</p>
-        <h3 className="combat-role-panel__title">{unitName}</h3>
-        <p className="muted-text">{summary}</p>
+    <section className="crp">
+      {/* Header */}
+      <div className="crp__head">
+        <p className="crp__eyebrow">{role}</p>
+        <h3 className="crp__name">{unitName}</h3>
+        <p className="crp__summary">{summary}</p>
       </div>
 
-      <RuleGroup title="Active Effects">
-        {panel.activeRules.length > 0 ? (
-          <div className="rule-list">
-            {panel.activeRules.map((rule) => (
-              <RuleToggleRow key={rule.id} rule={rule} />
-            ))}
-          </div>
-        ) : (
-          <p className="muted-text">No toggleable effects for this side.</p>
-        )}
-      </RuleGroup>
-
-      <RuleGroup title="Derived Effects">
-        <div className="combat-role-panel__derived">
-          {panel.derivedRows.length > 0 && (
-            <div className="rule-list">
-              {panel.derivedRows.map((rule) => (
-                <RuleAuto key={rule.id} rule={rule} />
+      {/* Detachment selector */}
+      {availableDetachments && availableDetachments.length > 0 && (
+        <div className="crp__det">
+          <label className="crp__det-label">
+            <span className="crp__det-name">Detachment</span>
+            <select
+              ref={detSelectRef}
+              className="crp__det-select"
+              value={selectedDetachmentId || ""}
+              onChange={(e) => onDetachmentChange?.(e.target.value)}
+              onMouseEnter={() => detSelectRef.current && detShow(detSelectRef.current)}
+              onMouseLeave={detHide}
+            >
+              {availableDetachments.map((d) => (
+                <option key={d.id} value={d.id}>
+                  {d.name}
+                </option>
               ))}
-            </div>
-          )}
-
-          {panel.derivedBuckets.length > 0 && (
-            <div className="rule-chip-grid">
-              {panel.derivedBuckets.map((bucket) => (
-                <div key={bucket.id} className="rule-chip-group">
-                  <h4 className="rule-chip-group__title">{bucket.title}</h4>
-                  <div className="rules-list">
-                    {bucket.rules.map((rule) => (
-                      <span key={rule.id} className="rule-tag">
-                        <HoverInfo
-                          label={<span>{rule.label}</span>}
-                          tooltip={rule.tooltip}
-                        />
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {panel.derivedRows.length === 0 && panel.derivedBuckets.length === 0 && (
-            <p className="muted-text">No derived effects are active right now.</p>
+            </select>
+          </label>
+          {detTooltipVisible && selectedDetachment && createPortal(
+            <div className="tt" style={{ top: detCoords.top, left: detCoords.left }}>
+              {buildDetachmentTooltip(selectedDetachment)}
+            </div>,
+            document.body
           )}
         </div>
-      </RuleGroup>
+      )}
 
-      <RuleGroup title="Passive Info" subtle>
-        {panel.passiveInfoRules.length > 0 ? (
-          <div className="rule-info-list">
-            {panel.passiveInfoRules.map((rule) => (
-              <RuleInfo key={rule.id} rule={rule} />
+      {/* Active Toggles */}
+      {hasAnyToggles && (
+        <CrpSubSection title="Active Toggles">
+          <div className="toggle-list">
+            {detachmentRules.map((r) => (
+              <ToggleRow key={r.id} rule={r} />
+            ))}
+            {enhancementRules.map((r) => (
+              <ToggleRow key={r.id} rule={r} />
+            ))}
+            {stratagemRules.map((r) => (
+              <ToggleRow key={r.id} rule={r} />
+            ))}
+            {abilityRules.map((r) => (
+              <ToggleRow key={r.id} rule={r} />
             ))}
           </div>
-        ) : (
-          <p className="muted-text">No additional passive info for this side.</p>
-        )}
-      </RuleGroup>
+        </CrpSubSection>
+      )}
+
+      {/* Derived Effects — chips only */}
+      {allDerivedChips.length > 0 && (
+        <CrpSubSection title="Derived Effects">
+          <div className="chip-row">
+            {allDerivedChips.map((chip) => (
+              <Chip
+                key={chip.id}
+                label={chip.label}
+                tooltip={chip.tooltip}
+                className="auto-chip"
+              />
+            ))}
+          </div>
+        </CrpSubSection>
+      )}
+
+      {/* Passive Info — chips only */}
+      {passiveChips.length > 0 && (
+        <CrpSubSection title="Passive Info">
+          <div className="chip-row">
+            {passiveChips.map((chip) => (
+              <Chip
+                key={chip.id}
+                label={chip.label}
+                tooltip={chip.tooltip}
+                className="info-chip"
+              />
+            ))}
+          </div>
+        </CrpSubSection>
+      )}
     </section>
   );
 }
 
-type RuleGroupProps = {
-  title: string;
-  subtle?: boolean;
-  children: React.ReactNode;
-};
+// ── Toggle row ────────────────────────────────────────────────────────────
 
-function RuleGroup({ title, subtle = false, children }: RuleGroupProps) {
-  return (
-    <section className={`rule-group${subtle ? " rule-group--subtle" : ""}`}>
-      <h3 className="rule-group__title">{title}</h3>
-      {children}
-    </section>
-  );
-}
-
-type RuleToggleRowProps = {
-  rule: DisplayRule;
-};
-
-function RuleToggleRow({ rule }: RuleToggleRowProps) {
-  const sourceBadge = getSourceBadgeLabel(rule.source);
+function ToggleRow({ rule }: { rule: DisplayRule }) {
+  const { visible, coords, show, hide } = usePortalTooltip();
+  const labelRef = useRef<HTMLLabelElement>(null);
+  const badge = getSourceBadgeLabel(rule.source);
 
   return (
-    <label className="rule-row rule-row--toggle" title={rule.label}>
-      <span className="rule-row__toggle">
+    <>
+      <label
+        ref={labelRef}
+        className={`toggle-row${rule.checked ? " toggle-row--on" : ""}`}
+        onMouseEnter={() => labelRef.current && show(labelRef.current)}
+        onMouseLeave={hide}
+      >
         <input
+          className="toggle-row__input"
           type="checkbox"
           checked={Boolean(rule.checked)}
           onChange={rule.onToggle}
         />
-      </span>
-      <span className="rule-row__content">
-        <span className="rule-row__main">
-          <HoverInfo
-            label={
-              <span className="rule-row__title" title={rule.label}>
-                {getCompactRuleLabel(rule)}
-              </span>
-            }
-            tooltip={rule.tooltip}
-          />
-          {sourceBadge && <span className="rule-source-badge">{sourceBadge}</span>}
-        </span>
-      </span>
-    </label>
-  );
-}
-
-type RuleAutoProps = {
-  rule: DisplayRule;
-};
-
-function RuleAuto({ rule }: RuleAutoProps) {
-  const sourceBadge = getSourceBadgeLabel(rule.source);
-
-  return (
-    <div className="rule-row rule-row--auto">
-      <div className="rule-row__content">
-        <span className="rule-row__main">
-          <HoverInfo
-            label={
-              <span className="rule-row__title" title={rule.label}>
-                {getCompactRuleLabel(rule)}
-              </span>
-            }
-            tooltip={rule.tooltip}
-          />
-          {sourceBadge && (
-            <span className="rule-source-badge rule-source-badge--muted">
-              {sourceBadge}
-            </span>
-          )}
-        </span>
-      </div>
-      <span className="rule-badge">Auto</span>
-    </div>
-  );
-}
-
-type RuleInfoProps = {
-  rule: DisplayRule;
-};
-
-function RuleInfo({ rule }: RuleInfoProps) {
-  const sourceBadge = getSourceBadgeLabel(rule.source);
-
-  return (
-    <div className="rule-info-item">
-      <HoverInfo
-        label={
-          <span className="rule-info-item__title" title={rule.label}>
-            {getCompactRuleLabel(rule)}
-          </span>
-        }
-        tooltip={rule.tooltip}
-      />
-      {sourceBadge && (
-        <span className="rule-source-badge rule-source-badge--subtle">
-          {sourceBadge}
-        </span>
+        <span className="toggle-row__name">{rule.label}</span>
+        {badge && <span className="toggle-row__badge">{badge}</span>}
+      </label>
+      {visible && rule.tooltip && createPortal(
+        <div className="tt" style={{ top: coords.top, left: coords.left }}>
+          {rule.tooltip}
+        </div>,
+        document.body
       )}
-    </div>
+    </>
   );
 }
 
-type HoverInfoProps = {
-  label: React.ReactNode;
-  tooltip: string;
-};
+// ── Chip — auto-chip and info-chip with portal tooltip ───────────────────
 
-function HoverInfo({ label, tooltip }: HoverInfoProps) {
-  if (!tooltip) {
-    return <span>{label}</span>;
-  }
+function Chip({
+  label,
+  tooltip,
+  className,
+}: {
+  label: string;
+  tooltip: string;
+  className: string;
+}) {
+  const { visible, coords, show, hide } = usePortalTooltip();
+  const ref = useRef<HTMLSpanElement>(null);
 
   return (
-    <span className="hover-info" tabIndex={0}>
-      <span className="hover-info__label">{label}</span>
-      <span className="hover-info__tooltip" role="tooltip">
-        {tooltip}
+    <>
+      <span
+        ref={ref}
+        className={className}
+        onMouseEnter={() => ref.current && show(ref.current)}
+        onMouseLeave={hide}
+      >
+        {label}
       </span>
-    </span>
+      {visible && tooltip && createPortal(
+        <div className="tt" style={{ top: coords.top, left: coords.left }}>
+          {tooltip}
+        </div>,
+        document.body
+      )}
+    </>
   );
 }
+
+// ── Tooltip builders ──────────────────────────────────────────────────────
 
 function buildDetachmentTooltip(detachment: DetachmentConfig): string {
   const lines = [

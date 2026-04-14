@@ -118,6 +118,8 @@ export type UnitPointsOption = {
 export type UnitAbility = {
   id: string;
   name: string;
+  /** Short sidebar label. Overrides name when present — use for long ability names. */
+  displayLabel?: string;
   description?: string;
   modifiers: SpecialRule[];
   supportLevel?: "implemented" | "planned" | "info-only";

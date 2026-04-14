@@ -43,6 +43,10 @@ interface CalculatorPageProps {
   ruleOptions: RuleOptionsState;
   enhancementOptions: EnhancementOptionsState;
   stratagemOptions: StratagemOptionsState;
+  defenderFactionRules: FactionRulesState;
+  defenderDetachmentRuleOptions: RuleOptionsState;
+  defenderDetachmentEnhancementOptions: EnhancementOptionsState;
+  defenderDetachmentStratagemOptions: StratagemOptionsState;
   expectedResult: ExpectedDamageResult;
   attackBreakdownExplanation: AttackBreakdownExplanation;
   compareWeapon: BattleSetupState["selectedWeapon"];
@@ -76,6 +80,10 @@ export function CalculatorPage({
   ruleOptions,
   enhancementOptions,
   stratagemOptions,
+  defenderFactionRules,
+  defenderDetachmentRuleOptions,
+  defenderDetachmentEnhancementOptions,
+  defenderDetachmentStratagemOptions,
   attackerScopedModifierRules,
   defenderScopedModifierRules,
   mode,
@@ -177,7 +185,6 @@ export function CalculatorPage({
 
       {/* Results Grid */}
       <div className="calculator-page__results" ref={resultsRef}>
-        <div className="workspace-grid">
         <div className="workspace-main">
           <SimulationPanel
             mode={mode}
@@ -194,51 +201,60 @@ export function CalculatorPage({
             <ExpectedResultPanel expectedResult={expectedResult} />
             <AttackBreakdownSourcesPanel explanation={attackBreakdownExplanation} />
           </div>
-
-          {battleSetup.attacker.weapons.length > 1 && (
-            <CompareWeaponsPanel
-              weaponA={battleSetup.selectedWeapon}
-              weaponB={compareWeapon}
-              compareWeaponId={compareWeaponId}
-              setCompareWeaponId={setCompareWeaponId}
-              availableWeapons={battleSetup.attacker.weapons}
-              resultA={expectedResult}
-              resultB={compareResult}
-            />
-          )}
         </div>
 
-        <div className="workspace-sidebar">
-          <ModifiersPanel
-            activeAttackModifiers={attackModifiers.activeAttackModifiers}
-            setActiveAttackModifiers={attackModifiers.setActiveAttackModifiers}
-            attackerActiveModifierRules={attackerScopedModifierRules}
-            defenderActiveModifierRules={defenderScopedModifierRules}
-            selectedWeapon={battleSetup.selectedWeapon}
-            attacker={battleSetup.attacker}
-            defender={battleSetup.defender}
-            availableDetachments={factionRules.availableDetachments}
-            selectedDetachmentId={factionRules.selectedDetachmentId}
-            setSelectedDetachmentId={factionRules.setSelectedDetachmentId}
-            selectedDetachment={factionRules.selectedDetachment}
-            availableRuleOptions={factionRules.allAvailableRuleOptions}
-            activeRuleOptionIds={ruleOptions.activeRuleOptionIds}
-            toggleRuleOption={ruleOptions.toggleRuleOption}
-            stratagems={factionRules.stratagems}
-            enhancements={factionRules.enhancements}
-            activeEnhancementIds={enhancementOptions.activeEnhancementIds}
-            toggleEnhancement={enhancementOptions.toggleEnhancement}
-            activeStratagemIds={stratagemOptions.activeStratagemIds}
-            toggleStratagem={stratagemOptions.toggleStratagem}
-            attackerUnitAbilityOptions={attackerUnitAbilityRuleOptions}
-            activeAttackerUnitAbilityIds={attackerUnitAbilityOptions.activeRuleOptionIds}
-            toggleAttackerUnitAbility={attackerUnitAbilityOptions.toggleRuleOption}
-            defenderUnitAbilityOptions={defenderUnitAbilityRuleOptions}
-            activeDefenderUnitAbilityIds={defenderUnitAbilityOptions.activeRuleOptionIds}
-            toggleDefenderUnitAbility={defenderUnitAbilityOptions.toggleRuleOption}
+        <ModifiersPanel
+          activeAttackModifiers={attackModifiers.activeAttackModifiers}
+          setActiveAttackModifiers={attackModifiers.setActiveAttackModifiers}
+          attackerActiveModifierRules={attackerScopedModifierRules}
+          defenderActiveModifierRules={defenderScopedModifierRules}
+          selectedWeapon={battleSetup.selectedWeapon}
+          attacker={battleSetup.attacker}
+          defender={battleSetup.defender}
+          availableDetachments={factionRules.availableDetachments}
+          selectedDetachmentId={factionRules.selectedDetachmentId}
+          setSelectedDetachmentId={factionRules.setSelectedDetachmentId}
+          selectedDetachment={factionRules.selectedDetachment}
+          availableRuleOptions={factionRules.allAvailableRuleOptions}
+          activeRuleOptionIds={ruleOptions.activeRuleOptionIds}
+          toggleRuleOption={ruleOptions.toggleRuleOption}
+          stratagems={factionRules.stratagems}
+          enhancements={factionRules.enhancements}
+          activeEnhancementIds={enhancementOptions.activeEnhancementIds}
+          toggleEnhancement={enhancementOptions.toggleEnhancement}
+          activeStratagemIds={stratagemOptions.activeStratagemIds}
+          toggleStratagem={stratagemOptions.toggleStratagem}
+          defenderAvailableDetachments={defenderFactionRules.availableDetachments}
+          defenderSelectedDetachmentId={defenderFactionRules.selectedDetachmentId}
+          setDefenderSelectedDetachmentId={defenderFactionRules.setSelectedDetachmentId}
+          defenderAvailableRuleOptions={defenderFactionRules.allAvailableRuleOptions}
+          activeDefenderDetachmentRuleOptionIds={defenderDetachmentRuleOptions.activeRuleOptionIds}
+          toggleDefenderDetachmentRuleOption={defenderDetachmentRuleOptions.toggleRuleOption}
+          defenderDetachmentStratagems={defenderFactionRules.stratagems}
+          defenderDetachmentEnhancements={defenderFactionRules.enhancements}
+          activeDefenderDetachmentEnhancementIds={defenderDetachmentEnhancementOptions.activeEnhancementIds}
+          toggleDefenderDetachmentEnhancement={defenderDetachmentEnhancementOptions.toggleEnhancement}
+          activeDefenderDetachmentStratagemIds={defenderDetachmentStratagemOptions.activeStratagemIds}
+          toggleDefenderDetachmentStratagem={defenderDetachmentStratagemOptions.toggleStratagem}
+          attackerUnitAbilityOptions={attackerUnitAbilityRuleOptions}
+          activeAttackerUnitAbilityIds={attackerUnitAbilityOptions.activeRuleOptionIds}
+          toggleAttackerUnitAbility={attackerUnitAbilityOptions.toggleRuleOption}
+          defenderUnitAbilityOptions={defenderUnitAbilityRuleOptions}
+          activeDefenderUnitAbilityIds={defenderUnitAbilityOptions.activeRuleOptionIds}
+          toggleDefenderUnitAbility={defenderUnitAbilityOptions.toggleRuleOption}
+        />
+
+        {battleSetup.attacker.weapons.length > 1 && (
+          <CompareWeaponsPanel
+            weaponA={battleSetup.selectedWeapon}
+            weaponB={compareWeapon}
+            compareWeaponId={compareWeaponId}
+            setCompareWeaponId={setCompareWeaponId}
+            availableWeapons={battleSetup.attacker.weapons}
+            resultA={expectedResult}
+            resultB={compareResult}
           />
-        </div>
-      </div>
+        )}
       </div>
 
       <section className="calculator-page__info">

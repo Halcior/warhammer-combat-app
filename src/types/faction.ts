@@ -21,6 +21,8 @@ export type RuleSupportLevel = "implemented" | "planned" | "info-only";
 export type RuleOption = {
   id: string;
   name: string;
+  /** Short sidebar label. Overrides name when present — use for long ability names. */
+  displayLabel?: string;
   description?: string;
   appliesTo: RuleApplicationTarget;
   phase?: CombatPhase;
@@ -28,6 +30,8 @@ export type RuleOption = {
   isToggle?: boolean;
   supportLevel?: RuleSupportLevel;
   engineTags?: string[];
+  /** Explicit combat role. Overrides the inferred side when present. */
+  combatRole?: "attacker" | "defender" | "shared";
 
   selectionGroup?: string;
   maxSelectionsInGroup?: number;

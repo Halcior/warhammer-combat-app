@@ -225,6 +225,41 @@ describe("CalculatorPage -> ModifiersPanel integration", () => {
           activeStratagemRuleEffects: [],
           activeStratagemEffects: [],
         }}
+        defenderFactionRules={{
+          availableDetachments: [],
+          selectedDetachmentId: "",
+          setSelectedDetachmentId: () => undefined,
+          selectedDetachment: {
+            id: "detachment-2",
+            name: "Defender Detachment",
+            ruleOptions: [],
+            stratagems: [],
+            enhancements: [],
+          },
+          allAvailableRuleOptions: [],
+          stratagems: [],
+          enhancements: [],
+        }}
+        defenderDetachmentRuleOptions={{
+          activeRuleOptionIds: [],
+          setActiveRuleOptionIds: () => undefined,
+          activeRuleOptions: [],
+          activeRuleModifiers: [],
+          activeEngineTags: [],
+          toggleRuleOption: () => undefined,
+        }}
+        defenderDetachmentEnhancementOptions={{
+          activeEnhancementIds: [],
+          toggleEnhancement: () => undefined,
+          activeEnhancementRuleEffects: [],
+          activeEnhancementEffects: [],
+        }}
+        defenderDetachmentStratagemOptions={{
+          activeStratagemIds: [],
+          toggleStratagem: () => undefined,
+          activeStratagemRuleEffects: [],
+          activeStratagemEffects: [],
+        }}
         expectedResult={{
           totalAttacks: 2,
           hitTarget: 4,

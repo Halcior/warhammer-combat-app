@@ -1,22 +1,22 @@
 import { useState } from "react";
-import type { ArmyPreset } from "../types/army";
+import type { ArmyPresetV2 } from "../types/armyPreset";
 import * as storage from "../lib/storage/armyStorage";
 
-type ArmyData = Pick<ArmyPreset, "name" | "faction" | "units" | "notes">;
+type ArmyDraft = storage.ArmyDraft;
 
 export function useArmyPresets() {
-  const [armies, setArmies] = useState<ArmyPreset[]>(() => storage.loadArmies());
+  const [armies, setArmies] = useState<ArmyPresetV2[]>(() => storage.loadArmies());
 
   function refresh() {
     setArmies(storage.loadArmies());
   }
 
-  function addArmy(data: ArmyData) {
+  function addArmy(data: ArmyDraft) {
     storage.createArmy(data);
     refresh();
   }
 
-  function editArmy(id: string, data: ArmyData) {
+  function editArmy(id: string, data: ArmyDraft) {
     storage.updateArmy(id, data);
     refresh();
   }

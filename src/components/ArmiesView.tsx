@@ -1,342 +1,18 @@
 import { useMemo, useState } from "react";
 import { units } from "../data/units";
-import type { ArmyPreset, SavedUnit } from "../types/army";
+import { detachments } from "../data/detachments";
+import { ArmyBuilder } from "./sections";
+import { calculateUnitPoints } from "../lib/presetUtils";
 import type { AppView } from "./AppNav";
-
-// ── Helpers ──────────────────────────────────────────────────────────────────
-
-const factions = [...new Set(units.map((u) => u.faction))].sort();
-
-function unitsByFaction(faction: string) {
-  return units.filter((u) => u.faction === faction);
-}
-
-function unitById(unitId: string) {
-  return units.find((u) => u.id === unitId) ?? null;
-}
-
-// ── Army Card ─────────────────────────────────────────────────────────────────
-
-function ArmyCard({
-  army,
-  onEdit,
-  onDelete,
-  onDuplicate,
-  onLoadInWorkspace,
-}: {
-  army: ArmyPreset;
-  onEdit: () => void;
-  onDelete: () => void;
-  onDuplicate: () => void;
-  onLoadInWorkspace: () => void;
-}) {
-  return (
-    <div className="card army-card">
-      <div>
-        <p className="army-card__faction">{army.faction}</p>
-        <h3 className="army-card__name">{army.name}</h3>
-        <p className="army-card__unit-count">
-          {army.units.length} {army.units.length === 1 ? "unit" : "units"}
-        </p>
-        {army.units.length > 0 && (
-          <ul className="army-card__unit-list">
-            {army.units.slice(0, 4).map((su) => {
-              const unit = unitById(su.unitId);
-              return (
-                <li key={su.unitId + su.selectedWeaponId} className="army-card__unit-item">
-                  {su.nickname ?? unit?.name ?? su.unitId}
-                </li>
-              );
-            })}
-            {army.units.length > 4 && (
-              <li className="army-card__unit-item army-card__unit-item--more">
-                +{army.units.length - 4} more
-              </li>
-            )}
-          </ul>
-        )}
-      </div>
-
-      <div className="army-card__actions">
-        <button className="army-card__btn" onClick={onEdit}>
-          Edit
-        </button>
-        <button className="army-card__btn" onClick={onDuplicate}>
-          Duplicate
-        </button>
-        <button className="army-card__btn army-card__btn--workspace" onClick={onLoadInWorkspace}>
-          Use in Workspace
-        </button>
-        <button
-          className="army-card__btn army-card__btn--danger"
-          onClick={() => {
-            if (confirm(`Delete "${army.name}"?`)) onDelete();
-          }}
-        >
-          Delete
-        </button>
-      </div>
-    </div>
-  );
-}
-
-// ── Army Builder ──────────────────────────────────────────────────────────────
-
-type BuilderState = {
-  name: string;
-  faction: string;
-  units: SavedUnit[];
-  notes: string;
-  pickUnitId: string;
-  pickWeaponId: string;
-};
-
-function initialBuilderState(initial?: ArmyPreset): BuilderState {
-  const faction = initial?.faction ?? factions[0];
-  const factionUnits = unitsByFaction(faction);
-  const firstUnit = factionUnits[0];
-  return {
-    name: initial?.name ?? "",
-    faction,
-    units: initial?.units ?? [],
-    notes: initial?.notes ?? "",
-    pickUnitId: firstUnit?.id ?? "",
-    pickWeaponId: firstUnit?.weapons[0]?.id ?? "",
-  };
-}
-
-function ArmyBuilder({
-  initial,
-  onSave,
-  onCancel,
-}: {
-  initial?: ArmyPreset;
-  onSave: (data: Pick<ArmyPreset, "name" | "faction" | "units" | "notes">) => void;
-  onCancel: () => void;
-}) {
-  const [state, setState] = useState<BuilderState>(() =>
-    initialBuilderState(initial)
-  );
-
-  const factionUnits = useMemo(
-    () => unitsByFaction(state.faction),
-    [state.faction]
-  );
-
-  const pickUnit = useMemo(
-    () => factionUnits.find((u) => u.id === state.pickUnitId) ?? factionUnits[0],
-    [factionUnits, state.pickUnitId]
-  );
-
-  function handleFactionChange(faction: string) {
-    if (state.units.length > 0) {
-      if (!confirm(`Changing faction will remove ${state.units.length} unit(s). Continue?`)) return;
-    }
-    const newFactionUnits = unitsByFaction(faction);
-    const firstUnit = newFactionUnits[0];
-    setState((s) => ({
-      ...s,
-      faction,
-      units: [],
-      pickUnitId: firstUnit?.id ?? "",
-      pickWeaponId: firstUnit?.weapons[0]?.id ?? "",
-    }));
-  }
-
-  function handlePickUnitChange(unitId: string) {
-    const unit = factionUnits.find((u) => u.id === unitId);
-    setState((s) => ({
-      ...s,
-      pickUnitId: unitId,
-      pickWeaponId: unit?.weapons[0]?.id ?? "",
-    }));
-  }
-
-  function addUnit() {
-    if (!state.pickUnitId || !state.pickWeaponId) return;
-    const newUnit: SavedUnit = {
-      unitId: state.pickUnitId,
-      selectedWeaponId: state.pickWeaponId,
-    };
-    setState((s) => ({ ...s, units: [...s.units, newUnit] }));
-  }
-
-  function removeUnit(idx: number) {
-    setState((s) => ({
-      ...s,
-      units: s.units.filter((_, i) => i !== idx),
-    }));
-  }
-
-  function handleSave() {
-    if (!state.name.trim()) return;
-    onSave({
-      name: state.name.trim(),
-      faction: state.faction,
-      units: state.units,
-      notes: state.notes.trim() || undefined,
-    });
-  }
-
-  return (
-    <div className="card army-builder">
-      <div className="panel-heading">
-        <p className="panel-eyebrow">Army Preset</p>
-        <h2>{initial ? "Edit Army" : "New Army"}</h2>
-      </div>
-
-      <div className="army-builder__fields">
-        <div className="army-builder__field">
-          <label className="army-builder__label" htmlFor="army-name">
-            Name
-          </label>
-          <input
-            id="army-name"
-            className="army-builder__input"
-            type="text"
-            placeholder="e.g. Tournament Custodes"
-            value={state.name}
-            onChange={(e) => setState((s) => ({ ...s, name: e.target.value }))}
-          />
-        </div>
-
-        <div className="army-builder__field">
-          <label className="army-builder__label" htmlFor="army-faction">
-            Faction
-          </label>
-          <select
-            id="army-faction"
-            className="army-builder__select"
-            value={state.faction}
-            onChange={(e) => handleFactionChange(e.target.value)}
-          >
-            {factions.map((f) => (
-              <option key={f} value={f}>
-                {f}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      <div className="army-builder__section">
-        <h3 className="army-builder__section-title">Units</h3>
-
-        {state.units.length > 0 && (
-          <div className="army-builder__unit-list">
-            {state.units.map((su, idx) => {
-              const unit = unitById(su.unitId);
-              const weapon = unit?.weapons.find((w) => w.id === su.selectedWeaponId);
-              return (
-                <div key={idx} className="army-builder__unit-row">
-                  <div className="army-builder__unit-info">
-                    <input
-                      className="army-builder__nickname-input"
-                      type="text"
-                      placeholder={unit?.name ?? su.unitId}
-                      value={su.nickname ?? ""}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        setState((s) => ({
-                          ...s,
-                          units: s.units.map((u, i) =>
-                            i === idx ? { ...u, nickname: val || undefined } : u
-                          ),
-                        }));
-                      }}
-                    />
-                    <span className="army-builder__unit-weapon">
-                      {weapon?.name ?? su.selectedWeaponId}
-                    </span>
-                  </div>
-                  <button
-                    className="army-builder__remove-btn"
-                    onClick={() => removeUnit(idx)}
-                    aria-label="Remove unit"
-                  >
-                    ×
-                  </button>
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        {state.units.length === 0 && (
-          <p className="army-builder__units-hint">Add at least one unit to save this army.</p>
-        )}
-
-        <div className="army-builder__add-row">
-          <select
-            className="army-builder__select army-builder__select--grow"
-            value={state.pickUnitId}
-            onChange={(e) => handlePickUnitChange(e.target.value)}
-          >
-            {factionUnits.map((u) => (
-              <option key={u.id} value={u.id}>
-                {u.name}
-              </option>
-            ))}
-          </select>
-
-          <select
-            className="army-builder__select army-builder__select--grow"
-            value={state.pickWeaponId}
-            onChange={(e) =>
-              setState((s) => ({ ...s, pickWeaponId: e.target.value }))
-            }
-          >
-            {(pickUnit?.weapons ?? []).map((w) => (
-              <option key={w.id} value={w.id}>
-                {w.name}
-              </option>
-            ))}
-          </select>
-
-          <button className="army-builder__add-btn" onClick={addUnit}>
-            + Add
-          </button>
-        </div>
-      </div>
-
-      <div className="army-builder__field">
-        <label className="army-builder__label" htmlFor="army-notes">
-          Notes <span className="army-builder__optional">(optional)</span>
-        </label>
-        <input
-          id="army-notes"
-          className="army-builder__input"
-          type="text"
-          placeholder="e.g. Shield Host detachment, Adeptus Custodes"
-          value={state.notes}
-          onChange={(e) => setState((s) => ({ ...s, notes: e.target.value }))}
-        />
-      </div>
-
-      <div className="army-builder__footer">
-        <button className="army-builder__cancel-btn" onClick={onCancel}>
-          Cancel
-        </button>
-        <button
-          className="army-builder__save-btn"
-          onClick={handleSave}
-          disabled={!state.name.trim() || state.units.length === 0}
-        >
-          {initial ? "Save Changes" : "Create Army"}
-        </button>
-      </div>
-    </div>
-  );
-}
-
-// ── Main View ─────────────────────────────────────────────────────────────────
+import type { ArmyPresetV2 } from "../types/armyPreset";
+import type { ArmyDraft } from "../lib/storage/armyStorage";
 
 type Props = {
-  armies: ArmyPreset[];
+  armies: ArmyPresetV2[];
   canCreate: boolean;
   freeLimit: number;
-  onAdd: (data: Pick<ArmyPreset, "name" | "faction" | "units" | "notes">) => void;
-  onEdit: (id: string, data: Pick<ArmyPreset, "name" | "faction" | "units" | "notes">) => void;
+  onAdd: (data: ArmyDraft) => void;
+  onEdit: (id: string, data: ArmyDraft) => void;
   onDelete: (id: string) => void;
   onDuplicate: (id: string) => void;
   onOpenWorkspace: (armyId: string, setView: (v: AppView) => void) => void;
@@ -346,7 +22,165 @@ type Props = {
 type EditorState =
   | { mode: "idle" }
   | { mode: "creating" }
-  | { mode: "editing"; army: ArmyPreset };
+  | { mode: "editing"; army: ArmyPresetV2 };
+
+function unitById(unitId: string) {
+  return units.find((unit) => unit.id === unitId) ?? null;
+}
+
+function toArmyDraft(preset: ArmyPresetV2, detachmentName?: string): ArmyDraft {
+  return {
+    name: preset.name,
+    faction: preset.faction,
+    units: preset.units,
+    detachmentId: preset.detachmentId,
+    detachmentName: detachmentName ?? preset.detachmentName,
+    totalPoints: preset.totalPoints,
+    pointsLimit: preset.pointsLimit,
+    pointsBreakdown: preset.pointsBreakdown,
+    notes: preset.notes,
+    purpose: preset.purpose,
+    tags: preset.tags,
+    createdAtReadable: preset.createdAtReadable,
+    isPublic: preset.isPublic,
+    authorId: preset.authorId,
+    forkedFromId: preset.forkedFromId,
+  };
+}
+
+function buildDetachmentsByFaction() {
+  return detachments.reduce<Record<string, Array<{ id: string; name: string }>>>(
+    (accumulator, detachment) => {
+      const current = accumulator[detachment.factionName] ?? [];
+
+      if (!current.some((item) => item.id === detachment.id)) {
+        current.push({ id: detachment.id, name: detachment.name });
+      }
+
+      accumulator[detachment.factionName] = current.sort((left, right) =>
+        left.name.localeCompare(right.name)
+      );
+      return accumulator;
+    },
+    {}
+  );
+}
+
+function buildEnhancementsByDetachment() {
+  return detachments.reduce<
+    Record<string, Array<{ id: string; name: string; description?: string; cost?: number }>>
+  >((accumulator, detachment) => {
+    accumulator[detachment.id] = [...detachment.enhancements]
+      .map((enhancement) => ({
+        id: enhancement.id,
+        name: enhancement.name,
+        description: enhancement.description,
+        cost: enhancement.points,
+      }))
+      .sort((left, right) => left.name.localeCompare(right.name));
+
+    return accumulator;
+  }, {});
+}
+
+function ArmyPresetCard({
+  army,
+  onEdit,
+  onDelete,
+  onDuplicate,
+  onLoadInWorkspace,
+}: {
+  army: ArmyPresetV2;
+  onEdit: () => void;
+  onDelete: () => void;
+  onDuplicate: () => void;
+  onLoadInWorkspace: () => void;
+}) {
+  return (
+    <article className="card army-card army-card--preset">
+      <div className="army-card__topline">
+        <p className="army-card__faction">{army.faction}</p>
+        <span className="army-card__points">
+          {army.totalPoints > 0 ? `${army.totalPoints} pts` : "Points pending"}
+        </span>
+      </div>
+
+      <div className="army-card__header">
+        <h3 className="army-card__name">{army.name}</h3>
+        {army.detachmentName && (
+          <p className="army-card__detachment">{army.detachmentName}</p>
+        )}
+      </div>
+
+      <div className="army-card__stats">
+        <div className="army-card__stat">
+          <span className="army-card__stat-label">Units</span>
+          <span className="army-card__stat-value">{army.units.length}</span>
+        </div>
+        <div className="army-card__stat">
+          <span className="army-card__stat-label">Limit</span>
+          <span className="army-card__stat-value">
+            {army.pointsLimit ? `${army.pointsLimit} pts` : "Unlimited"}
+          </span>
+        </div>
+      </div>
+
+      {army.units.length > 0 && (
+        <div className="army-card__units">
+          <p className="army-card__units-label">Preset preview</p>
+          <ul className="army-card__units-list">
+            {army.units.slice(0, 4).map((unit, index) => (
+              <li
+                key={unit.instanceId ?? `${unit.unitId}-${unit.addedAt ?? index}`}
+                className="army-card__unit-item"
+              >
+                <span className="army-card__unit-name">
+                  {unit.nickname || unitById(unit.unitId)?.name || unit.unitId}
+                </span>
+                <span className="army-card__unit-meta">
+                  {unit.modelCount} models
+                  {calculateUnitPoints(unit) > 0 ? ` • ${calculateUnitPoints(unit)} pts` : ""}
+                </span>
+              </li>
+            ))}
+            {army.units.length > 4 && (
+              <li className="army-card__unit-item army-card__unit-item--more">
+                +{army.units.length - 4} more units
+              </li>
+            )}
+          </ul>
+        </div>
+      )}
+
+      {army.notes && <p className="army-card__notes">{army.notes}</p>}
+
+      <div className="army-card__actions">
+        <button className="army-card__action-btn" onClick={onEdit}>
+          Edit
+        </button>
+        <button className="army-card__action-btn" onClick={onDuplicate}>
+          Duplicate
+        </button>
+        <button
+          className="army-card__action-btn army-card__action-btn--workspace"
+          onClick={onLoadInWorkspace}
+        >
+          Open in Workspace
+        </button>
+        <button
+          className="army-card__action-btn army-card__action-btn--danger"
+          onClick={() => {
+            if (confirm(`Delete "${army.name}"?`)) {
+              onDelete();
+            }
+          }}
+        >
+          Delete
+        </button>
+      </div>
+    </article>
+  );
+}
 
 export function ArmiesView({
   armies,
@@ -361,14 +195,45 @@ export function ArmiesView({
 }: Props) {
   const [editor, setEditor] = useState<EditorState>({ mode: "idle" });
 
+  const factions = useMemo(
+    () => [...new Set(units.map((unit) => unit.faction))].sort(),
+    []
+  );
+  const unitDefinitions = useMemo(
+    () => new Map(units.map((unit) => [unit.id, unit])),
+    []
+  );
+  const detachmentsByFaction = useMemo(buildDetachmentsByFaction, []);
+  const enhancementsByDetachment = useMemo(buildEnhancementsByDetachment, []);
+  const availableLeaders = useMemo(
+    () =>
+      units.filter((unit) =>
+        (unit.keywords ?? []).some(
+          (keyword) => keyword.toUpperCase() === "CHARACTER"
+        )
+      ),
+    []
+  );
+
   if (editor.mode === "creating") {
     return (
       <ArmyBuilder
-        onSave={(data) => {
-          onAdd(data);
+        onSave={(preset) => {
+          const detachmentName =
+            detachmentsByFaction[preset.faction]?.find(
+              (item) => item.id === preset.detachmentId
+            )?.name ?? preset.detachmentName;
+
+          onAdd(toArmyDraft(preset, detachmentName));
           setEditor({ mode: "idle" });
         }}
         onCancel={() => setEditor({ mode: "idle" })}
+        factions={factions}
+        detachmentsByFaction={detachmentsByFaction}
+        unitDefinitions={unitDefinitions}
+        availableUnits={units}
+        availableLeaders={availableLeaders}
+        availableEnhancementsByDetachment={enhancementsByDetachment}
       />
     );
   }
@@ -377,24 +242,35 @@ export function ArmiesView({
     return (
       <ArmyBuilder
         initial={editor.army}
-        onSave={(data) => {
-          onEdit(editor.army.id, data);
+        onSave={(preset) => {
+          const detachmentName =
+            detachmentsByFaction[preset.faction]?.find(
+              (item) => item.id === preset.detachmentId
+            )?.name ?? preset.detachmentName;
+
+          onEdit(editor.army.id, toArmyDraft(preset, detachmentName));
           setEditor({ mode: "idle" });
         }}
         onCancel={() => setEditor({ mode: "idle" })}
+        factions={factions}
+        detachmentsByFaction={detachmentsByFaction}
+        unitDefinitions={unitDefinitions}
+        availableUnits={units}
+        availableLeaders={availableLeaders}
+        availableEnhancementsByDetachment={enhancementsByDetachment}
       />
     );
   }
 
   return (
-    <div>
+    <div className="armies-view">
       <div className="armies-view__header">
         <div>
           <p className="panel-eyebrow">Saved Configurations</p>
           <h2 className="armies-view__title">My Armies</h2>
           <p className="muted-text">
-            Save unit lineups to load instantly into the calculator or battle
-            workspace.
+            Build once, keep points visible, and reopen the same army instantly
+            in calculator or workspace flow.
           </p>
         </div>
 
@@ -420,7 +296,8 @@ export function ArmiesView({
       {armies.length === 0 ? (
         <div className="armies-view__empty">
           <p className="armies-view__empty-text">
-            No armies saved yet. Create your first preset to speed up setup.
+            No armies saved yet. Create your first preset to unlock faster matchup
+            setup and workspace comparisons.
           </p>
           <button
             className="button-link button-link--primary"
@@ -430,9 +307,9 @@ export function ArmiesView({
           </button>
         </div>
       ) : (
-        <div className="army-list">
+        <div className="army-list army-list--presets">
           {armies.map((army) => (
-            <ArmyCard
+            <ArmyPresetCard
               key={army.id}
               army={army}
               onEdit={() => setEditor({ mode: "editing", army })}

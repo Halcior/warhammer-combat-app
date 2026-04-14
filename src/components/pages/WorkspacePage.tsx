@@ -4,7 +4,7 @@ import { SimulationPanel } from "../SimulationPanel";
 import { ExpectedResultPanel } from "../ExpectedResultPanel";
 import { AttackBreakdownSourcesPanel } from "../AttackBreakdownSourcesPanel";
 import { ModifiersPanel } from "../ModifiersPanel";
-import type { ArmyPreset } from "../../types/army";
+import type { ArmyPresetV2 } from "../../types/armyPreset";
 import type { AttackConditions } from "../../types/combat";
 import type { SimulationSummary } from "../../lib/combat/simulation/analyzeSimulation";
 import type { CalculationMode } from "../../lib/combat/simulation/runSimulationByMode";
@@ -12,7 +12,7 @@ import type { AttackBreakdownExplanation } from "../../lib/combat/explainAttackB
 import type { ExpectedDamageResult } from "../../lib/combat/types";
 
 interface WorkspacePageProps {
-  armies: ArmyPreset[];
+  armies: ArmyPresetV2[];
   workspaceArmyA: string | null;
   workspaceArmyB: string | null;
   setWorkspaceArmyA: (id: string | null) => void;
@@ -23,7 +23,6 @@ interface WorkspacePageProps {
   setConditions: (c: AttackConditions) => void;
   selectAttacker: (faction: string, unitId: string, weaponId: string) => void;
   selectDefender: (faction: string, unitId: string) => void;
-  // Calculation props
   expectedResult: ExpectedDamageResult;
   attackBreakdownExplanation: AttackBreakdownExplanation;
   mode: CalculationMode;
@@ -34,7 +33,6 @@ interface WorkspacePageProps {
   simulationSummary: SimulationSummary | null;
   simulationError: string | null;
   isSimulationRunning: boolean;
-  // Modifiers panel props
   activeAttackModifiers: any;
   setActiveAttackModifiers: any;
   attackerActiveModifierRules: any;
@@ -55,6 +53,18 @@ interface WorkspacePageProps {
   toggleEnhancement: (id: string) => void;
   activeStratagemIds: string[];
   toggleStratagem: (id: string) => void;
+  defenderAvailableDetachments: any;
+  defenderSelectedDetachmentId: string;
+  setDefenderSelectedDetachmentId: React.Dispatch<React.SetStateAction<string>>;
+  defenderAvailableRuleOptions: any;
+  activeDefenderDetachmentRuleOptionIds: string[];
+  toggleDefenderDetachmentRuleOption: (id: string) => void;
+  defenderDetachmentStratagems: any;
+  defenderDetachmentEnhancements: any;
+  activeDefenderDetachmentEnhancementIds: string[];
+  toggleDefenderDetachmentEnhancement: (id: string) => void;
+  activeDefenderDetachmentStratagemIds: string[];
+  toggleDefenderDetachmentStratagem: (id: string) => void;
   attackerUnitAbilityOptions: any;
   activeAttackerUnitAbilityIds: string[];
   toggleAttackerUnitAbility: (id: string) => void;
@@ -105,6 +115,18 @@ export function WorkspacePage({
   toggleEnhancement,
   activeStratagemIds,
   toggleStratagem,
+  defenderAvailableDetachments,
+  defenderSelectedDetachmentId,
+  setDefenderSelectedDetachmentId,
+  defenderAvailableRuleOptions,
+  activeDefenderDetachmentRuleOptionIds,
+  toggleDefenderDetachmentRuleOption,
+  defenderDetachmentStratagems,
+  defenderDetachmentEnhancements,
+  activeDefenderDetachmentEnhancementIds,
+  toggleDefenderDetachmentEnhancement,
+  activeDefenderDetachmentStratagemIds,
+  toggleDefenderDetachmentStratagem,
   attackerUnitAbilityOptions,
   activeAttackerUnitAbilityIds,
   toggleAttackerUnitAbility,
@@ -112,16 +134,16 @@ export function WorkspacePage({
   activeDefenderUnitAbilityIds,
   toggleDefenderUnitAbility,
 }: WorkspacePageProps) {
-  const armyA = armies.find((a) => a.id === workspaceArmyA);
-  const armyB = armies.find((a) => a.id === workspaceArmyB);
+  const armyA = armies.find((army) => army.id === workspaceArmyA);
+  const armyB = armies.find((army) => army.id === workspaceArmyB);
   const showAnalysis = armyA && armyB;
 
   return (
     <div className="workspace-page">
       <PageHeader
         title="Battle Workspace"
-        subtitle="Compare two armies and run instant matchups."
-        helperText="Load your army and your opponent's army to simulate attacks instantly."
+        subtitle="Load two saved armies, pick units instantly and pressure-test matchups."
+        helperText="This view is meant for rapid tabletop comparisons, not full army list editing."
       />
 
       <WorkspaceView
@@ -141,7 +163,8 @@ export function WorkspacePage({
       {showAnalysis && (
         <div className="workspace-page__analysis">
           <p className="workspace-page__helper-text">
-            Select units from each army to analyze their matchup.
+            Both armies are loaded. Select any unit pair above to inspect the
+            matchup and adjust the battlefield state.
           </p>
 
           <div className="workspace-grid">
@@ -185,6 +208,18 @@ export function WorkspacePage({
                 toggleEnhancement={toggleEnhancement}
                 activeStratagemIds={activeStratagemIds}
                 toggleStratagem={toggleStratagem}
+                defenderAvailableDetachments={defenderAvailableDetachments}
+                defenderSelectedDetachmentId={defenderSelectedDetachmentId}
+                setDefenderSelectedDetachmentId={setDefenderSelectedDetachmentId}
+                defenderAvailableRuleOptions={defenderAvailableRuleOptions}
+                activeDefenderDetachmentRuleOptionIds={activeDefenderDetachmentRuleOptionIds}
+                toggleDefenderDetachmentRuleOption={toggleDefenderDetachmentRuleOption}
+                defenderDetachmentStratagems={defenderDetachmentStratagems}
+                defenderDetachmentEnhancements={defenderDetachmentEnhancements}
+                activeDefenderDetachmentEnhancementIds={activeDefenderDetachmentEnhancementIds}
+                toggleDefenderDetachmentEnhancement={toggleDefenderDetachmentEnhancement}
+                activeDefenderDetachmentStratagemIds={activeDefenderDetachmentStratagemIds}
+                toggleDefenderDetachmentStratagem={toggleDefenderDetachmentStratagem}
                 attackerUnitAbilityOptions={attackerUnitAbilityOptions}
                 activeAttackerUnitAbilityIds={activeAttackerUnitAbilityIds}
                 toggleAttackerUnitAbility={toggleAttackerUnitAbility}

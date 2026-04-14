@@ -1,16 +1,50 @@
 import { useMemo } from "react";
 import { units } from "../data/units";
-import type { ArmyPreset, SavedUnit } from "../types/army";
+import type { ArmyPresetV2, SavedUnitInPreset } from "../types/armyPreset";
 import type { AttackConditions } from "../types/combat";
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
-
 function unitById(unitId: string) {
-  return units.find((u) => u.id === unitId) ?? null;
+  return units.find((unit) => unit.id === unitId) ?? null;
 }
 
+function getPresetUnitPrimaryWeapon(savedUnit: SavedUnitInPreset) {
+  const selectedWeapons = savedUnit.selectedWeapons ?? [];
+  const rangedWeapon = selectedWeapons.find((weapon) => weapon.category === "ranged")?.weaponId;
+  const meleeWeapon = selectedWeapons.find((weapon) => weapon.category === "melee")?.weaponId;
 
-// ── Army Panel ────────────────────────────────────────────────────────────────
+  return (
+    rangedWeapon ??
+    savedUnit.selectedRangedWeaponId ??
+    savedUnit.selectedWeaponId ??
+    meleeWeapon ??
+    savedUnit.selectedMeleeWeaponId
+  );
+}
+
+function getPresetUnitWeaponLabel(savedUnit: SavedUnitInPreset) {
+  const unit = unitById(savedUnit.unitId);
+  if (savedUnit.selectedWeapons && savedUnit.selectedWeapons.length > 0) {
+    return savedUnit.selectedWeapons
+      .map((weapon) => `${weapon.name}${weapon.quantity && weapon.quantity > 1 ? ` ×${weapon.quantity}` : ""}`)
+      .join(" • ");
+  }
+
+  const rangedWeapon = unit?.weapons.find(
+    (weapon) => weapon.id === savedUnit.selectedRangedWeaponId
+  );
+  const meleeWeapon = unit?.weapons.find(
+    (weapon) => weapon.id === savedUnit.selectedMeleeWeaponId
+  );
+  const primaryWeapon = unit?.weapons.find(
+    (weapon) => weapon.id === savedUnit.selectedWeaponId
+  );
+
+  if (rangedWeapon && meleeWeapon) {
+    return `${rangedWeapon.name} • ${meleeWeapon.name}`;
+  }
+
+  return rangedWeapon?.name ?? primaryWeapon?.name ?? meleeWeapon?.name ?? "Weapon not set";
+}
 
 function WorkspaceArmyPanel({
   side,
@@ -21,14 +55,14 @@ function WorkspaceArmyPanel({
   onSelectUnit,
 }: {
   side: "A" | "B";
-  armies: ArmyPreset[];
+  armies: ArmyPresetV2[];
   loadedArmyId: string | null;
   activeUnitId: string;
   onLoadArmy: (armyId: string) => void;
-  onSelectUnit: (su: SavedUnit, faction: string) => void;
+  onSelectUnit: (unit: SavedUnitInPreset, faction: string) => void;
 }) {
   const loadedArmy = useMemo(
-    () => armies.find((a) => a.id === loadedArmyId) ?? null,
+    () => armies.find((army) => army.id === loadedArmyId) ?? null,
     [armies, loadedArmyId]
   );
 
@@ -42,61 +76,91 @@ function WorkspaceArmyPanel({
         <select
           className="workspace-army-panel__select"
           value={loadedArmyId ?? ""}
-          onChange={(e) => e.target.value && onLoadArmy(e.target.value)}
+          onChange={(event) => event.target.value && onLoadArmy(event.target.value)}
         >
           <option value="">{emptyHint}</option>
-          {armies.map((a) => (
-            <option key={a.id} value={a.id}>
-              {a.name}
+          {armies.map((army) => (
+            <option key={army.id} value={army.id}>
+              {army.name}
             </option>
           ))}
         </select>
       </div>
 
       {loadedArmy ? (
-        <div className="workspace-unit-list">
-          {loadedArmy.units.length === 0 ? (
-            <p className="workspace-army-panel__empty">No units in this army.</p>
-          ) : (
-            loadedArmy.units.map((su, idx) => {
-              const unit = unitById(su.unitId);
-              const weapon = unit?.weapons.find(
-                (w) => w.id === su.selectedWeaponId
-              );
-              const isActive = su.unitId === activeUnitId;
-              return (
-                <button
-                  key={idx}
-                  className={`workspace-unit-row${isActive ? " workspace-unit-row--active" : ""}`}
-                  onClick={() => onSelectUnit(su, loadedArmy.faction)}
-                  aria-pressed={isActive}
-                >
-                  <div className="workspace-unit-row__info">
-                    <span className="workspace-unit-row__name">
-                      {su.nickname ?? unit?.name ?? su.unitId}
-                    </span>
-                    <span className="workspace-unit-row__weapon">
-                      {weapon?.name ?? su.selectedWeaponId}
-                    </span>
-                  </div>
-                  {isActive && (
-                    <span className="workspace-unit-row__badge">Active</span>
-                  )}
-                </button>
-              );
-            })
-          )}
-        </div>
+        <>
+          <div className="workspace-army-panel__summary">
+            <div className="workspace-army-panel__summary-block">
+              <span className="workspace-army-panel__summary-label">Faction</span>
+              <span className="workspace-army-panel__summary-value">
+                {loadedArmy.faction}
+              </span>
+            </div>
+            <div className="workspace-army-panel__summary-block">
+              <span className="workspace-army-panel__summary-label">Points</span>
+              <span className="workspace-army-panel__summary-value">
+                {loadedArmy.totalPoints > 0 ? `${loadedArmy.totalPoints} pts` : "Pending"}
+              </span>
+            </div>
+            <div className="workspace-army-panel__summary-block">
+              <span className="workspace-army-panel__summary-label">Units</span>
+              <span className="workspace-army-panel__summary-value">
+                {loadedArmy.units.length}
+              </span>
+            </div>
+          </div>
+
+          <div className="workspace-unit-list">
+            {loadedArmy.units.length === 0 ? (
+              <p className="workspace-army-panel__empty">No units in this army.</p>
+            ) : (
+              loadedArmy.units.map((savedUnit, index) => {
+                const unit = unitById(savedUnit.unitId);
+                const isActive =
+                  savedUnit.unitId === activeUnitId ||
+                  (savedUnit.nickname && savedUnit.nickname === activeUnitId);
+
+                return (
+                  <button
+                    key={savedUnit.instanceId ?? `${savedUnit.unitId}-${savedUnit.addedAt ?? index}`}
+                    className={`workspace-unit-row${isActive ? " workspace-unit-row--active" : ""}`}
+                    onClick={() => onSelectUnit(savedUnit, loadedArmy.faction)}
+                    aria-pressed={Boolean(isActive)}
+                  >
+                    <div className="workspace-unit-row__info">
+                      <span className="workspace-unit-row__name">
+                        {savedUnit.nickname ?? unit?.name ?? savedUnit.unitId}
+                      </span>
+                      <span className="workspace-unit-row__weapon">
+                        {getPresetUnitWeaponLabel(savedUnit)}
+                      </span>
+                    </div>
+                    <div className="workspace-unit-row__meta">
+                      <span>{savedUnit.modelCount} models</span>
+                      {savedUnit.unitTotalPoints > 0 && (
+                        <span>{savedUnit.unitTotalPoints} pts</span>
+                      )}
+                    </div>
+                    {isActive && (
+                      <span className="workspace-unit-row__badge">Active</span>
+                    )}
+                  </button>
+                );
+              })
+            )}
+          </div>
+        </>
       ) : (
         <div className="workspace-army-panel__no-army">
-          <p>Load an army preset from the dropdown, or go to <strong>My Armies</strong> to create one.</p>
+          <p>
+            Load an army preset from the dropdown, or go to <strong>My Armies</strong>{" "}
+            to create one.
+          </p>
         </div>
       )}
     </div>
   );
 }
-
-// ── Battle State Strip ────────────────────────────────────────────────────────
 
 function BattleStateStrip({
   conditions,
@@ -131,7 +195,7 @@ function BattleStateStrip({
             disabled={conditions.battleRound <= 1}
             aria-label="Previous round"
           >
-            −
+            -
           </button>
           <span className="workspace-state-strip__round-value">
             {conditions.battleRound}
@@ -163,10 +227,8 @@ function BattleStateStrip({
   );
 }
 
-// ── Main View ─────────────────────────────────────────────────────────────────
-
 type Props = {
-  armies: ArmyPreset[];
+  armies: ArmyPresetV2[];
   workspaceArmyA: string | null;
   workspaceArmyB: string | null;
   setWorkspaceArmyA: (id: string | null) => void;
@@ -199,7 +261,8 @@ export function WorkspaceView({
           <p className="panel-eyebrow">Battle Workspace</p>
           <h2 className="workspace-setup__title">Matchup Analysis</h2>
           <p className="muted-text">
-            Load two armies and click any unit to run the calculator instantly.
+            Load two saved armies, then click any unit row to move straight into
+            an active combat matchup.
           </p>
         </div>
       </div>
@@ -212,19 +275,22 @@ export function WorkspaceView({
           activeUnitId={attackerId}
           onLoadArmy={(id) => {
             setWorkspaceArmyA(id);
-            // Auto-select first unit of the loaded army
-            const army = armies.find((a) => a.id === id);
+            const army = armies.find((item) => item.id === id);
             const firstUnit = army?.units[0];
-            if (firstUnit) {
+            if (army && firstUnit) {
               selectAttacker(
-                army!.faction,
+                army.faction,
                 firstUnit.unitId,
-                firstUnit.selectedWeaponId
+                getPresetUnitPrimaryWeapon(firstUnit) ?? ""
               );
             }
           }}
-          onSelectUnit={(su, faction) => {
-            selectAttacker(faction, su.unitId, su.selectedWeaponId);
+          onSelectUnit={(savedUnit, faction) => {
+            selectAttacker(
+              faction,
+              savedUnit.unitId,
+              getPresetUnitPrimaryWeapon(savedUnit) ?? ""
+            );
           }}
         />
 
@@ -235,22 +301,19 @@ export function WorkspaceView({
           activeUnitId={defenderId}
           onLoadArmy={(id) => {
             setWorkspaceArmyB(id);
-            const army = armies.find((a) => a.id === id);
+            const army = armies.find((item) => item.id === id);
             const firstUnit = army?.units[0];
-            if (firstUnit) {
-              selectDefender(army!.faction, firstUnit.unitId);
+            if (army && firstUnit) {
+              selectDefender(army.faction, firstUnit.unitId);
             }
           }}
-          onSelectUnit={(su, faction) => {
-            selectDefender(faction, su.unitId);
+          onSelectUnit={(savedUnit, faction) => {
+            selectDefender(faction, savedUnit.unitId);
           }}
         />
       </div>
 
-      <BattleStateStrip
-        conditions={conditions}
-        setConditions={setConditions}
-      />
+      <BattleStateStrip conditions={conditions} setConditions={setConditions} />
     </div>
   );
 }

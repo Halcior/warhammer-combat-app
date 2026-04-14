@@ -131,6 +131,18 @@ function createProps() {
     toggleEnhancement: () => undefined,
     activeStratagemIds: [],
     toggleStratagem: () => undefined,
+    defenderAvailableDetachments: [],
+    defenderSelectedDetachmentId: "",
+    setDefenderSelectedDetachmentId: () => undefined,
+    defenderAvailableRuleOptions: [],
+    activeDefenderDetachmentRuleOptionIds: [],
+    toggleDefenderDetachmentRuleOption: () => undefined,
+    defenderDetachmentStratagems: [],
+    defenderDetachmentEnhancements: [],
+    activeDefenderDetachmentEnhancementIds: [],
+    toggleDefenderDetachmentEnhancement: () => undefined,
+    activeDefenderDetachmentStratagemIds: [],
+    toggleDefenderDetachmentStratagem: () => undefined,
     attackerUnitAbilityOptions: [],
     activeAttackerUnitAbilityIds: [],
     toggleAttackerUnitAbility: () => undefined,
@@ -190,7 +202,8 @@ describe("ModifiersPanel model", () => {
     expect(markup.toLowerCase()).not.toContain("info-only");
     expect(markup).toContain("Attacker");
     expect(markup).toContain("Defender");
-    expect(markup).toContain("Active Effects");
+    expect(markup).toContain("Detachment");
+    expect(markup).toContain("Active Toggles");
     expect(markup).toContain("Derived Effects");
     expect(markup).toContain("Passive Info");
     expect(markup).not.toContain("Always Active");

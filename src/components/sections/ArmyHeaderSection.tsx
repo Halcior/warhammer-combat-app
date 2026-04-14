@@ -65,10 +65,9 @@ export function ArmyHeaderSection({
             id="faction"
             className="form-select"
             value={preset.faction}
-            onChange={(e) => {
-              onFactionChange(e.target.value);
-              onDetachmentChange(undefined); // Reset detachment on faction change
-            }}
+            onChange={(e) => onFactionChange(e.target.value)}
+            aria-invalid={!!validationErrors?.faction}
+            aria-describedby={validationErrors?.faction ? "army-faction-error" : undefined}
           >
             <option value="">-- Select Faction --</option>
             {factions.map((faction) => (
@@ -77,6 +76,11 @@ export function ArmyHeaderSection({
               </option>
             ))}
           </select>
+          {validationErrors?.faction && (
+            <span id="army-faction-error" className="form-error">
+              {validationErrors.faction}
+            </span>
+          )}
         </div>
 
         {/* Detachment */}

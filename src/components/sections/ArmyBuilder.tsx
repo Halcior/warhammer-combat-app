@@ -9,7 +9,10 @@ import {
   removeUnitFromPreset,
   updateUnitInPreset,
   duplicateUnitInPreset,
+  buildDefaultSelectedWeapons,
   calculateUnitTotalPointsFromDefinition,
+  createPresetUnitInstanceId,
+  deriveLegacyWeaponSelection,
   getEstimatedPointsPerModel,
   formatUnitPointsOptionsSummary,
 } from "../../lib/presetUtils";
@@ -20,6 +23,7 @@ import { UnitCard } from "./UnitCard";
 interface Enhancement {
   id: string;
   name: string;
+  description?: string;
   cost?: number;
 }
 
@@ -32,18 +36,78 @@ interface ArmyBuilderProps {
   unitDefinitions: Map<string, Unit>;
   availableUnits: Unit[];
   availableLeaders: Unit[];
-  availableEnhancements: Enhancement[];
+  availableEnhancementsByDetachment: Record<string, Enhancement[]>;
 }
 
-function getDefaultWeaponSelections(unitDefinition: Unit) {
-  const rangedWeapon = unitDefinition.weapons.find((weapon) => weapon.type === "ranged");
-  const meleeWeapon = unitDefinition.weapons.find((weapon) => weapon.type === "melee");
-  const primaryWeaponId = rangedWeapon?.id ?? meleeWeapon?.id ?? unitDefinition.weapons[0]?.id ?? "";
+export function getFactionScopedUnits(availableUnits: Unit[], faction: string) {
+  if (!faction) {
+    return [];
+  }
+
+  return availableUnits.filter((unit) => unit.faction === faction);
+}
+
+export function applyFactionSelectionToPreset(
+  preset: ArmyPresetV2,
+  faction: string,
+  unitDefinitions: Map<string, Unit>
+): ArmyPresetV2 {
+  const nextUnits = preset.units.filter(
+    (unit) => unitDefinitions.get(unit.unitId)?.faction === faction
+  );
+  const totalPoints = nextUnits.reduce(
+    (sum, unit) =>
+      sum + unit.unitTotalPoints + (unit.leaderPointsCost ?? 0) + (unit.enhancementPointsCost ?? 0),
+    0
+  );
 
   return {
-    selectedWeaponId: primaryWeaponId,
-    selectedRangedWeaponId: rangedWeapon?.id,
-    selectedMeleeWeaponId: meleeWeapon?.id,
+    ...preset,
+    faction,
+    detachmentId: undefined,
+    detachmentName: undefined,
+    units: nextUnits,
+    totalPoints,
+    updatedAt: Date.now(),
+  };
+}
+
+export function applyDetachmentSelectionToPreset(
+  preset: ArmyPresetV2,
+  detachmentId: string | undefined,
+  detachmentName: string | undefined,
+  availableEnhancementsByDetachment: Record<string, Enhancement[]>
+): ArmyPresetV2 {
+  const allowedEnhancementIds = new Set(
+    (detachmentId ? availableEnhancementsByDetachment[detachmentId] : [])?.map(
+      (enhancement) => enhancement.id
+    ) ?? []
+  );
+
+  const nextUnits = preset.units.map((unit) => {
+    if (!unit.enhancementId || allowedEnhancementIds.has(unit.enhancementId)) {
+      return unit;
+    }
+
+    return {
+      ...unit,
+      enhancementId: undefined,
+      enhancementHost: "unit" as const,
+      enhancementPointsCost: 0,
+    };
+  });
+
+  return {
+    ...preset,
+    detachmentId,
+    detachmentName,
+    units: nextUnits,
+    totalPoints: nextUnits.reduce(
+      (sum, unit) =>
+        sum + unit.unitTotalPoints + (unit.leaderPointsCost ?? 0) + (unit.enhancementPointsCost ?? 0),
+      0
+    ),
+    updatedAt: Date.now(),
   };
 }
 
@@ -56,7 +120,7 @@ export function ArmyBuilder({
   unitDefinitions,
   availableUnits,
   availableLeaders,
-  availableEnhancements,
+  availableEnhancementsByDetachment,
 }: ArmyBuilderProps) {
   const [preset, setPreset] = useState<ArmyPresetV2>(
     initial ?? {
@@ -72,8 +136,16 @@ export function ArmyBuilder({
   );
   const [unitToAddId, setUnitToAddId] = useState("");
   const factionScopedUnits = useMemo(
-    () => availableUnits.filter((unit) => !preset.faction || unit.faction === preset.faction),
+    () => getFactionScopedUnits(availableUnits, preset.faction),
     [availableUnits, preset.faction]
+  );
+  const factionScopedLeaders = useMemo(
+    () => getFactionScopedUnits(availableLeaders, preset.faction),
+    [availableLeaders, preset.faction]
+  );
+  const detachmentScopedEnhancements = useMemo(
+    () => (preset.detachmentId ? availableEnhancementsByDetachment[preset.detachmentId] ?? [] : []),
+    [availableEnhancementsByDetachment, preset.detachmentId]
   );
 
   useEffect(() => {
@@ -107,20 +179,46 @@ export function ArmyBuilder({
     }
   };
 
+  const handleFactionChange = (faction: string) => {
+    setPreset((current) => applyFactionSelectionToPreset(current, faction, unitDefinitions));
+    setUnitToAddId("");
+  };
+
+  const handleDetachmentChange = (detachmentId: string | undefined) => {
+    const detachmentName =
+      preset.faction && detachmentId
+        ? detachmentsByFaction[preset.faction]?.find((item) => item.id === detachmentId)?.name
+        : undefined;
+
+    setPreset((current) =>
+      applyDetachmentSelectionToPreset(
+        current,
+        detachmentId,
+        detachmentName,
+        availableEnhancementsByDetachment
+      )
+    );
+  };
+
   const handleAddUnit = (unitId: string) => {
     const unitDef = unitDefinitions.get(unitId);
     if (!unitDef) return;
-    const weaponSelections = getDefaultWeaponSelections(unitDef);
+    const selectedWeapons = buildDefaultSelectedWeapons(unitDef);
+    const legacyWeaponSelection = deriveLegacyWeaponSelection(selectedWeapons, unitDef);
     const modelCount = unitDef.pointsOptions?.[0]?.modelCount ?? 1;
     const pointsPerModel = getEstimatedPointsPerModel(unitDef);
 
     const newUnit: SavedUnitInPreset = {
+      instanceId: createPresetUnitInstanceId(),
       unitId,
       nickname: unitDef.name,
       modelCount,
-      ...weaponSelections,
+      ...legacyWeaponSelection,
+      selectedWeapons: legacyWeaponSelection.selectedWeapons,
       leaderAttachedId: undefined,
+      attachedLeader: undefined,
       enhancementId: undefined,
+      enhancementHost: "unit",
       pointsPerModel,
       unitTotalPoints: calculateUnitTotalPointsFromDefinition(unitDef, modelCount),
       leaderPointsCost: 0,
@@ -134,21 +232,21 @@ export function ArmyBuilder({
     setPreset(updated);
   };
 
-  const handleUpdateUnit = (unitId: string, updates: Partial<SavedUnitInPreset>) => {
-    const unit = preset.units.find((u) => u.unitId === unitId);
+  const handleUpdateUnit = (instanceId: string, updates: Partial<SavedUnitInPreset>) => {
+    const unit = preset.units.find((u) => u.instanceId === instanceId);
     if (!unit) return;
 
-    const updated = updateUnitInPreset(preset, unitId, { ...unit, ...updates });
+    const updated = updateUnitInPreset(preset, instanceId, { ...unit, ...updates });
     setPreset(updated);
   };
 
-  const handleDeleteUnit = (unitId: string) => {
-    const updated = removeUnitFromPreset(preset, unitId);
+  const handleDeleteUnit = (instanceId: string) => {
+    const updated = removeUnitFromPreset(preset, instanceId);
     setPreset(updated);
   };
 
-  const handleDuplicateUnit = (unitId: string) => {
-    const updated = duplicateUnitInPreset(preset, unitId);
+  const handleDuplicateUnit = (instanceId: string) => {
+    const updated = duplicateUnitInPreset(preset, instanceId);
     setPreset(updated);
   };
 
@@ -181,10 +279,10 @@ export function ArmyBuilder({
       {/* Army Header Section */}
       <ArmyHeaderSection
         preset={preset}
-        onNameChange={(name) => setPreset({ ...preset, name })}
-        onFactionChange={(faction) => setPreset({ ...preset, faction })}
-        onDetachmentChange={(detachmentId) => setPreset({ ...preset, detachmentId })}
-        onNotesChange={(notes) => setPreset({ ...preset, notes })}
+        onNameChange={(name) => setPreset((current) => ({ ...current, name }))}
+        onFactionChange={handleFactionChange}
+        onDetachmentChange={handleDetachmentChange}
+        onNotesChange={(notes) => setPreset((current) => ({ ...current, notes }))}
         factions={factions}
         detachmentsByFaction={detachmentsByFaction}
         validationErrors={
@@ -239,21 +337,28 @@ export function ArmyBuilder({
 
               return (
                 <UnitCard
-                  key={unit.unitId}
+                  key={unit.instanceId}
                   unit={unit}
                   unitDefinition={unitDef}
-                  onUpdate={(updates) => handleUpdateUnit(unit.unitId, updates)}
-                  onDelete={() => handleDeleteUnit(unit.unitId)}
-                  onDuplicate={() => handleDuplicateUnit(unit.unitId)}
-                  availableLeaders={availableLeaders}
-                  availableEnhancements={availableEnhancements}
+                  onUpdate={(updates) => handleUpdateUnit(unit.instanceId, updates)}
+                  onDelete={() => handleDeleteUnit(unit.instanceId)}
+                  onDuplicate={() => handleDuplicateUnit(unit.instanceId)}
+                  availableLeaders={factionScopedLeaders}
+                  availableEnhancements={detachmentScopedEnhancements}
+                  detachmentSelected={Boolean(preset.detachmentId)}
                 />
               );
             })}
           </div>
         )}
 
-        {factionScopedUnits.length > 0 && (
+        {!preset.faction && (
+          <p className="army-builder__units-hint army-builder__units-hint--empty">
+            Select a faction first to narrow the unit list to a legal roster.
+          </p>
+        )}
+
+        {preset.faction && factionScopedUnits.length > 0 && (
           <div className="army-builder__add-row">
             <select
               className="army-builder__select army-builder__select--grow"
@@ -282,9 +387,15 @@ export function ArmyBuilder({
           </div>
         )}
 
-        {unitToAdd && (
+        {preset.faction && unitToAdd && (
           <p className="army-builder__units-hint">
             {formatUnitPointsOptionsSummary(unitToAdd)}
+          </p>
+        )}
+
+        {preset.faction && factionScopedUnits.length === 0 && (
+          <p className="army-builder__units-hint army-builder__units-hint--empty">
+            No units were found for {preset.faction}.
           </p>
         )}
       </div>

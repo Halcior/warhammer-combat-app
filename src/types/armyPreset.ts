@@ -20,8 +20,27 @@
  * - Which enhancement is active (if any)
  * - Points calculation
  */
+export type SelectedWeaponEntry = {
+  weaponId: string;
+  name: string;
+  category: "ranged" | "melee" | "other";
+  quantity?: number;
+};
+
+export type AttachedLeaderInPreset = {
+  unitId: string;
+  unitName: string;
+  modelCount: number;
+  selectedWeapons: SelectedWeaponEntry[];
+  selectedWeaponId: string;
+  selectedRangedWeaponId?: string;
+  selectedMeleeWeaponId?: string;
+  pointsTotal: number;
+};
+
 export type SavedUnitInPreset = {
   // ── Core identification ──
+  instanceId: string;       // Unique instance identifier within the preset
   unitId: string;           // Reference to base unit definition
   nickname?: string;        // Optional user label (e.g., "Heavy Weapons Squad")
 
@@ -30,8 +49,11 @@ export type SavedUnitInPreset = {
   selectedWeaponId: string; // Primary/default weapon choice
   selectedRangedWeaponId?: string;
   selectedMeleeWeaponId?: string;
+  selectedWeapons?: SelectedWeaponEntry[];
   leaderAttachedId?: string;      // Optional leader unit ID attached to this unit
+  attachedLeader?: AttachedLeaderInPreset;
   enhancementId?: string;         // Optional enhancement from detachment
+  enhancementHost?: "unit" | "leader";
   wargearUpgrades?: string[];     // Future: wargear/upgrade IDs
 
   // ── Points tracking (calculated & cached) ──

@@ -1,14 +1,15 @@
 import { PageHeader } from "../PageHeader";
 import { ArmiesView } from "../ArmiesView";
-import type { ArmyPreset } from "../../types/army";
+import type { ArmyPresetV2 } from "../../types/armyPreset";
 import type { AppView } from "../AppNav";
+import type { ArmyDraft } from "../../lib/storage/armyStorage";
 
 interface ArmiesPageProps {
-  armies: ArmyPreset[];
+  armies: ArmyPresetV2[];
   canCreate: boolean;
   freeLimit: number;
-  onAdd: (data: Pick<ArmyPreset, "name" | "faction" | "units" | "notes">) => void;
-  onEdit: (id: string, data: Pick<ArmyPreset, "name" | "faction" | "units" | "notes">) => void;
+  onAdd: (data: ArmyDraft) => void;
+  onEdit: (id: string, data: ArmyDraft) => void;
   onDelete: (id: string) => void;
   onDuplicate: (id: string) => void;
   onOpenWorkspace: (armyId: string, setView: (v: AppView) => void) => void;
@@ -30,7 +31,8 @@ export function ArmiesPage({
     <div className="armies-page">
       <PageHeader
         title="My Armies"
-        subtitle="Save and reuse your army presets to speed up analysis."
+        subtitle="Build reusable army presets with points, detachments and unit loadouts."
+        helperText="Save a polished list once, then load it straight into the calculator or battle workspace."
       />
 
       <ArmiesView

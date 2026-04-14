@@ -12,8 +12,10 @@ import type {
   ArmyPreset,
   ArmyPresetV2,
   ArmyPresetOld,
+  AttachedLeaderInPreset,
   SavedUnit,
   SavedUnitInPreset,
+  SelectedWeaponEntry,
   ValidationResult,
   MigrationResult,
   PointsBreakdownItem,
@@ -38,6 +40,99 @@ export function calculateUnitPoints(unit: SavedUnitInPreset): number {
   }
   
   return total;
+}
+
+export function createPresetUnitInstanceId(): string {
+  return `unit_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+}
+
+export function buildDefaultSelectedWeapons(unitDefinition: Unit | undefined): SelectedWeaponEntry[] {
+  if (!unitDefinition) {
+    return [];
+  }
+
+  const rangedWeapon = unitDefinition.weapons.find((weapon) => weapon.type === "ranged");
+  const meleeWeapon = unitDefinition.weapons.find((weapon) => weapon.type === "melee");
+  const fallbackWeapon = unitDefinition.weapons[0];
+  const defaults = [rangedWeapon, meleeWeapon].filter(Boolean);
+
+  const uniqueDefaults = (defaults.length > 0 ? defaults : [fallbackWeapon]).filter(
+    (weapon, index, array): weapon is NonNullable<typeof weapon> =>
+      Boolean(weapon) && array.findIndex((item) => item?.id === weapon?.id) === index
+  );
+
+  return uniqueDefaults.map((weapon) => ({
+    weaponId: weapon.id,
+    name: weapon.name,
+    category: weapon.type,
+    quantity: 1,
+  }));
+}
+
+export function deriveLegacyWeaponSelection(
+  selectedWeapons: SelectedWeaponEntry[],
+  unitDefinition: Unit | undefined
+) {
+  const resolvedWeapons =
+    selectedWeapons.length > 0 ? selectedWeapons : buildDefaultSelectedWeapons(unitDefinition);
+  const selectedRangedWeaponId = resolvedWeapons.find((weapon) => weapon.category === "ranged")?.weaponId;
+  const selectedMeleeWeaponId = resolvedWeapons.find((weapon) => weapon.category === "melee")?.weaponId;
+  const selectedWeaponId =
+    selectedRangedWeaponId ?? selectedMeleeWeaponId ?? resolvedWeapons[0]?.weaponId ?? "";
+
+  return {
+    selectedWeapons: resolvedWeapons,
+    selectedWeaponId,
+    selectedRangedWeaponId,
+    selectedMeleeWeaponId,
+  };
+}
+
+export function createAttachedLeaderFromUnit(unitDefinition: Unit | undefined): AttachedLeaderInPreset | undefined {
+  if (!unitDefinition) {
+    return undefined;
+  }
+
+  const selectedWeapons = buildDefaultSelectedWeapons(unitDefinition);
+  const legacySelection = deriveLegacyWeaponSelection(selectedWeapons, unitDefinition);
+
+  return {
+    unitId: unitDefinition.id,
+    unitName: unitDefinition.name,
+    modelCount: 1,
+    selectedWeapons: legacySelection.selectedWeapons,
+    selectedWeaponId: legacySelection.selectedWeaponId,
+    selectedRangedWeaponId: legacySelection.selectedRangedWeaponId,
+    selectedMeleeWeaponId: legacySelection.selectedMeleeWeaponId,
+    pointsTotal: calculateUnitTotalPointsFromDefinition(unitDefinition, 1),
+  };
+}
+
+export function resolveEditedUnitPoints(
+  unitDefinition: Unit | undefined,
+  modelCount: number,
+  selectedWeapons: SelectedWeaponEntry[],
+  attachedLeader: AttachedLeaderInPreset | undefined,
+  attachedLeaderLoadout: SelectedWeaponEntry[] | undefined,
+  selectedEnhancementCost: number | undefined
+) {
+  const normalizedUnitWeapons = deriveLegacyWeaponSelection(selectedWeapons, unitDefinition);
+  const baseUnitPoints = calculateUnitTotalPointsFromDefinition(unitDefinition, modelCount);
+  const normalizedLeaderLoadout = attachedLeader
+    ? deriveLegacyWeaponSelection(attachedLeaderLoadout ?? attachedLeader.selectedWeapons ?? [], undefined)
+        .selectedWeapons
+    : [];
+  const leaderPoints = attachedLeader?.pointsTotal ?? 0;
+  const enhancementPoints = selectedEnhancementCost ?? 0;
+
+  return {
+    baseUnitPoints,
+    leaderPoints,
+    enhancementPoints,
+    totalPoints: baseUnitPoints + leaderPoints + enhancementPoints,
+    normalizedUnitWeapons,
+    normalizedLeaderLoadout,
+  };
 }
 
 function getSortedPointsOptions(unitDefinition: Unit | undefined) {
@@ -185,7 +280,7 @@ export function validateArmyPreset(preset: ArmyPresetV2): ValidationResult {
       errors.push(`Unit ${unit.nickname || unit.unitId}: model count cannot exceed 100`);
     }
 
-    if (!unit.selectedWeaponId) {
+    if (!unit.selectedWeaponId && (!unit.selectedWeapons || unit.selectedWeapons.length === 0)) {
       errors.push(`Unit ${unit.nickname || unit.unitId}: weapon selection is required`);
     }
   }
@@ -215,12 +310,25 @@ export function migrateUnitToPreset(
   oldUnit: SavedUnit
 ): SavedUnitInPreset {
   const pointsPerModel = 0;
+  const selectedWeapons: SelectedWeaponEntry[] = oldUnit.selectedWeaponId
+    ? [
+        {
+          weaponId: oldUnit.selectedWeaponId,
+          name: oldUnit.selectedWeaponId,
+          category: "other",
+          quantity: 1,
+        },
+      ]
+    : [];
 
   return {
+    instanceId: createPresetUnitInstanceId(),
     unitId: oldUnit.unitId,
     nickname: oldUnit.nickname,
     modelCount: 1, // Default assumption
     selectedWeaponId: oldUnit.selectedWeaponId,
+    selectedWeapons,
+    enhancementHost: "unit",
     pointsPerModel,
     unitTotalPoints: pointsPerModel * 1,
   };
@@ -267,8 +375,41 @@ export function migratePresetToV2(
 export function loadAndMigratePreset(preset: ArmyPreset): ArmyPresetV2 {
   // Check if it's the old format
   if ("units" in preset && preset.units.length > 0 && "modelCount" in preset.units[0]) {
-    // Already new format
-    return preset as ArmyPresetV2;
+    const v2Preset = preset as ArmyPresetV2;
+
+    return {
+      ...v2Preset,
+      units: v2Preset.units.map((unit) => ({
+        ...unit,
+        instanceId: unit.instanceId ?? createPresetUnitInstanceId(),
+        enhancementHost: unit.enhancementHost ?? "unit",
+        selectedWeapons:
+          unit.selectedWeapons && unit.selectedWeapons.length > 0
+            ? unit.selectedWeapons
+            : [
+                unit.selectedRangedWeaponId && {
+                  weaponId: unit.selectedRangedWeaponId,
+                  name: unit.selectedRangedWeaponId,
+                  category: "ranged" as const,
+                  quantity: 1,
+                },
+                unit.selectedMeleeWeaponId && {
+                  weaponId: unit.selectedMeleeWeaponId,
+                  name: unit.selectedMeleeWeaponId,
+                  category: "melee" as const,
+                  quantity: 1,
+                },
+                !unit.selectedRangedWeaponId &&
+                  !unit.selectedMeleeWeaponId &&
+                  unit.selectedWeaponId && {
+                    weaponId: unit.selectedWeaponId,
+                    name: unit.selectedWeaponId,
+                    category: "other" as const,
+                    quantity: 1,
+                  },
+              ].filter(Boolean) as SelectedWeaponEntry[],
+      })),
+    };
   }
 
   // Migrate old format
@@ -303,11 +444,11 @@ export function addUnitToPreset(
  */
 export function updateUnitInPreset(
   preset: ArmyPresetV2,
-  unitId: string,
+  instanceId: string,
   updates: Partial<SavedUnitInPreset>
 ): ArmyPresetV2 {
   const updatedUnits = preset.units.map((unit) =>
-    unit.unitId === unitId ? { ...unit, ...updates } : unit
+    unit.instanceId === instanceId ? { ...unit, ...updates } : unit
   );
   const totalPoints = updatedUnits.reduce((sum, unit) => sum + calculateUnitPoints(unit), 0);
 
@@ -324,9 +465,9 @@ export function updateUnitInPreset(
  */
 export function removeUnitFromPreset(
   preset: ArmyPresetV2,
-  unitId: string
+  instanceId: string
 ): ArmyPresetV2 {
-  const updatedUnits = preset.units.filter((unit) => unit.unitId !== unitId);
+  const updatedUnits = preset.units.filter((unit) => unit.instanceId !== instanceId);
   const totalPoints = updatedUnits.reduce((sum, unit) => sum + calculateUnitPoints(unit), 0);
 
   return {
@@ -342,17 +483,19 @@ export function removeUnitFromPreset(
  */
 export function duplicateUnitInPreset(
   preset: ArmyPresetV2,
-  unitId: string,
+  instanceId: string,
   newNickname?: string
 ): ArmyPresetV2 {
-  const unitToDuplicate = preset.units.find((unit) => unit.unitId === unitId);
+  const unitToDuplicate = preset.units.find((unit) => unit.instanceId === instanceId);
   if (!unitToDuplicate) {
     return preset;
   }
 
   const duplicatedUnit: SavedUnitInPreset = {
     ...unitToDuplicate,
-    nickname: newNickname ?? `${unitToDuplicate.nickname} (copy)`,
+    instanceId: createPresetUnitInstanceId(),
+    nickname: newNickname ?? `${unitToDuplicate.nickname || unitToDuplicate.unitId} (copy)`,
+    addedAt: Date.now(),
   };
 
   return addUnitToPreset(preset, duplicatedUnit);

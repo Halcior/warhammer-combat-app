@@ -957,8 +957,8 @@ button:focus-visible,
   position: relative;
   display: inline-flex;
   min-width: 0;
-  isolation: isolate;
-  z-index: 2;
+  /* Removed isolation: isolate to allow z-index to work properly */
+  z-index: 1;
 }
 
 .hover-info__label {
@@ -1051,51 +1051,302 @@ button:focus-visible,
   gap: 12px;
 }
 
+/* ── Combat role panel (crp) — battle control panel ─────────────────── */
+
 .combat-role-layout {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 14px;
-}
-
-.combat-role-panel {
-  display: flex;
-  flex-direction: column;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
   gap: 16px;
-  min-width: 0;
-  padding: 16px;
-  border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(255, 255, 255, 0.018);
 }
 
-.combat-role-panel__header {
+/* crp = combat role panel — one per attacker/defender column */
+.crp {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 14px;
+  min-width: 0;
+  padding: 16px 14px 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.02);
 }
 
-.combat-role-panel__eyebrow {
+.crp__head {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.crp__eyebrow {
   margin: 0;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
   color: var(--accent);
+}
+
+.crp__name {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-h);
+  letter-spacing: -0.02em;
+}
+
+.crp__summary {
+  margin: 0;
+  font-size: 0.78rem;
+  color: rgba(167, 173, 181, 0.65);
+  line-height: 1.4;
+}
+
+/* Detachment selector row */
+.crp__det {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.crp__det-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.crp__det-name {
   font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(167, 173, 181, 0.7);
+  flex-shrink: 0;
+}
+
+.crp__det-select {
+  flex: 1;
+  min-width: 0;
+  padding: 5px 8px;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-h);
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.crp__det-select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* Sub-section within a crp column */
+.crp-sub {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.crp-sub__title {
+  margin: 0;
+  font-size: 0.65rem;
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  color: rgba(167, 173, 181, 0.5);
+  padding: 0 4px;
 }
 
-.combat-role-panel__title {
+/* ── Toggle rows ─────────────────────────────────────────────────────── */
+
+.toggle-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+/* One horizontal action row — [checkbox] [name] [badge] */
+.toggle-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 6px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background 0.1s ease;
+  user-select: none;
+}
+
+.toggle-row:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.toggle-row--on {
+  background: rgba(242, 106, 27, 0.08);
+}
+
+.toggle-row--on:hover {
+  background: rgba(242, 106, 27, 0.13);
+}
+
+/* Native checkbox — accent-color handles the checked state styling */
+.toggle-row__input {
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
   margin: 0;
+  padding: 0;
+  cursor: pointer;
+  accent-color: var(--accent);
+}
+
+.toggle-row__name {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
   color: var(--text);
-  font-family: "Space Grotesk", "Inter", sans-serif;
-  font-size: 1.22rem;
-  line-height: 1.04;
-  letter-spacing: -0.03em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1;
+}
+
+.toggle-row--on .toggle-row__name {
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+.toggle-row__badge {
+  flex-shrink: 0;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: rgba(167, 173, 181, 0.5);
+  padding: 2px 5px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  white-space: nowrap;
+}
+
+/* ── Portal tooltip — rendered to document.body via createPortal ─────── */
+
+.tt {
+  position: absolute;
+  z-index: 9999;
+  width: min(440px, calc(100vw - 24px));
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(242, 106, 27, 0.18);
+  background: rgba(14, 16, 18, 0.98);
+  color: #fff8f1;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
+  white-space: pre-wrap;
+  line-height: 1.56;
+  font-size: 0.79rem;
+  font-weight: 500;
+  pointer-events: none;
+}
+
+/* ── Derived / Passive chips ─────────────────────────────────────────── */
+
+.chip-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 0 2px;
+}
+
+/* Auto chip — derived engine effects */
+.auto-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 5px;
+  background: rgba(242, 106, 27, 0.1);
+  border: 1px solid rgba(242, 106, 27, 0.2);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: rgba(242, 130, 60, 0.9);
+  white-space: nowrap;
+  cursor: help;
+}
+
+/* Info chip — passive ability info */
+.info-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: rgba(167, 173, 181, 0.75);
+  white-space: nowrap;
+  cursor: help;
 }
 
 .combat-role-panel__derived {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.combat-role-panel__detachment {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(242, 106, 27, 0.05);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(242, 106, 27, 0.15);
+  margin-bottom: 12px;
+}
+
+.combat-role-panel__detachment-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.combat-role-panel__detachment-select {
+  padding: 6px 8px;
+  border: 1px solid rgba(242, 106, 27, 0.2);
+  border-radius: var(--radius-xs);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-family: inherit;
+}
+
+.combat-role-panel__detachment-select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(242, 106, 27, 0.1);
+}
+
+.combat-role-panel__detachment-info {
+  font-size: 0.82rem;
+}
+
+.combat-role-panel__detachment-name {
+  font-weight: 700;
+  color: var(--accent);
 }
 
 .rule-group {
@@ -1321,6 +1572,37 @@ button:focus-visible,
   gap: 16px;
 }
 
+/* Compact sections inside each combat-role column */
+.combat-role-panel .rules-section {
+  padding: 10px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.combat-role-panel .rules-section:first-of-type {
+  padding-top: 2px;
+  border-top: none;
+}
+
+.combat-role-panel .rules-section__summary {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(200, 197, 210, 0.85);
+  padding: 2px 0;
+}
+
+.combat-role-panel .rules-section__chevron {
+  width: 20px;
+  height: 20px;
+  font-size: 0.8rem;
+}
+
+.combat-role-panel .combat-role-panel__detachment-label {
+  font-size: 0.82rem;
+  gap: 4px;
+}
+
 .active-modifier-groups {
   display: flex;
   flex-direction: column;
@@ -1368,7 +1650,7 @@ button:focus-visible,
 
 .card--modifiers {
   gap: 22px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .workspace-sidebar > .card {
@@ -1701,7 +1983,9 @@ button:focus-visible,
   .workspace-sidebar > .card {
     position: static;
   }
+}
 
+@media (max-width: 900px) {
   .combat-role-layout {
     grid-template-columns: 1fr;
   }
@@ -2050,6 +2334,115 @@ button:focus-visible,
   color: #ffb5a6;
 }
 
+.armies-view {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.army-list--presets {
+  gap: 18px;
+}
+
+.army-card--preset {
+  gap: 14px;
+}
+
+.army-card__topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.army-card__points,
+.army-card__detachment,
+.army-card__notes,
+.workspace-army-panel__summary-label,
+.workspace-unit-row__meta {
+  color: var(--text-muted);
+}
+
+.army-card__points {
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.army-card--preset .army-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.army-card__detachment {
+  margin: 0;
+  font-size: 0.84rem;
+}
+
+.army-card__stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.army-card--preset .army-card__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.018);
+}
+
+.army-card__units {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.army-card__units-label {
+  margin: 0;
+  color: rgba(167, 173, 181, 0.9);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.army-card--preset .army-card__units-list {
+  gap: 8px;
+}
+
+.army-card--preset .army-card__unit-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.018);
+}
+
+.army-card__unit-name {
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.army-card__unit-meta {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+}
+
+.army-card__notes {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
 /* ── Army Builder ─────────────────────────────────────────────────── */
 
 .army-builder {
@@ -2155,6 +2548,10 @@ button:focus-visible,
   font-size: 0.78rem;
   color: var(--text-muted);
   margin: 6px 0 0;
+}
+
+.army-builder__units-hint--empty {
+  color: rgba(167, 173, 181, 0.9);
 }
 
 .army-builder__remove-btn {
@@ -2319,6 +2716,36 @@ button:focus-visible,
   /* inherits global select styles */
 }
 
+.workspace-army-panel__summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.workspace-army-panel__summary-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.018);
+}
+
+.workspace-army-panel__summary-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.workspace-army-panel__summary-value {
+  color: var(--text);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
 .workspace-unit-list {
   display: flex;
   flex-direction: column;
@@ -2383,9 +2810,17 @@ button:focus-visible,
 .workspace-unit-row__weapon {
   font-size: 0.75rem;
   color: var(--text-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.4;
+}
+
+.workspace-unit-row__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-end;
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
 }
 
 .workspace-unit-row__badge {
@@ -2506,6 +2941,10 @@ button:focus-visible,
 
 @media (max-width: 1180px) {
   .workspace-armies {
+    grid-template-columns: 1fr;
+  }
+
+  .workspace-army-panel__summary {
     grid-template-columns: 1fr;
   }
 }
@@ -3330,6 +3769,9 @@ button:focus-visible,
 
 .calculator-page__results {
   scroll-margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
 }
 
 /* ── Responsive Onboarding ─────────────────────────────────────────── */
@@ -3467,6 +3909,10 @@ button:focus-visible,
 .form-hint {
   font-size: 0.8rem;
   color: var(--text-muted);
+}
+
+.form-hint--warning {
+  color: #ffd2b7;
 }
 
 /* ── Points Summary Section ───────────────────────────────────────── */
@@ -3761,6 +4207,92 @@ button:focus-visible,
   gap: 16px;
   padding-top: 16px;
   border-top: 1px solid rgba(242, 106, 27, 0.2);
+}
+
+.unit-card__loadout,
+.unit-card__nested-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.unit-card__nested-editor {
+  border-color: rgba(242, 106, 27, 0.16);
+  background: rgba(242, 106, 27, 0.04);
+}
+
+.unit-card__loadout-header,
+.unit-card__nested-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.unit-card__nested-title {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.unit-card__loadout-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.unit-card__loadout-label {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.unit-card__equipment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.unit-card__equipment-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.unit-card__equipment-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.unit-card__equipment-toggle input {
+  width: 18px;
+  height: 18px;
+  min-height: 18px;
+  padding: 0;
+}
+
+.unit-card__equipment-quantity {
+  width: 84px;
+  min-height: 40px;
+}
+
+.unit-card__nested-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-top: 4px;
 }
 
 .unit-card__points-display {
