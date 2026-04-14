@@ -50,6 +50,10 @@ vi.mock("../../onboarding/WhatYouGet", () => ({
   WhatYouGet: () => <div>WhatYouGet</div>,
 }));
 
+vi.mock("../../LoadArmySelector", () => ({
+  LoadArmySelector: () => <div>LoadArmySelector</div>,
+}));
+
 import { CalculatorPage } from "../CalculatorPage";
 
 describe("CalculatorPage -> ModifiersPanel integration", () => {
@@ -365,6 +369,8 @@ describe("CalculatorPage -> ModifiersPanel integration", () => {
         isSimulationRunning={false}
         compareWeaponId=""
         setCompareWeaponId={() => undefined}
+        armies={[]}
+        unitDefinitions={[]}
       />
     );
 

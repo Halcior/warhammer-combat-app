@@ -5058,6 +5058,50 @@ button:focus-visible,
     flex-wrap: wrap;
     gap: 6px;
   }
+}
+
+/* Extra small screens 375px */
+@media (max-width: 480px) {
+  .modal {
+    width: 98%;
+    max-height: 98vh;
+    padding: 12px;
+  }
+
+  .modal__header {
+    padding: 8px 0;
+  }
+
+  .modal__body {
+    padding: 12px 0;
+  }
+
+  .modal__footer {
+    padding: 8px 0;
+    flex-direction: column;
+  }
+
+  .export-json-textarea,
+  .import-textarea {
+    min-height: 100px;
+    font-size: 10px;
+    padding: 8px;
+  }
+
+  .modal button {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .import-tabs__btn {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .import-preview__item {
+    font-size: 0.8rem;
+  }
+}
 
   .modal__footer .button-link {
     flex: 1 1 auto;
@@ -5225,7 +5269,7 @@ button:focus-visible,
   border-color: var(--border-strong);
 }
 
-/* Mobile */
+/* Mobile 768px */
 @media (max-width: 768px) {
   .load-army-selector__container {
     padding: 12px;
@@ -5238,6 +5282,73 @@ button:focus-visible,
 
   .load-army-selector__button {
     width: 100%;
+  }
+
+  .load-army-selector__title {
+    font-size: 0.85rem;
+  }
+
+  .load-army-selector__label {
+    font-size: 0.75rem;
+  }
+
+  .load-army-selector__preview-row {
+    font-size: 0.85rem;
+  }
+
+  .calculator-page__load-army-button {
+    padding: 8px 12px;
+    font-size: 0.75rem;
+  }
+}
+
+/* Extra small 375px */
+@media (max-width: 480px) {
+  .load-army-selector__container {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .load-army-selector__section {
+    gap: 6px;
+  }
+
+  .load-army-selector__select {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+  }
+
+  .load-army-selector__preview {
+    padding: 10px;
+    gap: 6px;
+  }
+
+  .load-army-selector__preview-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    font-size: 0.8rem;
+  }
+
+  .load-army-selector__preview-label {
+    min-width: auto;
+  }
+
+  .load-army-selector__preview-value {
+    text-align: left;
+  }
+
+  .load-army-selector__button {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .load-army-selector__title {
+    font-size: 0.8rem;
+  }
+
+  .load-army-selector__label {
+    font-size: 0.7rem;
   }
 }
 
