@@ -38,6 +38,13 @@ type EquipmentEditorProps = {
   unitDefinition: Unit;
   selectedWeapons: SelectedWeaponEntry[];
   onChange: (selectedWeapons: SelectedWeaponEntry[]) => void;
+  validation: WeaponSelectionValidation;
+};
+
+export type WeaponSelectionValidation = {
+  isValid: boolean;
+  messages: string[];
+  selectedByCategory: Record<string, number>;
 };
 
 export function stripRuleHtmlText(value?: string) {
@@ -50,7 +57,7 @@ export function stripRuleHtmlText(value?: string) {
     .replace(/<[^>]+>/g, " ")
     .replace(/&nbsp;/gi, " ")
     .replace(/&quot;/gi, '"')
-    .replace(/&#39;|&apos;|â€™/gi, "'")
+    .replace(/&#39;|&apos;|&#8217;|&rsquo;/gi, "'")
     .replace(/&amp;/gi, "&")
     .replace(/\s+/g, " ")
     .trim();
@@ -106,6 +113,28 @@ export function getEnhancementRestrictionLabel(
   return `Restricted to: ${restrictionText}`;
 }
 
+export function validateWeaponSelections(
+  selectedWeapons: SelectedWeaponEntry[] | undefined
+): WeaponSelectionValidation {
+  const selectedByCategory = (selectedWeapons ?? []).reduce<Record<string, number>>((acc, entry) => {
+    const category = entry.category || "other";
+    acc[category] = (acc[category] ?? 0) + 1;
+    return acc;
+  }, {});
+
+  const messages: string[] = [];
+
+  if (!selectedWeapons || selectedWeapons.length === 0) {
+    messages.push("Select at least one weapon or equipment entry before saving.");
+  }
+
+  return {
+    isValid: messages.length === 0,
+    messages,
+    selectedByCategory,
+  };
+}
+
 function groupWeaponsByCategory(weapons: Weapon[]) {
   return {
     ranged: weapons.filter((weapon) => weapon.type === "ranged"),
@@ -129,8 +158,8 @@ function formatSelectedWeapons(
   const resolvedSelections = getSelectedWeaponEntries(selectedWeapons, unitDefinition);
 
   return resolvedSelections
-    .map((entry) => `${entry.name}${entry.quantity && entry.quantity > 1 ? ` ×${entry.quantity}` : ""}`)
-    .join(" • ");
+    .map((entry) => entry.name)
+    .join(" | ");
 }
 
 function upsertWeaponEntry(
@@ -149,7 +178,6 @@ function upsertWeaponEntry(
         weaponId: weapon.id,
         name: weapon.name,
         category: weapon.type,
-        quantity: 1,
       },
     ];
   }
@@ -157,23 +185,12 @@ function upsertWeaponEntry(
   return selectedWeapons.filter((entry) => entry.weaponId !== weapon.id);
 }
 
-function updateWeaponQuantity(
-  selectedWeapons: SelectedWeaponEntry[],
-  weaponId: string,
-  quantity: number
-) {
-  return selectedWeapons.map((entry) =>
-    entry.weaponId === weaponId
-      ? { ...entry, quantity: Math.max(1, Math.min(20, quantity || 1)) }
-      : entry
-  );
-}
-
 function WeaponLoadoutEditor({
   title,
   unitDefinition,
   selectedWeapons,
   onChange,
+  validation,
 }: EquipmentEditorProps) {
   const groupedWeapons = useMemo(() => groupWeaponsByCategory(unitDefinition.weapons), [unitDefinition.weapons]);
   const categories: Array<{ key: "ranged" | "melee"; label: string; weapons: Weapon[] }> = [
@@ -186,14 +203,20 @@ function WeaponLoadoutEditor({
       <div className="unit-card__loadout-header">
         <h5 className="unit-card__nested-title">{title}</h5>
         <span className="form-hint">
-          Select one or more weapons and adjust quantities where needed.
+          Save which weapon profiles are present in this loadout. Match-specific attacker counts are chosen in Battle Workspace.
         </span>
       </div>
 
       {categories.map(({ key, label, weapons }) =>
         weapons.length > 0 ? (
           <div key={key} className="unit-card__loadout-group">
-            <p className="unit-card__loadout-label">{label}</p>
+            <div className="unit-card__loadout-group-header">
+              <p className="unit-card__loadout-label">{label}</p>
+              <span className="unit-card__loadout-meta">
+                {validation.selectedByCategory[key] ?? 0} selected
+              </span>
+            </div>
+
             <div className="unit-card__equipment-list">
               {weapons.map((weapon) => {
                 const selectedEntry = selectedWeapons.find((entry) => entry.weaponId === weapon.id);
@@ -201,36 +224,22 @@ function WeaponLoadoutEditor({
 
                 return (
                   <div key={weapon.id} className="unit-card__equipment-row">
-                    <label className="unit-card__equipment-toggle">
-                      <input
-                        type="checkbox"
-                        checked={isSelected}
-                        onChange={(event) =>
-                          onChange(upsertWeaponEntry(selectedWeapons, weapon, event.target.checked))
-                        }
-                      />
+                    <div className="unit-card__equipment-name">
                       <span>{weapon.name}</span>
-                    </label>
+                    </div>
 
-                    {isSelected && (
-                      <input
-                        className="unit-card__equipment-quantity"
-                        type="number"
-                        min="1"
-                        max="20"
-                        value={selectedEntry?.quantity ?? 1}
-                        onChange={(event) =>
-                          onChange(
-                            updateWeaponQuantity(
-                              selectedWeapons,
-                              weapon.id,
-                              parseInt(event.target.value, 10) || 1
-                            )
-                          )
-                        }
-                        aria-label={`${weapon.name} quantity`}
-                      />
-                    )}
+                    <div className="unit-card__equipment-controls">
+                      <label className="unit-card__equipment-check">
+                        <input
+                          type="checkbox"
+                          checked={isSelected}
+                          onChange={(event) =>
+                            onChange(upsertWeaponEntry(selectedWeapons, weapon, event.target.checked))
+                          }
+                        />
+                        <span>{isSelected ? "Included" : "Add to loadout"}</span>
+                      </label>
+                    </div>
                   </div>
                 );
               })}
@@ -284,17 +293,45 @@ function resolveEditableUnitState(
     attachedLeader?.selectedWeapons,
     selectedEnhancement?.cost
   );
+  const normalizedLeaderWeapons = attachedLeader
+    ? deriveLegacyWeaponSelection(resolvedPoints.normalizedLeaderLoadout, leaderDefinition)
+    : undefined;
 
   return {
     ...draft,
     ...resolvedPoints.normalizedUnitWeapons,
-    attachedLeader,
+    attachedLeader: attachedLeader
+      ? {
+          ...attachedLeader,
+          ...(normalizedLeaderWeapons as ReturnType<typeof deriveLegacyWeaponSelection>),
+          pointsTotal: resolvedPoints.leaderPoints,
+        }
+      : undefined,
     leaderAttachedId: attachedLeader?.unitId,
     enhancementHost,
     pointsPerModel: getEstimatedPointsPerModel(unitDefinition),
     unitTotalPoints: resolvedPoints.baseUnitPoints,
     leaderPointsCost: resolvedPoints.leaderPoints,
     enhancementPointsCost: resolvedPoints.enhancementPoints,
+  };
+}
+
+function getEditorValidationMessages(unitDraft: SavedUnitInPreset) {
+  const unitValidation = validateWeaponSelections(unitDraft.selectedWeapons);
+  const leaderValidation = unitDraft.attachedLeader
+    ? validateWeaponSelections(unitDraft.attachedLeader.selectedWeapons)
+    : undefined;
+
+  const messages = [
+    ...unitValidation.messages,
+    ...(leaderValidation?.messages.map((message) => `Leader: ${message}`) ?? []),
+  ];
+
+  return {
+    isValid: messages.length === 0,
+    messages,
+    unitValidation,
+    leaderValidation,
   };
 }
 
@@ -319,19 +356,24 @@ export function UnitCard({
     }
   }, [unit, isEditing]);
 
+  const resolvedLocalUnit = useMemo(
+    () =>
+      resolveEditableUnitState(localUnit, unitDefinition, availableLeaders, availableEnhancements),
+    [localUnit, unitDefinition, availableLeaders, availableEnhancements]
+  );
+
   const selectedLeaderDefinition = useMemo(
-    () => availableLeaders.find((leader) => leader.id === localUnit.leaderAttachedId),
-    [availableLeaders, localUnit.leaderAttachedId]
+    () => availableLeaders.find((leader) => leader.id === resolvedLocalUnit.leaderAttachedId),
+    [availableLeaders, resolvedLocalUnit.leaderAttachedId]
   );
-  const selectedLeaderPoints = selectedLeaderDefinition
-    ? calculateUnitTotalPointsFromDefinition(selectedLeaderDefinition, 1)
-    : 0;
+
   const selectedEnhancement = useMemo(
-    () => availableEnhancements.find((enhancement) => enhancement.id === localUnit.enhancementId),
-    [availableEnhancements, localUnit.enhancementId]
+    () => availableEnhancements.find((enhancement) => enhancement.id === resolvedLocalUnit.enhancementId),
+    [availableEnhancements, resolvedLocalUnit.enhancementId]
   );
+
   const enhancementHostDefinition =
-    localUnit.enhancementHost === "leader" && selectedLeaderDefinition
+    resolvedLocalUnit.enhancementHost === "leader" && selectedLeaderDefinition
       ? selectedLeaderDefinition
       : unitDefinition;
   const enhancementRestriction = getEnhancementRestrictionLabel(
@@ -339,6 +381,10 @@ export function UnitCard({
     selectedEnhancement
   );
   const totalUnitPoints = calculateUnitPoints(unit);
+  const editorValidation = useMemo(
+    () => getEditorValidationMessages(resolvedLocalUnit),
+    [resolvedLocalUnit]
+  );
 
   function applyDraftUpdate(updater: (current: SavedUnitInPreset) => SavedUnitInPreset) {
     setLocalUnit((current) => {
@@ -349,7 +395,11 @@ export function UnitCard({
         availableLeaders,
         availableEnhancements
       );
-      onUpdate(resolved);
+
+      if (getEditorValidationMessages(resolved).isValid) {
+        onUpdate(resolved);
+      }
+
       return resolved;
     });
   }
@@ -366,6 +416,15 @@ export function UnitCard({
     setIsEditing(false);
   }
 
+  function saveEditing() {
+    if (!editorValidation.isValid) {
+      return;
+    }
+
+    onUpdate(resolvedLocalUnit);
+    setIsEditing(false);
+  }
+
   if (isEditing) {
     return (
       <div className="unit-card unit-card--editing">
@@ -376,182 +435,250 @@ export function UnitCard({
             onClick={cancelEditing}
             aria-label="Close editor"
           >
-            ×
+            x
           </button>
         </div>
 
         <div className="unit-card__editor">
-          <div className="form-field">
-            <label className="form-label">Model Count *</label>
-            <input
-              type="number"
-              min="1"
-              max="100"
-              value={localUnit.modelCount}
-              onChange={(event) =>
-                applyDraftUpdate((current) => ({
-                  ...current,
-                  modelCount: Math.max(1, Math.min(100, parseInt(event.target.value, 10) || 1)),
-                }))
-              }
-              className="form-input"
-            />
-            <span className="form-hint">
-              Base points update immediately from the current model count.
-            </span>
-          </div>
-
-          <WeaponLoadoutEditor
-            title="Weapons / Equipment"
-            unitDefinition={unitDefinition}
-            selectedWeapons={getSelectedWeaponEntries(localUnit.selectedWeapons, unitDefinition)}
-            onChange={(selectedWeapons) =>
-              applyDraftUpdate((current) => ({ ...current, selectedWeapons }))
-            }
-          />
-
-          <div className="form-field">
-            <label className="form-label">Leader (Optional)</label>
-            <select
-              value={localUnit.leaderAttachedId ?? ""}
-              onChange={(event) =>
-                applyDraftUpdate((current) => {
-                  const selectedId = event.target.value || undefined;
-                  const leaderDefinition = availableLeaders.find((leader) => leader.id === selectedId);
-
-                  return {
-                    ...current,
-                    leaderAttachedId: selectedId,
-                    attachedLeader: selectedId ? createAttachedLeaderFromUnit(leaderDefinition) : undefined,
-                    leaderPointsCost: leaderDefinition
-                      ? calculateUnitTotalPointsFromDefinition(leaderDefinition, 1)
-                      : 0,
-                    enhancementHost: selectedId ? current.enhancementHost ?? "unit" : "unit",
-                  };
-                })
-              }
-              className="form-select"
-            >
-              <option value="">-- None --</option>
-              {availableLeaders.map((leader) => (
-                <option key={leader.id} value={leader.id}>
-                  {leader.name}
-                  {calculateUnitTotalPointsFromDefinition(leader, 1)
-                    ? ` (+${calculateUnitTotalPointsFromDefinition(leader, 1)} pts)`
-                    : ""}
-                </option>
-              ))}
-            </select>
-            <span className="form-hint">
-              {selectedLeaderDefinition
-                ? `${selectedLeaderDefinition.name}${selectedLeaderPoints ? ` (${selectedLeaderPoints} pts)` : ""}`
-                : "No leader attached"}
-            </span>
-          </div>
-
-          {selectedLeaderDefinition && localUnit.attachedLeader && (
-            <div className="unit-card__nested-editor">
-              <div className="unit-card__nested-header">
-                <h5 className="unit-card__nested-title">Attached Leader</h5>
-                <span className="form-hint">
-                  Edit the attached leader as a mini sub-unit.
-                </span>
-              </div>
-
-              <WeaponLoadoutEditor
-                title={selectedLeaderDefinition.name}
-                unitDefinition={selectedLeaderDefinition}
-                selectedWeapons={getSelectedWeaponEntries(
-                  localUnit.attachedLeader.selectedWeapons,
-                  selectedLeaderDefinition
-                )}
-                onChange={(selectedWeapons) =>
-                  applyDraftUpdate((current) => ({
-                    ...current,
-                    attachedLeader: current.attachedLeader
-                      ? { ...current.attachedLeader, selectedWeapons }
-                      : current.attachedLeader,
-                  }))
-                }
-              />
-
-              <div className="unit-card__nested-summary">
-                <span className="unit-card__detail-label">Leader points</span>
-                <span className="unit-card__detail-value">
-                  {localUnit.leaderPointsCost ? `${localUnit.leaderPointsCost} pts` : "Unavailable"}
-                </span>
-              </div>
+          <section className="unit-card__editor-section">
+            <div className="unit-card__section-header">
+              <h5 className="unit-card__section-title">Model Count</h5>
+              <span className="form-hint">Base points update immediately from the selected size.</span>
             </div>
-          )}
 
-          <div className="form-field">
-            <label className="form-label">Enhancement (Optional)</label>
-            <select
-              value={localUnit.enhancementId ?? ""}
-              onChange={(event) =>
-                applyDraftUpdate((current) => ({
-                  ...current,
-                  enhancementId: event.target.value || undefined,
-                }))
-              }
-              className="form-select"
-              disabled={!detachmentSelected}
-            >
-              <option value="">
-                {detachmentSelected ? "-- None --" : "-- Select detachment first --"}
-              </option>
-              {availableEnhancements.map((enhancement) => (
-                <option key={enhancement.id} value={enhancement.id}>
-                  {enhancement.name}
-                  {enhancement.cost ? ` (+${enhancement.cost} pts)` : ""}
-                </option>
-              ))}
-            </select>
-            {selectedLeaderDefinition && localUnit.enhancementId && (
-              <select
-                className="form-select"
-                value={localUnit.enhancementHost ?? "unit"}
+            <div className="form-field">
+              <label className="form-label">Models</label>
+              <input
+                type="number"
+                min="1"
+                max="100"
+                value={resolvedLocalUnit.modelCount}
                 onChange={(event) =>
                   applyDraftUpdate((current) => ({
                     ...current,
-                    enhancementHost: event.target.value as "unit" | "leader",
+                    modelCount: Math.max(1, Math.min(100, parseInt(event.target.value, 10) || 1)),
                   }))
                 }
-              >
-                <option value="unit">Apply to unit</option>
-                <option value="leader">Apply to attached leader</option>
-              </select>
-            )}
-            <span className="form-hint">
-              {detachmentSelected
-                ? selectedEnhancement
-                  ? `${selectedEnhancement.name}${selectedEnhancement.cost ? ` (${selectedEnhancement.cost} pts)` : ""}`
-                  : "Choose from the selected detachment's enhancements"
-                : "Enhancements unlock after choosing a detachment"}
-            </span>
-            {enhancementRestriction && (
-              <span className="form-hint form-hint--warning">{enhancementRestriction}</span>
-            )}
-          </div>
+                className="form-input"
+              />
+            </div>
+          </section>
 
-          <div className="unit-card__points-display">
-            <div className="unit-card__points-row">
-              <span>Base unit points</span>
-              <span>{localUnit.unitTotalPoints > 0 ? `${localUnit.unitTotalPoints} pts` : "Unavailable"}</span>
+          <section className="unit-card__editor-section">
+            <div className="unit-card__section-header">
+              <h5 className="unit-card__section-title">Weapons / Equipment</h5>
+              <span className="form-hint">
+                Choose active profiles and keep per-category assignments within the unit size.
+              </span>
             </div>
-            <div className="unit-card__points-row">
-              <span>Attached leader</span>
-              <span>{localUnit.leaderPointsCost ? `${localUnit.leaderPointsCost} pts` : "0 pts"}</span>
+
+            <WeaponLoadoutEditor
+              title="Unit loadout"
+              unitDefinition={unitDefinition}
+              selectedWeapons={getSelectedWeaponEntries(resolvedLocalUnit.selectedWeapons, unitDefinition)}
+              onChange={(selectedWeapons) =>
+                applyDraftUpdate((current) => ({ ...current, selectedWeapons }))
+              }
+              validation={editorValidation.unitValidation}
+            />
+          </section>
+
+          <section className="unit-card__editor-section">
+            <div className="unit-card__section-header">
+              <h5 className="unit-card__section-title">Attached Leader</h5>
+              <span className="form-hint">
+                Optional. Attached leaders add their own points and selectable combat profile.
+              </span>
             </div>
-            <div className="unit-card__points-row">
-              <span>Enhancement</span>
-              <span>{localUnit.enhancementPointsCost ? `${localUnit.enhancementPointsCost} pts` : "0 pts"}</span>
+
+            <div className="form-field">
+              <label className="form-label">Leader</label>
+              <select
+                value={resolvedLocalUnit.leaderAttachedId ?? ""}
+                onChange={(event) =>
+                  applyDraftUpdate((current) => {
+                    const selectedId = event.target.value || undefined;
+                    const leaderDefinition = availableLeaders.find((leader) => leader.id === selectedId);
+
+                    return {
+                      ...current,
+                      leaderAttachedId: selectedId,
+                      attachedLeader: selectedId ? createAttachedLeaderFromUnit(leaderDefinition) : undefined,
+                      leaderPointsCost: leaderDefinition
+                        ? calculateUnitTotalPointsFromDefinition(leaderDefinition, 1)
+                        : 0,
+                      enhancementHost: selectedId ? current.enhancementHost ?? "unit" : "unit",
+                    };
+                  })
+                }
+                className="form-select"
+              >
+                <option value="">-- None --</option>
+                {availableLeaders.map((leader) => (
+                  <option key={leader.id} value={leader.id}>
+                    {leader.name}
+                    {calculateUnitTotalPointsFromDefinition(leader, 1)
+                      ? ` (+${calculateUnitTotalPointsFromDefinition(leader, 1)} pts)`
+                      : ""}
+                  </option>
+                ))}
+              </select>
             </div>
-            <div className="unit-card__points-row unit-card__points-row--total">
-              <span>Total</span>
-              <span>{calculateUnitPoints(localUnit)} pts</span>
+
+            {selectedLeaderDefinition && resolvedLocalUnit.attachedLeader && (
+              <div className="unit-card__nested-editor">
+                <div className="unit-card__nested-header">
+                  <h5 className="unit-card__nested-title">{selectedLeaderDefinition.name}</h5>
+                  <span className="form-hint">
+                    The leader is saved as an editable sub-unit and appears in Battle Workspace.
+                  </span>
+                </div>
+
+                <WeaponLoadoutEditor
+                  title="Leader loadout"
+                  unitDefinition={selectedLeaderDefinition}
+                  selectedWeapons={getSelectedWeaponEntries(
+                    resolvedLocalUnit.attachedLeader.selectedWeapons,
+                    selectedLeaderDefinition
+                  )}
+                  onChange={(selectedWeapons) =>
+                    applyDraftUpdate((current) => ({
+                      ...current,
+                      attachedLeader: current.attachedLeader
+                        ? { ...current.attachedLeader, selectedWeapons }
+                        : current.attachedLeader,
+                    }))
+                  }
+                  validation={
+                    editorValidation.leaderValidation ??
+                    validateWeaponSelections(resolvedLocalUnit.attachedLeader.selectedWeapons)
+                  }
+                />
+
+                <div className="unit-card__nested-summary">
+                  <span className="unit-card__detail-label">Leader points</span>
+                  <span className="unit-card__detail-value">
+                    {resolvedLocalUnit.leaderPointsCost
+                      ? `${resolvedLocalUnit.leaderPointsCost} pts`
+                      : "Unavailable"}
+                  </span>
+                </div>
+              </div>
+            )}
+          </section>
+
+          <section className="unit-card__editor-section">
+            <div className="unit-card__section-header">
+              <h5 className="unit-card__section-title">Enhancement</h5>
+              <span className="form-hint">
+                Enhancements stay attached to a specific eligible unit or leader.
+              </span>
             </div>
-          </div>
+
+            <div className="form-field">
+              <label className="form-label">Enhancement</label>
+              <select
+                value={resolvedLocalUnit.enhancementId ?? ""}
+                onChange={(event) =>
+                  applyDraftUpdate((current) => ({
+                    ...current,
+                    enhancementId: event.target.value || undefined,
+                  }))
+                }
+                className="form-select"
+                disabled={!detachmentSelected}
+              >
+                <option value="">
+                  {detachmentSelected ? "-- None --" : "-- Select detachment first --"}
+                </option>
+                {availableEnhancements.map((enhancement) => (
+                  <option key={enhancement.id} value={enhancement.id}>
+                    {enhancement.name}
+                    {enhancement.cost ? ` (+${enhancement.cost} pts)` : ""}
+                  </option>
+                ))}
+              </select>
+
+              {selectedLeaderDefinition && resolvedLocalUnit.enhancementId && (
+                <select
+                  className="form-select"
+                  value={resolvedLocalUnit.enhancementHost ?? "unit"}
+                  onChange={(event) =>
+                    applyDraftUpdate((current) => ({
+                      ...current,
+                      enhancementHost: event.target.value as "unit" | "leader",
+                    }))
+                  }
+                >
+                  <option value="unit">Host: unit</option>
+                  <option value="leader">Host: attached leader</option>
+                </select>
+              )}
+
+              <span className="form-hint">
+                {detachmentSelected
+                  ? selectedEnhancement
+                    ? `${selectedEnhancement.name}${selectedEnhancement.cost ? ` (${selectedEnhancement.cost} pts)` : ""}`
+                    : "Choose from the selected detachment's enhancements."
+                  : "Enhancements unlock after choosing a detachment."}
+              </span>
+
+              {enhancementRestriction && (
+                <span className="form-hint form-hint--warning">{enhancementRestriction}</span>
+              )}
+            </div>
+          </section>
+
+          <section className="unit-card__editor-section unit-card__editor-section--summary">
+            <div className="unit-card__section-header">
+              <h5 className="unit-card__section-title">Points Summary</h5>
+              <span className="form-hint">
+                Total combines unit size, attached leader, and enhancement cost.
+              </span>
+            </div>
+
+            <div className="unit-card__points-display">
+              <div className="unit-card__points-row">
+                <span>Base unit points</span>
+                <span>
+                  {resolvedLocalUnit.unitTotalPoints > 0
+                    ? `${resolvedLocalUnit.unitTotalPoints} pts`
+                    : "Unavailable"}
+                </span>
+              </div>
+              <div className="unit-card__points-row">
+                <span>Attached leader</span>
+                <span>
+                  {resolvedLocalUnit.leaderPointsCost
+                    ? `${resolvedLocalUnit.leaderPointsCost} pts`
+                    : "0 pts"}
+                </span>
+              </div>
+              <div className="unit-card__points-row">
+                <span>Enhancement</span>
+                <span>
+                  {resolvedLocalUnit.enhancementPointsCost
+                    ? `${resolvedLocalUnit.enhancementPointsCost} pts`
+                    : "0 pts"}
+                </span>
+              </div>
+              <div className="unit-card__points-row unit-card__points-row--total">
+                <span>Total</span>
+                <span>{calculateUnitPoints(resolvedLocalUnit)} pts</span>
+              </div>
+            </div>
+
+            {!editorValidation.isValid && (
+              <div className="unit-card__validation unit-card__validation--error" role="alert">
+                <strong>Fix the loadout before saving:</strong>
+                <ul className="unit-card__validation-list">
+                  {editorValidation.messages.map((message) => (
+                    <li key={message}>{message}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </section>
 
           <div className="unit-card__actions">
             <button className="button-link button-link--secondary" onClick={cancelEditing}>
@@ -568,7 +695,8 @@ export function UnitCard({
             </button>
             <button
               className="button-link button-link--primary"
-              onClick={() => setIsEditing(false)}
+              onClick={saveEditing}
+              disabled={!editorValidation.isValid}
             >
               Save Changes
             </button>
@@ -607,7 +735,7 @@ export function UnitCard({
             onClick={onDelete}
             title="Delete unit"
           >
-            ×
+            x
           </button>
         </div>
       </div>

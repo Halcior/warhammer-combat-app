@@ -447,18 +447,26 @@ function App() {
         )}
 
         {view === "workspace" && (
-          <WorkspacePage
-            armies={armyPresets.armies}
-            workspaceArmyA={workspaceArmyA}
-            workspaceArmyB={workspaceArmyB}
-            setWorkspaceArmyA={setWorkspaceArmyA}
-            setWorkspaceArmyB={setWorkspaceArmyB}
-            attackerId={battleSetup.attackerId}
-            defenderId={battleSetup.defenderId}
-            conditions={battleSetup.conditions}
-            setConditions={battleSetup.setConditions}
-            selectAttacker={battleSetup.selectAttacker}
-            selectDefender={battleSetup.selectDefender}
+            <WorkspacePage
+              armies={armyPresets.armies}
+              workspaceArmyA={workspaceArmyA}
+              workspaceArmyB={workspaceArmyB}
+              setWorkspaceArmyA={setWorkspaceArmyA}
+              setWorkspaceArmyB={setWorkspaceArmyB}
+              attackerFaction={battleSetup.attackerFaction}
+              defenderFaction={battleSetup.defenderFaction}
+              attackerId={battleSetup.attackerId}
+              defenderId={battleSetup.defenderId}
+              weaponId={battleSetup.weaponId}
+              attackingModels={battleSetup.attackingModels}
+              defendingModels={battleSetup.defendingModels}
+              conditions={battleSetup.conditions}
+              setConditions={battleSetup.setConditions}
+              handleWeaponChange={battleSetup.handleWeaponChange}
+              setAttackingModels={battleSetup.setAttackingModels}
+              setDefendingModels={battleSetup.setDefendingModels}
+              selectAttacker={battleSetup.selectAttacker}
+              selectDefender={battleSetup.selectDefender}
             expectedResult={expectedResult}
             attackBreakdownExplanation={attackBreakdownExplanation}
             mode={mode}

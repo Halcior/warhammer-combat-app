@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 
 import type { AttackConditions, Unit, Weapon, WeaponType } from "../types/combat";
 
-type BattleStateToggleKey =
+export type BattleStateToggleKey =
   | "isTargetInCover"
   | "remainedStationary"
   | "isChargeTurn"
@@ -41,7 +41,7 @@ type BattleStateToggleKey =
   | "attackerBelowHalfStrength"
   | "attackerIsIsolated";
 
-type BattleStateToggle = {
+export type BattleStateToggle = {
   key: BattleStateToggleKey;
   label: string;
   title: string;
@@ -50,7 +50,7 @@ type BattleStateToggle = {
   attackTypes?: WeaponType[];
 };
 
-const battleStateToggles: BattleStateToggle[] = [
+export const battleStateToggles: BattleStateToggle[] = [
   { key: "isTargetInCover", label: "Target in cover", title: "The defender benefits from cover.", group: "core" },
   { key: "remainedStationary", label: "Remained stationary", title: "The attacking unit remained stationary this turn.", group: "core", attackTypes: ["ranged"] },
   { key: "isChargeTurn", label: "Charge turn", title: "The current attack happens during a charge turn.", group: "core", attackTypes: ["melee"] },

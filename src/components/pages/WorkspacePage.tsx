@@ -17,10 +17,18 @@ interface WorkspacePageProps {
   workspaceArmyB: string | null;
   setWorkspaceArmyA: (id: string | null) => void;
   setWorkspaceArmyB: (id: string | null) => void;
+  attackerFaction: string;
+  defenderFaction: string;
   attackerId: string;
   defenderId: string;
+  weaponId: string;
+  attackingModels: number;
+  defendingModels: number;
   conditions: AttackConditions;
   setConditions: (c: AttackConditions) => void;
+  handleWeaponChange: (weaponId: string) => void;
+  setAttackingModels: (value: number) => void;
+  setDefendingModels: (value: number) => void;
   selectAttacker: (faction: string, unitId: string, weaponId: string) => void;
   selectDefender: (faction: string, unitId: string) => void;
   expectedResult: ExpectedDamageResult;
@@ -79,10 +87,18 @@ export function WorkspacePage({
   workspaceArmyB,
   setWorkspaceArmyA,
   setWorkspaceArmyB,
+  attackerFaction,
+  defenderFaction,
   attackerId,
   defenderId,
+  weaponId,
+  attackingModels,
+  defendingModels,
   conditions,
   setConditions,
+  handleWeaponChange,
+  setAttackingModels,
+  setDefendingModels,
   selectAttacker,
   selectDefender,
   expectedResult,
@@ -152,10 +168,18 @@ export function WorkspacePage({
         workspaceArmyB={workspaceArmyB}
         setWorkspaceArmyA={setWorkspaceArmyA}
         setWorkspaceArmyB={setWorkspaceArmyB}
+        attackerFaction={attackerFaction}
+        defenderFaction={defenderFaction}
         attackerId={attackerId}
         defenderId={defenderId}
+        weaponId={weaponId}
+        attackingModels={attackingModels}
+        defendingModels={defendingModels}
         conditions={conditions}
         setConditions={setConditions}
+        handleWeaponChange={handleWeaponChange}
+        setAttackingModels={setAttackingModels}
+        setDefendingModels={setDefendingModels}
         selectAttacker={selectAttacker}
         selectDefender={selectDefender}
       />

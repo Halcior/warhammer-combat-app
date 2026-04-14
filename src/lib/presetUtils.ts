@@ -65,7 +65,6 @@ export function buildDefaultSelectedWeapons(unitDefinition: Unit | undefined): S
     weaponId: weapon.id,
     name: weapon.name,
     category: weapon.type,
-    quantity: 1,
   }));
 }
 
@@ -316,7 +315,6 @@ export function migrateUnitToPreset(
           weaponId: oldUnit.selectedWeaponId,
           name: oldUnit.selectedWeaponId,
           category: "other",
-          quantity: 1,
         },
       ]
     : [];
@@ -391,13 +389,11 @@ export function loadAndMigratePreset(preset: ArmyPreset): ArmyPresetV2 {
                   weaponId: unit.selectedRangedWeaponId,
                   name: unit.selectedRangedWeaponId,
                   category: "ranged" as const,
-                  quantity: 1,
                 },
                 unit.selectedMeleeWeaponId && {
                   weaponId: unit.selectedMeleeWeaponId,
                   name: unit.selectedMeleeWeaponId,
                   category: "melee" as const,
-                  quantity: 1,
                 },
                 !unit.selectedRangedWeaponId &&
                   !unit.selectedMeleeWeaponId &&
@@ -405,7 +401,6 @@ export function loadAndMigratePreset(preset: ArmyPreset): ArmyPresetV2 {
                     weaponId: unit.selectedWeaponId,
                     name: unit.selectedWeaponId,
                     category: "other" as const,
-                    quantity: 1,
                   },
               ].filter(Boolean) as SelectedWeaponEntry[],
       })),

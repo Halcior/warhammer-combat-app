@@ -3,6 +3,7 @@ import type { Unit } from "../../../types/combat";
 import {
   getEnhancementRestrictionLabel,
   stripRuleHtmlText,
+  validateWeaponSelections,
 } from "../UnitCard";
 
 function createUnit(overrides: Partial<Unit> = {}): Unit {
@@ -47,5 +48,27 @@ describe("UnitCard helpers", () => {
     });
 
     expect(warning).toBe("Restricted to: CANONESS or PALATINE");
+  });
+
+  it("blocks weapon assignments that exceed model count within a category", () => {
+    const validation = validateWeaponSelections(
+      [
+        { weaponId: "bolter", name: "Bolter", category: "ranged" },
+        { weaponId: "flamer", name: "Flamer", category: "ranged" },
+        { weaponId: "blade", name: "Blade", category: "melee" },
+      ]
+    );
+
+    expect(validation.isValid).toBe(true);
+    expect(validation.selectedByCategory.ranged).toBe(2);
+  });
+
+  it("requires at least one selected weapon profile", () => {
+    const validation = validateWeaponSelections([]);
+
+    expect(validation.isValid).toBe(false);
+    expect(validation.messages).toContain(
+      "Select at least one weapon or equipment entry before saving."
+    );
   });
 });
