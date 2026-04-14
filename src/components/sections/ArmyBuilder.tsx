@@ -316,18 +316,7 @@ export function ArmyBuilder({
 
         {preset.units.length === 0 ? (
           <div className="army-builder__empty">
-            <p className="army-builder__empty-text">No units added yet</p>
-            <button
-              className="button-link button-link--primary"
-              onClick={() => {
-                if (unitToAddId) {
-                  handleAddUnit(unitToAddId);
-                }
-              }}
-              disabled={!unitToAddId}
-            >
-              Add Units to Start
-            </button>
+            <p className="army-builder__empty-text">No units added yet. Use the + Add Unit button above to get started.</p>
           </div>
         ) : (
           <div className="army-builder__units-list">

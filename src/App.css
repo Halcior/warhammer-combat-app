@@ -2550,6 +2550,21 @@ button:focus-visible,
   margin: 6px 0 0;
 }
 
+.army-builder__units-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.army-builder__units-title {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
 .army-builder__units-hint--empty {
   color: rgba(167, 173, 181, 0.9);
 }

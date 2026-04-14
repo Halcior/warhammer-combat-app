@@ -60,6 +60,9 @@ export function ImportArmyModal({
     };
 
     reader.readAsText(file);
+
+    // Reset input so the same file can be selected again
+    e.target.value = "";
   };
 
   const handleConfirmImport = async () => {
@@ -233,7 +236,13 @@ export function ImportArmyModal({
               accept=".json"
               onChange={handleFileSelect}
               className="import-file-input"
-              style={{ display: "none" }}
+              style={{
+                position: "absolute",
+                opacity: 0,
+                width: 0,
+                height: 0,
+                pointerEvents: "none",
+              }}
             />
             <button
               className="button-link button-link--secondary import-file-btn"
