@@ -2,6 +2,8 @@ import { useMemo, useState } from "react";
 import { units } from "../data/units";
 import { detachments } from "../data/detachments";
 import { ArmyBuilder } from "./sections";
+import { ExportArmyModal } from "./modals/ExportArmyModal";
+import { ImportArmyModal } from "./modals/ImportArmyModal";
 import { calculateUnitPoints } from "../lib/presetUtils";
 import type { AppView } from "./AppNav";
 import type { ArmyPresetV2 } from "../types/armyPreset";
@@ -89,12 +91,14 @@ function ArmyPresetCard({
   onDelete,
   onDuplicate,
   onLoadInWorkspace,
+  onExport,
 }: {
   army: ArmyPresetV2;
   onEdit: () => void;
   onDelete: () => void;
   onDuplicate: () => void;
   onLoadInWorkspace: () => void;
+  onExport: () => void;
 }) {
   return (
     <article className="card army-card army-card--preset">
@@ -161,6 +165,9 @@ function ArmyPresetCard({
         <button className="army-card__action-btn" onClick={onDuplicate}>
           Duplicate
         </button>
+        <button className="army-card__action-btn" onClick={onExport}>
+          Export
+        </button>
         <button
           className="army-card__action-btn army-card__action-btn--workspace"
           onClick={onLoadInWorkspace}
@@ -194,6 +201,8 @@ export function ArmiesView({
   setView,
 }: Props) {
   const [editor, setEditor] = useState<EditorState>({ mode: "idle" });
+  const [exportingArmy, setExportingArmy] = useState<ArmyPresetV2 | null>(null);
+  const [showImportModal, setShowImportModal] = useState(false);
 
   const factions = useMemo(
     () => [...new Set(units.map((unit) => unit.faction))].sort(),
@@ -278,6 +287,12 @@ export function ArmiesView({
           <span className="armies-view__limit">
             {armies.length}/{freeLimit} presets
           </span>
+          <button
+            className="button-link button-link--secondary"
+            onClick={() => setShowImportModal(true)}
+          >
+            ⬆ Import Army
+          </button>
           {canCreate ? (
             <button
               className="button-link button-link--primary"
@@ -316,9 +331,34 @@ export function ArmiesView({
               onDelete={() => onDelete(army.id)}
               onDuplicate={() => onDuplicate(army.id)}
               onLoadInWorkspace={() => onOpenWorkspace(army.id, setView)}
+              onExport={() => setExportingArmy(army)}
             />
           ))}
         </div>
+      )}
+
+      {exportingArmy && (
+        <ExportArmyModal
+          army={exportingArmy}
+          unitDefinitions={unitDefinitions}
+          onClose={() => setExportingArmy(null)}
+        />
+      )}
+
+      {showImportModal && (
+        <ImportArmyModal
+          unitDefinitions={unitDefinitions}
+          onImport={(preset) => {
+            const detachmentName =
+              detachmentsByFaction[preset.faction]?.find(
+                (item) => item.id === preset.detachmentId
+              )?.name ?? preset.detachmentName;
+
+            onAdd(toArmyDraft(preset, detachmentName));
+            setShowImportModal(false);
+          }}
+          onClose={() => setShowImportModal(false)}
+        />
       )}
     </div>
   );
