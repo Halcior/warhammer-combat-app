@@ -3498,6 +3498,31 @@ button:focus-visible,
   flex: 1;
 }
 
+.app-header__support {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(242, 106, 27, 0.22);
+  background: rgba(242, 106, 27, 0.08);
+  color: #fff3e9;
+  font-size: 0.9rem;
+  font-weight: 700;
+  white-space: nowrap;
+  transition:
+    background 0.14s ease,
+    border-color 0.14s ease,
+    transform 0.14s ease;
+}
+
+.app-header__support:hover {
+  background: rgba(242, 106, 27, 0.14);
+  border-color: rgba(242, 106, 27, 0.36);
+  transform: translateY(-1px);
+}
+
 .app-header__tab {
   background: none;
   border: none;
@@ -4010,11 +4035,16 @@ button:focus-visible,
 
 @media (max-width: 768px) {
   .app-header__content {
+    flex-wrap: wrap;
     gap: 16px;
   }
 
   .app-header__nav {
     gap: 12px;
+  }
+
+  .app-header__support {
+    order: 3;
   }
 
   .app-header__tab {
@@ -4334,6 +4364,11 @@ button:focus-visible,
 }
 
 @media (max-width: 768px) {
+  .support-cta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .updates-hint {
     flex-direction: column;
     align-items: flex-start;
@@ -5984,6 +6019,39 @@ button:focus-visible,
   border: 1px solid rgba(255, 255, 255, 0.08);
   color: var(--text);
   font-size: 0.9rem;
+}
+
+.support-cta {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-color: rgba(242, 106, 27, 0.18);
+  background:
+    linear-gradient(135deg, rgba(242, 106, 27, 0.1) 0%, rgba(255, 255, 255, 0.02) 52%),
+    var(--surface);
+}
+
+.support-cta__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.support-cta__title {
+  margin: 0;
+  font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+  font-family: "Space Grotesk", "Inter", sans-serif;
+  line-height: 1.2;
+}
+
+.support-cta__text {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.55;
+  max-width: 760px;
 }
 
 /* Mobile 768px */

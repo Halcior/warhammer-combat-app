@@ -85,6 +85,26 @@ export function UpdatesPage() {
       </section>
 
       <StatusList title={knownLimitations.title} items={knownLimitations.items} />
+
+      <section className="card support-cta">
+        <div className="support-cta__copy">
+          <p className="panel-eyebrow">Support DamageForge</p>
+          <h2 className="support-cta__title">If the tool is helping, you can help keep it moving.</h2>
+          <p className="support-cta__text">
+            Support is completely optional, but it helps fund continued faction coverage,
+            polish, testing time and future quality-of-life work.
+          </p>
+        </div>
+
+        <a
+          className="button-link button-link--primary"
+          href="https://buymeacoffee.com/damageforge"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Support on Buy Me a Coffee
+        </a>
+      </section>
     </div>
   );
 }

@@ -392,6 +392,15 @@ function LoadedApp({ units, detachments }: LoadedAppProps) {
               </button>
             </nav>
 
+            <a
+              className="app-header__support"
+              href="https://buymeacoffee.com/damageforge"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Support
+            </a>
+
           </div>
         </div>
       </header>
