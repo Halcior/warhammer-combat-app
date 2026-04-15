@@ -3520,6 +3520,46 @@ button:focus-visible,
   border-bottom-color: var(--accent);
 }
 
+.updates-hint {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 22px 24px;
+  border-color: rgba(242, 106, 27, 0.18);
+  background:
+    linear-gradient(135deg, rgba(242, 106, 27, 0.1) 0%, rgba(255, 255, 255, 0.02) 52%),
+    var(--surface);
+}
+
+.updates-hint__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.updates-hint__title {
+  margin: 0;
+  font-family: "Space Grotesk", "Inter", sans-serif;
+  font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+  line-height: 1.2;
+}
+
+.updates-hint__text {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.55;
+  max-width: 760px;
+}
+
+.updates-hint__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
 /* ── Page Header Component ─────────────────────────────────────────── */
 
 .page-header {
@@ -4294,6 +4334,16 @@ button:focus-visible,
 }
 
 @media (max-width: 768px) {
+  .updates-hint {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .updates-hint__actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
   .step-indicator {
     gap: 8px;
     flex-wrap: wrap;

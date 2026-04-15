@@ -55,10 +55,13 @@ function LoadedApp({ units, detachments }: LoadedAppProps) {
   const [view, setView] = useState<AppView>(session.view ?? "calculator");
   const [workspaceArmyA, setWorkspaceArmyA] = useState<string | null>(session.workspaceArmyA ?? null);
   const [workspaceArmyB, setWorkspaceArmyB] = useState<string | null>(session.workspaceArmyB ?? null);
+  const [updatesHintDismissed, setUpdatesHintDismissed] = useState(
+    session.updatesHintDismissed ?? false
+  );
 
   useEffect(() => {
-    saveUISession({ view, workspaceArmyA, workspaceArmyB });
-  }, [view, workspaceArmyA, workspaceArmyB]);
+    saveUISession({ view, workspaceArmyA, workspaceArmyB, updatesHintDismissed });
+  }, [view, workspaceArmyA, workspaceArmyB, updatesHintDismissed]);
 
   const [compareWeaponId, setCompareWeaponId] = useState("");
   const [mode, setMode] = useState<CalculationMode>("fast");
@@ -394,6 +397,34 @@ function LoadedApp({ units, detachments }: LoadedAppProps) {
       </header>
 
       <main className="page-shell app-main">
+        {!updatesHintDismissed && (
+          <section className="updates-hint card" aria-label="Tester updates hint">
+            <div className="updates-hint__copy">
+              <p className="panel-eyebrow">For testers</p>
+              <h2 className="updates-hint__title">Check Updates before deeper testing.</h2>
+              <p className="updates-hint__text">
+                It covers the current alpha status, best-supported factions, known limitations
+                and the parts of the app that are still actively moving.
+              </p>
+            </div>
+
+            <div className="updates-hint__actions">
+              <button
+                className="button-link button-link--primary"
+                onClick={() => setView("updates")}
+              >
+                Open Updates
+              </button>
+              <button
+                className="button-link button-link--ghost"
+                onClick={() => setUpdatesHintDismissed(true)}
+              >
+                Dismiss
+              </button>
+            </div>
+          </section>
+        )}
+
         {view === "calculator" && (
           <CalculatorPage
             battleSetup={battleSetup}

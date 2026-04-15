@@ -6,6 +6,7 @@ type UISession = {
   view: "calculator" | "armies" | "workspace" | "updates";
   workspaceArmyA: string | null;
   workspaceArmyB: string | null;
+  updatesHintDismissed?: boolean;
 };
 
 export function loadUISession(): Partial<UISession> {
