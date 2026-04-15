@@ -4,7 +4,7 @@ import type { Unit } from "../types/combat";
 
 interface LoadArmySelectorProps {
   armies: ArmyPresetV2[];
-  unitDefinitions: CombatUnit[];
+  unitDefinitions: Unit[];
   onLoadUnit: (faction: string, unitId: string, weaponId: string) => void;
   onClose?: () => void;
 }
@@ -111,7 +111,7 @@ export function LoadArmySelector({
             <div className="load-army-selector__preview-row">
               <span className="load-army-selector__preview-label">Weapon:</span>
               <span className="load-army-selector__preview-value">
-                {selectedUnitDefinition.weapons.find((w) => w.id === selectedUnit.selectedWeaponId)
+                {selectedUnitDefinition.weapons.find((w: Unit["weapons"][number]) => w.id === selectedUnit.selectedWeaponId)
                   ?.name ?? "Unknown"}
               </span>
             </div>

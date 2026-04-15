@@ -139,6 +139,10 @@ function WorkspaceArmyPanel({
     () => buildWorkspaceSelectableEntries(loadedArmy),
     [loadedArmy]
   );
+  const activeEntry = useMemo(
+    () => selectableEntries.find((entry) => entry.entryId === activeEntryId) ?? selectableEntries[0] ?? null,
+    [activeEntryId, selectableEntries]
+  );
 
   const label = side === "A" ? "Attacker - Army A" : "Defender - Army B";
   const emptyHint = side === "A" ? "Select your army" : "Select opponent's army";
@@ -163,10 +167,10 @@ function WorkspaceArmyPanel({
 
       {loadedArmy ? (
         <>
-          <div className="workspace-army-panel__summary">
-            <div className="workspace-army-panel__summary-block">
-              <span className="workspace-army-panel__summary-label">Faction</span>
-              <span className="workspace-army-panel__summary-value">{loadedArmy.faction}</span>
+        <div className="workspace-army-panel__summary">
+          <div className="workspace-army-panel__summary-block">
+            <span className="workspace-army-panel__summary-label">Faction</span>
+            <span className="workspace-army-panel__summary-value">{loadedArmy.faction}</span>
             </div>
             <div className="workspace-army-panel__summary-block">
               <span className="workspace-army-panel__summary-label">Points</span>
@@ -179,6 +183,28 @@ function WorkspaceArmyPanel({
               <span className="workspace-army-panel__summary-value">{loadedArmy.units.length}</span>
             </div>
           </div>
+
+          {activeEntry && (
+            <div className="workspace-army-panel__active-summary">
+              <div className="workspace-army-panel__active-header">
+                <span className="workspace-army-panel__summary-label">
+                  {side === "A" ? "Active attacker" : "Active defender"}
+                </span>
+                <span className="workspace-army-panel__active-role">
+                  {activeEntry.source === "attachedLeader" ? "Attached leader" : "Primary unit"}
+                </span>
+              </div>
+              <strong className="workspace-army-panel__active-name">{activeEntry.displayName}</strong>
+              <div className="workspace-army-panel__active-meta">
+                <span>{activeEntry.modelCount} model{activeEntry.modelCount === 1 ? "" : "s"}</span>
+                {activeEntry.points > 0 && <span>{activeEntry.points} pts</span>}
+              </div>
+              <p className="workspace-army-panel__active-loadout">{activeEntry.weaponLabel}</p>
+              {activeEntry.parentLabel && (
+                <span className="workspace-army-panel__active-parent">Attached to {activeEntry.parentLabel}</span>
+              )}
+            </div>
+          )}
 
           <div className="workspace-unit-list">
             {selectableEntries.length === 0 ? (
@@ -245,6 +271,22 @@ type WorkspaceCombatSetupProps = {
   setConditions: (c: AttackConditions) => void;
 };
 
+function classifyBattleStateSide(key: keyof AttackConditions) {
+  if (key.startsWith("attacker")) {
+    return "attacker";
+  }
+
+  if (
+    key.startsWith("target") ||
+    key.startsWith("defender") ||
+    key === "isTargetInCover"
+  ) {
+    return "defender";
+  }
+
+  return "shared";
+}
+
 function WorkspaceCombatSetup({
   attackerEntry,
   defenderEntry,
@@ -302,6 +344,17 @@ function WorkspaceCombatSetup({
 
     return matchesFaction && matchesAttackType;
   });
+  const attackerAdvancedToggles = visibleAdvancedToggles.filter(
+    (toggle) => classifyBattleStateSide(toggle.key) === "attacker"
+  );
+  const defenderAdvancedToggles = visibleAdvancedToggles.filter(
+    (toggle) => classifyBattleStateSide(toggle.key) === "defender"
+  );
+  const sharedAdvancedToggles = visibleAdvancedToggles.filter(
+    (toggle) => classifyBattleStateSide(toggle.key) === "shared"
+  );
+  const selectedWeaponLabel =
+    attackerEntry?.weaponOptions.find((option) => option.weaponId === weaponId)?.label ?? "Not selected";
 
   return (
     <div className="card workspace-combat-setup">
@@ -312,6 +365,30 @@ function WorkspaceCombatSetup({
           <p className="muted-text">
             Pick the active weapon, adjust the matchup context and keep the simulation grounded in the saved loadout.
           </p>
+        </div>
+      </div>
+
+      <div className="workspace-matchup-summary">
+        <div className="workspace-matchup-summary__side">
+          <span className="workspace-matchup-summary__label">Attacker</span>
+          <strong>{attackerEntry?.displayName ?? "Not selected"}</strong>
+          <span>{attackerEntry?.source === "attachedLeader" ? "Attached leader actor" : "Primary unit actor"}</span>
+          {attackerEntry && (
+            <span className="workspace-matchup-summary__detail">
+              {attackingModels} attacking • {selectedWeaponLabel}
+            </span>
+          )}
+        </div>
+        <div className="workspace-matchup-summary__vs">vs</div>
+        <div className="workspace-matchup-summary__side">
+          <span className="workspace-matchup-summary__label">Defender</span>
+          <strong>{defenderEntry?.displayName ?? "Not selected"}</strong>
+          <span>{defenderEntry?.source === "attachedLeader" ? "Attached leader actor" : "Primary unit target"}</span>
+          {defenderEntry && (
+            <span className="workspace-matchup-summary__detail">
+              {defendingModels} defending • {defenderEntry.weaponLabel}
+            </span>
+          )}
         </div>
       </div>
 
@@ -375,6 +452,24 @@ function WorkspaceCombatSetup({
         </label>
       </div>
 
+      {attackerEntry && attackerEntry.weaponOptions.length > 1 && (
+        <div className="workspace-weapon-quickpick">
+          <span className="workspace-weapon-quickpick__label">Quick weapon pick</span>
+          <div className="workspace-weapon-quickpick__options">
+            {attackerEntry.weaponOptions.map((option) => (
+              <button
+                key={option.weaponId}
+                className={`workspace-weapon-chip${option.weaponId === weaponId ? " workspace-weapon-chip--active" : ""}`}
+                onClick={() => onWeaponChange(option.weaponId)}
+                aria-pressed={option.weaponId === weaponId}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="workspace-state-strip">
         <div className="workspace-state-strip__round">
           <span className="workspace-state-strip__label">Round</span>
@@ -426,22 +521,90 @@ function WorkspaceCombatSetup({
         </summary>
 
         {showAdvanced && (
-          <div className="workspace-advanced-state__grid">
-            {visibleAdvancedToggles.map(({ key, label, title }) => (
-              <label key={key} className="checkbox-row" title={title}>
-                <input
-                  type="checkbox"
-                  checked={conditions[key]}
-                  onChange={(event) =>
-                    setConditions({
-                      ...conditions,
-                      [key]: event.target.checked,
-                    })
-                  }
-                />
-                <span className="checkbox-row__label">{label}</span>
-              </label>
-            ))}
+          <div className="workspace-advanced-state__columns">
+            <div className="workspace-advanced-state__group">
+              <div className="workspace-advanced-state__group-header">
+                <h4>Attacker-side</h4>
+                <span>{attackerAdvancedToggles.length}</span>
+              </div>
+              <div className="workspace-advanced-state__grid">
+                {attackerAdvancedToggles.length > 0 ? (
+                  attackerAdvancedToggles.map(({ key, label, title }) => (
+                    <label key={key} className="checkbox-row" title={title}>
+                      <input
+                        type="checkbox"
+                        checked={conditions[key]}
+                        onChange={(event) =>
+                          setConditions({
+                            ...conditions,
+                            [key]: event.target.checked,
+                          })
+                        }
+                      />
+                      <span className="checkbox-row__label">{label}</span>
+                    </label>
+                  ))
+                ) : (
+                  <p className="workspace-advanced-state__empty">No attacker-side advanced states are relevant.</p>
+                )}
+              </div>
+            </div>
+
+            <div className="workspace-advanced-state__group">
+              <div className="workspace-advanced-state__group-header">
+                <h4>Defender-side</h4>
+                <span>{defenderAdvancedToggles.length}</span>
+              </div>
+              <div className="workspace-advanced-state__grid">
+                {defenderAdvancedToggles.length > 0 ? (
+                  defenderAdvancedToggles.map(({ key, label, title }) => (
+                    <label key={key} className="checkbox-row" title={title}>
+                      <input
+                        type="checkbox"
+                        checked={conditions[key]}
+                        onChange={(event) =>
+                          setConditions({
+                            ...conditions,
+                            [key]: event.target.checked,
+                          })
+                        }
+                      />
+                      <span className="checkbox-row__label">{label}</span>
+                    </label>
+                  ))
+                ) : (
+                  <p className="workspace-advanced-state__empty">No defender-side advanced states are relevant.</p>
+                )}
+              </div>
+            </div>
+
+            <div className="workspace-advanced-state__group">
+              <div className="workspace-advanced-state__group-header">
+                <h4>Shared</h4>
+                <span>{sharedAdvancedToggles.length}</span>
+              </div>
+              <div className="workspace-advanced-state__grid">
+                {sharedAdvancedToggles.length > 0 ? (
+                  sharedAdvancedToggles.map(({ key, label, title }) => (
+                    <label key={key} className="checkbox-row" title={title}>
+                      <input
+                        type="checkbox"
+                        checked={conditions[key]}
+                        onChange={(event) =>
+                          setConditions({
+                            ...conditions,
+                            [key]: event.target.checked,
+                          })
+                        }
+                      />
+                      <span className="checkbox-row__label">{label}</span>
+                    </label>
+                  ))
+                ) : (
+                  <p className="workspace-advanced-state__empty">No shared advanced states are relevant.</p>
+                )}
+              </div>
+            </div>
           </div>
         )}
       </details>
@@ -554,6 +717,36 @@ export function WorkspaceView({
     handleWeaponChange(activeAttackerEntry.weaponOptions[0].weaponId);
   }, [activeAttackerEntry, handleWeaponChange, weaponId]);
 
+  useEffect(() => {
+    if (!activeAttackerEntry) {
+      return;
+    }
+
+    if (attackingModels > activeAttackerEntry.modelCount) {
+      setAttackingModels(activeAttackerEntry.modelCount);
+    }
+  }, [activeAttackerEntry, attackingModels, setAttackingModels]);
+
+  useEffect(() => {
+    if (!activeDefenderEntry) {
+      return;
+    }
+
+    if (defendingModels > activeDefenderEntry.modelCount) {
+      setDefendingModels(activeDefenderEntry.modelCount);
+      setConditions({
+        ...conditions,
+        targetModelCount: activeDefenderEntry.modelCount,
+      });
+    }
+  }, [
+    activeDefenderEntry,
+    conditions,
+    defendingModels,
+    setConditions,
+    setDefendingModels,
+  ]);
+
   return (
     <div className="workspace-setup">
       <div className="workspace-setup__header">
@@ -578,11 +771,13 @@ export function WorkspaceView({
             const firstEntry = buildWorkspaceSelectableEntries(army)[0];
             if (army && firstEntry) {
               setActiveAttackerEntryId(firstEntry.entryId);
+              setAttackingModels(firstEntry.modelCount);
               selectAttacker(army.faction, firstEntry.unitId, firstEntry.primaryWeaponId ?? "");
             }
           }}
           onSelectUnit={(entry, faction) => {
             setActiveAttackerEntryId(entry.entryId);
+            setAttackingModels(entry.modelCount);
             selectAttacker(faction, entry.unitId, entry.primaryWeaponId ?? "");
           }}
         />
@@ -598,11 +793,21 @@ export function WorkspaceView({
             const firstEntry = buildWorkspaceSelectableEntries(army)[0];
             if (army && firstEntry) {
               setActiveDefenderEntryId(firstEntry.entryId);
+              setDefendingModels(firstEntry.modelCount);
+              setConditions({
+                ...conditions,
+                targetModelCount: firstEntry.modelCount,
+              });
               selectDefender(army.faction, firstEntry.unitId);
             }
           }}
           onSelectUnit={(entry, faction) => {
             setActiveDefenderEntryId(entry.entryId);
+            setDefendingModels(entry.modelCount);
+            setConditions({
+              ...conditions,
+              targetModelCount: entry.modelCount,
+            });
             selectDefender(faction, entry.unitId);
           }}
         />

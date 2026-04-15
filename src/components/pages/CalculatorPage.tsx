@@ -18,7 +18,7 @@ import type { RuleOption } from "../../types/faction";
 import type { AttackBreakdownExplanation } from "../../lib/combat/explainAttackBreakdown";
 import type { ExpectedDamageResult } from "../../lib/combat/types";
 import type { ArmyPresetV2 } from "../../types/armyPreset";
-import type { CombatUnit } from "../../types/combat";
+import type { Unit } from "../../types/combat";
 
 type BattleSetupState = ReturnType<
   typeof import("../../hooks/useBattleSetup").useBattleSetup
@@ -74,7 +74,7 @@ interface CalculatorPageProps {
   compareWeaponId: string;
   setCompareWeaponId: React.Dispatch<React.SetStateAction<string>>;
   armies: ArmyPresetV2[];
-  unitDefinitions: CombatUnit[];
+  unitDefinitions: Unit[];
 }
 
 export function CalculatorPage({

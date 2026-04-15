@@ -61,6 +61,7 @@ describe("UnitCard helpers", () => {
 
     expect(validation.isValid).toBe(true);
     expect(validation.selectedByCategory.ranged).toBe(2);
+    expect(validation.selectedByCategory.melee).toBe(1);
   });
 
   it("requires at least one selected weapon profile", () => {

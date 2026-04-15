@@ -375,9 +375,6 @@ function App() {
               </button>
             </nav>
 
-            <a className="app-header__link" href="https://github.com/Halcior/warhammer-combat-app.git" target="_blank" rel="noreferrer">
-              GitHub
-            </a>
           </div>
         </div>
       </header>

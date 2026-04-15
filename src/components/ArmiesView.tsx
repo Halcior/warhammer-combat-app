@@ -4,7 +4,7 @@ import { detachments } from "../data/detachments";
 import { ArmyBuilder } from "./sections";
 import { ExportArmyModal } from "./modals/ExportArmyModal";
 import { ImportArmyModal } from "./modals/ImportArmyModal";
-import { calculateUnitPoints } from "../lib/presetUtils";
+import { ArmyCard } from "./ArmyCard";
 import type { AppView } from "./AppNav";
 import type { ArmyPresetV2 } from "../types/armyPreset";
 import type { ArmyDraft } from "../lib/storage/armyStorage";
@@ -25,10 +25,6 @@ type EditorState =
   | { mode: "idle" }
   | { mode: "creating" }
   | { mode: "editing"; army: ArmyPresetV2 };
-
-function unitById(unitId: string) {
-  return units.find((unit) => unit.id === unitId) ?? null;
-}
 
 function toArmyDraft(preset: ArmyPresetV2, detachmentName?: string): ArmyDraft {
   return {
@@ -83,110 +79,6 @@ function buildEnhancementsByDetachment() {
 
     return accumulator;
   }, {});
-}
-
-function ArmyPresetCard({
-  army,
-  onEdit,
-  onDelete,
-  onDuplicate,
-  onLoadInWorkspace,
-  onExport,
-}: {
-  army: ArmyPresetV2;
-  onEdit: () => void;
-  onDelete: () => void;
-  onDuplicate: () => void;
-  onLoadInWorkspace: () => void;
-  onExport: () => void;
-}) {
-  return (
-    <article className="card army-card army-card--preset">
-      <div className="army-card__topline">
-        <p className="army-card__faction">{army.faction}</p>
-        <span className="army-card__points">
-          {army.totalPoints > 0 ? `${army.totalPoints} pts` : "Points pending"}
-        </span>
-      </div>
-
-      <div className="army-card__header">
-        <h3 className="army-card__name">{army.name}</h3>
-        {army.detachmentName && (
-          <p className="army-card__detachment">{army.detachmentName}</p>
-        )}
-      </div>
-
-      <div className="army-card__stats">
-        <div className="army-card__stat">
-          <span className="army-card__stat-label">Units</span>
-          <span className="army-card__stat-value">{army.units.length}</span>
-        </div>
-        <div className="army-card__stat">
-          <span className="army-card__stat-label">Limit</span>
-          <span className="army-card__stat-value">
-            {army.pointsLimit ? `${army.pointsLimit} pts` : "Unlimited"}
-          </span>
-        </div>
-      </div>
-
-      {army.units.length > 0 && (
-        <div className="army-card__units">
-          <p className="army-card__units-label">Preset preview</p>
-          <ul className="army-card__units-list">
-            {army.units.slice(0, 4).map((unit, index) => (
-              <li
-                key={unit.instanceId ?? `${unit.unitId}-${unit.addedAt ?? index}`}
-                className="army-card__unit-item"
-              >
-                <span className="army-card__unit-name">
-                  {unit.nickname || unitById(unit.unitId)?.name || unit.unitId}
-                </span>
-                <span className="army-card__unit-meta">
-                  {unit.modelCount} models
-                  {calculateUnitPoints(unit) > 0 ? ` • ${calculateUnitPoints(unit)} pts` : ""}
-                </span>
-              </li>
-            ))}
-            {army.units.length > 4 && (
-              <li className="army-card__unit-item army-card__unit-item--more">
-                +{army.units.length - 4} more units
-              </li>
-            )}
-          </ul>
-        </div>
-      )}
-
-      {army.notes && <p className="army-card__notes">{army.notes}</p>}
-
-      <div className="army-card__actions">
-        <button className="army-card__action-btn" onClick={onEdit}>
-          Edit
-        </button>
-        <button className="army-card__action-btn" onClick={onDuplicate}>
-          Duplicate
-        </button>
-        <button className="army-card__action-btn" onClick={onExport}>
-          Export
-        </button>
-        <button
-          className="army-card__action-btn army-card__action-btn--workspace"
-          onClick={onLoadInWorkspace}
-        >
-          Open in Workspace
-        </button>
-        <button
-          className="army-card__action-btn army-card__action-btn--danger"
-          onClick={() => {
-            if (confirm(`Delete "${army.name}"?`)) {
-              onDelete();
-            }
-          }}
-        >
-          Delete
-        </button>
-      </div>
-    </article>
-  );
 }
 
 export function ArmiesView({
@@ -291,7 +183,7 @@ export function ArmiesView({
             className="button-link button-link--secondary"
             onClick={() => setShowImportModal(true)}
           >
-            ⬆ Import Army
+            Import Army
           </button>
           {canCreate ? (
             <button
@@ -324,9 +216,10 @@ export function ArmiesView({
       ) : (
         <div className="army-list army-list--presets">
           {armies.map((army) => (
-            <ArmyPresetCard
+            <ArmyCard
               key={army.id}
               army={army}
+              unitDefinitions={unitDefinitions}
               onEdit={() => setEditor({ mode: "editing", army })}
               onDelete={() => onDelete(army.id)}
               onDuplicate={() => onDuplicate(army.id)}
