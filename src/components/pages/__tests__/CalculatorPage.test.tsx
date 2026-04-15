@@ -210,12 +210,12 @@ describe("CalculatorPage -> ModifiersPanel integration", () => {
           enhancements: [],
         }}
         ruleOptions={{
-          activeRuleOptionIds: [],
-          setActiveRuleOptionIds: () => undefined,
-          activeRuleOptions: [],
-          activeRuleModifiers: [],
-          activeEngineTags: [],
-          toggleRuleOption: () => undefined,
+          activeRuleOptionIdsBySide: { attacker: [], defender: [] },
+          toggleRuleOptionForSide: () => undefined,
+          attackerActiveRuleOptions: [],
+          defenderActiveRuleOptions: [],
+          attackerModifiers: [],
+          defenderModifiers: [],
         }}
         enhancementOptions={{
           activeEnhancementIds: [],

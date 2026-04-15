@@ -3118,6 +3118,113 @@ button:focus-visible,
   }
 }
 
+/* Extra small 480px - Workspace */
+@media (max-width: 480px) {
+  .workspace-armies {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .workspace-army-panel {
+    padding: 12px;
+  }
+
+  .workspace-army-panel__header {
+    gap: 8px;
+  }
+
+  .workspace-army-panel__select {
+    min-width: auto;
+    font-size: 0.85rem;
+    padding: 8px;
+  }
+
+  .workspace-army-panel__summary {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .workspace-army-panel__summary-block {
+    padding: 8px;
+  }
+
+  .workspace-army-panel__summary-label {
+    font-size: 0.8rem;
+  }
+
+  .workspace-army-panel__summary-value {
+    font-size: 0.9rem;
+  }
+
+  .workspace-unit-row {
+    padding: 8px;
+  }
+
+  .workspace-unit-row__name {
+    font-size: 0.85rem;
+  }
+
+  .workspace-unit-row__weapon {
+    font-size: 0.75rem;
+  }
+
+  .workspace-unit-row__meta {
+    font-size: 0.75rem;
+  }
+
+  .workspace-combat-setup {
+    padding: 12px;
+  }
+
+  .workspace-combat-setup__grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .workspace-state-strip {
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  .workspace-state-toggle {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+  }
+
+  .app-nav {
+    padding: 0 12px;
+  }
+
+  .app-nav__tab {
+    padding: 10px 8px;
+    font-size: 0.7rem;
+  }
+
+  .armies-view__header {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .army-builder {
+    padding: 12px 8px;
+  }
+
+  .army-builder__fields {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .army-builder__add-row {
+    flex-direction: column;
+  }
+
+  .army-builder__add-btn {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 0.75rem;
+  }
+}
+
 /* ── App Header (new layout) ───────────────────────────────────────── */
 
 .app-header {
@@ -3987,6 +4094,75 @@ button:focus-visible,
 
   .calculator-page__setup-wrapper {
     padding: 20px;
+  }
+}
+
+/* Extra small 375px - Calculator page */
+@media (max-width: 480px) {
+  .calculator-page__intro {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .calculator-page__load-army-button {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 0.75rem;
+  }
+
+  .calculator-page__setup-wrapper {
+    padding: 12px;
+    margin-bottom: 16px;
+  }
+
+  .quick-start {
+    padding: 12px;
+  }
+
+  .quick-start__title {
+    font-size: 1rem;
+  }
+
+  .quick-start__content {
+    gap: 8px;
+  }
+
+  .step-indicator {
+    gap: 4px;
+  }
+
+  .step-indicator__item {
+    gap: 4px;
+  }
+
+  .step-indicator__label {
+    font-size: 0.7rem;
+  }
+
+  .what-you-get {
+    padding: 12px;
+  }
+
+  .example-result {
+    padding: 12px;
+  }
+
+  .example-result__content {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .example-result__section {
+    padding: 8px;
+  }
+
+  .example-result__section-label {
+    font-size: 0.75rem;
+  }
+
+  .example-result__section-value {
+    font-size: 1.1rem;
   }
 }
 
@@ -5058,6 +5234,121 @@ button:focus-visible,
     flex-wrap: wrap;
     gap: 6px;
   }
+
+  /* Army section 768px */
+  .army-builder__units-header {
+    margin-bottom: 12px;
+  }
+
+  .army-cards-container {
+    gap: 12px;
+  }
+
+  .army-card {
+    padding: 12px;
+  }
+
+  .unit-card {
+    padding: 12px;
+  }
+}
+
+/* Extra small screens 375px - Army & Components */
+@media (max-width: 480px) {
+  .army-header-section {
+    padding: 12px;
+  }
+
+  .army-header-section__grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .army-builder {
+    padding: 12px 8px;
+  }
+
+  .army-builder__units-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .unit-card {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .unit-card__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .unit-card__name {
+    font-size: 0.9rem;
+  }
+
+  .unit-card__meta {
+    font-size: 0.8rem;
+  }
+
+  .unit-card__detail {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .unit-card__detail-label {
+    font-size: 0.75rem;
+  }
+
+  .unit-card__equipment-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .unit-card__actions {
+    gap: 6px;
+  }
+
+  .unit-card__actions button {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+  }
+
+  .army-cards-container {
+    gap: 10px;
+  }
+
+  .army-card {
+    padding: 10px;
+  }
+
+  .army-card__header {
+    font-size: 0.9rem;
+  }
+
+  .army-card__stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .army-card__stat-value {
+    font-size: 1.1rem;
+  }
+
+  .army-card__actions {
+    gap: 6px;
+  }
+
+  .army-card__actions button {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+  }
+}
 }
 
 /* Extra small screens 375px */

@@ -13,10 +13,10 @@ import {
   useEnhancementOptions,
   useStratagemOptions,
 } from "./hooks/useRuleOptions";
+import { useSidedRuleOptions } from "./hooks/useSidedRuleOptions";
 
 import type { SimulationSummary } from "./lib/combat/simulation/analyzeSimulation";
 import type { CalculationMode } from "./lib/combat/simulation/runSimulationByMode";
-import type { RuleOption } from "./types/faction";
 
 import { guardAttackerModifiers, guardDefenderModifiers } from "./lib/combat/combatRoleGuards";
 import { explainAttackBreakdown } from "./lib/combat/explainAttackBreakdown";
@@ -32,7 +32,7 @@ function App() {
   const battleSetup = useBattleSetup();
   const attackModifiers = useAttackModifiers();
   const factionRules = useFactionRules(battleSetup.attackerFaction);
-  const ruleOptions = useRuleOptions(factionRules.allAvailableRuleOptions);
+  const ruleOptions = useSidedRuleOptions(factionRules.allAvailableRuleOptions);
   const enhancementOptions = useEnhancementOptions(factionRules.enhancements);
   const stratagemOptions = useStratagemOptions(factionRules.stratagems);
 
@@ -121,60 +121,47 @@ function App() {
   const attackerUnitAbilityOptions = useRuleOptions(attackerUnitAbilityRuleOptions);
   const defenderUnitAbilityOptions = useRuleOptions(defenderUnitAbilityRuleOptions);
 
-  // Attacker-side active rule effects: detachment rules, enhancements,
-  // stratagems, and attacker unit abilities — all from the ATTACKER panel.
-  // Kept separate from defender effects so guards can be applied cleanly.
-  const attackerActiveRuleEffects = useMemo(() => {
-    return [
-      ...ruleOptions.activeRuleOptions,
-      ...enhancementOptions.activeEnhancementRuleEffects,
-      ...stratagemOptions.activeStratagemRuleEffects,
-      ...attackerUnitAbilityOptions.activeRuleOptions,
-    ];
+  // Attacker modifier rules fed to the engine.
+  //
+  // useSidedRuleOptions routes each attacker detachment rule into the correct
+  // side bucket (attacker vs defender) based on inferRuleOptionSide, and
+  // pre-applies guardAttackerModifiers so offensive types from defender-panel
+  // rules cannot bleed into this list. enhancements / stratagems are always
+  // attacker-side; an extra guardAttackerModifiers pass catches any
+  // miscategorised types in data.
+  const attackerScopedModifierRules = useMemo(() => {
+    return guardAttackerModifiers([
+      ...attackModifiers.allActiveModifierRules,
+      ...ruleOptions.attackerModifiers,
+      ...enhancementOptions.activeEnhancementEffects,
+      ...stratagemOptions.activeStratagemEffects,
+      ...attackerUnitAbilityOptions.activeRuleModifiers,
+    ]);
   }, [
-    ruleOptions.activeRuleOptions,
-    enhancementOptions.activeEnhancementRuleEffects,
-    stratagemOptions.activeStratagemRuleEffects,
-    attackerUnitAbilityOptions.activeRuleOptions,
+    attackModifiers.allActiveModifierRules,
+    ruleOptions.attackerModifiers,
+    enhancementOptions.activeEnhancementEffects,
+    stratagemOptions.activeStratagemEffects,
+    attackerUnitAbilityOptions.activeRuleModifiers,
   ]);
 
-  // Attacker modifier rules fed to the engine.
-  // Guard strips any defender-exclusive types (FEEL_NO_PAIN, INVULNERABLE_SAVE,
-  // etc.) that could accidentally appear here due to miscategorised data.
-  const attackerScopedModifierRules = useMemo(() => {
-    const raw = [
-      ...attackModifiers.allActiveModifierRules,
-      ...attackerActiveRuleEffects
-        .filter((effect: RuleOption) => effect.appliesTo !== "defender")
-        .flatMap((effect) => effect.modifiers),
-    ];
-    return guardAttackerModifiers(raw);
-  }, [attackModifiers.allActiveModifierRules, attackerActiveRuleEffects]);
-
   // Defender modifier rules fed to the engine.
-  // Sources (in order):
-  //   1. Attacker detachment rules explicitly tagged appliesTo:"defender"
-  //      (e.g. rules that penalise the target, like ranged range limits)
-  //   2. Defender unit ability modifiers
-  //   3. Defender detachment / enhancement / stratagem modifiers
-  // Guard strips attacker-exclusive types (REROLL_HITS, LETHAL_HITS, etc.)
-  // from all sources — the engine is blind to rule origin and would apply
-  // them to the attacker's rolls if they reached the combined rule list.
+  //
+  // ruleOptions.defenderModifiers carries attacker detachment rules inferred
+  // as defender-side (e.g. appliesTo:"defender" or modifier-score-based
+  // inference). guardDefenderModifiers is applied inside useSidedRuleOptions
+  // and again here as a belt-and-suspenders pass over all sources.
   const defenderScopedModifierRules = useMemo(() => {
-    const raw = [
-      ...attackerActiveRuleEffects
-        .filter((effect: RuleOption) => effect.appliesTo === "defender")
-        .flatMap((effect) => effect.modifiers),
-      ...defenderUnitAbilityOptions.activeRuleOptions
-        .flatMap((effect) => effect.modifiers),
+    return guardDefenderModifiers([
+      ...ruleOptions.defenderModifiers,
+      ...defenderUnitAbilityOptions.activeRuleModifiers,
       ...defenderDetachmentRuleOptions.activeRuleModifiers,
       ...defenderDetachmentEnhancementOptions.activeEnhancementEffects,
       ...defenderDetachmentStratagemOptions.activeStratagemEffects,
-    ];
-    return guardDefenderModifiers(raw);
+    ]);
   }, [
-    attackerActiveRuleEffects,
-    defenderUnitAbilityOptions.activeRuleOptions,
+    ruleOptions.defenderModifiers,
+    defenderUnitAbilityOptions.activeRuleModifiers,
     defenderDetachmentRuleOptions.activeRuleModifiers,
     defenderDetachmentEnhancementOptions.activeEnhancementEffects,
     defenderDetachmentStratagemOptions.activeStratagemEffects,
@@ -492,8 +479,8 @@ function App() {
             setSelectedDetachmentId={factionRules.setSelectedDetachmentId}
             selectedDetachment={factionRules.selectedDetachment}
             availableRuleOptions={factionRules.allAvailableRuleOptions}
-            activeRuleOptionIds={ruleOptions.activeRuleOptionIds}
-            toggleRuleOption={ruleOptions.toggleRuleOption}
+            activeRuleOptionIdsBySide={ruleOptions.activeRuleOptionIdsBySide}
+            toggleRuleOptionForSide={ruleOptions.toggleRuleOptionForSide}
             stratagems={factionRules.stratagems}
             enhancements={factionRules.enhancements}
             activeEnhancementIds={enhancementOptions.activeEnhancementIds}

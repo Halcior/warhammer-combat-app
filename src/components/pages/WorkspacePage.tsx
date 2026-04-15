@@ -53,8 +53,8 @@ interface WorkspacePageProps {
   setSelectedDetachmentId: React.Dispatch<React.SetStateAction<string>>;
   selectedDetachment: any;
   availableRuleOptions: any;
-  activeRuleOptionIds: string[];
-  toggleRuleOption: (id: string) => void;
+  activeRuleOptionIdsBySide: { attacker: string[]; defender: string[] };
+  toggleRuleOptionForSide: (id: string, side: "attacker" | "defender") => void;
   stratagems: any;
   enhancements: any;
   activeEnhancementIds: string[];
@@ -123,8 +123,8 @@ export function WorkspacePage({
   setSelectedDetachmentId,
   selectedDetachment,
   availableRuleOptions,
-  activeRuleOptionIds,
-  toggleRuleOption,
+  activeRuleOptionIdsBySide,
+  toggleRuleOptionForSide,
   stratagems,
   enhancements,
   activeEnhancementIds,
@@ -224,8 +224,8 @@ export function WorkspacePage({
                 setSelectedDetachmentId={setSelectedDetachmentId}
                 selectedDetachment={selectedDetachment}
                 availableRuleOptions={availableRuleOptions}
-                activeRuleOptionIds={activeRuleOptionIds}
-                toggleRuleOption={toggleRuleOption}
+                activeRuleOptionIdsBySide={activeRuleOptionIdsBySide}
+                toggleRuleOptionForSide={toggleRuleOptionForSide}
                 stratagems={stratagems}
                 enhancements={enhancements}
                 activeEnhancementIds={activeEnhancementIds}

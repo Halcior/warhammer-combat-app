@@ -32,6 +32,9 @@ type FactionRulesState = ReturnType<
 type RuleOptionsState = ReturnType<
   typeof import("../../hooks/useRuleOptions").useRuleOptions
 >;
+type SidedRuleOptionsState = ReturnType<
+  typeof import("../../hooks/useSidedRuleOptions").useSidedRuleOptions
+>;
 type EnhancementOptionsState = ReturnType<
   typeof import("../../hooks/useRuleOptions").useEnhancementOptions
 >;
@@ -43,7 +46,7 @@ interface CalculatorPageProps {
   battleSetup: BattleSetupState;
   attackModifiers: AttackModifiersState;
   factionRules: FactionRulesState;
-  ruleOptions: RuleOptionsState;
+  ruleOptions: SidedRuleOptionsState;
   enhancementOptions: EnhancementOptionsState;
   stratagemOptions: StratagemOptionsState;
   defenderFactionRules: FactionRulesState;
@@ -255,8 +258,8 @@ export function CalculatorPage({
           setSelectedDetachmentId={factionRules.setSelectedDetachmentId}
           selectedDetachment={factionRules.selectedDetachment}
           availableRuleOptions={factionRules.allAvailableRuleOptions}
-          activeRuleOptionIds={ruleOptions.activeRuleOptionIds}
-          toggleRuleOption={ruleOptions.toggleRuleOption}
+          activeRuleOptionIdsBySide={ruleOptions.activeRuleOptionIdsBySide}
+          toggleRuleOptionForSide={ruleOptions.toggleRuleOptionForSide}
           stratagems={factionRules.stratagems}
           enhancements={factionRules.enhancements}
           activeEnhancementIds={enhancementOptions.activeEnhancementIds}

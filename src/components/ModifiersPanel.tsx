@@ -33,8 +33,8 @@ type ModifiersPanelProps = {
   setSelectedDetachmentId: React.Dispatch<React.SetStateAction<string>>;
   selectedDetachment?: DetachmentConfig;
   availableRuleOptions: RuleOption[];
-  activeRuleOptionIds: string[];
-  toggleRuleOption: (ruleId: string) => void;
+  activeRuleOptionIdsBySide: { attacker: string[]; defender: string[] };
+  toggleRuleOptionForSide: (ruleId: string, side: "attacker" | "defender") => void;
   stratagems: StratagemConfig[];
   enhancements: EnhancementConfig[];
   activeEnhancementIds: string[];
@@ -193,18 +193,19 @@ export function buildModifiersPanelModel(
   ]);
 
   const activeRules = dedupeDisplayRules([
-    ...props.availableRuleOptions.map((rule) =>
-      createToggleRule({
+    ...props.availableRuleOptions.map((rule) => {
+      const side = inferRuleOptionSide(rule);
+      return createToggleRule({
         id: `rule-option-${rule.id}`,
         label: rule.displayLabel ?? formatUiName(rule.name),
         tooltip: buildRuleOptionTooltip(rule),
         source: "Faction / Detachment",
-        side: inferRuleOptionSide(rule),
-        checked: props.activeRuleOptionIds.includes(rule.id),
-        onToggle: () => props.toggleRuleOption(rule.id),
+        side,
+        checked: props.activeRuleOptionIdsBySide[side].includes(rule.id),
+        onToggle: () => props.toggleRuleOptionForSide(rule.id, side),
         group: inferRuleOptionGroup(rule),
-      })
-    ),
+      });
+    }),
     ...props.enhancements.map((enhancement) =>
       createToggleRule({
         id: `enhancement-${enhancement.id}`,

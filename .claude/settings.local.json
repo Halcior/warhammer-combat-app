@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(npx tsc:*)",
-      "Bash(node /c/Users/bpawelec/warhammer-helper/node_modules/vitest/vitest.mjs run)"
+      "Bash(node /c/Users/bpawelec/warhammer-helper/node_modules/vitest/vitest.mjs run)",
+      "Bash(npx vitest:*)",
+      "Bash(npx eslint:*)"
     ]
   }
 }
