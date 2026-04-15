@@ -21,7 +21,8 @@ import { guardAttackerModifiers, guardDefenderModifiers } from "./lib/combat/com
 import { explainAttackBreakdown } from "./lib/combat/explainAttackBreakdown";
 import type { AppView } from "./components/AppNav";
 import { useArmyPresets } from "./hooks/useArmyPresets";
-import { loadUISession, saveUISession } from "./lib/storage/uiStorage";
+import { loadBattleSetup, loadUISession, saveUISession } from "./lib/storage/uiStorage";
+import { loadArmies } from "./lib/storage/armyStorage";
 
 import { CalculatorPage } from "./components/pages/CalculatorPage";
 import { ArmiesPage } from "./components/pages/ArmiesPage";
@@ -528,7 +529,16 @@ function App() {
 
     Promise.all([import("./data/loadAllUnits"), import("./data/detachments")])
       .then(async ([unitsModule, detachmentsModule]) => {
-        const units = await unitsModule.loadAllUnits();
+        const savedBattleSetup = loadBattleSetup();
+        const savedUISession = loadUISession();
+        const savedArmies = loadArmies();
+        const priorityFactions = unitsModule.resolvePriorityUnitFactions({
+          battleSetup: savedBattleSetup,
+          uiSession: savedUISession,
+          armies: savedArmies,
+        });
+
+        const units = await unitsModule.loadUnitsForFactions(priorityFactions);
 
         if (cancelled) {
           return;
@@ -538,6 +548,28 @@ function App() {
           units,
           detachments: detachmentsModule.detachments,
         });
+
+        void unitsModule
+          .loadRemainingUnits(priorityFactions)
+          .then((remainingUnits) => {
+            if (cancelled || remainingUnits.length === 0) {
+              return;
+            }
+
+            setLoadedData((current) => {
+              if (!current) {
+                return current;
+              }
+
+              return {
+                ...current,
+                units: mergeUnitsById(current.units, remainingUnits),
+              };
+            });
+          })
+          .catch(() => {
+            // Background hydration is best-effort only.
+          });
       })
       .catch((error) => {
         if (cancelled) {
@@ -603,4 +635,16 @@ function getSimulationErrorMessage(error: unknown): string {
   }
 
   return "Simulation failed for this setup.";
+}
+
+function mergeUnitsById(existingUnits: Unit[], incomingUnits: Unit[]): Unit[] {
+  const mergedUnits = new Map(existingUnits.map((unit) => [unit.id, unit]));
+
+  incomingUnits.forEach((unit) => {
+    if (!mergedUnits.has(unit.id)) {
+      mergedUnits.set(unit.id, unit);
+    }
+  });
+
+  return Array.from(mergedUnits.values());
 }
