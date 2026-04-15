@@ -1,12 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
-import { units } from "../data/units";
 import { calculateUnitPoints } from "../lib/presetUtils";
 import type { ArmyPresetV2, SavedUnitInPreset } from "../types/armyPreset";
-import type { AttackConditions } from "../types/combat";
+import type { AttackConditions, Unit } from "../types/combat";
 import { battleStateToggles } from "../lib/battleStateToggles";
 
-function unitById(unitId: string) {
-  return units.find((unit) => unit.id === unitId) ?? null;
+function unitById(unitDefinitions: Unit[], unitId: string) {
+  return unitDefinitions.find((unit) => unit.id === unitId) ?? null;
 }
 
 function getPresetUnitPrimaryWeapon(savedUnit: SavedUnitInPreset) {
@@ -36,8 +35,8 @@ function formatSelectedWeapons(
     .join(" | ");
 }
 
-function getPresetUnitWeaponLabel(savedUnit: SavedUnitInPreset) {
-  const unit = unitById(savedUnit.unitId);
+function getPresetUnitWeaponLabel(savedUnit: SavedUnitInPreset, unitDefinitions: Unit[]) {
+  const unit = unitById(unitDefinitions, savedUnit.unitId);
   if (savedUnit.selectedWeapons && savedUnit.selectedWeapons.length > 0) {
     return formatSelectedWeapons(savedUnit.selectedWeapons);
   }
@@ -67,18 +66,21 @@ export type WorkspaceSelectableEntry = {
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
-export function buildWorkspaceSelectableEntries(army: ArmyPresetV2 | null): WorkspaceSelectableEntry[] {
+export function buildWorkspaceSelectableEntries(
+  army: ArmyPresetV2 | null,
+  unitDefinitions: Unit[]
+): WorkspaceSelectableEntry[] {
   if (!army) {
     return [];
   }
 
   return army.units.flatMap((savedUnit, index) => {
-    const hostUnit = unitById(savedUnit.unitId);
+    const hostUnit = unitById(unitDefinitions, savedUnit.unitId);
     const hostEntry: WorkspaceSelectableEntry = {
       entryId: savedUnit.instanceId ?? `${savedUnit.unitId}-${savedUnit.addedAt ?? index}`,
       unitId: savedUnit.unitId,
       displayName: savedUnit.nickname ?? hostUnit?.name ?? savedUnit.unitId,
-      weaponLabel: getPresetUnitWeaponLabel(savedUnit),
+      weaponLabel: getPresetUnitWeaponLabel(savedUnit, unitDefinitions),
       modelCount: savedUnit.modelCount,
       points: calculateUnitPoints(savedUnit),
       source: "unit",
@@ -117,6 +119,7 @@ export function buildWorkspaceSelectableEntries(army: ArmyPresetV2 | null): Work
 type WorkspaceArmyPanelProps = {
   side: "A" | "B";
   armies: ArmyPresetV2[];
+  unitDefinitions: Unit[];
   loadedArmyId: string | null;
   activeEntryId: string;
   onLoadArmy: (armyId: string) => void;
@@ -126,6 +129,7 @@ type WorkspaceArmyPanelProps = {
 function WorkspaceArmyPanel({
   side,
   armies,
+  unitDefinitions,
   loadedArmyId,
   activeEntryId,
   onLoadArmy,
@@ -136,8 +140,8 @@ function WorkspaceArmyPanel({
     [armies, loadedArmyId]
   );
   const selectableEntries = useMemo(
-    () => buildWorkspaceSelectableEntries(loadedArmy),
-    [loadedArmy]
+    () => buildWorkspaceSelectableEntries(loadedArmy, unitDefinitions),
+    [loadedArmy, unitDefinitions]
   );
   const activeEntry = useMemo(
     () => selectableEntries.find((entry) => entry.entryId === activeEntryId) ?? selectableEntries[0] ?? null,
@@ -259,6 +263,7 @@ function WorkspaceArmyPanel({
 type WorkspaceCombatSetupProps = {
   attackerEntry: WorkspaceSelectableEntry | null;
   defenderEntry: WorkspaceSelectableEntry | null;
+  unitDefinitions: Unit[];
   attackerFaction: string;
   defenderFaction: string;
   weaponId: string;
@@ -290,6 +295,7 @@ function classifyBattleStateSide(key: keyof AttackConditions) {
 function WorkspaceCombatSetup({
   attackerEntry,
   defenderEntry,
+  unitDefinitions,
   attackerFaction,
   defenderFaction,
   weaponId,
@@ -327,10 +333,10 @@ function WorkspaceCombatSetup({
       return true;
     }
 
-    const actorUnit = unitById(attackerEntry.unitId);
+    const actorUnit = unitById(unitDefinitions, attackerEntry.unitId);
     const selectedWeapon = actorUnit?.weapons.find((weapon) => weapon.id === weaponId);
     return selectedWeapon?.type !== "melee";
-  }, [attackerEntry, weaponId]);
+  }, [attackerEntry, unitDefinitions, weaponId]);
   const advancedToggles = battleStateToggles.filter((toggle) => toggle.group === "advanced");
   const visibleAdvancedToggles = advancedToggles.filter((toggle) => {
     if (conditions[toggle.key]) {
@@ -629,6 +635,7 @@ function WorkspaceCombatSetup({
 
 type Props = {
   armies: ArmyPresetV2[];
+  unitDefinitions: Unit[];
   workspaceArmyA: string | null;
   workspaceArmyB: string | null;
   setWorkspaceArmyA: (id: string | null) => void;
@@ -651,6 +658,7 @@ type Props = {
 
 export function WorkspaceView({
   armies,
+  unitDefinitions,
   workspaceArmyA,
   workspaceArmyB,
   setWorkspaceArmyA,
@@ -682,12 +690,12 @@ export function WorkspaceView({
     [armies, workspaceArmyB]
   );
   const attackerEntries = useMemo(
-    () => buildWorkspaceSelectableEntries(attackerArmy),
-    [attackerArmy]
+    () => buildWorkspaceSelectableEntries(attackerArmy, unitDefinitions),
+    [attackerArmy, unitDefinitions]
   );
   const defenderEntries = useMemo(
-    () => buildWorkspaceSelectableEntries(defenderArmy),
-    [defenderArmy]
+    () => buildWorkspaceSelectableEntries(defenderArmy, unitDefinitions),
+    [defenderArmy, unitDefinitions]
   );
 
   const activeAttackerEntry = useMemo(
@@ -763,12 +771,13 @@ export function WorkspaceView({
         <WorkspaceArmyPanel
           side="A"
           armies={armies}
+          unitDefinitions={unitDefinitions}
           loadedArmyId={workspaceArmyA}
           activeEntryId={activeAttackerEntryId}
           onLoadArmy={(id) => {
             setWorkspaceArmyA(id);
             const army = armies.find((item) => item.id === id) ?? null;
-            const firstEntry = buildWorkspaceSelectableEntries(army)[0];
+            const firstEntry = buildWorkspaceSelectableEntries(army, unitDefinitions)[0];
             if (army && firstEntry) {
               setActiveAttackerEntryId(firstEntry.entryId);
               setAttackingModels(firstEntry.modelCount);
@@ -785,12 +794,13 @@ export function WorkspaceView({
         <WorkspaceArmyPanel
           side="B"
           armies={armies}
+          unitDefinitions={unitDefinitions}
           loadedArmyId={workspaceArmyB}
           activeEntryId={activeDefenderEntryId}
           onLoadArmy={(id) => {
             setWorkspaceArmyB(id);
             const army = armies.find((item) => item.id === id) ?? null;
-            const firstEntry = buildWorkspaceSelectableEntries(army)[0];
+            const firstEntry = buildWorkspaceSelectableEntries(army, unitDefinitions)[0];
             if (army && firstEntry) {
               setActiveDefenderEntryId(firstEntry.entryId);
               setDefendingModels(firstEntry.modelCount);
@@ -816,6 +826,7 @@ export function WorkspaceView({
       <WorkspaceCombatSetup
         attackerEntry={activeAttackerEntry}
         defenderEntry={activeDefenderEntry}
+        unitDefinitions={unitDefinitions}
         attackerFaction={attackerFaction}
         defenderFaction={defenderFaction}
         weaponId={weaponId}

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { ArmyPresetV2 } from "../../types/armyPreset";
+import type { Unit } from "../../types/combat";
 import { buildWorkspaceSelectableEntries } from "../WorkspaceView";
 
 describe("WorkspaceView helpers", () => {
@@ -51,7 +52,52 @@ describe("WorkspaceView helpers", () => {
       updatedAt: 1,
     };
 
-    const entries = buildWorkspaceSelectableEntries(army);
+    const unitDefinitions: Unit[] = [
+      {
+        id: "deathshroud-terminators",
+        name: "Deathshroud Terminators",
+        faction: "Death Guard",
+        toughness: 6,
+        save: 2,
+        woundsPerModel: 4,
+        weapons: [
+          {
+            id: "plaguespurt-gauntlet",
+            name: "Plaguespurt Gauntlet",
+            type: "ranged",
+            attacks: 1,
+            skill: 2,
+            strength: 3,
+            ap: 0,
+            damage: 1,
+          },
+        ],
+        keywords: ["INFANTRY"],
+      },
+      {
+        id: "lord-of-contagion",
+        name: "Lord of Contagion",
+        faction: "Death Guard",
+        toughness: 6,
+        save: 2,
+        woundsPerModel: 6,
+        weapons: [
+          {
+            id: "plaguereaper",
+            name: "Plaguereaper",
+            type: "melee",
+            attacks: 5,
+            skill: 2,
+            strength: 8,
+            ap: -2,
+            damage: 2,
+          },
+        ],
+        keywords: ["CHARACTER"],
+      },
+    ];
+
+    const entries = buildWorkspaceSelectableEntries(army, unitDefinitions);
 
     expect(entries).toHaveLength(2);
     expect(entries[0]?.source).toBe("unit");

@@ -3547,6 +3547,23 @@ button:focus-visible,
   margin: 8px 0 0;
 }
 
+.app-loading-state {
+  margin: 48px auto 0;
+  max-width: 620px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 28px;
+}
+
+.app-loading-state__title {
+  margin: 0;
+  font-family: "Space Grotesk", "Inter", sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.05;
+  color: var(--text);
+}
+
 /* ── Empty State Component ─────────────────────────────────────────── */
 
 .empty-state {
@@ -5566,7 +5583,6 @@ button:focus-visible,
     font-size: 0.75rem;
   }
 }
-}
 
 /* Extra small screens 375px */
 @media (max-width: 480px) {
@@ -5609,8 +5625,6 @@ button:focus-visible,
   .import-preview__item {
     font-size: 0.8rem;
   }
-}
-
   .modal__footer .button-link {
     flex: 1 1 auto;
     min-width: 80px;

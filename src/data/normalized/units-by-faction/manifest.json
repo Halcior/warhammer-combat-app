@@ -1,0 +1,152 @@
+[
+  {
+    "factionName": "Adepta Sororitas",
+    "slug": "adepta-sororitas",
+    "fileName": "adepta-sororitas.json",
+    "unitCount": 37
+  },
+  {
+    "factionName": "Adeptus Custodes",
+    "slug": "adeptus-custodes",
+    "fileName": "adeptus-custodes.json",
+    "unitCount": 31
+  },
+  {
+    "factionName": "Adeptus Mechanicus",
+    "slug": "adeptus-mechanicus",
+    "fileName": "adeptus-mechanicus.json",
+    "unitCount": 36
+  },
+  {
+    "factionName": "Adeptus Titanicus",
+    "slug": "adeptus-titanicus",
+    "fileName": "adeptus-titanicus.json",
+    "unitCount": 4
+  },
+  {
+    "factionName": "Aeldari",
+    "slug": "aeldari",
+    "fileName": "aeldari.json",
+    "unitCount": 97
+  },
+  {
+    "factionName": "Astra Militarum",
+    "slug": "astra-militarum",
+    "fileName": "astra-militarum.json",
+    "unitCount": 128
+  },
+  {
+    "factionName": "Chaos Daemons",
+    "slug": "chaos-daemons",
+    "fileName": "chaos-daemons.json",
+    "unitCount": 106
+  },
+  {
+    "factionName": "Chaos Knights",
+    "slug": "chaos-knights",
+    "fileName": "chaos-knights.json",
+    "unitCount": 37
+  },
+  {
+    "factionName": "Chaos Space Marines",
+    "slug": "chaos-space-marines",
+    "fileName": "chaos-space-marines.json",
+    "unitCount": 110
+  },
+  {
+    "factionName": "Death Guard",
+    "slug": "death-guard",
+    "fileName": "death-guard.json",
+    "unitCount": 71
+  },
+  {
+    "factionName": "Drukhari",
+    "slug": "drukhari",
+    "fileName": "drukhari.json",
+    "unitCount": 47
+  },
+  {
+    "factionName": "Emperor’s Children",
+    "slug": "emperor-s-children",
+    "fileName": "emperor-s-children.json",
+    "unitCount": 22
+  },
+  {
+    "factionName": "Genestealer Cults",
+    "slug": "genestealer-cults",
+    "fileName": "genestealer-cults.json",
+    "unitCount": 136
+  },
+  {
+    "factionName": "Grey Knights",
+    "slug": "grey-knights",
+    "fileName": "grey-knights.json",
+    "unitCount": 31
+  },
+  {
+    "factionName": "Imperial Agents",
+    "slug": "imperial-agents",
+    "fileName": "imperial-agents.json",
+    "unitCount": 45
+  },
+  {
+    "factionName": "Imperial Knights",
+    "slug": "imperial-knights",
+    "fileName": "imperial-knights.json",
+    "unitCount": 27
+  },
+  {
+    "factionName": "Leagues of Votann",
+    "slug": "leagues-of-votann",
+    "fileName": "leagues-of-votann.json",
+    "unitCount": 22
+  },
+  {
+    "factionName": "Necrons",
+    "slug": "necrons",
+    "fileName": "necrons.json",
+    "unitCount": 64
+  },
+  {
+    "factionName": "Orks",
+    "slug": "orks",
+    "fileName": "orks.json",
+    "unitCount": 86
+  },
+  {
+    "factionName": "Space Marines",
+    "slug": "space-marines",
+    "fileName": "space-marines.json",
+    "unitCount": 299
+  },
+  {
+    "factionName": "T’au Empire",
+    "slug": "t-au-empire",
+    "fileName": "t-au-empire.json",
+    "unitCount": 63
+  },
+  {
+    "factionName": "Thousand Sons",
+    "slug": "thousand-sons",
+    "fileName": "thousand-sons.json",
+    "unitCount": 60
+  },
+  {
+    "factionName": "Tyranids",
+    "slug": "tyranids",
+    "fileName": "tyranids.json",
+    "unitCount": 56
+  },
+  {
+    "factionName": "Unaligned Forces",
+    "slug": "unaligned-forces",
+    "fileName": "unaligned-forces.json",
+    "unitCount": 20
+  },
+  {
+    "factionName": "World Eaters",
+    "slug": "world-eaters",
+    "fileName": "world-eaters.json",
+    "unitCount": 58
+  }
+]

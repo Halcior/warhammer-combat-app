@@ -19,6 +19,7 @@ import type { ExpectedDamageResult } from "../../lib/combat/types";
 
 interface WorkspacePageProps {
   armies: ArmyPresetV2[];
+  unitDefinitions: Unit[];
   workspaceArmyA: string | null;
   workspaceArmyB: string | null;
   setWorkspaceArmyA: (id: string | null) => void;
@@ -89,6 +90,7 @@ interface WorkspacePageProps {
 
 export function WorkspacePage({
   armies,
+  unitDefinitions,
   workspaceArmyA,
   workspaceArmyB,
   setWorkspaceArmyA,
@@ -170,6 +172,7 @@ export function WorkspacePage({
 
       <WorkspaceView
         armies={armies}
+        unitDefinitions={unitDefinitions}
         workspaceArmyA={workspaceArmyA}
         workspaceArmyB={workspaceArmyB}
         setWorkspaceArmyA={setWorkspaceArmyA}

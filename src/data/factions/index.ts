@@ -1,12 +1,16 @@
 import type { FactionConfig } from "../../types/faction";
-import { adeptusCustodesFactionConfig } from "./AdeptusCustodes/faction";
+import type { NormalizedDetachment } from "../../types/wahapedia";
+import { getAdeptusCustodesFactionConfig } from "./AdeptusCustodes/faction";
 
-export const factionConfigs: FactionConfig[] = [
-  adeptusCustodesFactionConfig,
-];
+export function getFactionConfigs(
+  detachments: NormalizedDetachment[]
+): FactionConfig[] {
+  return [getAdeptusCustodesFactionConfig(detachments)];
+}
 
 export function getFactionConfigByName(
-  factionName: string
+  factionName: string,
+  detachments: NormalizedDetachment[]
 ): FactionConfig | undefined {
-  return factionConfigs.find((config) => config.faction === factionName);
+  return getFactionConfigs(detachments).find((config) => config.faction === factionName);
 }

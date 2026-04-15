@@ -1,11 +1,16 @@
 import { useMemo, useState } from "react";
 import { getFactionRuntimeDetachments } from "../data/factions/runtimeDetachments";
 import type { RuleOption } from "../types/faction";
-import { adeptusCustodesFactionConfig } from "../data/factions/AdeptusCustodes/faction";
+import { getAdeptusCustodesFactionConfig } from "../data/factions/AdeptusCustodes/faction";
+import type { NormalizedDetachment } from "../types/wahapedia";
 
-export function useFactionRules(attackerFaction: string) {
+export function useFactionRules(
+  attackerFaction: string,
+  normalizedDetachments: NormalizedDetachment[]
+) {
   const runtimeData = useMemo(() => {
     if (attackerFaction === "Adeptus Custodes") {
+      const adeptusCustodesFactionConfig = getAdeptusCustodesFactionConfig(normalizedDetachments);
       return {
         detachments: adeptusCustodesFactionConfig.detachments,
         enhancements: adeptusCustodesFactionConfig.detachments.flatMap(
@@ -17,8 +22,8 @@ export function useFactionRules(attackerFaction: string) {
       };
     }
 
-    return getFactionRuntimeDetachments(attackerFaction);
-  }, [attackerFaction]);
+    return getFactionRuntimeDetachments(attackerFaction, normalizedDetachments);
+  }, [attackerFaction, normalizedDetachments]);
 
   const availableDetachments = runtimeData.detachments;
 
@@ -41,6 +46,7 @@ export function useFactionRules(attackerFaction: string) {
 
   const allAvailableRuleOptions: RuleOption[] = useMemo(() => {
     if (attackerFaction === "Adeptus Custodes") {
+      const adeptusCustodesFactionConfig = getAdeptusCustodesFactionConfig(normalizedDetachments);
       return [
         ...adeptusCustodesFactionConfig.armyRules,
         ...(selectedDetachment?.ruleOptions ?? []),
@@ -48,7 +54,7 @@ export function useFactionRules(attackerFaction: string) {
     }
 
     return selectedDetachment?.ruleOptions ?? [];
-  }, [attackerFaction, selectedDetachment]);
+  }, [attackerFaction, normalizedDetachments, selectedDetachment]);
 
   // Stable references — only change when selectedDetachment changes.
   // Without memoization these would be new array instances on every render,

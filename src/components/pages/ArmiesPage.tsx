@@ -3,6 +3,8 @@ import { ArmiesView } from "../ArmiesView";
 import type { ArmyPresetV2 } from "../../types/armyPreset";
 import type { AppView } from "../AppNav";
 import type { ArmyDraft } from "../../lib/storage/armyStorage";
+import type { Unit } from "../../types/combat";
+import type { NormalizedDetachment } from "../../types/wahapedia";
 
 interface ArmiesPageProps {
   armies: ArmyPresetV2[];
@@ -14,6 +16,8 @@ interface ArmiesPageProps {
   onDuplicate: (id: string) => void;
   onOpenWorkspace: (armyId: string, setView: (v: AppView) => void) => void;
   setView: (v: AppView) => void;
+  availableUnits: Unit[];
+  availableDetachments: NormalizedDetachment[];
 }
 
 export function ArmiesPage({
@@ -26,6 +30,8 @@ export function ArmiesPage({
   onDuplicate,
   onOpenWorkspace,
   setView,
+  availableUnits,
+  availableDetachments,
 }: ArmiesPageProps) {
   return (
     <div className="armies-page">
@@ -45,6 +51,8 @@ export function ArmiesPage({
         onDuplicate={onDuplicate}
         onOpenWorkspace={onOpenWorkspace}
         setView={setView}
+        availableUnits={availableUnits}
+        availableDetachments={availableDetachments}
       />
     </div>
   );

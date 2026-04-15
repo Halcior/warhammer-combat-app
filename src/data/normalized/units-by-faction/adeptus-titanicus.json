@@ -1,0 +1,768 @@
+[
+  {
+    "id": "reaver_titan",
+    "name": "Reaver Titan",
+    "factionId": "TL",
+    "factionName": "Adeptus Titanicus",
+    "models": [
+      {
+        "id": "reaver_titan_model_1",
+        "name": "Reaver Titan",
+        "toughness": 14,
+        "save": 2,
+        "invulnerableSave": 5,
+        "wounds": 60
+      }
+    ],
+    "weapons": [
+      {
+        "id": "reaver_titan_reaver_apocalypse_launcher_1",
+        "name": "Reaver apocalypse launcher",
+        "range": "200",
+        "type": "ranged",
+        "attacks": "3D6",
+        "skill": 3,
+        "strength": 7,
+        "ap": -1,
+        "damage": 2,
+        "keywords": [
+          "BLAST",
+          "INDIRECT FIRE"
+        ],
+        "description": "blast, indirect fire"
+      },
+      {
+        "id": "reaver_titan_reaver_gatling_blaster_2",
+        "name": "Reaver gatling blaster",
+        "range": "72",
+        "type": "ranged",
+        "attacks": 12,
+        "skill": 3,
+        "strength": 8,
+        "ap": -2,
+        "damage": 3,
+        "keywords": [
+          "SUSTAINED HITS 1"
+        ],
+        "description": "sustained hits 1"
+      },
+      {
+        "id": "reaver_titan_reaver_laser_blaster_3",
+        "name": "Reaver laser blaster",
+        "range": "72",
+        "type": "ranged",
+        "attacks": 8,
+        "skill": 3,
+        "strength": 20,
+        "ap": -3,
+        "damage": "D6+2",
+        "keywords": [
+          "BLAST"
+        ],
+        "description": "blast"
+      },
+      {
+        "id": "reaver_titan_reaver_melta_cannon_4",
+        "name": "Reaver melta cannon",
+        "range": "48",
+        "type": "ranged",
+        "attacks": "D6+2",
+        "skill": 3,
+        "strength": 13,
+        "ap": -4,
+        "damage": 6,
+        "keywords": [
+          "BLAST",
+          "MELTA 4"
+        ],
+        "description": "blast, melta 4"
+      },
+      {
+        "id": "reaver_titan_reaver_volcano_cannon_5",
+        "name": "Reaver volcano cannon",
+        "range": "120",
+        "type": "ranged",
+        "attacks": "D3+1",
+        "skill": 3,
+        "strength": 24,
+        "ap": -5,
+        "damage": 14,
+        "keywords": [
+          "BLAST",
+          "HEAVY"
+        ],
+        "description": "blast, heavy"
+      },
+      {
+        "id": "reaver_titan_reaver_feet_6",
+        "name": "Reaver feet",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 8,
+        "skill": 4,
+        "strength": 12,
+        "ap": -2,
+        "damage": 4,
+        "keywords": []
+      },
+      {
+        "id": "reaver_titan_reaver_power_fist_strike_7",
+        "name": "Reaver power fist – strike",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 6,
+        "skill": 4,
+        "strength": 20,
+        "ap": -4,
+        "damage": 14,
+        "keywords": []
+      },
+      {
+        "id": "reaver_titan_reaver_power_fist_sweep_8",
+        "name": "Reaver power fist – sweep",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 12,
+        "skill": 4,
+        "strength": 12,
+        "ap": -3,
+        "damage": 6,
+        "keywords": []
+      }
+    ],
+    "keywords": [
+      "ADEPTUS TITANICUS",
+      "IMPERIUM",
+      "VEHICLE",
+      "WALKER",
+      "TITANIC",
+      "TOWERING",
+      "REAVER TITAN"
+    ],
+    "abilities": [
+      {
+        "id": "reaver_titan_ability_1",
+        "name": "Deadly Demise D6+6",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "reaver_titan_ability_2",
+        "name": "Super-heavy Walker",
+        "description": "Each time a model with this ability makes a Normal, Advance or Fall Back move, it can move over models (excluding <span class=\"kwb\">TITANIC</span> models) and terrain features that are 4\" or less in height as if they were not there.",
+        "type": "Faction"
+      },
+      {
+        "id": "reaver_titan_ability_3",
+        "name": "Striding Colossus",
+        "description": "Each time you target this model with a Stratagem, you must spend three times that Stratagem’s stated CP cost to do so.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "reaver_titan_ability_4",
+        "name": "God-machine",
+        "description": "This model is eligible to shoot and declare a charge in a turn in which it Fell Back.",
+        "type": "Datasheet"
+      }
+    ],
+    "points": 2200,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 2200,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "warbringer_nemesis_titan",
+    "name": "Warbringer Nemesis Titan",
+    "factionId": "TL",
+    "factionName": "Adeptus Titanicus",
+    "models": [
+      {
+        "id": "warbringer_nemesis_titan_model_1",
+        "name": "Warbringer Nemesis Titan",
+        "toughness": 14,
+        "save": 2,
+        "invulnerableSave": 5,
+        "wounds": 80
+      }
+    ],
+    "weapons": [
+      {
+        "id": "warbringer_nemesis_titan_anvillus_defence_battery_1",
+        "name": "Anvillus defence battery",
+        "range": "72",
+        "type": "ranged",
+        "attacks": 8,
+        "skill": 3,
+        "strength": 8,
+        "ap": -1,
+        "damage": 2,
+        "keywords": [
+          "ANTI-FLY 4+"
+        ],
+        "description": "anti-fly 4+"
+      },
+      {
+        "id": "warbringer_nemesis_titan_ardex_defensor_mauler_2",
+        "name": "Ardex-defensor mauler",
+        "range": "36",
+        "type": "ranged",
+        "attacks": 6,
+        "skill": 3,
+        "strength": 6,
+        "ap": -2,
+        "damage": 2,
+        "keywords": []
+      },
+      {
+        "id": "warbringer_nemesis_titan_nemesis_quake_cannon_3",
+        "name": "Nemesis quake cannon",
+        "range": "480",
+        "type": "ranged",
+        "attacks": "D6+6",
+        "skill": 3,
+        "strength": 16,
+        "ap": -4,
+        "damage": 4,
+        "keywords": [
+          "BLAST",
+          "INDIRECT FIRE"
+        ],
+        "description": "blast, indirect fire"
+      },
+      {
+        "id": "warbringer_nemesis_titan_nemesis_volcano_cannon_4",
+        "name": "Nemesis volcano cannon",
+        "range": "120",
+        "type": "ranged",
+        "attacks": "D3+3",
+        "skill": 3,
+        "strength": 24,
+        "ap": -5,
+        "damage": 14,
+        "keywords": [
+          "BLAST"
+        ],
+        "description": "blast"
+      },
+      {
+        "id": "warbringer_nemesis_titan_reaver_gatling_blaster_5",
+        "name": "Reaver gatling blaster",
+        "range": "72",
+        "type": "ranged",
+        "attacks": 12,
+        "skill": 3,
+        "strength": 8,
+        "ap": -2,
+        "damage": 3,
+        "keywords": [
+          "SUSTAINED HITS 1"
+        ],
+        "description": "sustained hits 1"
+      },
+      {
+        "id": "warbringer_nemesis_titan_reaver_laser_blaster_6",
+        "name": "Reaver laser blaster",
+        "range": "72",
+        "type": "ranged",
+        "attacks": 8,
+        "skill": 3,
+        "strength": 20,
+        "ap": -3,
+        "damage": "D6+2",
+        "keywords": [
+          "BLAST"
+        ],
+        "description": "blast"
+      },
+      {
+        "id": "warbringer_nemesis_titan_reaver_melta_cannon_7",
+        "name": "Reaver melta cannon",
+        "range": "48",
+        "type": "ranged",
+        "attacks": "D6+2",
+        "skill": 3,
+        "strength": 13,
+        "ap": -4,
+        "damage": 6,
+        "keywords": [
+          "BLAST",
+          "MELTA 4"
+        ],
+        "description": "blast, melta 4"
+      },
+      {
+        "id": "warbringer_nemesis_titan_reaver_volcano_cannon_8",
+        "name": "Reaver volcano cannon",
+        "range": "120",
+        "type": "ranged",
+        "attacks": "D3+1",
+        "skill": 3,
+        "strength": 24,
+        "ap": -5,
+        "damage": 14,
+        "keywords": [
+          "BLAST",
+          "HEAVY"
+        ],
+        "description": "blast, heavy"
+      },
+      {
+        "id": "warbringer_nemesis_titan_nemesis_feet_9",
+        "name": "Nemesis feet",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 6,
+        "skill": 4,
+        "strength": 12,
+        "ap": -2,
+        "damage": 4,
+        "keywords": []
+      }
+    ],
+    "keywords": [
+      "ADEPTUS TITANICUS",
+      "WARBRINGER NEMESIS TITAN",
+      "IMPERIUM",
+      "TOWERING",
+      "TITANIC",
+      "WALKER",
+      "VEHICLE"
+    ],
+    "abilities": [
+      {
+        "id": "warbringer_nemesis_titan_ability_1",
+        "name": "Deadly Demise D6+6",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "warbringer_nemesis_titan_ability_2",
+        "name": "Super-heavy Walker",
+        "description": "Each time a model with this ability makes a Normal, Advance or Fall Back move, it can move over models (excluding <span class=\"kwb\">TITANIC</span> models) and terrain features that are 4\" or less in height as if they were not there.",
+        "type": "Faction"
+      },
+      {
+        "id": "warbringer_nemesis_titan_ability_3",
+        "name": "Striding Colossus",
+        "description": "Each time you target this model with a Stratagem, you must spend three times that Stratagem’s stated CP cost to do so.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "warbringer_nemesis_titan_ability_4",
+        "name": "Titanic Fire Support",
+        "description": "In your Shooting phase, after this model has shot, select one enemy unit hit by one or more of those attacks. Until the end of the phase, each time a friendly Imperium model makes an attack that targets that enemy unit, on a Critical Wound, improve the Armour Penetration characteristic of that attack by 1.",
+        "type": "Datasheet"
+      }
+    ],
+    "points": 2600,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 2600,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "warhound_titan",
+    "name": "Warhound Titan",
+    "factionId": "TL",
+    "factionName": "Adeptus Titanicus",
+    "models": [
+      {
+        "id": "warhound_titan_model_1",
+        "name": "Warhound Titan",
+        "toughness": 13,
+        "save": 2,
+        "invulnerableSave": 5,
+        "wounds": 40
+      }
+    ],
+    "weapons": [
+      {
+        "id": "warhound_titan_warhound_inferno_gun_1",
+        "name": "Warhound inferno gun",
+        "range": "24",
+        "type": "ranged",
+        "attacks": "3D6",
+        "skill": 0,
+        "strength": 7,
+        "ap": -2,
+        "damage": 3,
+        "keywords": [
+          "IGNORES COVER",
+          "TORRENT"
+        ],
+        "description": "ignores cover, torrent"
+      },
+      {
+        "id": "warhound_titan_warhound_plasma_blastgun_standard_2",
+        "name": "Warhound plasma blastgun – standard",
+        "range": "72",
+        "type": "ranged",
+        "attacks": "2D6+3",
+        "skill": 3,
+        "strength": 9,
+        "ap": -3,
+        "damage": 4,
+        "keywords": [
+          "BLAST"
+        ],
+        "description": "blast"
+      },
+      {
+        "id": "warhound_titan_warhound_plasma_blastgun_supercharge_3",
+        "name": "Warhound plasma blastgun – supercharge",
+        "range": "72",
+        "type": "ranged",
+        "attacks": "2D6+3",
+        "skill": 3,
+        "strength": 10,
+        "ap": -3,
+        "damage": 5,
+        "keywords": [
+          "BLAST",
+          "HAZARDOUS"
+        ],
+        "description": "blast, hazardous"
+      },
+      {
+        "id": "warhound_titan_warhound_turbo_laser_destructor_4",
+        "name": "Warhound turbo-laser destructor",
+        "range": "72",
+        "type": "ranged",
+        "attacks": "D3+3",
+        "skill": 3,
+        "strength": 20,
+        "ap": -3,
+        "damage": "2D6",
+        "keywords": [
+          "BLAST"
+        ],
+        "description": "blast"
+      },
+      {
+        "id": "warhound_titan_warhound_vulcan_mega_bolter_5",
+        "name": "Warhound vulcan mega-bolter",
+        "range": "48",
+        "type": "ranged",
+        "attacks": 20,
+        "skill": 3,
+        "strength": 6,
+        "ap": -1,
+        "damage": 2,
+        "keywords": [
+          "SUSTAINED HITS 1"
+        ],
+        "description": "sustained hits 1"
+      },
+      {
+        "id": "warhound_titan_warhound_feet_6",
+        "name": "Warhound feet",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 8,
+        "skill": 4,
+        "strength": 10,
+        "ap": -1,
+        "damage": 2,
+        "keywords": []
+      }
+    ],
+    "keywords": [
+      "ADEPTUS TITANICUS",
+      "TITANIC",
+      "TOWERING",
+      "WARHOUND TITAN",
+      "IMPERIUM",
+      "VEHICLE",
+      "WALKER"
+    ],
+    "abilities": [
+      {
+        "id": "warhound_titan_ability_1",
+        "name": "Deadly Demise 2D6",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "warhound_titan_ability_2",
+        "name": "Super-heavy Walker",
+        "description": "Each time a model with this ability makes a Normal, Advance or Fall Back move, it can move over models (excluding <span class=\"kwb\">TITANIC</span> models) and terrain features that are 4\" or less in height as if they were not there.",
+        "type": "Faction"
+      },
+      {
+        "id": "warhound_titan_ability_3",
+        "name": "Striding Colossus",
+        "description": "Each time you target this model with a Stratagem, you must spend twice that Stratagem’s stated CP cost to do so.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "warhound_titan_ability_4",
+        "name": "Flank Speed",
+        "description": "Each time this model Advances, do not make an Advance roll for it. Instead, until the end of the phase, add 8\" to the Move characteristic of this model.",
+        "type": "Datasheet"
+      }
+    ],
+    "points": 1100,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 1100,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "warlord_titan",
+    "name": "Warlord Titan",
+    "factionId": "TL",
+    "factionName": "Adeptus Titanicus",
+    "models": [
+      {
+        "id": "warlord_titan_model_1",
+        "name": "Warlord Titan",
+        "toughness": 16,
+        "save": 2,
+        "invulnerableSave": 5,
+        "wounds": 100
+      }
+    ],
+    "weapons": [
+      {
+        "id": "warlord_titan_apocalypse_launcher_1",
+        "name": "Apocalypse launcher",
+        "range": "200",
+        "type": "ranged",
+        "attacks": 20,
+        "skill": 3,
+        "strength": 8,
+        "ap": -2,
+        "damage": 2,
+        "keywords": [
+          "BLAST",
+          "INDIRECT FIRE"
+        ],
+        "description": "blast, indirect fire"
+      },
+      {
+        "id": "warlord_titan_ardex_defensor_lascannon_2",
+        "name": "Ardex-defensor lascannon",
+        "range": "48",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 3,
+        "strength": 12,
+        "ap": -3,
+        "damage": "D6+1",
+        "keywords": []
+      },
+      {
+        "id": "warlord_titan_ardex_defensor_mauler_3",
+        "name": "Ardex-defensor mauler",
+        "range": "36",
+        "type": "ranged",
+        "attacks": 6,
+        "skill": 3,
+        "strength": 6,
+        "ap": -2,
+        "damage": 2,
+        "keywords": []
+      },
+      {
+        "id": "warlord_titan_arioch_power_claw_4",
+        "name": "Arioch power claw",
+        "range": "48",
+        "type": "ranged",
+        "attacks": 20,
+        "skill": 3,
+        "strength": 6,
+        "ap": -1,
+        "damage": 2,
+        "keywords": [
+          "SUSTAINED HITS 1"
+        ],
+        "description": "sustained hits 1"
+      },
+      {
+        "id": "warlord_titan_belicosa_volcano_cannon_5",
+        "name": "Belicosa volcano cannon",
+        "range": "120",
+        "type": "ranged",
+        "attacks": "D3+3",
+        "skill": 3,
+        "strength": 32,
+        "ap": -5,
+        "damage": 18,
+        "keywords": [
+          "BLAST"
+        ],
+        "description": "blast"
+      },
+      {
+        "id": "warlord_titan_laser_blaster_6",
+        "name": "Laser blaster",
+        "range": "72",
+        "type": "ranged",
+        "attacks": 6,
+        "skill": 3,
+        "strength": 16,
+        "ap": -4,
+        "damage": "D6+3",
+        "keywords": [
+          "BLAST"
+        ],
+        "description": "blast"
+      },
+      {
+        "id": "warlord_titan_macro_gatling_blaster_7",
+        "name": "Macro gatling blaster",
+        "range": "100",
+        "type": "ranged",
+        "attacks": 30,
+        "skill": 3,
+        "strength": 9,
+        "ap": -2,
+        "damage": 3,
+        "keywords": [
+          "SUSTAINED HITS 1"
+        ],
+        "description": "sustained hits 1"
+      },
+      {
+        "id": "warlord_titan_mori_quake_cannon_8",
+        "name": "Mori quake cannon",
+        "range": "280",
+        "type": "ranged",
+        "attacks": "3D6",
+        "skill": 3,
+        "strength": 16,
+        "ap": -4,
+        "damage": 6,
+        "keywords": [
+          "BLAST",
+          "IGNORES COVER"
+        ],
+        "description": "blast, ignores cover"
+      },
+      {
+        "id": "warlord_titan_sunfury_plasma_annihilator_standard_9",
+        "name": "Sunfury plasma annihilator – standard",
+        "range": "72",
+        "type": "ranged",
+        "attacks": "2D6+6",
+        "skill": 3,
+        "strength": 10,
+        "ap": -3,
+        "damage": 5,
+        "keywords": [
+          "BLAST"
+        ],
+        "description": "blast"
+      },
+      {
+        "id": "warlord_titan_sunfury_plasma_annihilator_supercharge_10",
+        "name": "Sunfury plasma annihilator – supercharge",
+        "range": "72",
+        "type": "ranged",
+        "attacks": "2D6+6",
+        "skill": 3,
+        "strength": 12,
+        "ap": -3,
+        "damage": 8,
+        "keywords": [
+          "BLAST",
+          "HAZARDOUS"
+        ],
+        "description": "blast, hazardous"
+      },
+      {
+        "id": "warlord_titan_arioch_power_claw_strike_11",
+        "name": "Arioch power claw – strike",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 6,
+        "skill": 4,
+        "strength": 20,
+        "ap": -4,
+        "damage": 24,
+        "keywords": []
+      },
+      {
+        "id": "warlord_titan_arioch_power_claw_sweep_12",
+        "name": "Arioch power claw – sweep",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 12,
+        "skill": 4,
+        "strength": 12,
+        "ap": -3,
+        "damage": 8,
+        "keywords": []
+      },
+      {
+        "id": "warlord_titan_warlord_feet_13",
+        "name": "Warlord feet",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 6,
+        "skill": 4,
+        "strength": 12,
+        "ap": -2,
+        "damage": 4,
+        "keywords": []
+      }
+    ],
+    "keywords": [
+      "ADEPTUS TITANICUS",
+      "WARLORD TITAN",
+      "WALKER",
+      "VEHICLE",
+      "TITANIC",
+      "TOWERING",
+      "IMPERIUM"
+    ],
+    "abilities": [
+      {
+        "id": "warlord_titan_ability_1",
+        "name": "Deadly Demise 2D6+6",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "warlord_titan_ability_2",
+        "name": "Super-heavy Walker",
+        "description": "Each time a model with this ability makes a Normal, Advance or Fall Back move, it can move over models (excluding <span class=\"kwb\">TITANIC</span> models) and terrain features that are 4\" or less in height as if they were not there.",
+        "type": "Faction"
+      },
+      {
+        "id": "warlord_titan_ability_3",
+        "name": "Striding Colossus",
+        "description": "Each time you target this model with a Stratagem, you must spend four times that Stratagem’s stated CP cost to do so.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "warlord_titan_ability_4",
+        "name": "Wrath of the Omnissiah",
+        "description": "In your Shooting phase, after this model has shot, select one enemy unit hit by one or more of those attacks. That unit must take a Battle-shock test.",
+        "type": "Datasheet"
+      }
+    ],
+    "points": 3500,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 3500,
+        "modelCount": 1
+      }
+    ]
+  }
+]

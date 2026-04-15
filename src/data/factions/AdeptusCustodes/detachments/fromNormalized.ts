@@ -1,10 +1,17 @@
-import { detachments } from "../../../detachments";
 import { mapNormalizedDetachmentToDetachmentConfig } from "../../../mappers/mapNormalizedDetachmentToFactionConfig";
 import type { DetachmentConfig } from "../../../../types/faction";
+import type { NormalizedDetachment } from "../../../../types/wahapedia";
 
 export function getAdeptusCustodesDetachmentFromNormalized(
-  id: string
+  id: string,
+  detachments?: NormalizedDetachment[]
 ): DetachmentConfig {
+  if (!detachments) {
+    throw new Error(
+      `Normalized detachment data must be provided to resolve Adeptus Custodes detachment: ${id}`
+    );
+  }
+
   const detachment = detachments.find(
     (entry) => entry.factionName === "Adeptus Custodes" && entry.id === id
   );

@@ -1,0 +1,2786 @@
+[
+  {
+    "id": "chaos_land_raider",
+    "name": "Chaos Land Raider",
+    "factionId": "EC",
+    "factionName": "Emperor’s Children",
+    "models": [
+      {
+        "id": "chaos_land_raider_model_1",
+        "name": "Chaos Land Raider",
+        "toughness": 12,
+        "save": 2,
+        "wounds": 16
+      }
+    ],
+    "weapons": [
+      {
+        "id": "chaos_land_raider_combi_bolter_1",
+        "name": "Combi-bolter",
+        "range": "24",
+        "type": "ranged",
+        "attacks": 2,
+        "skill": 3,
+        "strength": 4,
+        "ap": 0,
+        "damage": 1,
+        "keywords": [
+          "RAPID FIRE 2"
+        ],
+        "description": "rapid fire 2"
+      },
+      {
+        "id": "chaos_land_raider_combi_weapon_2",
+        "name": "Combi-weapon",
+        "range": "24",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 4,
+        "strength": 4,
+        "ap": 0,
+        "damage": 1,
+        "keywords": [
+          "ANTI-INFANTRY 4+",
+          "DEVASTATING WOUNDS",
+          "RAPID FIRE 1"
+        ],
+        "description": "anti-infantry 4+, devastating wounds, rapid fire 1"
+      },
+      {
+        "id": "chaos_land_raider_havoc_launcher_3",
+        "name": "Havoc launcher",
+        "range": "48",
+        "type": "ranged",
+        "attacks": "D6",
+        "skill": 3,
+        "strength": 5,
+        "ap": 0,
+        "damage": 1,
+        "keywords": [
+          "BLAST"
+        ],
+        "description": "blast"
+      },
+      {
+        "id": "chaos_land_raider_soulshatter_lascannon_4",
+        "name": "Soulshatter lascannon",
+        "range": "48",
+        "type": "ranged",
+        "attacks": 2,
+        "skill": 3,
+        "strength": 12,
+        "ap": -3,
+        "damage": "D6+1",
+        "keywords": []
+      },
+      {
+        "id": "chaos_land_raider_twin_heavy_bolter_5",
+        "name": "Twin heavy bolter",
+        "range": "36",
+        "type": "ranged",
+        "attacks": 3,
+        "skill": 3,
+        "strength": 5,
+        "ap": -1,
+        "damage": 2,
+        "keywords": [
+          "SUSTAINED HITS 1",
+          "TWIN-LINKED"
+        ],
+        "description": "sustained hits 1, twin-linked"
+      },
+      {
+        "id": "chaos_land_raider_armoured_tracks_6",
+        "name": "Armoured tracks",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 6,
+        "skill": 4,
+        "strength": 8,
+        "ap": 0,
+        "damage": 1,
+        "keywords": []
+      }
+    ],
+    "keywords": [
+      "EMPEROR’S CHILDREN",
+      "TRANSPORT",
+      "SMOKE",
+      "CHAOS",
+      "SLAANESH",
+      "VEHICLE",
+      "LAND RAIDER"
+    ],
+    "abilities": [
+      {
+        "id": "chaos_land_raider_ability_1",
+        "name": "Deadly Demise D6",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "chaos_land_raider_ability_2",
+        "name": "Thrill Seekers",
+        "description": "If your Army Faction is Emperor’s Children, this unit is eligible to shoot and declare a charge in a turn in which it Advanced or Fell Back, but when doing so:<br><ul><li>It cannot target a unit it was within Engagement Range of at the start of the turn.</li><li>It cannot target a unit that was the target of another units charge or attack this phase.</li></ul>",
+        "type": "Faction"
+      },
+      {
+        "id": "chaos_land_raider_ability_3",
+        "name": "Assault Ramp",
+        "description": "Each time a unit disembarks from this model after it has made a Normal move, that unit is still eligible to declare a charge this turn.",
+        "type": "Datasheet"
+      }
+    ],
+    "points": 220,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 220,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "chaos_rhino",
+    "name": "Chaos Rhino",
+    "factionId": "EC",
+    "factionName": "Emperor’s Children",
+    "models": [
+      {
+        "id": "chaos_rhino_model_1",
+        "name": "Chaos Rhino",
+        "toughness": 9,
+        "save": 3,
+        "wounds": 10
+      }
+    ],
+    "weapons": [
+      {
+        "id": "chaos_rhino_combi_bolter_1",
+        "name": "Combi-bolter",
+        "range": "24",
+        "type": "ranged",
+        "attacks": 2,
+        "skill": 3,
+        "strength": 4,
+        "ap": 0,
+        "damage": 1,
+        "keywords": [
+          "RAPID FIRE 2"
+        ],
+        "description": "rapid fire 2"
+      },
+      {
+        "id": "chaos_rhino_combi_weapon_2",
+        "name": "Combi-weapon",
+        "range": "24",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 4,
+        "strength": 4,
+        "ap": 0,
+        "damage": 1,
+        "keywords": [
+          "ANTI-INFANTRY 4+",
+          "DEVASTATING WOUNDS",
+          "RAPID FIRE 1"
+        ],
+        "description": "anti-infantry 4+, devastating wounds, rapid fire 1"
+      },
+      {
+        "id": "chaos_rhino_havoc_launcher_3",
+        "name": "Havoc launcher",
+        "range": "48",
+        "type": "ranged",
+        "attacks": "D6",
+        "skill": 3,
+        "strength": 5,
+        "ap": 0,
+        "damage": 1,
+        "keywords": [
+          "BLAST"
+        ],
+        "description": "blast"
+      },
+      {
+        "id": "chaos_rhino_armoured_tracks_4",
+        "name": "Armoured tracks",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 3,
+        "skill": 4,
+        "strength": 6,
+        "ap": 0,
+        "damage": 1,
+        "keywords": []
+      }
+    ],
+    "keywords": [
+      "EMPEROR’S CHILDREN",
+      "DEDICATED TRANSPORT",
+      "VEHICLE",
+      "TRANSPORT",
+      "SMOKE",
+      "RHINO",
+      "SLAANESH",
+      "CHAOS"
+    ],
+    "abilities": [
+      {
+        "id": "chaos_rhino_ability_1",
+        "name": "Deadly Demise D3",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "chaos_rhino_ability_2",
+        "name": "Firing Deck 2",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">FIRING DECK</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some transports have firing hatches, ports or platforms from which embarked passengers can shoot.</p>Some <span class=\"kwb\">TRANSPORT</span> models have ‘Firing Deck x’ listed in their abilities. Each time such a model is selected to shoot in the <a href=\"/wh40k10ed/the-rules/core-rules/#SHOOTING-PHASE\">Shooting phase</a>, you can select up to ‘x’ models <span class=\"tooltip00070\" data-tooltip-content=\"#tooltip_content00070\"><span class=\"tt kwbu\">embarked</span></span> within it whose units have not already shot this phase. Then, for each of those embarked models, you can select one ranged weapon that embarked model is equipped with (excluding weapons with the <span class=\"kwb2 bluefont\">[ONE SHOT]</span> ability). Until that <span class=\"kwb\">TRANSPORT</span> model has resolved all of its attacks, it counts as being equipped with all of the weapons you selected in this way, in addition to its other weapons. Until the end of the phase, those selected models’ units are not eligible to shoot.<br><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Firing Deck ‘x’:</b> Each time this <span class=\"kwb\">TRANSPORT</span> shoots, select one weapon (excluding weapons with the <span class=\"kwb2 bluefont\">[ONE SHOT]</span> ability) from up to ‘x’ models embarked within it whose units have not shot this phase; this <span class=\"kwb\">TRANSPORT</span> counts as being equipped with those weapons as well. Until the end of the phase, those selected models’ units are not eligible to shoot.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "chaos_rhino_ability_3",
+        "name": "Thrill Seekers",
+        "description": "If your Army Faction is Emperor’s Children, this unit is eligible to shoot and declare a charge in a turn in which it Advanced or Fell Back, but when doing so:<br><ul><li>It cannot target a unit it was within Engagement Range of at the start of the turn.</li><li>It cannot target a unit that was the target of another units charge or attack this phase.</li></ul>",
+        "type": "Faction"
+      },
+      {
+        "id": "chaos_rhino_ability_4",
+        "name": "Assault Vehicle",
+        "description": "Units can disembark from this <span class=\"kwb\">TRANSPORT</span> after it has Advanced. Units that do so count as having made a Normal move that phase, and cannot declare a charge in the same turn, but can otherwise act normally.",
+        "type": "Datasheet"
+      }
+    ],
+    "points": 80,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 80,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "chaos_spawn",
+    "name": "Chaos Spawn",
+    "factionId": "EC",
+    "factionName": "Emperor’s Children",
+    "models": [
+      {
+        "id": "chaos_spawn_model_1",
+        "name": "Chaos Spawn",
+        "toughness": 5,
+        "save": 4,
+        "wounds": 4
+      }
+    ],
+    "weapons": [
+      {
+        "id": "chaos_spawn_hideous_mutations_1",
+        "name": "Hideous mutations",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": "D6+2",
+        "skill": 4,
+        "strength": 5,
+        "ap": -1,
+        "damage": 2,
+        "keywords": []
+      }
+    ],
+    "keywords": [
+      "EMPEROR’S CHILDREN",
+      "BEAST",
+      "CHAOS",
+      "SLAANESH",
+      "CHAOS SPAWN"
+    ],
+    "abilities": [
+      {
+        "id": "chaos_spawn_ability_1",
+        "name": "Feel No Pain 5+",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">FEEL NO PAIN</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some warriors refuse to be laid low, even by what should be fatal wounds.</p>Some models have ‘Feel No Pain x+’ listed in their abilities. Each time a model with this ability suffers damage and so would lose a wound (including wounds lost due to <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span>), roll one D6: if the result is greater than or equal to the number denoted by ‘x’, that wound is ignored and is not lost. If a model has more than one Feel No Pain ability, you can only use one of those abilities each time that model suffers damage and so would lose a wound.<br><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Feel No Pain x+:</b> Each time this model would lose a wound, roll one D6: if the result equals or exceeds ‘x’, that wound is not lost.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "chaos_spawn_ability_2",
+        "name": "Thrill Seekers",
+        "description": "If your Army Faction is Emperor’s Children, this unit is eligible to shoot and declare a charge in a turn in which it Advanced or Fell Back, but when doing so:<br><ul><li>It cannot target a unit it was within Engagement Range of at the start of the turn.</li><li>It cannot target a unit that was the target of another units charge or attack this phase.</li></ul>",
+        "type": "Faction"
+      },
+      {
+        "id": "chaos_spawn_ability_3",
+        "name": "Scuttling Horrors",
+        "description": "Once per turn, when an enemy unit ends a Normal, Advance or Fall Back move within 9\" of this unit, this unit can make a Normal move of up to 6\".",
+        "type": "Datasheet"
+      }
+    ],
+    "points": 70,
+    "pointsDescription": "2 models",
+    "pointsOptions": [
+      {
+        "description": "2 models",
+        "cost": 70,
+        "modelCount": 2
+      }
+    ]
+  },
+  {
+    "id": "chaos_terminators",
+    "name": "Chaos Terminators",
+    "factionId": "EC",
+    "factionName": "Emperor’s Children",
+    "models": [
+      {
+        "id": "chaos_terminators_model_1",
+        "name": "Terminator Squad",
+        "toughness": 5,
+        "save": 2,
+        "invulnerableSave": 4,
+        "wounds": 3
+      }
+    ],
+    "weapons": [
+      {
+        "id": "chaos_terminators_combi_bolter_1",
+        "name": "Combi-bolter",
+        "range": "24",
+        "type": "ranged",
+        "attacks": 2,
+        "skill": 3,
+        "strength": 4,
+        "ap": 0,
+        "damage": 1,
+        "keywords": [
+          "RAPID FIRE 2"
+        ],
+        "description": "rapid fire 2"
+      },
+      {
+        "id": "chaos_terminators_combi_weapon_2",
+        "name": "Combi-weapon",
+        "range": "24",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 4,
+        "strength": 4,
+        "ap": 0,
+        "damage": 1,
+        "keywords": [
+          "ANTI-INFANTRY 4+",
+          "DEVASTATING WOUNDS",
+          "RAPID FIRE 1"
+        ],
+        "description": "anti-infantry 4+, devastating wounds, rapid fire 1"
+      },
+      {
+        "id": "chaos_terminators_heavy_flamer_3",
+        "name": "Heavy flamer",
+        "range": "12",
+        "type": "ranged",
+        "attacks": "D6",
+        "skill": 0,
+        "strength": 5,
+        "ap": -1,
+        "damage": 1,
+        "keywords": [
+          "IGNORES COVER",
+          "TORRENT"
+        ],
+        "description": "ignores cover, torrent"
+      },
+      {
+        "id": "chaos_terminators_reaper_autocannon_4",
+        "name": "Reaper autocannon",
+        "range": "36",
+        "type": "ranged",
+        "attacks": 4,
+        "skill": 3,
+        "strength": 7,
+        "ap": -1,
+        "damage": 1,
+        "keywords": [
+          "DEVASTATING WOUNDS",
+          "SUSTAINED HITS 1"
+        ],
+        "description": "devastating wounds, sustained hits 1"
+      },
+      {
+        "id": "chaos_terminators_accursed_weapon_5",
+        "name": "Accursed weapon",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 4,
+        "skill": 3,
+        "strength": 5,
+        "ap": -2,
+        "damage": 1,
+        "keywords": []
+      },
+      {
+        "id": "chaos_terminators_chainfist_6",
+        "name": "Chainfist",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 3,
+        "skill": 4,
+        "strength": 8,
+        "ap": -2,
+        "damage": 2,
+        "keywords": [
+          "ANTI-VEHICLE 3+"
+        ],
+        "description": "anti-vehicle 3+"
+      },
+      {
+        "id": "chaos_terminators_paired_accursed_weapons_7",
+        "name": "Paired accursed weapons",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 5,
+        "skill": 3,
+        "strength": 5,
+        "ap": -2,
+        "damage": 1,
+        "keywords": [
+          "TWIN-LINKED"
+        ],
+        "description": "twin-linked"
+      },
+      {
+        "id": "chaos_terminators_power_fist_8",
+        "name": "Power fist",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 3,
+        "skill": 3,
+        "strength": 8,
+        "ap": -2,
+        "damage": 2,
+        "keywords": []
+      }
+    ],
+    "keywords": [
+      "EMPEROR’S CHILDREN",
+      "INFANTRY",
+      "TERMINATOR SQUAD",
+      "CHAOS",
+      "SLAANESH",
+      "TERMINATOR"
+    ],
+    "abilities": [
+      {
+        "id": "chaos_terminators_ability_1",
+        "name": "Deep Strike",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEEP STRIKE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some units make their way to battle via tunnelling, teleportation, high-altitude descent or other extraordinary means that allow them to appear suddenly in the thick of the fighting.</p>During the Declare Battle Formations step, if every model in a unit has this ability, you can set it up in Reserves instead of setting it up on the battlefield. If you do, in the Reinforcements step of one of your Movement phases you can set up this unit anywhere on the battlefield that is more than 9\" horizontally away from all enemy models. If a unit with the Deep Strike ability arrives from Strategic Reserves, the controlling player can choose for that unit to be set up either using the rules for Strategic Reserves or using the Deep Strike ability. <br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li>Unit can be set up in Reserves instead of on the battlefield.</li><li>Unit can be set up in your Reinforcements step, more than 9\" horizontally away from all enemy models.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "chaos_terminators_ability_2",
+        "name": "Thrill Seekers",
+        "description": "If your Army Faction is Emperor’s Children, this unit is eligible to shoot and declare a charge in a turn in which it Advanced or Fell Back, but when doing so:<br><ul><li>It cannot target a unit it was within Engagement Range of at the start of the turn.</li><li>It cannot target a unit that was the target of another units charge or attack this phase.</li></ul>",
+        "type": "Faction"
+      },
+      {
+        "id": "chaos_terminators_ability_3",
+        "name": "Lethal Obsession",
+        "description": "In your Shooting phase, each time this unit is selected to shoot, if it makes one or more ranged attacks and all of those attacks target the same enemy unit, until the end of the turn, each time this unit declares a charge, if that enemy unit is a target of that charge, you can re-roll the Charge roll.",
+        "type": "Datasheet"
+      }
+    ],
+    "points": 145,
+    "pointsDescription": "5 models",
+    "pointsOptions": [
+      {
+        "description": "5 models",
+        "cost": 145,
+        "modelCount": 5
+      }
+    ]
+  },
+  {
+    "id": "daemon_prince_of_slaanesh",
+    "name": "Daemon Prince of Slaanesh",
+    "factionId": "EC",
+    "factionName": "Emperor’s Children",
+    "models": [
+      {
+        "id": "daemon_prince_of_slaanesh_model_1",
+        "name": "Daemon Prince of Slaanesh",
+        "toughness": 10,
+        "save": 2,
+        "invulnerableSave": 4,
+        "wounds": 10
+      }
+    ],
+    "weapons": [
+      {
+        "id": "daemon_prince_of_slaanesh_infernal_cannon_1",
+        "name": "Infernal cannon",
+        "range": "24",
+        "type": "ranged",
+        "attacks": 3,
+        "skill": 2,
+        "strength": 5,
+        "ap": -1,
+        "damage": 2,
+        "keywords": []
+      },
+      {
+        "id": "daemon_prince_of_slaanesh_hellforged_weapons_strike_2",
+        "name": "Hellforged weapons – strike",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 6,
+        "skill": 2,
+        "strength": 8,
+        "ap": -2,
+        "damage": 3,
+        "keywords": []
+      },
+      {
+        "id": "daemon_prince_of_slaanesh_hellforged_weapons_sweep_3",
+        "name": "Hellforged weapons – sweep",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 14,
+        "skill": 2,
+        "strength": 6,
+        "ap": 0,
+        "damage": 1,
+        "keywords": []
+      }
+    ],
+    "keywords": [
+      "EMPEROR’S CHILDREN",
+      "MONSTER",
+      "CHARACTER",
+      "CHAOS",
+      "DAEMON",
+      "SLAANESH",
+      "DAEMON PRINCE"
+    ],
+    "abilities": [
+      {
+        "id": "daemon_prince_of_slaanesh_ability_1",
+        "name": "Deadly Demise D3",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "daemon_prince_of_slaanesh_ability_2",
+        "name": "Thrill Seekers",
+        "description": "If your Army Faction is Emperor’s Children, this unit is eligible to shoot and declare a charge in a turn in which it Advanced or Fell Back, but when doing so:<br><ul><li>It cannot target a unit it was within Engagement Range of at the start of the turn.</li><li>It cannot target a unit that was the target of another units charge or attack this phase.</li></ul>",
+        "type": "Faction"
+      },
+      {
+        "id": "daemon_prince_of_slaanesh_ability_3",
+        "name": "Lord of Excess",
+        "description": "While this model is within 3\" of one or more friendly Slaanesh Infantry units, this model has the Lone Operative ability.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "daemon_prince_of_slaanesh_ability_4",
+        "name": "Excessive Vigour (Aura)",
+        "description": "While a friendly Slaanesh unit is within 6\" of this model, if that unit made a Charge move this turn, improve the Armour Penetration characteristic of melee weapons equipped by models in that unit by 1.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "daemon_prince_of_slaanesh_ability_5",
+        "name": "Ecstatic Death",
+        "description": "If this model is destroyed by a melee attack, if it has not fought this phase, roll one D6: on a 2+, do not remove it from play. This model can fight after the attacking unit has finished making its attacks, and is then removed from play.",
+        "type": "Datasheet"
+      }
+    ],
+    "points": 180,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 180,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "daemon_prince_of_slaanesh_with_wings",
+    "name": "Daemon Prince of Slaanesh with Wings",
+    "factionId": "EC",
+    "factionName": "Emperor’s Children",
+    "models": [
+      {
+        "id": "daemon_prince_of_slaanesh_with_wings_model_1",
+        "name": "Daemon Prince of Slaanesh with Wings",
+        "toughness": 9,
+        "save": 2,
+        "invulnerableSave": 4,
+        "wounds": 10
+      }
+    ],
+    "weapons": [
+      {
+        "id": "daemon_prince_of_slaanesh_with_wings_infernal_cannon_1",
+        "name": "Infernal cannon",
+        "range": "24",
+        "type": "ranged",
+        "attacks": 3,
+        "skill": 2,
+        "strength": 5,
+        "ap": -1,
+        "damage": 2,
+        "keywords": []
+      },
+      {
+        "id": "daemon_prince_of_slaanesh_with_wings_hellforged_weapons_strike_2",
+        "name": "Hellforged weapons – strike",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 6,
+        "skill": 2,
+        "strength": 8,
+        "ap": -2,
+        "damage": 3,
+        "keywords": []
+      },
+      {
+        "id": "daemon_prince_of_slaanesh_with_wings_hellforged_weapons_sweep_3",
+        "name": "Hellforged weapons – sweep",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 14,
+        "skill": 2,
+        "strength": 6,
+        "ap": 0,
+        "damage": 1,
+        "keywords": []
+      }
+    ],
+    "keywords": [
+      "EMPEROR’S CHILDREN",
+      "CHAOS",
+      "FLY",
+      "MONSTER",
+      "CHARACTER",
+      "SLAANESH",
+      "DAEMON",
+      "DAEMON PRINCE WITH WINGS"
+    ],
+    "abilities": [
+      {
+        "id": "daemon_prince_of_slaanesh_with_wings_ability_1",
+        "name": "Deadly Demise D3",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "daemon_prince_of_slaanesh_with_wings_ability_2",
+        "name": "Deep Strike",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEEP STRIKE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some units make their way to battle via tunnelling, teleportation, high-altitude descent or other extraordinary means that allow them to appear suddenly in the thick of the fighting.</p>During the Declare Battle Formations step, if every model in a unit has this ability, you can set it up in Reserves instead of setting it up on the battlefield. If you do, in the Reinforcements step of one of your Movement phases you can set up this unit anywhere on the battlefield that is more than 9\" horizontally away from all enemy models. If a unit with the Deep Strike ability arrives from Strategic Reserves, the controlling player can choose for that unit to be set up either using the rules for Strategic Reserves or using the Deep Strike ability. <br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li>Unit can be set up in Reserves instead of on the battlefield.</li><li>Unit can be set up in your Reinforcements step, more than 9\" horizontally away from all enemy models.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "daemon_prince_of_slaanesh_with_wings_ability_3",
+        "name": "Thrill Seekers",
+        "description": "If your Army Faction is Emperor’s Children, this unit is eligible to shoot and declare a charge in a turn in which it Advanced or Fell Back, but when doing so:<br><ul><li>It cannot target a unit it was within Engagement Range of at the start of the turn.</li><li>It cannot target a unit that was the target of another units charge or attack this phase.</li></ul>",
+        "type": "Faction"
+      },
+      {
+        "id": "daemon_prince_of_slaanesh_with_wings_ability_4",
+        "name": "Daemonic Destruction",
+        "description": "Each time this model ends a Charge move, select one enemy unit within Engagement Range of it and roll one D6 for each of this model’s remaining wounds: for each 4+, that enemy unit suffers 1 mortal wound (to a maximum of 6 mortal wounds).",
+        "type": "Datasheet"
+      },
+      {
+        "id": "daemon_prince_of_slaanesh_with_wings_ability_5",
+        "name": "Stimulated by Pain",
+        "description": "Each time an attack is allocated to this model, subtract 1 from the Damage characteristic of that attack.",
+        "type": "Datasheet"
+      }
+    ],
+    "points": 215,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 215,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "daemonettes",
+    "name": "Daemonettes",
+    "factionId": "EC",
+    "factionName": "Emperor’s Children",
+    "models": [
+      {
+        "id": "daemonettes_model_1",
+        "name": "Daemonettes",
+        "toughness": 3,
+        "save": 7,
+        "invulnerableSave": 5,
+        "wounds": 1
+      }
+    ],
+    "weapons": [
+      {
+        "id": "daemonettes_slashing_claws_1",
+        "name": "Slashing claws",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 3,
+        "skill": 3,
+        "strength": 4,
+        "ap": -1,
+        "damage": 1,
+        "keywords": [
+          "DEVASTATING WOUNDS"
+        ],
+        "description": "devastating wounds"
+      }
+    ],
+    "keywords": [
+      "LEGIONS OF EXCESS",
+      "DAEMONETTES",
+      "BATTLELINE",
+      "CHAOS",
+      "SLAANESH",
+      "SUMMONED",
+      "DAEMON",
+      "INFANTRY"
+    ],
+    "abilities": [
+      {
+        "id": "daemonettes_ability_1",
+        "name": "Deep Strike",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEEP STRIKE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some units make their way to battle via tunnelling, teleportation, high-altitude descent or other extraordinary means that allow them to appear suddenly in the thick of the fighting.</p>During the Declare Battle Formations step, if every model in a unit has this ability, you can set it up in Reserves instead of setting it up on the battlefield. If you do, in the Reinforcements step of one of your Movement phases you can set up this unit anywhere on the battlefield that is more than 9\" horizontally away from all enemy models. If a unit with the Deep Strike ability arrives from Strategic Reserves, the controlling player can choose for that unit to be set up either using the rules for Strategic Reserves or using the Deep Strike ability. <br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li>Unit can be set up in Reserves instead of on the battlefield.</li><li>Unit can be set up in your Reinforcements step, more than 9\" horizontally away from all enemy models.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "daemonettes_ability_2",
+        "name": "Fights First",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">FIGHTS FIRST</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some warriors attack with blinding speed, landing their blows before their foes can react.</p>Units with this ability that are eligible to fight do so in the <a href=\"/wh40k10ed/the-rules/core-rules/#1.-Fights-First\">Fights First</a> step, provided every model in the unit has this ability.</div>",
+        "type": "Core"
+      },
+      {
+        "id": "daemonettes_ability_3",
+        "name": "Pact of Excess",
+        "description": "When mustering your army, unless specifically stated otherwise, you cannot select Legions of Excess as your Army Faction.",
+        "type": "Faction"
+      },
+      {
+        "id": "daemonettes_ability_4",
+        "name": "Horrifying Beauty",
+        "description": "At the start of the Fight phase, each enemy unit within Engagement Range of one or more units from your army with this ability must take a Battle-shock test, subtracting 1 from the result if that enemy unit is Below Half-strength.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "daemonettes_ability_5",
+        "name": "Daemonic Icon",
+        "description": "Models in the bearer’s unit have a Leadership characteristic of 6+.",
+        "type": "Wargear"
+      },
+      {
+        "id": "daemonettes_ability_6",
+        "name": "Instrument of Chaos",
+        "description": "Add 1 to Charge rolls made for the bearer’s unit.",
+        "type": "Wargear"
+      }
+    ],
+    "points": 90,
+    "pointsDescription": "10 models",
+    "pointsOptions": [
+      {
+        "description": "10 models",
+        "cost": 90,
+        "modelCount": 10
+      }
+    ]
+  },
+  {
+    "id": "fiends",
+    "name": "Fiends",
+    "factionId": "EC",
+    "factionName": "Emperor’s Children",
+    "models": [
+      {
+        "id": "fiends_model_1",
+        "name": "Fiends",
+        "toughness": 5,
+        "save": 7,
+        "invulnerableSave": 5,
+        "wounds": 4
+      }
+    ],
+    "weapons": [
+      {
+        "id": "fiends_barbed_tail_and_dissecting_claws_1",
+        "name": "Barbed tail and dissecting claws",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 5,
+        "skill": 3,
+        "strength": 5,
+        "ap": -2,
+        "damage": 2,
+        "keywords": [
+          "DEVASTATING WOUNDS"
+        ],
+        "description": "devastating wounds"
+      }
+    ],
+    "keywords": [
+      "LEGIONS OF EXCESS",
+      "BEAST",
+      "CHAOS",
+      "DAEMON",
+      "SUMMONED",
+      "SLAANESH",
+      "FIENDS"
+    ],
+    "abilities": [
+      {
+        "id": "fiends_ability_1",
+        "name": "Deep Strike",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEEP STRIKE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some units make their way to battle via tunnelling, teleportation, high-altitude descent or other extraordinary means that allow them to appear suddenly in the thick of the fighting.</p>During the Declare Battle Formations step, if every model in a unit has this ability, you can set it up in Reserves instead of setting it up on the battlefield. If you do, in the Reinforcements step of one of your Movement phases you can set up this unit anywhere on the battlefield that is more than 9\" horizontally away from all enemy models. If a unit with the Deep Strike ability arrives from Strategic Reserves, the controlling player can choose for that unit to be set up either using the rules for Strategic Reserves or using the Deep Strike ability. <br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li>Unit can be set up in Reserves instead of on the battlefield.</li><li>Unit can be set up in your Reinforcements step, more than 9\" horizontally away from all enemy models.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "fiends_ability_2",
+        "name": "Pact of Excess",
+        "description": "When mustering your army, unless specifically stated otherwise, you cannot select Legions of Excess as your Army Faction.",
+        "type": "Faction"
+      },
+      {
+        "id": "fiends_ability_3",
+        "name": "Soporific Musk",
+        "description": "Each time an enemy unit (excluding <span class=\"kwb\">MONSTERS</span> and <span class=\"kwb\">VEHICLES</span>) within Engagement Range of one or more units from your army with this ability Falls Back, models in that enemy unit must take Desperate Escape tests. When doing so, if that enemy unit is also Battle-shocked, subtract 1 from each of those Desperate Escape tests.",
+        "type": "Datasheet"
+      }
+    ],
+    "points": 95,
+    "pointsDescription": "3 models",
+    "pointsOptions": [
+      {
+        "description": "3 models",
+        "cost": 95,
+        "modelCount": 3
+      },
+      {
+        "description": "6 models",
+        "cost": 190,
+        "modelCount": 6
+      }
+    ]
+  },
+  {
+    "id": "flawless_blades",
+    "name": "Flawless Blades",
+    "factionId": "EC",
+    "factionName": "Emperor’s Children",
+    "models": [
+      {
+        "id": "flawless_blades_model_1",
+        "name": "Flawless Blades",
+        "toughness": 5,
+        "save": 3,
+        "invulnerableSave": 5,
+        "wounds": 3
+      }
+    ],
+    "weapons": [
+      {
+        "id": "flawless_blades_bolt_pistol_1",
+        "name": "Bolt pistol",
+        "range": "12",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 3,
+        "strength": 4,
+        "ap": 0,
+        "damage": 1,
+        "keywords": [
+          "PISTOL"
+        ],
+        "description": "pistol"
+      },
+      {
+        "id": "flawless_blades_blissblade_2",
+        "name": "Blissblade",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 4,
+        "skill": 2,
+        "strength": 6,
+        "ap": -3,
+        "damage": 2,
+        "keywords": []
+      }
+    ],
+    "keywords": [
+      "EMPEROR’S CHILDREN",
+      "CHAOS",
+      "INFANTRY",
+      "GRENADES",
+      "SLAANESH",
+      "FLAWLESS BLADES"
+    ],
+    "abilities": [
+      {
+        "id": "flawless_blades_ability_1",
+        "name": "Thrill Seekers",
+        "description": "If your Army Faction is Emperor’s Children, this unit is eligible to shoot and declare a charge in a turn in which it Advanced or Fell Back, but when doing so:<br><ul><li>It cannot target a unit it was within Engagement Range of at the start of the turn.</li><li>It cannot target a unit that was the target of another units charge or attack this phase.</li></ul>",
+        "type": "Faction"
+      },
+      {
+        "id": "flawless_blades_ability_2",
+        "name": "Daemonic Patrons",
+        "description": "Each time this unit is selected to fight, it can call upon daemonic patrons. If it does, until the end of the phase, each time a model in this unit makes an attack, an unmodified Wound roll of 3+ scores a Critical Wound. At the end of the Fight phase, if this unit called upon daemonic patrons this phase and no enemy models were destroyed by attacks made by models in this unit this phase, one model in this unit is destroyed.",
+        "type": "Datasheet"
+      }
+    ],
+    "points": 100,
+    "pointsDescription": "3 models",
+    "pointsOptions": [
+      {
+        "description": "3 models",
+        "cost": 100,
+        "modelCount": 3
+      },
+      {
+        "description": "6 models",
+        "cost": 200,
+        "modelCount": 6
+      }
+    ]
+  },
+  {
+    "id": "fulgrim",
+    "name": "Fulgrim",
+    "factionId": "EC",
+    "factionName": "Emperor’s Children",
+    "models": [
+      {
+        "id": "fulgrim_model_1",
+        "name": "Fulgrim",
+        "toughness": 11,
+        "save": 2,
+        "invulnerableSave": 4,
+        "wounds": 16
+      }
+    ],
+    "weapons": [
+      {
+        "id": "fulgrim_malefic_lash_1",
+        "name": "Malefic lash",
+        "range": "12",
+        "type": "ranged",
+        "attacks": 6,
+        "skill": 2,
+        "strength": 8,
+        "ap": -2,
+        "damage": 2,
+        "keywords": [
+          "SUSTAINED HITS 1"
+        ],
+        "description": "sustained hits 1"
+      },
+      {
+        "id": "fulgrim_daemonic_blades_strike_2",
+        "name": "Daemonic blades – strike",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 6,
+        "skill": 2,
+        "strength": 14,
+        "ap": -3,
+        "damage": "D6+1",
+        "keywords": [
+          "SUSTAINED HITS 1"
+        ],
+        "description": "sustained hits 1"
+      },
+      {
+        "id": "fulgrim_daemonic_blades_sweep_3",
+        "name": "Daemonic blades – sweep",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 12,
+        "skill": 2,
+        "strength": 8,
+        "ap": -2,
+        "damage": 2,
+        "keywords": [
+          "SUSTAINED HITS 1"
+        ],
+        "description": "sustained hits 1"
+      },
+      {
+        "id": "fulgrim_serpentine_tail_4",
+        "name": "Serpentine tail",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 6,
+        "skill": 2,
+        "strength": 6,
+        "ap": -1,
+        "damage": 1,
+        "keywords": [
+          "EXTRA ATTACKS"
+        ],
+        "description": "extra attacks"
+      }
+    ],
+    "keywords": [
+      "EMPEROR’S CHILDREN",
+      "FULGRIM",
+      "CHARACTER",
+      "PRIMARCH",
+      "SLAANESH",
+      "CHAOS",
+      "DAEMON",
+      "EPIC HERO",
+      "FLY",
+      "MONSTER"
+    ],
+    "abilities": [
+      {
+        "id": "fulgrim_ability_1",
+        "name": "Deadly Demise D6",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "fulgrim_ability_2",
+        "name": "Deep Strike",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEEP STRIKE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some units make their way to battle via tunnelling, teleportation, high-altitude descent or other extraordinary means that allow them to appear suddenly in the thick of the fighting.</p>During the Declare Battle Formations step, if every model in a unit has this ability, you can set it up in Reserves instead of setting it up on the battlefield. If you do, in the Reinforcements step of one of your Movement phases you can set up this unit anywhere on the battlefield that is more than 9\" horizontally away from all enemy models. If a unit with the Deep Strike ability arrives from Strategic Reserves, the controlling player can choose for that unit to be set up either using the rules for Strategic Reserves or using the Deep Strike ability. <br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li>Unit can be set up in Reserves instead of on the battlefield.</li><li>Unit can be set up in your Reinforcements step, more than 9\" horizontally away from all enemy models.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "fulgrim_ability_3",
+        "name": "Thrill Seekers",
+        "description": "If your Army Faction is Emperor’s Children, this unit is eligible to shoot and declare a charge in a turn in which it Advanced or Fell Back, but when doing so:<br><ul><li>It cannot target a unit it was within Engagement Range of at the start of the turn.</li><li>It cannot target a unit that was the target of another units charge or attack this phase.</li></ul>",
+        "type": "Faction"
+      },
+      {
+        "id": "fulgrim_ability_4",
+        "name": "Daemonic Poisons",
+        "description": "In your Shooting phase and the Fight phase, after this model has finished making its attacks, select one enemy unit hit by one or more of those attacks. Until the end of the battle, that enemy unit is poisoned. At the start of each player’s Command phase, roll one D6 for each poisoned enemy unit on the battlefield: on a 4+,that enemy unit suffers D3 mortal wounds.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "fulgrim_ability_5",
+        "name": "Daemon Primarch of Slaanesh",
+        "description": "At the start of your opponent’s Command phase, select one of the abilities in the Daemon Primarch of Slaanesh section. Until the start of your opponent’s next Command phase, this model has that ability.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "fulgrim_ability_6",
+        "name": "Serpentine",
+        "description": "Each time this model makes a Normal, Advance or Fall Back move, it can move over sections of terrain features that are 4\" or less in height.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "fulgrim_ability_7",
+        "name": "Beguiling Form",
+        "description": "Each time a model makes an attack that targets this model, subtract 1 from the Hit roll.",
+        "type": "Primarch"
+      },
+      {
+        "id": "fulgrim_ability_8",
+        "name": "Daemonic Speed",
+        "description": "This model has the Fights First ability.",
+        "type": "Primarch"
+      },
+      {
+        "id": "fulgrim_ability_9",
+        "name": "Enthralling Hypnosis (Aura)",
+        "description": "While an enemy unit is within 6\" of this model, each time that unit is selected to Fall Back, it must take a Leadership test. If that test is failed, that unit must Remain Stationary this phase instead.",
+        "type": "Primarch"
+      },
+      {
+        "id": "fulgrim_ability_10",
+        "name": "SUPREME COMMANDER",
+        "description": "If this model is in your army, it must be your <span class=\"kwb\">WARLORD</span>.",
+        "type": "Fortification (левая колонка)"
+      }
+    ],
+    "points": 340,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 340,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "heldrake",
+    "name": "Heldrake",
+    "factionId": "EC",
+    "factionName": "Emperor’s Children",
+    "models": [
+      {
+        "id": "heldrake_model_1",
+        "name": "Heldrake",
+        "toughness": 10,
+        "save": 3,
+        "invulnerableSave": 5,
+        "wounds": 14
+      }
+    ],
+    "weapons": [
+      {
+        "id": "heldrake_baleflamer_1",
+        "name": "Baleflamer",
+        "range": "12",
+        "type": "ranged",
+        "attacks": "D6+3",
+        "skill": 0,
+        "strength": 6,
+        "ap": -1,
+        "damage": 2,
+        "keywords": [
+          "IGNORES COVER",
+          "TORRENT"
+        ],
+        "description": "ignores cover, torrent"
+      },
+      {
+        "id": "heldrake_hades_autocannon_2",
+        "name": "Hades autocannon",
+        "range": "36",
+        "type": "ranged",
+        "attacks": 6,
+        "skill": 3,
+        "strength": 8,
+        "ap": -1,
+        "damage": 2,
+        "keywords": []
+      },
+      {
+        "id": "heldrake_heldrake_claws_3",
+        "name": "Heldrake claws",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 5,
+        "skill": 3,
+        "strength": 7,
+        "ap": -1,
+        "damage": 2,
+        "keywords": [
+          "ANTI-FLY 2+",
+          "DEVASTATING WOUNDS"
+        ],
+        "description": "anti-fly 2+, devastating wounds"
+      }
+    ],
+    "keywords": [
+      "EMPEROR’S CHILDREN",
+      "AIRCRAFT",
+      "CHAOS",
+      "FLY",
+      "DAEMON",
+      "VEHICLE",
+      "SLAANESH",
+      "HELDRAKE"
+    ],
+    "abilities": [
+      {
+        "id": "heldrake_ability_1",
+        "name": "Deadly Demise D3",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "heldrake_ability_2",
+        "name": "Hover",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">HOVER</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some aircraft can use vectored thrusters or anti-grav technology to hover over the battlefield, the better to hunt their prey or deploy embarked troops.</p>Some <a href=\"/wh40k10ed/the-rules/core-rules/#Aircraft\"><span class=\"kwb\">AIRCRAFT</span></a> models have ‘Hover’ listed in their abilities. When you are instructed to <a href=\"/wh40k10ed/the-rules/core-rules/#Declare-Battle-Formations\">Declare Battle Formations</a>, before doing anything else, you must first declare which models from your army with this ability will be in Hover mode.<br><br>If a model is in Hover mode, then until the end of the battle, its Move characteristic is changed to 20\", it loses the <span class=\"kwb\">AIRCRAFT</span> keyword and it loses all associated rules for being an <span class=\"kwb\">AIRCRAFT</span> model. Models in Hover mode do not start the battle in <a href=\"/wh40k10ed/the-rules/core-rules/#2.-Reinforcements\">Reserves</a>, but you can choose to place them into <a href=\"/wh40k10ed/the-rules/core-rules/#Strategic-Reserves\">Strategic Reserves</a> following the normal rules if you wish.</div>",
+        "type": "Core"
+      },
+      {
+        "id": "heldrake_ability_3",
+        "name": "Thrill Seekers",
+        "description": "If your Army Faction is Emperor’s Children, this unit is eligible to shoot and declare a charge in a turn in which it Advanced or Fell Back, but when doing so:<br><ul><li>It cannot target a unit it was within Engagement Range of at the start of the turn.</li><li>It cannot target a unit that was the target of another units charge or attack this phase.</li></ul>",
+        "type": "Faction"
+      },
+      {
+        "id": "heldrake_ability_4",
+        "name": "Airborne Predator",
+        "description": "Each time this model ends a Normal move, you can select one enemy unit that it moved over during that move and roll two D6, adding 1 to each result if that enemy unit can <span class=\"kwb\">FLY</span>: for each 4+, that enemy unit suffers D3 mortal wounds.",
+        "type": "Datasheet"
+      }
+    ],
+    "points": 195,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 195,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "infractors",
+    "name": "Infractors",
+    "factionId": "EC",
+    "factionName": "Emperor’s Children",
+    "models": [
+      {
+        "id": "infractors_model_1",
+        "name": "Infractors",
+        "toughness": 4,
+        "save": 3,
+        "wounds": 2
+      }
+    ],
+    "weapons": [
+      {
+        "id": "infractors_bolt_pistol_1",
+        "name": "Bolt pistol",
+        "range": "12",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 3,
+        "strength": 4,
+        "ap": 0,
+        "damage": 1,
+        "keywords": [
+          "PISTOL"
+        ],
+        "description": "pistol"
+      },
+      {
+        "id": "infractors_plasma_pistol_standard_2",
+        "name": "Plasma pistol - standard",
+        "range": "12",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 3,
+        "strength": 7,
+        "ap": -2,
+        "damage": 1,
+        "keywords": [
+          "PISTOL"
+        ],
+        "description": "pistol"
+      },
+      {
+        "id": "infractors_plasma_pistol_supercharge_3",
+        "name": "Plasma pistol - supercharge",
+        "range": "12",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 3,
+        "strength": 8,
+        "ap": -3,
+        "damage": 2,
+        "keywords": [
+          "HAZARDOUS",
+          "PISTOL"
+        ],
+        "description": "hazardous, pistol"
+      },
+      {
+        "id": "infractors_duelling_sabre_4",
+        "name": "Duelling sabre",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 4,
+        "skill": 3,
+        "strength": 4,
+        "ap": -1,
+        "damage": 1,
+        "keywords": [
+          "PRECISION"
+        ],
+        "description": "precision"
+      },
+      {
+        "id": "infractors_power_sword_5",
+        "name": "Power sword",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 4,
+        "skill": 3,
+        "strength": 5,
+        "ap": -2,
+        "damage": 1,
+        "keywords": [
+          "PRECISION"
+        ],
+        "description": "precision"
+      },
+      {
+        "id": "infractors_rapture_lash_6",
+        "name": "Rapture lash",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 6,
+        "skill": 3,
+        "strength": 4,
+        "ap": -1,
+        "damage": 1,
+        "keywords": [
+          "PRECISION"
+        ],
+        "description": "precision"
+      }
+    ],
+    "keywords": [
+      "EMPEROR’S CHILDREN",
+      "CHAOS",
+      "GRENADES",
+      "BATTLELINE",
+      "INFRACTORS",
+      "INFANTRY",
+      "SLAANESH"
+    ],
+    "abilities": [
+      {
+        "id": "infractors_ability_1",
+        "name": "Scouts 6\"",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">SCOUTS</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Scouts form the vanguard of many armies. Unnoticed by the enemy, they range ahead of the main force.</p>Some units have ‘Scouts x\"’ listed in their abilities. If every model in a unit has this ability, then at the start of the first battle round, before the first turn begins, it can make a Normal move of up to x\", with the exception that, while making that move, the distance moved by each model in that unit can be greater than that model's Move characteristic, as long as it is not greater than x\".<br><br><span class=\"kwb\">DEDICATED</span> <span class=\"kwb\">TRANSPORT</span> models can make use of any Scouts x\" ability listed in their abilities, or a Scouts x\" ability that a unit that starts the battle embarked within that <span class=\"kwb\">DEDICATED</span> <span class=\"kwb\">TRANSPORT</span> model has (provided only models with this ability are embarked within that <span class=\"kwb\">DEDICATED</span> <span class=\"kwb\">TRANSPORT</span> model), regardless of how that embarked unit gained this ability (e.g. listed in their abilities, conferred by an Enhancement or by an <span class=\"tooltip00018\" data-tooltip-content=\"#tooltip_content00018\"><span class=\"tt kwbu\">attached</span></span> <span class=\"kwb\">CHARACTER</span>, etc.).<br><br>A unit that moves using this ability must end that move more than 9\" horizontally away from all enemy models. If both players have units that can do this, the player who is taking the first turn moves their units first.<br><br><div class=\"redExample\"><b>Example:</b> A unit has the Scouts 6\" ability. At the start of the first battle round, the controlling player can make a Normal move with that unit of up to 6\".</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Scouts x\":</b> Unit can make a Normal move of up to x\" before the first turn begins.</li><li>If embarked in a <span class=\"kwb\">DEDICATED</span> <span class=\"kwb\">TRANSPORT</span>, that <span class=\"kwb\">DEDICATED</span> <span class=\"kwb\">TRANSPORT</span> can make this move instead.</li><li>Must end this move more than 9\" horizontally away from all enemy models.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "infractors_ability_2",
+        "name": "Thrill Seekers",
+        "description": "If your Army Faction is Emperor’s Children, this unit is eligible to shoot and declare a charge in a turn in which it Advanced or Fell Back, but when doing so:<br><ul><li>It cannot target a unit it was within Engagement Range of at the start of the turn.</li><li>It cannot target a unit that was the target of another units charge or attack this phase.</li></ul>",
+        "type": "Faction"
+      },
+      {
+        "id": "infractors_ability_3",
+        "name": "Excessive Assault",
+        "description": "Each time a model in this unit targets an enemy unit with a melee attack, re-roll a Wound roll of 1. If that enemy unit is within range of an objective marker, you can re-roll the Wound roll instead.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "infractors_ability_4",
+        "name": "Icon of Excess",
+        "description": "At the end of your Shooting phase or the Fight phase, if the bearer’s unit destroyed one or more enemy units that phase, the bearer’s unit takes a Leadership test. If that test is passed, you gain 1CP.",
+        "type": "Wargear"
+      }
+    ],
+    "points": 85,
+    "pointsDescription": "5 models",
+    "pointsOptions": [
+      {
+        "description": "5 models",
+        "cost": 85,
+        "modelCount": 5
+      },
+      {
+        "description": "10 models",
+        "cost": 160,
+        "modelCount": 10
+      }
+    ]
+  },
+  {
+    "id": "keeper_of_secrets",
+    "name": "Keeper of Secrets",
+    "factionId": "EC",
+    "factionName": "Emperor’s Children",
+    "models": [
+      {
+        "id": "keeper_of_secrets_model_1",
+        "name": "Keeper of Secrets",
+        "toughness": 10,
+        "save": 5,
+        "invulnerableSave": 4,
+        "wounds": 18
+      }
+    ],
+    "weapons": [
+      {
+        "id": "keeper_of_secrets_living_whip_1",
+        "name": "Living whip",
+        "range": "12",
+        "type": "ranged",
+        "attacks": 6,
+        "skill": 2,
+        "strength": 6,
+        "ap": -1,
+        "damage": 2,
+        "keywords": [
+          "ASSAULT"
+        ],
+        "description": "assault"
+      },
+      {
+        "id": "keeper_of_secrets_phantasmagoria_witchfire_2",
+        "name": "Phantasmagoria – witchfire",
+        "range": "18",
+        "type": "ranged",
+        "attacks": 6,
+        "skill": 2,
+        "strength": 6,
+        "ap": -2,
+        "damage": 1,
+        "keywords": [
+          "DEVASTATING WOUNDS",
+          "PSYCHIC"
+        ],
+        "description": "devastating wounds, psychic"
+      },
+      {
+        "id": "keeper_of_secrets_phantasmagoria_focused_witchfire_3",
+        "name": "Phantasmagoria – focused witchfire",
+        "range": "18",
+        "type": "ranged",
+        "attacks": 9,
+        "skill": 2,
+        "strength": 6,
+        "ap": -2,
+        "damage": 1,
+        "keywords": [
+          "DEVASTATING WOUNDS",
+          "HAZARDOUS",
+          "PSYCHIC"
+        ],
+        "description": "devastating wounds, hazardous, psychic"
+      },
+      {
+        "id": "keeper_of_secrets_ritual_knife_4",
+        "name": "Ritual knife",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 3,
+        "skill": 2,
+        "strength": 6,
+        "ap": -2,
+        "damage": 2,
+        "keywords": [
+          "EXTRA ATTACKS"
+        ],
+        "description": "extra attacks"
+      },
+      {
+        "id": "keeper_of_secrets_snapping_claws_5",
+        "name": "Snapping claws",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 4,
+        "skill": 2,
+        "strength": 6,
+        "ap": -2,
+        "damage": 3,
+        "keywords": [
+          "DEVASTATING WOUNDS",
+          "EXTRA ATTACKS"
+        ],
+        "description": "devastating wounds, extra attacks"
+      },
+      {
+        "id": "keeper_of_secrets_witstealer_sword_6",
+        "name": "Witstealer sword",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 6,
+        "skill": 2,
+        "strength": 8,
+        "ap": -2,
+        "damage": 3,
+        "keywords": []
+      }
+    ],
+    "keywords": [
+      "LEGIONS OF EXCESS",
+      "CHARACTER",
+      "MONSTER",
+      "PSYKER",
+      "CHAOS",
+      "DAEMON",
+      "SUMMONED",
+      "SLAANESH",
+      "KEEPER OF SECRETS"
+    ],
+    "abilities": [
+      {
+        "id": "keeper_of_secrets_ability_1",
+        "name": "Deadly Demise D6",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "keeper_of_secrets_ability_2",
+        "name": "Deep Strike",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEEP STRIKE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some units make their way to battle via tunnelling, teleportation, high-altitude descent or other extraordinary means that allow them to appear suddenly in the thick of the fighting.</p>During the Declare Battle Formations step, if every model in a unit has this ability, you can set it up in Reserves instead of setting it up on the battlefield. If you do, in the Reinforcements step of one of your Movement phases you can set up this unit anywhere on the battlefield that is more than 9\" horizontally away from all enemy models. If a unit with the Deep Strike ability arrives from Strategic Reserves, the controlling player can choose for that unit to be set up either using the rules for Strategic Reserves or using the Deep Strike ability. <br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li>Unit can be set up in Reserves instead of on the battlefield.</li><li>Unit can be set up in your Reinforcements step, more than 9\" horizontally away from all enemy models.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "keeper_of_secrets_ability_3",
+        "name": "Pact of Excess",
+        "description": "When mustering your army, unless specifically stated otherwise, you cannot select Legions of Excess as your Army Faction.",
+        "type": "Faction"
+      },
+      {
+        "id": "keeper_of_secrets_ability_4",
+        "name": "Daemon Lord of Slaanesh (Aura)",
+        "description": "While a friendly Legions of Excess unit is within 6\" of this model, improve the Armour Penetration characteristic of melee weapons equipped by models in that unit by 1.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "keeper_of_secrets_ability_5",
+        "name": "Mesmerising Form",
+        "description": "Each time an attack targets this model, subtract 1 from the Hit roll.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "keeper_of_secrets_ability_6",
+        "name": "Shining Aegis",
+        "description": "The bearer has a Save characteristic of 3+.",
+        "type": "Wargear"
+      }
+    ],
+    "points": 240,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 240,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "lord_exultant",
+    "name": "Lord Exultant",
+    "factionId": "EC",
+    "factionName": "Emperor’s Children",
+    "models": [
+      {
+        "id": "lord_exultant_model_1",
+        "name": "Lord Exultant",
+        "toughness": 4,
+        "save": 3,
+        "invulnerableSave": 4,
+        "wounds": 5
+      }
+    ],
+    "weapons": [
+      {
+        "id": "lord_exultant_bolt_pistol_1",
+        "name": "Bolt pistol",
+        "range": "12",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 2,
+        "strength": 4,
+        "ap": 0,
+        "damage": 1,
+        "keywords": [
+          "PISTOL"
+        ],
+        "description": "pistol"
+      },
+      {
+        "id": "lord_exultant_plasma_pistol_standard_2",
+        "name": "Plasma pistol - standard",
+        "range": "12",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 2,
+        "strength": 7,
+        "ap": -2,
+        "damage": 1,
+        "keywords": [
+          "PISTOL"
+        ],
+        "description": "pistol"
+      },
+      {
+        "id": "lord_exultant_plasma_pistol_supercharge_3",
+        "name": "Plasma pistol - supercharge",
+        "range": "12",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 2,
+        "strength": 8,
+        "ap": -3,
+        "damage": 2,
+        "keywords": [
+          "HAZARDOUS",
+          "PISTOL"
+        ],
+        "description": "hazardous, pistol"
+      },
+      {
+        "id": "lord_exultant_screamer_pistol_4",
+        "name": "Screamer pistol",
+        "range": "12",
+        "type": "ranged",
+        "attacks": 3,
+        "skill": 2,
+        "strength": 5,
+        "ap": -1,
+        "damage": 2,
+        "keywords": [
+          "IGNORES COVER",
+          "PISTOL"
+        ],
+        "description": "ignores cover, pistol"
+      },
+      {
+        "id": "lord_exultant_close_combat_weapon_5",
+        "name": "Close combat weapon",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 6,
+        "skill": 2,
+        "strength": 4,
+        "ap": 0,
+        "damage": 1,
+        "keywords": []
+      },
+      {
+        "id": "lord_exultant_master_crafted_power_sword_6",
+        "name": "Master-crafted power sword",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 5,
+        "skill": 2,
+        "strength": 5,
+        "ap": -2,
+        "damage": 2,
+        "keywords": [
+          "PRECISION"
+        ],
+        "description": "precision"
+      },
+      {
+        "id": "lord_exultant_phoenix_power_spear_7",
+        "name": "Phoenix power spear",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 5,
+        "skill": 2,
+        "strength": 7,
+        "ap": -2,
+        "damage": 2,
+        "keywords": [
+          "LANCE"
+        ],
+        "description": "lance"
+      },
+      {
+        "id": "lord_exultant_power_fist_8",
+        "name": "Power fist",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 5,
+        "skill": 2,
+        "strength": 8,
+        "ap": -2,
+        "damage": 2,
+        "keywords": []
+      },
+      {
+        "id": "lord_exultant_rapture_lash_9",
+        "name": "Rapture lash",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 4,
+        "skill": 2,
+        "strength": 4,
+        "ap": -1,
+        "damage": 1,
+        "keywords": [
+          "EXTRA ATTACKS"
+        ],
+        "description": "extra attacks"
+      }
+    ],
+    "keywords": [
+      "EMPEROR’S CHILDREN",
+      "INFANTRY",
+      "CHARACTER",
+      "CHAOS",
+      "SLAANESH",
+      "LORD EXULTANT",
+      "GRENADES"
+    ],
+    "abilities": [
+      {
+        "id": "lord_exultant_ability_1",
+        "name": "Leader",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">LEADER</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Mighty heroes fight at the forefront of battle.</p>Some <span class=\"kwb\">CHARACTER</span> units have ‘Leader’ listed on their datasheets. Such <span class=\"kwb\">CHARACTER</span> units are known as Leaders, and the units they can lead – known as their Bodyguard units – are listed on their datasheet.<br><br>During the Declare Battle Formations step, for each Leader in your army, if your army also includes one or more of that Leader’s Bodyguard units, you can select one of those Bodyguard units. That Leader will then attach to that Bodyguard unit for the duration of the battle and is said to be leading that unit. Each Bodyguard unit can only have one Leader attached to it.<br><br>While a Bodyguard unit contains a Leader, it is known as an Attached unit and, with the exception of rules that are triggered when units are <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, it is treated as a single unit for all rules purposes. Each time an attack targets an Attached unit, until the attacking unit has resolved all of its attacks, you must use the Toughness characteristic of the Bodyguard models in that unit, even if a Leader in that unit has a different Toughness characteristic. Each time an attack sucessfully wounds an Attached unit, that attack cannot be allocated to a <span class=\"kwb\">CHARACTER</span> model in that unit, even if that <span class=\"kwb\">CHARACTER</span> model has lost one or more wounds or has already had attacks allocated to it this phase. As soon as the last Bodyguard model in an Attached unit has been destroyed, any attacks made against that unit that have yet to be allocated can then be allocated to <span class=\"kwb\">CHARACTER</span> models in that unit.<br><br>Each time the last model in a Bodyguard unit is destroyed, each <span class=\"kwb\">CHARACTER</span> unit that is part of that Attached unit is no longer part of an Attached unit. It becomes a separate unit, with its original Starting Strength. If this happens as the result of an attack, they become separate units after the attacking unit has resolved all of its attacks.<br><br>Each time the last model in a <span class=\"kwb\">CHARACTER</span> unit that is attached to a Bodyguard unit is destroyed and there is not another <span class=\"kwb\">CHARACTER</span> unit attached, that Attached unit’s Bodyguard unit is no longer part of an Attached unit. It becomes a separate unit, with its original Starting Strength. If this happens as the result of an attack, they become separate units after the attacking unit has resolved all of its attacks. <br><br>Each time a unit that is part of an Attached unit is destroyed, it does not have the keywords of any other units that make up that Attached unit (unless it has those keywords on its own datasheet) for the purposes of any rules that would be triggered when that unit is destroyed.<br><br><div class=\"redExample\"><b>Example:</b> <i>If you only destroy the Bodyguard unit that is part of an Attached unit, you have not destroyed a <span class=\"kwb\">CHARACTER</span> unit. If you only destroy the <span class=\"kwb\">CHARACTER</span> unit that is part of an Attached unit, or if you destroy the whole Attached unit, you have destroyed one <span class=\"kwb\">CHARACTER</span> unit.</i></div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li>Before the battle, <span class=\"kwb\">CHARACTER</span> units with the Leader ability can be attached to one of their Bodyguard units to form an Attached unit.</li><li>Attached units can only contain one Leader.</li><li>Attacks cannot be allocated to <span class=\"kwb\">CHARACTER</span> models in Attached units.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "lord_exultant_ability_2",
+        "name": "Thrill Seekers",
+        "description": "If your Army Faction is Emperor’s Children, this unit is eligible to shoot and declare a charge in a turn in which it Advanced or Fell Back, but when doing so:<br><ul><li>It cannot target a unit it was within Engagement Range of at the start of the turn.</li><li>It cannot target a unit that was the target of another units charge or attack this phase.</li></ul>",
+        "type": "Faction"
+      },
+      {
+        "id": "lord_exultant_ability_3",
+        "name": "Perfectionists",
+        "description": "While this model is leading a unit, weapons equipped by models in that unit have the [LETHAL HITS] ability.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "lord_exultant_ability_4",
+        "name": "Euphoric Strikes",
+        "description": "Once per battle, at the start of the Fight phase, this model can use this ability. If it does, until the end of the phase, add 3 to the Attacks characteristic of melee weapons equipped by this model and improve the Armour Penetration characteristic of those weapons by 1.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "lord_exultant_ability_5",
+        "name": "LORD OF THE HOST",
+        "description": "If this model is attached to an Emperor’s Children Battleline unit during the Declare Battle Formations step, this model has the Infiltrators and Scouts 6\" abilities.",
+        "type": "Fortification (левая колонка)"
+      }
+    ],
+    "points": 80,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 80,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "lord_kakophonist",
+    "name": "Lord Kakophonist",
+    "factionId": "EC",
+    "factionName": "Emperor’s Children",
+    "models": [
+      {
+        "id": "lord_kakophonist_model_1",
+        "name": "Lord Kakophonist",
+        "toughness": 5,
+        "save": 2,
+        "invulnerableSave": 4,
+        "wounds": 6
+      }
+    ],
+    "weapons": [
+      {
+        "id": "lord_kakophonist_screamer_pistol_1",
+        "name": "Screamer pistol",
+        "range": "12",
+        "type": "ranged",
+        "attacks": 3,
+        "skill": 2,
+        "strength": 5,
+        "ap": -1,
+        "damage": 2,
+        "keywords": [
+          "IGNORES COVER",
+          "PISTOL"
+        ],
+        "description": "ignores cover, pistol"
+      },
+      {
+        "id": "lord_kakophonist_close_combat_weapon_2",
+        "name": "Close combat weapon",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 6,
+        "skill": 2,
+        "strength": 4,
+        "ap": 0,
+        "damage": 1,
+        "keywords": []
+      },
+      {
+        "id": "lord_kakophonist_power_sword_3",
+        "name": "Power sword",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 6,
+        "skill": 2,
+        "strength": 5,
+        "ap": -2,
+        "damage": 1,
+        "keywords": []
+      }
+    ],
+    "keywords": [
+      "EMPEROR’S CHILDREN",
+      "SLAANESH",
+      "GRENADES",
+      "CHARACTER",
+      "CHAOS",
+      "INFANTRY",
+      "LORD KAKOPHONIST"
+    ],
+    "abilities": [
+      {
+        "id": "lord_kakophonist_ability_1",
+        "name": "Leader",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">LEADER</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Mighty heroes fight at the forefront of battle.</p>Some <span class=\"kwb\">CHARACTER</span> units have ‘Leader’ listed on their datasheets. Such <span class=\"kwb\">CHARACTER</span> units are known as Leaders, and the units they can lead – known as their Bodyguard units – are listed on their datasheet.<br><br>During the Declare Battle Formations step, for each Leader in your army, if your army also includes one or more of that Leader’s Bodyguard units, you can select one of those Bodyguard units. That Leader will then attach to that Bodyguard unit for the duration of the battle and is said to be leading that unit. Each Bodyguard unit can only have one Leader attached to it.<br><br>While a Bodyguard unit contains a Leader, it is known as an Attached unit and, with the exception of rules that are triggered when units are <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, it is treated as a single unit for all rules purposes. Each time an attack targets an Attached unit, until the attacking unit has resolved all of its attacks, you must use the Toughness characteristic of the Bodyguard models in that unit, even if a Leader in that unit has a different Toughness characteristic. Each time an attack sucessfully wounds an Attached unit, that attack cannot be allocated to a <span class=\"kwb\">CHARACTER</span> model in that unit, even if that <span class=\"kwb\">CHARACTER</span> model has lost one or more wounds or has already had attacks allocated to it this phase. As soon as the last Bodyguard model in an Attached unit has been destroyed, any attacks made against that unit that have yet to be allocated can then be allocated to <span class=\"kwb\">CHARACTER</span> models in that unit.<br><br>Each time the last model in a Bodyguard unit is destroyed, each <span class=\"kwb\">CHARACTER</span> unit that is part of that Attached unit is no longer part of an Attached unit. It becomes a separate unit, with its original Starting Strength. If this happens as the result of an attack, they become separate units after the attacking unit has resolved all of its attacks.<br><br>Each time the last model in a <span class=\"kwb\">CHARACTER</span> unit that is attached to a Bodyguard unit is destroyed and there is not another <span class=\"kwb\">CHARACTER</span> unit attached, that Attached unit’s Bodyguard unit is no longer part of an Attached unit. It becomes a separate unit, with its original Starting Strength. If this happens as the result of an attack, they become separate units after the attacking unit has resolved all of its attacks. <br><br>Each time a unit that is part of an Attached unit is destroyed, it does not have the keywords of any other units that make up that Attached unit (unless it has those keywords on its own datasheet) for the purposes of any rules that would be triggered when that unit is destroyed.<br><br><div class=\"redExample\"><b>Example:</b> <i>If you only destroy the Bodyguard unit that is part of an Attached unit, you have not destroyed a <span class=\"kwb\">CHARACTER</span> unit. If you only destroy the <span class=\"kwb\">CHARACTER</span> unit that is part of an Attached unit, or if you destroy the whole Attached unit, you have destroyed one <span class=\"kwb\">CHARACTER</span> unit.</i></div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li>Before the battle, <span class=\"kwb\">CHARACTER</span> units with the Leader ability can be attached to one of their Bodyguard units to form an Attached unit.</li><li>Attached units can only contain one Leader.</li><li>Attacks cannot be allocated to <span class=\"kwb\">CHARACTER</span> models in Attached units.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "lord_kakophonist_ability_2",
+        "name": "Thrill Seekers",
+        "description": "If your Army Faction is Emperor’s Children, this unit is eligible to shoot and declare a charge in a turn in which it Advanced or Fell Back, but when doing so:<br><ul><li>It cannot target a unit it was within Engagement Range of at the start of the turn.</li><li>It cannot target a unit that was the target of another units charge or attack this phase.</li></ul>",
+        "type": "Faction"
+      },
+      {
+        "id": "lord_kakophonist_ability_3",
+        "name": "Obsessive Annunciation",
+        "description": "While this model is leading a unit, ranged weapons equipped by models in that unit have the [SUSTAINED HITS 1] ability.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "lord_kakophonist_ability_4",
+        "name": "Doom Siren",
+        "description": "In your Shooting phase, after this model’s unit has shot, select one enemy <span class=\"kwb\">INFANTRY</span> unit hit by one or more of those attacks and roll three D6: for each 4+, that enemy unit suffers 1 mortal wound. If an enemy unit suffers one or more mortal wounds as a result of this ability, it must take a Battle-shock test.",
+        "type": "Datasheet"
+      }
+    ],
+    "points": 70,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 70,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "lucius_the_eternal",
+    "name": "Lucius the Eternal",
+    "factionId": "EC",
+    "factionName": "Emperor’s Children",
+    "models": [
+      {
+        "id": "lucius_the_eternal_model_1",
+        "name": "Lucius the Eternal",
+        "toughness": 5,
+        "save": 2,
+        "invulnerableSave": 4,
+        "wounds": 6
+      }
+    ],
+    "weapons": [
+      {
+        "id": "lucius_the_eternal_blade_of_the_laer_1",
+        "name": "Blade of the Laer",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 6,
+        "skill": 2,
+        "strength": 8,
+        "ap": -3,
+        "damage": 3,
+        "keywords": [
+          "PRECISION"
+        ],
+        "description": "precision"
+      },
+      {
+        "id": "lucius_the_eternal_lash_of_torment_2",
+        "name": "Lash of Torment",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 10,
+        "skill": 2,
+        "strength": 4,
+        "ap": -1,
+        "damage": 1,
+        "keywords": [
+          "SUSTAINED HITS 1"
+        ],
+        "description": "sustained hits 1"
+      }
+    ],
+    "keywords": [
+      "EMPEROR’S CHILDREN",
+      "INFANTRY",
+      "CHARACTER",
+      "EPIC HERO",
+      "LUCIUS THE ETERNAL",
+      "SLAANESH",
+      "CHAOS"
+    ],
+    "abilities": [
+      {
+        "id": "lucius_the_eternal_ability_1",
+        "name": "Feel No Pain 5+",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">FEEL NO PAIN</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some warriors refuse to be laid low, even by what should be fatal wounds.</p>Some models have ‘Feel No Pain x+’ listed in their abilities. Each time a model with this ability suffers damage and so would lose a wound (including wounds lost due to <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span>), roll one D6: if the result is greater than or equal to the number denoted by ‘x’, that wound is ignored and is not lost. If a model has more than one Feel No Pain ability, you can only use one of those abilities each time that model suffers damage and so would lose a wound.<br><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Feel No Pain x+:</b> Each time this model would lose a wound, roll one D6: if the result equals or exceeds ‘x’, that wound is not lost.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "lucius_the_eternal_ability_2",
+        "name": "Leader",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">LEADER</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Mighty heroes fight at the forefront of battle.</p>Some <span class=\"kwb\">CHARACTER</span> units have ‘Leader’ listed on their datasheets. Such <span class=\"kwb\">CHARACTER</span> units are known as Leaders, and the units they can lead – known as their Bodyguard units – are listed on their datasheet.<br><br>During the Declare Battle Formations step, for each Leader in your army, if your army also includes one or more of that Leader’s Bodyguard units, you can select one of those Bodyguard units. That Leader will then attach to that Bodyguard unit for the duration of the battle and is said to be leading that unit. Each Bodyguard unit can only have one Leader attached to it.<br><br>While a Bodyguard unit contains a Leader, it is known as an Attached unit and, with the exception of rules that are triggered when units are <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, it is treated as a single unit for all rules purposes. Each time an attack targets an Attached unit, until the attacking unit has resolved all of its attacks, you must use the Toughness characteristic of the Bodyguard models in that unit, even if a Leader in that unit has a different Toughness characteristic. Each time an attack sucessfully wounds an Attached unit, that attack cannot be allocated to a <span class=\"kwb\">CHARACTER</span> model in that unit, even if that <span class=\"kwb\">CHARACTER</span> model has lost one or more wounds or has already had attacks allocated to it this phase. As soon as the last Bodyguard model in an Attached unit has been destroyed, any attacks made against that unit that have yet to be allocated can then be allocated to <span class=\"kwb\">CHARACTER</span> models in that unit.<br><br>Each time the last model in a Bodyguard unit is destroyed, each <span class=\"kwb\">CHARACTER</span> unit that is part of that Attached unit is no longer part of an Attached unit. It becomes a separate unit, with its original Starting Strength. If this happens as the result of an attack, they become separate units after the attacking unit has resolved all of its attacks.<br><br>Each time the last model in a <span class=\"kwb\">CHARACTER</span> unit that is attached to a Bodyguard unit is destroyed and there is not another <span class=\"kwb\">CHARACTER</span> unit attached, that Attached unit’s Bodyguard unit is no longer part of an Attached unit. It becomes a separate unit, with its original Starting Strength. If this happens as the result of an attack, they become separate units after the attacking unit has resolved all of its attacks. <br><br>Each time a unit that is part of an Attached unit is destroyed, it does not have the keywords of any other units that make up that Attached unit (unless it has those keywords on its own datasheet) for the purposes of any rules that would be triggered when that unit is destroyed.<br><br><div class=\"redExample\"><b>Example:</b> <i>If you only destroy the Bodyguard unit that is part of an Attached unit, you have not destroyed a <span class=\"kwb\">CHARACTER</span> unit. If you only destroy the <span class=\"kwb\">CHARACTER</span> unit that is part of an Attached unit, or if you destroy the whole Attached unit, you have destroyed one <span class=\"kwb\">CHARACTER</span> unit.</i></div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li>Before the battle, <span class=\"kwb\">CHARACTER</span> units with the Leader ability can be attached to one of their Bodyguard units to form an Attached unit.</li><li>Attached units can only contain one Leader.</li><li>Attacks cannot be allocated to <span class=\"kwb\">CHARACTER</span> models in Attached units.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "lucius_the_eternal_ability_3",
+        "name": "Lone Operative",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">LONE OPERATIVE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Assassins and other covert agents are difficult to track and pinpoint in the swirling maelstrom of battle.</p>Unless part of an Attached unit (see <span class=\"tooltip00010\" data-tooltip-content=\"#tooltip_content00010\"><span class=\"tt kwbu\">Leader</span></span>), this unit can only be selected as the target of a ranged attack if the attacking model is within 12\".</div>",
+        "type": "Core"
+      },
+      {
+        "id": "lucius_the_eternal_ability_4",
+        "name": "Thrill Seekers",
+        "description": "If your Army Faction is Emperor’s Children, this unit is eligible to shoot and declare a charge in a turn in which it Advanced or Fell Back, but when doing so:<br><ul><li>It cannot target a unit it was within Engagement Range of at the start of the turn.</li><li>It cannot target a unit that was the target of another units charge or attack this phase.</li></ul>",
+        "type": "Faction"
+      },
+      {
+        "id": "lucius_the_eternal_ability_5",
+        "name": "A Challenge Worthy of Skill",
+        "description": "Each time this model makes an attack that targets a <span class=\"kwb\">CHARACTER</span>, <span class=\"kwb\">MONSTER</span> or <span class=\"kwb\">WALKER</span> unit, you can re-roll the Hit roll and you can re-roll the Wound roll.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "lucius_the_eternal_ability_6",
+        "name": "Duellist’s Hubris",
+        "description": "At the start of the Fight phase; if this model is not leading a unit, until the end of the phase, it has the Fights First ability.",
+        "type": "Datasheet"
+      }
+    ],
+    "points": 150,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 150,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "maulerfiend",
+    "name": "Maulerfiend",
+    "factionId": "EC",
+    "factionName": "Emperor’s Children",
+    "models": [
+      {
+        "id": "maulerfiend_model_1",
+        "name": "Maulerfiend",
+        "toughness": 10,
+        "save": 3,
+        "invulnerableSave": 5,
+        "wounds": 12
+      }
+    ],
+    "weapons": [
+      {
+        "id": "maulerfiend_magma_cutters_1",
+        "name": "Magma cutters",
+        "range": "6",
+        "type": "ranged",
+        "attacks": 2,
+        "skill": 3,
+        "strength": 9,
+        "ap": -4,
+        "damage": "D6",
+        "keywords": [
+          "MELTA 2"
+        ],
+        "description": "melta 2"
+      },
+      {
+        "id": "maulerfiend_lasher_tendrils_2",
+        "name": "Lasher tendrils",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 6,
+        "skill": 3,
+        "strength": 7,
+        "ap": -1,
+        "damage": 1,
+        "keywords": [
+          "EXTRA ATTACKS"
+        ],
+        "description": "extra attacks"
+      },
+      {
+        "id": "maulerfiend_maulerfiend_fists_3",
+        "name": "Maulerfiend fists",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 6,
+        "skill": 3,
+        "strength": 14,
+        "ap": -2,
+        "damage": "D6+1",
+        "keywords": []
+      }
+    ],
+    "keywords": [
+      "EMPEROR’S CHILDREN",
+      "WALKER",
+      "MAULERFIEND",
+      "DAEMON",
+      "SLAANESH",
+      "CHAOS",
+      "VEHICLE"
+    ],
+    "abilities": [
+      {
+        "id": "maulerfiend_ability_1",
+        "name": "Deadly Demise D3",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "maulerfiend_ability_2",
+        "name": "Thrill Seekers",
+        "description": "If your Army Faction is Emperor’s Children, this unit is eligible to shoot and declare a charge in a turn in which it Advanced or Fell Back, but when doing so:<br><ul><li>It cannot target a unit it was within Engagement Range of at the start of the turn.</li><li>It cannot target a unit that was the target of another units charge or attack this phase.</li></ul>",
+        "type": "Faction"
+      },
+      {
+        "id": "maulerfiend_ability_3",
+        "name": "Glutton for Punishment",
+        "description": "Each time this model makes an attack, if it is below its Starting Strength, add 1 to the Hit roll. If this model is also Below Half-strength, add 1 to the Wound roll as well.",
+        "type": "Datasheet"
+      }
+    ],
+    "points": 130,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 130,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "noise_marines",
+    "name": "Noise Marines",
+    "factionId": "EC",
+    "factionName": "Emperor’s Children",
+    "models": [
+      {
+        "id": "noise_marines_model_1",
+        "name": "Noise Marines",
+        "toughness": 5,
+        "save": 3,
+        "wounds": 2
+      }
+    ],
+    "weapons": [
+      {
+        "id": "noise_marines_blastmaster_single_frequency_1",
+        "name": "Blastmaster – single frequency",
+        "range": "18",
+        "type": "ranged",
+        "attacks": 3,
+        "skill": 3,
+        "strength": 10,
+        "ap": -2,
+        "damage": 3,
+        "keywords": [
+          "IGNORES COVER"
+        ],
+        "description": "ignores cover"
+      },
+      {
+        "id": "noise_marines_blastmaster_varied_frequency_2",
+        "name": "Blastmaster – varied frequency",
+        "range": "18",
+        "type": "ranged",
+        "attacks": 6,
+        "skill": 3,
+        "strength": 6,
+        "ap": -2,
+        "damage": 1,
+        "keywords": [
+          "IGNORES COVER"
+        ],
+        "description": "ignores cover"
+      },
+      {
+        "id": "noise_marines_screamer_pistol_3",
+        "name": "Screamer pistol",
+        "range": "12",
+        "type": "ranged",
+        "attacks": 3,
+        "skill": 3,
+        "strength": 5,
+        "ap": -1,
+        "damage": 2,
+        "keywords": [
+          "IGNORES COVER",
+          "PISTOL"
+        ],
+        "description": "ignores cover, pistol"
+      },
+      {
+        "id": "noise_marines_sonic_blaster_4",
+        "name": "Sonic blaster",
+        "range": "18",
+        "type": "ranged",
+        "attacks": 3,
+        "skill": 3,
+        "strength": 5,
+        "ap": -1,
+        "damage": 2,
+        "keywords": [
+          "IGNORES COVER"
+        ],
+        "description": "ignores cover"
+      },
+      {
+        "id": "noise_marines_close_combat_weapon_5",
+        "name": "Close combat weapon",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 3,
+        "skill": 3,
+        "strength": 4,
+        "ap": 0,
+        "damage": 1,
+        "keywords": []
+      },
+      {
+        "id": "noise_marines_power_sword_6",
+        "name": "Power sword",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 4,
+        "skill": 3,
+        "strength": 5,
+        "ap": -2,
+        "damage": 1,
+        "keywords": []
+      }
+    ],
+    "keywords": [
+      "EMPEROR’S CHILDREN",
+      "SLAANESH",
+      "NOISE MARINES",
+      "INFANTRY",
+      "CHAOS"
+    ],
+    "abilities": [
+      {
+        "id": "noise_marines_ability_1",
+        "name": "Thrill Seekers",
+        "description": "If your Army Faction is Emperor’s Children, this unit is eligible to shoot and declare a charge in a turn in which it Advanced or Fell Back, but when doing so:<br><ul><li>It cannot target a unit it was within Engagement Range of at the start of the turn.</li><li>It cannot target a unit that was the target of another units charge or attack this phase.</li></ul>",
+        "type": "Faction"
+      },
+      {
+        "id": "noise_marines_ability_2",
+        "name": "Terrifying Crescendo",
+        "description": "In your Shooting phase, after this unit has shot, select one enemy unit hit by one or more of those attacks. Until the start of your next Shooting phase, each time a Battle-shock or Leadership test is taken for that enemy unit, subtract 1 from that test.",
+        "type": "Datasheet"
+      }
+    ],
+    "points": 145,
+    "pointsDescription": "6 models",
+    "pointsOptions": [
+      {
+        "description": "6 models",
+        "cost": 145,
+        "modelCount": 6
+      }
+    ]
+  },
+  {
+    "id": "seekers",
+    "name": "Seekers",
+    "factionId": "EC",
+    "factionName": "Emperor’s Children",
+    "models": [
+      {
+        "id": "seekers_model_1",
+        "name": "Seekers",
+        "toughness": 4,
+        "save": 7,
+        "invulnerableSave": 5,
+        "wounds": 2
+      }
+    ],
+    "weapons": [
+      {
+        "id": "seekers_lashing_tongue_1",
+        "name": "Lashing tongue",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 2,
+        "skill": 4,
+        "strength": 4,
+        "ap": 0,
+        "damage": 1,
+        "keywords": [
+          "EXTRA ATTACKS",
+          "LETHAL HITS"
+        ],
+        "description": "extra attacks, lethal hits"
+      },
+      {
+        "id": "seekers_slashing_claws_2",
+        "name": "Slashing claws",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 3,
+        "skill": 3,
+        "strength": 4,
+        "ap": -1,
+        "damage": 1,
+        "keywords": [
+          "DEVASTATING WOUNDS"
+        ],
+        "description": "devastating wounds"
+      }
+    ],
+    "keywords": [
+      "LEGIONS OF EXCESS",
+      "SLAANESH",
+      "SEEKERS",
+      "SUMMONED",
+      "MOUNTED",
+      "CHAOS",
+      "DAEMON"
+    ],
+    "abilities": [
+      {
+        "id": "seekers_ability_1",
+        "name": "Deep Strike",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEEP STRIKE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some units make their way to battle via tunnelling, teleportation, high-altitude descent or other extraordinary means that allow them to appear suddenly in the thick of the fighting.</p>During the Declare Battle Formations step, if every model in a unit has this ability, you can set it up in Reserves instead of setting it up on the battlefield. If you do, in the Reinforcements step of one of your Movement phases you can set up this unit anywhere on the battlefield that is more than 9\" horizontally away from all enemy models. If a unit with the Deep Strike ability arrives from Strategic Reserves, the controlling player can choose for that unit to be set up either using the rules for Strategic Reserves or using the Deep Strike ability. <br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li>Unit can be set up in Reserves instead of on the battlefield.</li><li>Unit can be set up in your Reinforcements step, more than 9\" horizontally away from all enemy models.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "seekers_ability_2",
+        "name": "Scouts 9\"",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">SCOUTS</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Scouts form the vanguard of many armies. Unnoticed by the enemy, they range ahead of the main force.</p>Some units have ‘Scouts x\"’ listed in their abilities. If every model in a unit has this ability, then at the start of the first battle round, before the first turn begins, it can make a Normal move of up to x\", with the exception that, while making that move, the distance moved by each model in that unit can be greater than that model's Move characteristic, as long as it is not greater than x\".<br><br><span class=\"kwb\">DEDICATED</span> <span class=\"kwb\">TRANSPORT</span> models can make use of any Scouts x\" ability listed in their abilities, or a Scouts x\" ability that a unit that starts the battle embarked within that <span class=\"kwb\">DEDICATED</span> <span class=\"kwb\">TRANSPORT</span> model has (provided only models with this ability are embarked within that <span class=\"kwb\">DEDICATED</span> <span class=\"kwb\">TRANSPORT</span> model), regardless of how that embarked unit gained this ability (e.g. listed in their abilities, conferred by an Enhancement or by an <span class=\"tooltip00018\" data-tooltip-content=\"#tooltip_content00018\"><span class=\"tt kwbu\">attached</span></span> <span class=\"kwb\">CHARACTER</span>, etc.).<br><br>A unit that moves using this ability must end that move more than 9\" horizontally away from all enemy models. If both players have units that can do this, the player who is taking the first turn moves their units first.<br><br><div class=\"redExample\"><b>Example:</b> A unit has the Scouts 6\" ability. At the start of the first battle round, the controlling player can make a Normal move with that unit of up to 6\".</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Scouts x\":</b> Unit can make a Normal move of up to x\" before the first turn begins.</li><li>If embarked in a <span class=\"kwb\">DEDICATED</span> <span class=\"kwb\">TRANSPORT</span>, that <span class=\"kwb\">DEDICATED</span> <span class=\"kwb\">TRANSPORT</span> can make this move instead.</li><li>Must end this move more than 9\" horizontally away from all enemy models.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "seekers_ability_3",
+        "name": "Pact of Excess",
+        "description": "When mustering your army, unless specifically stated otherwise, you cannot select Legions of Excess as your Army Faction.",
+        "type": "Faction"
+      },
+      {
+        "id": "seekers_ability_4",
+        "name": "Unholy Speed",
+        "description": "You can re-roll Advance and Charge rolls made for this unit.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "seekers_ability_5",
+        "name": "Daemonic Icon",
+        "description": "Models in the bearer’s unit have a Leadership characteristic of 6+.",
+        "type": "Wargear"
+      },
+      {
+        "id": "seekers_ability_6",
+        "name": "Instrument of Chaos",
+        "description": "Add 1 to Charge rolls made for the bearer’s unit.",
+        "type": "Wargear"
+      }
+    ],
+    "points": 80,
+    "pointsDescription": "5 models",
+    "pointsOptions": [
+      {
+        "description": "5 models",
+        "cost": 80,
+        "modelCount": 5
+      },
+      {
+        "description": "10 models",
+        "cost": 160,
+        "modelCount": 10
+      }
+    ]
+  },
+  {
+    "id": "shalaxi_helbane",
+    "name": "Shalaxi Helbane",
+    "factionId": "EC",
+    "factionName": "Emperor’s Children",
+    "models": [
+      {
+        "id": "shalaxi_helbane_model_1",
+        "name": "Shalaxi Helbane",
+        "toughness": 10,
+        "save": 3,
+        "invulnerableSave": 4,
+        "wounds": 20
+      }
+    ],
+    "weapons": [
+      {
+        "id": "shalaxi_helbane_lash_of_slaanesh_1",
+        "name": "Lash of Slaanesh",
+        "range": "12",
+        "type": "ranged",
+        "attacks": 6,
+        "skill": 2,
+        "strength": 6,
+        "ap": -1,
+        "damage": 2,
+        "keywords": [
+          "ASSAULT"
+        ],
+        "description": "assault"
+      },
+      {
+        "id": "shalaxi_helbane_pavane_of_slaanesh_witchfire_2",
+        "name": "Pavane of Slaanesh – witchfire",
+        "range": "18",
+        "type": "ranged",
+        "attacks": "D6",
+        "skill": 2,
+        "strength": 9,
+        "ap": -1,
+        "damage": "D3",
+        "keywords": [
+          "DEVASTATING WOUNDS",
+          "PSYCHIC"
+        ],
+        "description": "devastating wounds, psychic"
+      },
+      {
+        "id": "shalaxi_helbane_pavane_of_slaanesh_focused_witchfire_3",
+        "name": "Pavane of Slaanesh – focused witchfire",
+        "range": "18",
+        "type": "ranged",
+        "attacks": "D6",
+        "skill": 2,
+        "strength": 9,
+        "ap": -2,
+        "damage": "D3",
+        "keywords": [
+          "HAZARDOUS",
+          "DEVASTATING WOUNDS",
+          "PSYCHIC",
+          "SUSTAINED HITS 3"
+        ],
+        "description": "hazardous, devastating wounds, psychic, sustained hits 3"
+      },
+      {
+        "id": "shalaxi_helbane_snapping_claws_4",
+        "name": "Snapping claws",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 4,
+        "skill": 2,
+        "strength": 6,
+        "ap": -2,
+        "damage": 3,
+        "keywords": [
+          "DEVASTATING WOUNDS",
+          "EXTRA ATTACKS"
+        ],
+        "description": "devastating wounds, extra attacks"
+      },
+      {
+        "id": "shalaxi_helbane_soulpiercer_5",
+        "name": "Soulpiercer",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 6,
+        "skill": 2,
+        "strength": 12,
+        "ap": -3,
+        "damage": "D6+2",
+        "keywords": [
+          "PRECISION"
+        ],
+        "description": "precision"
+      }
+    ],
+    "keywords": [
+      "LEGIONS OF EXCESS",
+      "EPIC HERO",
+      "CHARACTER",
+      "PSYKER",
+      "CHAOS",
+      "DAEMON",
+      "SUMMONED",
+      "SLAANESH",
+      "SHALAXI HELBANE",
+      "MONSTER"
+    ],
+    "abilities": [
+      {
+        "id": "shalaxi_helbane_ability_1",
+        "name": "Deadly Demise D6",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "shalaxi_helbane_ability_2",
+        "name": "Deep Strike",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEEP STRIKE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some units make their way to battle via tunnelling, teleportation, high-altitude descent or other extraordinary means that allow them to appear suddenly in the thick of the fighting.</p>During the Declare Battle Formations step, if every model in a unit has this ability, you can set it up in Reserves instead of setting it up on the battlefield. If you do, in the Reinforcements step of one of your Movement phases you can set up this unit anywhere on the battlefield that is more than 9\" horizontally away from all enemy models. If a unit with the Deep Strike ability arrives from Strategic Reserves, the controlling player can choose for that unit to be set up either using the rules for Strategic Reserves or using the Deep Strike ability. <br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li>Unit can be set up in Reserves instead of on the battlefield.</li><li>Unit can be set up in your Reinforcements step, more than 9\" horizontally away from all enemy models.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "shalaxi_helbane_ability_3",
+        "name": "Pact of Excess",
+        "description": "When mustering your army, unless specifically stated otherwise, you cannot select Legions of Excess as your Army Faction.",
+        "type": "Faction"
+      },
+      {
+        "id": "shalaxi_helbane_ability_4",
+        "name": "No Prey Can Evade",
+        "description": "You can re-roll Advance and Charge rolls made for this model.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "shalaxi_helbane_ability_5",
+        "name": "Monarch of the Hunt",
+        "description": "At the start of the first battle round, select one enemy unit to be this model’s quarry. Each time this model makes a melee attack that targets its quarry, you can re-roll the Hit roll and you can re-roll the Wound roll. Each time this model’s quarry is destroyed, select one new enemy unit to be this model’s quarry.",
+        "type": "Datasheet"
+      }
+    ],
+    "points": 340,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 340,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "sorcerer",
+    "name": "Sorcerer",
+    "factionId": "EC",
+    "factionName": "Emperor’s Children",
+    "models": [
+      {
+        "id": "sorcerer_model_1",
+        "name": "Sorcerer",
+        "toughness": 4,
+        "save": 3,
+        "wounds": 4
+      }
+    ],
+    "weapons": [
+      {
+        "id": "sorcerer_agonising_energies_witchfire_1",
+        "name": "Agonising Energies – witchfire",
+        "range": "18",
+        "type": "ranged",
+        "attacks": "D6",
+        "skill": 3,
+        "strength": 5,
+        "ap": -1,
+        "damage": "D3",
+        "keywords": [
+          "PSYCHIC"
+        ],
+        "description": "psychic"
+      },
+      {
+        "id": "sorcerer_agonising_energies_focused_witchfire_2",
+        "name": "Agonising Energies – focused witchfire",
+        "range": "18",
+        "type": "ranged",
+        "attacks": "D6",
+        "skill": 3,
+        "strength": 6,
+        "ap": -2,
+        "damage": "D3",
+        "keywords": [
+          "DEVASTATING WOUNDS",
+          "HAZARDOUS",
+          "PSYCHIC"
+        ],
+        "description": "devastating wounds, hazardous, psychic"
+      },
+      {
+        "id": "sorcerer_bolt_pistol_3",
+        "name": "Bolt pistol",
+        "range": "12",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 3,
+        "strength": 4,
+        "ap": 0,
+        "damage": 1,
+        "keywords": [
+          "PISTOL"
+        ],
+        "description": "pistol"
+      },
+      {
+        "id": "sorcerer_force_weapon_4",
+        "name": "Force weapon",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 4,
+        "skill": 3,
+        "strength": 6,
+        "ap": -2,
+        "damage": "D3",
+        "keywords": [
+          "PSYCHIC"
+        ],
+        "description": "psychic"
+      }
+    ],
+    "keywords": [
+      "EMPEROR’S CHILDREN",
+      "PSYKER",
+      "CHAOS",
+      "INFANTRY",
+      "SLAANESH",
+      "SORCERER",
+      "GRENADES",
+      "CHARACTER"
+    ],
+    "abilities": [
+      {
+        "id": "sorcerer_ability_1",
+        "name": "Leader",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">LEADER</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Mighty heroes fight at the forefront of battle.</p>Some <span class=\"kwb\">CHARACTER</span> units have ‘Leader’ listed on their datasheets. Such <span class=\"kwb\">CHARACTER</span> units are known as Leaders, and the units they can lead – known as their Bodyguard units – are listed on their datasheet.<br><br>During the Declare Battle Formations step, for each Leader in your army, if your army also includes one or more of that Leader’s Bodyguard units, you can select one of those Bodyguard units. That Leader will then attach to that Bodyguard unit for the duration of the battle and is said to be leading that unit. Each Bodyguard unit can only have one Leader attached to it.<br><br>While a Bodyguard unit contains a Leader, it is known as an Attached unit and, with the exception of rules that are triggered when units are <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, it is treated as a single unit for all rules purposes. Each time an attack targets an Attached unit, until the attacking unit has resolved all of its attacks, you must use the Toughness characteristic of the Bodyguard models in that unit, even if a Leader in that unit has a different Toughness characteristic. Each time an attack sucessfully wounds an Attached unit, that attack cannot be allocated to a <span class=\"kwb\">CHARACTER</span> model in that unit, even if that <span class=\"kwb\">CHARACTER</span> model has lost one or more wounds or has already had attacks allocated to it this phase. As soon as the last Bodyguard model in an Attached unit has been destroyed, any attacks made against that unit that have yet to be allocated can then be allocated to <span class=\"kwb\">CHARACTER</span> models in that unit.<br><br>Each time the last model in a Bodyguard unit is destroyed, each <span class=\"kwb\">CHARACTER</span> unit that is part of that Attached unit is no longer part of an Attached unit. It becomes a separate unit, with its original Starting Strength. If this happens as the result of an attack, they become separate units after the attacking unit has resolved all of its attacks.<br><br>Each time the last model in a <span class=\"kwb\">CHARACTER</span> unit that is attached to a Bodyguard unit is destroyed and there is not another <span class=\"kwb\">CHARACTER</span> unit attached, that Attached unit’s Bodyguard unit is no longer part of an Attached unit. It becomes a separate unit, with its original Starting Strength. If this happens as the result of an attack, they become separate units after the attacking unit has resolved all of its attacks. <br><br>Each time a unit that is part of an Attached unit is destroyed, it does not have the keywords of any other units that make up that Attached unit (unless it has those keywords on its own datasheet) for the purposes of any rules that would be triggered when that unit is destroyed.<br><br><div class=\"redExample\"><b>Example:</b> <i>If you only destroy the Bodyguard unit that is part of an Attached unit, you have not destroyed a <span class=\"kwb\">CHARACTER</span> unit. If you only destroy the <span class=\"kwb\">CHARACTER</span> unit that is part of an Attached unit, or if you destroy the whole Attached unit, you have destroyed one <span class=\"kwb\">CHARACTER</span> unit.</i></div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li>Before the battle, <span class=\"kwb\">CHARACTER</span> units with the Leader ability can be attached to one of their Bodyguard units to form an Attached unit.</li><li>Attached units can only contain one Leader.</li><li>Attacks cannot be allocated to <span class=\"kwb\">CHARACTER</span> models in Attached units.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "sorcerer_ability_2",
+        "name": "Thrill Seekers",
+        "description": "If your Army Faction is Emperor’s Children, this unit is eligible to shoot and declare a charge in a turn in which it Advanced or Fell Back, but when doing so:<br><ul><li>It cannot target a unit it was within Engagement Range of at the start of the turn.</li><li>It cannot target a unit that was the target of another units charge or attack this phase.</li></ul>",
+        "type": "Faction"
+      },
+      {
+        "id": "sorcerer_ability_3",
+        "name": "Warped Interference (Psychic)",
+        "description": "While this model is leading a unit, each time a ranged attack targets that unit, models in it have the Benefit of Cover against that attack.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "sorcerer_ability_4",
+        "name": "Wracking Agonies (Psychic)",
+        "description": "In your Shooting phase, after this model has shot, select one <span class=\"kwb\">INFANTRY</span> unit hit by one or more of those attacks made with its Agonising Energies. Until the start of your next turn, that unit is wracked with agonies. While a unit is wracked with agonies, subtract 2\" from its Move characteristic and subtract 2 from Charge rolls made for it.",
+        "type": "Datasheet"
+      }
+    ],
+    "points": 60,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 60,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "tormentors",
+    "name": "Tormentors",
+    "factionId": "EC",
+    "factionName": "Emperor’s Children",
+    "models": [
+      {
+        "id": "tormentors_model_1",
+        "name": "Tormentors",
+        "toughness": 4,
+        "save": 3,
+        "wounds": 2
+      }
+    ],
+    "weapons": [
+      {
+        "id": "tormentors_bolt_pistol_1",
+        "name": "Bolt pistol",
+        "range": "12",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 3,
+        "strength": 4,
+        "ap": 0,
+        "damage": 1,
+        "keywords": [
+          "PISTOL",
+          "PRECISION"
+        ],
+        "description": "pistol, precision"
+      },
+      {
+        "id": "tormentors_boltgun_2",
+        "name": "Boltgun",
+        "range": "24",
+        "type": "ranged",
+        "attacks": 2,
+        "skill": 3,
+        "strength": 4,
+        "ap": 0,
+        "damage": 1,
+        "keywords": [
+          "PRECISION"
+        ],
+        "description": "precision"
+      },
+      {
+        "id": "tormentors_meltagun_3",
+        "name": "Meltagun",
+        "range": "12",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 3,
+        "strength": 9,
+        "ap": -4,
+        "damage": "D6",
+        "keywords": [
+          "MELTA 2",
+          "PRECISION"
+        ],
+        "description": "melta 2, precision"
+      },
+      {
+        "id": "tormentors_plasma_gun_standard_4",
+        "name": "Plasma gun - standard",
+        "range": "24",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 3,
+        "strength": 7,
+        "ap": -2,
+        "damage": 1,
+        "keywords": [
+          "PRECISION",
+          "RAPID FIRE 1"
+        ],
+        "description": "precision, rapid fire 1"
+      },
+      {
+        "id": "tormentors_plasma_gun_supercharge_5",
+        "name": "Plasma gun - supercharge",
+        "range": "24",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 3,
+        "strength": 8,
+        "ap": -3,
+        "damage": 2,
+        "keywords": [
+          "HAZARDOUS",
+          "PRECISION",
+          "RAPID FIRE 1"
+        ],
+        "description": "hazardous, precision, rapid fire 1"
+      },
+      {
+        "id": "tormentors_plasma_pistol_standard_6",
+        "name": "Plasma pistol - standard",
+        "range": "12",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 3,
+        "strength": 7,
+        "ap": -2,
+        "damage": 1,
+        "keywords": [
+          "PISTOL",
+          "PRECISION"
+        ],
+        "description": "pistol, precision"
+      },
+      {
+        "id": "tormentors_plasma_pistol_supercharge_7",
+        "name": "Plasma pistol - supercharge",
+        "range": "12",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 3,
+        "strength": 8,
+        "ap": -3,
+        "damage": 2,
+        "keywords": [
+          "HAZARDOUS",
+          "PISTOL",
+          "PRECISION"
+        ],
+        "description": "hazardous, pistol, precision"
+      },
+      {
+        "id": "tormentors_close_combat_weapon_8",
+        "name": "Close combat weapon",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 3,
+        "skill": 3,
+        "strength": 4,
+        "ap": 0,
+        "damage": 1,
+        "keywords": []
+      },
+      {
+        "id": "tormentors_power_sword_9",
+        "name": "Power sword",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 4,
+        "skill": 3,
+        "strength": 5,
+        "ap": -2,
+        "damage": 1,
+        "keywords": []
+      },
+      {
+        "id": "tormentors_rapture_lash_10",
+        "name": "Rapture lash",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 6,
+        "skill": 3,
+        "strength": 4,
+        "ap": -1,
+        "damage": 1,
+        "keywords": []
+      }
+    ],
+    "keywords": [
+      "EMPEROR’S CHILDREN",
+      "BATTLELINE",
+      "GRENADES",
+      "CHAOS",
+      "SLAANESH",
+      "TORMENTORS",
+      "INFANTRY"
+    ],
+    "abilities": [
+      {
+        "id": "tormentors_ability_1",
+        "name": "Infiltrators",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">INFILTRATORS</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Many armies employ reconnaissance units who can sit concealed, waiting for the right moment to strike.</p>During deployment, if every model in a unit has this ability, then when you set it up, it can be set up anywhere on the battlefield that is more than 9\" horizontally away from the enemy deployment zone and all enemy models.</div>",
+        "type": "Core"
+      },
+      {
+        "id": "tormentors_ability_2",
+        "name": "Thrill Seekers",
+        "description": "If your Army Faction is Emperor’s Children, this unit is eligible to shoot and declare a charge in a turn in which it Advanced or Fell Back, but when doing so:<br><ul><li>It cannot target a unit it was within Engagement Range of at the start of the turn.</li><li>It cannot target a unit that was the target of another units charge or attack this phase.</li></ul>",
+        "type": "Faction"
+      },
+      {
+        "id": "tormentors_ability_3",
+        "name": "Objective Defiled",
+        "description": "At the end of your Command phase, if this unit is within range of an objective marker you control, that objective marker remains under your control until your opponent’s Level of Control over that objective marker is greater than yours at the end of a phase.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "tormentors_ability_4",
+        "name": "Icon of Excess",
+        "description": "At the end of your Shooting phase or the Fight phase, if the bearer’s unit destroyed one or more enemy units that phase, the bearer’s unit takes a Leadership test. If that test is passed, you gain 1CP.",
+        "type": "Wargear"
+      }
+    ],
+    "points": 85,
+    "pointsDescription": "5 models",
+    "pointsOptions": [
+      {
+        "description": "5 models",
+        "cost": 85,
+        "modelCount": 5
+      },
+      {
+        "description": "10 models",
+        "cost": 160,
+        "modelCount": 10
+      }
+    ]
+  }
+]

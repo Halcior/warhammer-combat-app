@@ -1,6 +1,4 @@
 import { useMemo, useState } from "react";
-import { units } from "../data/units";
-import { detachments } from "../data/detachments";
 import { ArmyBuilder } from "./sections";
 import { ExportArmyModal } from "./modals/ExportArmyModal";
 import { ImportArmyModal } from "./modals/ImportArmyModal";
@@ -8,6 +6,8 @@ import { ArmyCard } from "./ArmyCard";
 import type { AppView } from "./AppNav";
 import type { ArmyPresetV2 } from "../types/armyPreset";
 import type { ArmyDraft } from "../lib/storage/armyStorage";
+import type { Unit } from "../types/combat";
+import type { NormalizedDetachment } from "../types/wahapedia";
 
 type Props = {
   armies: ArmyPresetV2[];
@@ -19,6 +19,8 @@ type Props = {
   onDuplicate: (id: string) => void;
   onOpenWorkspace: (armyId: string, setView: (v: AppView) => void) => void;
   setView: (v: AppView) => void;
+  availableUnits: Unit[];
+  availableDetachments: NormalizedDetachment[];
 };
 
 type EditorState =
@@ -47,7 +49,7 @@ function toArmyDraft(preset: ArmyPresetV2, detachmentName?: string): ArmyDraft {
 }
 
 function buildDetachmentsByFaction() {
-  return detachments.reduce<Record<string, Array<{ id: string; name: string }>>>(
+  return (availableDetachments: NormalizedDetachment[]) => availableDetachments.reduce<Record<string, Array<{ id: string; name: string }>>>(
     (accumulator, detachment) => {
       const current = accumulator[detachment.factionName] ?? [];
 
@@ -65,7 +67,7 @@ function buildDetachmentsByFaction() {
 }
 
 function buildEnhancementsByDetachment() {
-  return detachments.reduce<
+  return (availableDetachments: NormalizedDetachment[]) => availableDetachments.reduce<
     Record<string, Array<{ id: string; name: string; description?: string; cost?: number }>>
   >((accumulator, detachment) => {
     accumulator[detachment.id] = [...detachment.enhancements]
@@ -91,29 +93,31 @@ export function ArmiesView({
   onDuplicate,
   onOpenWorkspace,
   setView,
+  availableUnits,
+  availableDetachments,
 }: Props) {
   const [editor, setEditor] = useState<EditorState>({ mode: "idle" });
   const [exportingArmy, setExportingArmy] = useState<ArmyPresetV2 | null>(null);
   const [showImportModal, setShowImportModal] = useState(false);
 
   const factions = useMemo(
-    () => [...new Set(units.map((unit) => unit.faction))].sort(),
-    []
+    () => [...new Set(availableUnits.map((unit) => unit.faction))].sort(),
+    [availableUnits]
   );
   const unitDefinitions = useMemo(
-    () => new Map(units.map((unit) => [unit.id, unit])),
-    []
+    () => new Map(availableUnits.map((unit) => [unit.id, unit])),
+    [availableUnits]
   );
-  const detachmentsByFaction = useMemo(() => buildDetachmentsByFaction(), []);
-  const enhancementsByDetachment = useMemo(() => buildEnhancementsByDetachment(), []);
+  const detachmentsByFaction = useMemo(() => buildDetachmentsByFaction()(availableDetachments), [availableDetachments]);
+  const enhancementsByDetachment = useMemo(() => buildEnhancementsByDetachment()(availableDetachments), [availableDetachments]);
   const availableLeaders = useMemo(
     () =>
-      units.filter((unit) =>
+      availableUnits.filter((unit) =>
         (unit.keywords ?? []).some(
           (keyword) => keyword.toUpperCase() === "CHARACTER"
         )
       ),
-    []
+    [availableUnits]
   );
 
   if (editor.mode === "creating") {
@@ -132,7 +136,7 @@ export function ArmiesView({
         factions={factions}
         detachmentsByFaction={detachmentsByFaction}
         unitDefinitions={unitDefinitions}
-        availableUnits={units}
+        availableUnits={availableUnits}
         availableLeaders={availableLeaders}
         availableEnhancementsByDetachment={enhancementsByDetachment}
       />
@@ -156,7 +160,7 @@ export function ArmiesView({
         factions={factions}
         detachmentsByFaction={detachmentsByFaction}
         unitDefinitions={unitDefinitions}
-        availableUnits={units}
+        availableUnits={availableUnits}
         availableLeaders={availableLeaders}
         availableEnhancementsByDetachment={enhancementsByDetachment}
       />

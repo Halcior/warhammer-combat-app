@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
-import { units } from "../data/units";
+import type { Unit } from "../types/combat";
 import type { AttackConditions } from "../types/combat";
 import { loadBattleSetup, saveBattleSetup } from "../lib/storage/uiStorage";
 
-export function useBattleSetup() {
+export function useBattleSetup(units: Unit[]) {
   const initialConditions: AttackConditions = {
     battleRound: 1,
     isTargetInCover: false,

@@ -3,7 +3,6 @@ import "./App.css";
 import appLogo from "./assets/Nowe_LogoPNG.png";
 import { calculateExpectedDamage } from "./lib/combat";
 import { runSimulationByMode } from "./lib/combat/simulation/runSimulationByMode";
-import { units } from "./data/units";
 
 import { useBattleSetup } from "./hooks/useBattleSetup";
 import { useAttackModifiers } from "./hooks/useAttackModifiers";
@@ -27,16 +26,23 @@ import { loadUISession, saveUISession } from "./lib/storage/uiStorage";
 import { CalculatorPage } from "./components/pages/CalculatorPage";
 import { ArmiesPage } from "./components/pages/ArmiesPage";
 import { WorkspacePage } from "./components/pages/WorkspacePage";
+import type { Unit } from "./types/combat";
+import type { NormalizedDetachment } from "./types/wahapedia";
 
-function App() {
-  const battleSetup = useBattleSetup();
+type LoadedAppProps = {
+  units: Unit[];
+  detachments: NormalizedDetachment[];
+};
+
+function LoadedApp({ units, detachments }: LoadedAppProps) {
+  const battleSetup = useBattleSetup(units);
   const attackModifiers = useAttackModifiers();
-  const factionRules = useFactionRules(battleSetup.attackerFaction);
+  const factionRules = useFactionRules(battleSetup.attackerFaction, detachments);
   const ruleOptions = useSidedRuleOptions(factionRules.allAvailableRuleOptions);
   const enhancementOptions = useEnhancementOptions(factionRules.enhancements);
   const stratagemOptions = useStratagemOptions(factionRules.stratagems);
 
-  const defenderFactionRules = useFactionRules(battleSetup.defenderFaction);
+  const defenderFactionRules = useFactionRules(battleSetup.defenderFaction, detachments);
   const defenderDetachmentRuleOptions = useRuleOptions(defenderFactionRules.allAvailableRuleOptions);
   const defenderDetachmentEnhancementOptions = useEnhancementOptions(defenderFactionRules.enhancements);
   const defenderDetachmentStratagemOptions = useStratagemOptions(defenderFactionRules.stratagems);
@@ -427,6 +433,8 @@ function App() {
             onDelete={armyPresets.removeArmy}
             onDuplicate={armyPresets.dupeArmy}
             setView={setView}
+            availableUnits={units}
+            availableDetachments={detachments}
             onOpenWorkspace={(armyId, sv) => {
               setWorkspaceArmyA(armyId);
               sv("workspace");
@@ -437,6 +445,7 @@ function App() {
         {view === "workspace" && (
             <WorkspacePage
               armies={armyPresets.armies}
+              unitDefinitions={units}
               workspaceArmyA={workspaceArmyA}
               workspaceArmyB={workspaceArmyB}
               setWorkspaceArmyA={setWorkspaceArmyA}
@@ -508,6 +517,72 @@ function App() {
       </main>
     </div>
   );
+}
+
+function App() {
+  const [loadedData, setLoadedData] = useState<LoadedAppProps | null>(null);
+  const [loadingError, setLoadingError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    Promise.all([import("./data/loadAllUnits"), import("./data/detachments")])
+      .then(async ([unitsModule, detachmentsModule]) => {
+        const units = await unitsModule.loadAllUnits();
+
+        if (cancelled) {
+          return;
+        }
+
+        setLoadedData({
+          units,
+          detachments: detachmentsModule.detachments,
+        });
+      })
+      .catch((error) => {
+        if (cancelled) {
+          return;
+        }
+
+        setLoadingError(error instanceof Error ? error.message : "Failed to load app data.");
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (loadingError) {
+    return (
+      <div className="app">
+        <main className="page-shell app-main">
+          <section className="card app-loading-state">
+            <p className="panel-eyebrow">Startup Error</p>
+            <h1 className="app-loading-state__title">DamageForge couldn't load its data.</h1>
+            <p className="muted-text">{loadingError}</p>
+          </section>
+        </main>
+      </div>
+    );
+  }
+
+  if (!loadedData) {
+    return (
+      <div className="app">
+        <main className="page-shell app-main">
+          <section className="card app-loading-state">
+            <p className="panel-eyebrow">Loading</p>
+            <h1 className="app-loading-state__title">Preparing units and detachments…</h1>
+            <p className="muted-text">
+              Heavy game data is loading separately so the app shell can start faster.
+            </p>
+          </section>
+        </main>
+      </div>
+    );
+  }
+
+  return <LoadedApp units={loadedData.units} detachments={loadedData.detachments} />;
 }
 
 export default App;

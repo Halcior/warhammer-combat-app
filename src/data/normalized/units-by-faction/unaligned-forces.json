@@ -1,0 +1,2271 @@
+[
+  {
+    "id": "aegis_defence_line_with_weapon_emplacement",
+    "name": "Aegis Defence Line With Weapon Emplacement",
+    "factionId": "UN",
+    "factionName": "Unaligned Forces",
+    "models": [
+      {
+        "id": "aegis_defence_line_with_weapon_emplacement_model_1",
+        "name": "Aegis Defence Line With Weapon Emplacement",
+        "toughness": 12,
+        "save": 2,
+        "wounds": 10
+      }
+    ],
+    "weapons": [
+      {
+        "id": "aegis_defence_line_with_weapon_emplacement_icarus_lascannon_1",
+        "name": "Icarus lascannon",
+        "range": "48",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 5,
+        "strength": 12,
+        "ap": -3,
+        "damage": "D6+1",
+        "keywords": [
+          "ANTI-FLY 2+"
+        ],
+        "description": "anti-fly 2+"
+      },
+      {
+        "id": "aegis_defence_line_with_weapon_emplacement_quad_gun_2",
+        "name": "Quad-gun",
+        "range": "48",
+        "type": "ranged",
+        "attacks": 4,
+        "skill": 5,
+        "strength": 9,
+        "ap": -1,
+        "damage": 3,
+        "keywords": [
+          "ANTI-FLY 3+",
+          "TWIN-LINKED"
+        ],
+        "description": "anti-fly 3+, twin-linked"
+      }
+    ],
+    "keywords": [
+      "UNALIGNED FORCES",
+      "UNALIGNED",
+      "FORTIFICATION",
+      "AEGIS DEFENCE LINE WITH WEAPON EMPLACEMENT"
+    ],
+    "abilities": [
+      {
+        "id": "aegis_defence_line_with_weapon_emplacement_ability_1",
+        "name": "Unaligned Forces",
+        "description": "You can include <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units in your army even if they do not have the Faction keyword you selected in the Select Army Faction step. The combined points value of <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units you can include in your army depends on the battle size, as follows:<br><ul><li><b>Incursion:</b> Up to 250 pts</li><li><b>Strike Force:</b> Up to 500 pts</li><li><b>Onslaught:</b> Up to 1000 pts</li></ul>No <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> models can be your <span class=\"kwb\">WARLORD</span>.",
+        "type": "Faction"
+      },
+      {
+        "id": "aegis_defence_line_with_weapon_emplacement_ability_2",
+        "name": "Defence Line",
+        "description": "When this <span class=\"kwb\">FORTIFICATION</span> is set up, all parts of it must be set up within 1\" of another part. While an <span class=\"kwb\">INFANTRY</span> model has the Benefit of Cover as a result of this <span class=\"kwb\">FORTIFICATION</span> (see below), that model has a 4+ invulnerable save.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "aegis_defence_line_with_weapon_emplacement_ability_3",
+        "name": "Reinforced Cover",
+        "description": "Each time a ranged attack is allocated to a model, if that model is not fully visible to every model in the attacking unit because of this <span class=\"kwb\">FORTIFICATION</span>, that model has the Benefit of Cover against that attack.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "aegis_defence_line_with_weapon_emplacement_ability_4",
+        "name": "FORTIFICATION",
+        "description": "While an enemy unit is only within Engagement Range of one or more Fortifications from your army: <br><ul><li>That unit can still be selected as the target of ranged attacks, but each time such an attack is made, unless it is made with a Pistol, subtract 1 from the Hit roll. </li><li>Models in that unit do not need to take Desperate Escape tests due to Falling Back while Battle-shocked, except for those that will move over enemy models when doing so.</li></ul>",
+        "type": "Fortification (левая колонка)"
+      }
+    ],
+    "points": 145,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 145,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "ambull",
+    "name": "Ambull",
+    "factionId": "UN",
+    "factionName": "Unaligned Forces",
+    "models": [
+      {
+        "id": "ambull_model_1",
+        "name": "Ambull",
+        "toughness": 8,
+        "save": 3,
+        "wounds": 8
+      }
+    ],
+    "weapons": [
+      {
+        "id": "ambull_enormous_claws_1",
+        "name": "Enormous claws",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 4,
+        "skill": 3,
+        "strength": 6,
+        "ap": -2,
+        "damage": "D3",
+        "keywords": []
+      }
+    ],
+    "keywords": [
+      "UNALIGNED",
+      "UNALIGNED FORCES",
+      "CHARACTER",
+      "AMBULL",
+      "MONSTER"
+    ],
+    "abilities": [
+      {
+        "id": "ambull_ability_1",
+        "name": "Unaligned Forces",
+        "description": "You can include <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units in your army even if they do not have the Faction keyword you selected in the Select Army Faction step. The combined points value of <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units you can include in your army depends on the battle size, as follows:<br><ul><li><b>Incursion:</b> Up to 250 pts</li><li><b>Strike Force:</b> Up to 500 pts</li><li><b>Onslaught:</b> Up to 1000 pts</li></ul>No <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> models can be your <span class=\"kwb\">WARLORD</span>.",
+        "type": "Faction"
+      },
+      {
+        "id": "ambull_ability_2",
+        "name": "Deep Strike",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEEP STRIKE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some units make their way to battle via tunnelling, teleportation, high-altitude descent or other extraordinary means that allow them to appear suddenly in the thick of the fighting.</p>During the Declare Battle Formations step, if every model in a unit has this ability, you can set it up in Reserves instead of setting it up on the battlefield. If you do, in the Reinforcements step of one of your Movement phases you can set up this unit anywhere on the battlefield that is more than 9\" horizontally away from all enemy models. If a unit with the Deep Strike ability arrives from Strategic Reserves, the controlling player can choose for that unit to be set up either using the rules for Strategic Reserves or using the Deep Strike ability. <br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li>Unit can be set up in Reserves instead of on the battlefield.</li><li>Unit can be set up in your Reinforcements step, more than 9\" horizontally away from all enemy models.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "ambull_ability_3",
+        "name": "Feel No Pain 5+",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">FEEL NO PAIN</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some warriors refuse to be laid low, even by what should be fatal wounds.</p>Some models have ‘Feel No Pain x+’ listed in their abilities. Each time a model with this ability suffers damage and so would lose a wound (including wounds lost due to <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span>), roll one D6: if the result is greater than or equal to the number denoted by ‘x’, that wound is ignored and is not lost. If a model has more than one Feel No Pain ability, you can only use one of those abilities each time that model suffers damage and so would lose a wound.<br><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Feel No Pain x+:</b> Each time this model would lose a wound, roll one D6: if the result equals or exceeds ‘x’, that wound is not lost.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "ambull_ability_4",
+        "name": "Borewyrm Infestation",
+        "description": "Twice per battle, at the end of your opponent’s turn, if this model is not within Engagement Range of one or more enemy units, you can remove this model from the battlefield. In the Reinforcements step of your next Movement phase, set it up anywhere on the battlefield that is more than 9\" horizontally away from all enemy models. If the battle ends and this unit is not on the battlefield, it is destroyed.<br><br><b>Designer’s Note:</b> <i>Place two Borewyrm Infestation tokens next to this model, removing one each time this ability has been used.</i>",
+        "type": "Wargear"
+      },
+      {
+        "id": "ambull_ability_5",
+        "name": "Frenzy",
+        "description": "Each time an enemy unit is selected to shoot or fight, after it has finished making its attacks, if one or more of those attacks targeted this model and this model is not destroyed, this model can fight as if it were the Fight phase.",
+        "type": "Datasheet"
+      }
+    ],
+    "points": 85,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 85,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "bastion",
+    "name": "Bastion",
+    "factionId": "UN",
+    "factionName": "Unaligned Forces",
+    "models": [
+      {
+        "id": "bastion_model_1",
+        "name": "Bastion",
+        "toughness": 13,
+        "save": 2,
+        "wounds": 18
+      }
+    ],
+    "weapons": [
+      {
+        "id": "bastion_heavy_bolter_1",
+        "name": "Heavy bolter",
+        "range": "36",
+        "type": "ranged",
+        "attacks": 3,
+        "skill": 4,
+        "strength": 5,
+        "ap": -1,
+        "damage": 2,
+        "keywords": [
+          "SUSTAINED HITS 1"
+        ],
+        "description": "sustained hits 1"
+      },
+      {
+        "id": "bastion_icarus_lascannon_2",
+        "name": "Icarus lascannon",
+        "range": "48",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 5,
+        "strength": 12,
+        "ap": -3,
+        "damage": "D6+1",
+        "keywords": [
+          "ANTI-FLY 2+"
+        ],
+        "description": "anti-fly 2+"
+      },
+      {
+        "id": "bastion_quad_gun_3",
+        "name": "Quad-gun",
+        "range": "48",
+        "type": "ranged",
+        "attacks": 4,
+        "skill": 5,
+        "strength": 9,
+        "ap": -1,
+        "damage": 3,
+        "keywords": [
+          "ANTI-FLY 3+",
+          "TWIN-LINKED"
+        ],
+        "description": "anti-fly 3+, twin-linked"
+      }
+    ],
+    "keywords": [
+      "UNALIGNED",
+      "UNALIGNED FORCES",
+      "TOWERING",
+      "VEHICLE",
+      "FORTIFICATION",
+      "TRANSPORT",
+      "BASTION"
+    ],
+    "abilities": [
+      {
+        "id": "bastion_ability_1",
+        "name": "Unaligned Forces",
+        "description": "You can include <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units in your army even if they do not have the Faction keyword you selected in the Select Army Faction step. The combined points value of <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units you can include in your army depends on the battle size, as follows:<br><ul><li><b>Incursion:</b> Up to 250 pts</li><li><b>Strike Force:</b> Up to 500 pts</li><li><b>Onslaught:</b> Up to 1000 pts</li></ul>No <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> models can be your <span class=\"kwb\">WARLORD</span>.",
+        "type": "Faction"
+      },
+      {
+        "id": "bastion_ability_2",
+        "name": "Deadly Demise D6",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "bastion_ability_3",
+        "name": "Firing Deck 10",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">FIRING DECK</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some transports have firing hatches, ports or platforms from which embarked passengers can shoot.</p>Some <span class=\"kwb\">TRANSPORT</span> models have ‘Firing Deck x’ listed in their abilities. Each time such a model is selected to shoot in the <a href=\"/wh40k10ed/the-rules/core-rules/#SHOOTING-PHASE\">Shooting phase</a>, you can select up to ‘x’ models <span class=\"tooltip00070\" data-tooltip-content=\"#tooltip_content00070\"><span class=\"tt kwbu\">embarked</span></span> within it whose units have not already shot this phase. Then, for each of those embarked models, you can select one ranged weapon that embarked model is equipped with (excluding weapons with the <span class=\"kwb2 bluefont\">[ONE SHOT]</span> ability). Until that <span class=\"kwb\">TRANSPORT</span> model has resolved all of its attacks, it counts as being equipped with all of the weapons you selected in this way, in addition to its other weapons. Until the end of the phase, those selected models’ units are not eligible to shoot.<br><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Firing Deck ‘x’:</b> Each time this <span class=\"kwb\">TRANSPORT</span> shoots, select one weapon (excluding weapons with the <span class=\"kwb2 bluefont\">[ONE SHOT]</span> ability) from up to ‘x’ models embarked within it whose units have not shot this phase; this <span class=\"kwb\">TRANSPORT</span> counts as being equipped with those weapons as well. Until the end of the phase, those selected models’ units are not eligible to shoot.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "bastion_ability_4",
+        "name": "Reinforced Cover",
+        "description": "Each time a ranged attack is allocated to a model, if that model is not fully visible to every model in the attacking unit because of this <span class=\"kwb\">FORTIFICATION</span>, that model has the Benefit of Cover against that attack.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "bastion_ability_5",
+        "name": "Roof Access",
+        "description": "Friendly <span class=\"kwb\">INFANTRY</span> models can be set up or end any type of move on top of the roof section of this <span class=\"kwb\">FORTIFICATION</span>.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "bastion_ability_6",
+        "name": "Comms Antenna",
+        "description": "In your Command phase, if one or more <span class=\"kwb\">CHARACTER</span> models are embarked within this <span class=\"kwb\">FORTIFICATION</span>, roll one D6: on a 5+, you gain 1CP.",
+        "type": "Wargear"
+      },
+      {
+        "id": "bastion_ability_7",
+        "name": "FORTIFICATION",
+        "description": "While an enemy unit is only within Engagement Range of one or more Fortifications from your army: <br><ul><li>That unit can still be selected as the target of ranged attacks, but each time such an attack is made, unless it is made with a Pistol, subtract 1 from the Hit roll. </li><li>Models in that unit do not need to take Desperate Escape tests due to Falling Back while Battle-shocked, except for those that will move over enemy models when doing so.</li></ul>",
+        "type": "Fortification (левая колонка)"
+      }
+    ],
+    "points": 275,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 275,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "castellum_stronghold",
+    "name": "Castellum Stronghold",
+    "factionId": "UN",
+    "factionName": "Unaligned Forces",
+    "models": [
+      {
+        "id": "castellum_stronghold_model_1",
+        "name": "Castellum Stronghold",
+        "toughness": 13,
+        "save": 2,
+        "wounds": 50
+      }
+    ],
+    "weapons": [
+      {
+        "id": "castellum_stronghold_castellum_air_defence_missiles_1",
+        "name": "Castellum air defence missiles",
+        "range": "48",
+        "type": "ranged",
+        "attacks": "D6",
+        "skill": 4,
+        "strength": 9,
+        "ap": -2,
+        "damage": "D6",
+        "keywords": [
+          "ANTI-FLY 2+"
+        ],
+        "description": "anti-fly 2+"
+      },
+      {
+        "id": "castellum_stronghold_castellum_battle_cannon_2",
+        "name": "Castellum battle cannon",
+        "range": "48",
+        "type": "ranged",
+        "attacks": "D6+3",
+        "skill": 4,
+        "strength": 10,
+        "ap": -1,
+        "damage": 3,
+        "keywords": [
+          "BLAST"
+        ],
+        "description": "blast"
+      },
+      {
+        "id": "castellum_stronghold_castellum_icarus_quad_lascannon_3",
+        "name": "Castellum Icarus quad lascannon",
+        "range": "48",
+        "type": "ranged",
+        "attacks": 2,
+        "skill": 4,
+        "strength": 12,
+        "ap": -3,
+        "damage": "D6+1",
+        "keywords": [
+          "ANTI-FLY 2+",
+          "TWIN-LINKED"
+        ],
+        "description": "anti-fly 2+, twin-linked"
+      },
+      {
+        "id": "castellum_stronghold_multi_melta_4",
+        "name": "Multi-melta",
+        "range": "18",
+        "type": "ranged",
+        "attacks": 2,
+        "skill": 4,
+        "strength": 9,
+        "ap": -4,
+        "damage": "D6",
+        "keywords": [
+          "MELTA 2"
+        ],
+        "description": "melta 2"
+      },
+      {
+        "id": "castellum_stronghold_twin_assault_cannon_5",
+        "name": "Twin assault cannon",
+        "range": "24",
+        "type": "ranged",
+        "attacks": 6,
+        "skill": 4,
+        "strength": 6,
+        "ap": 0,
+        "damage": 1,
+        "keywords": [
+          "DEVASTATING WOUNDS",
+          "TWIN-LINKED"
+        ],
+        "description": "devastating wounds, twin-linked"
+      },
+      {
+        "id": "castellum_stronghold_twin_heavy_bolter_6",
+        "name": "Twin heavy bolter",
+        "range": "36",
+        "type": "ranged",
+        "attacks": 3,
+        "skill": 4,
+        "strength": 5,
+        "ap": -1,
+        "damage": 2,
+        "keywords": [
+          "SUSTAINED HITS 1",
+          "TWIN-LINKED"
+        ],
+        "description": "sustained hits 1, twin-linked"
+      },
+      {
+        "id": "castellum_stronghold_twin_heavy_flamer_7",
+        "name": "Twin heavy flamer",
+        "range": "12",
+        "type": "ranged",
+        "attacks": "D6",
+        "skill": 0,
+        "strength": 5,
+        "ap": -1,
+        "damage": 2,
+        "keywords": [
+          "IGNORES COVER",
+          "TORRENT",
+          "TWIN-LINKED"
+        ],
+        "description": "ignores cover, torrent, twin-linked"
+      },
+      {
+        "id": "castellum_stronghold_twin_lascannon_8",
+        "name": "Twin lascannon",
+        "range": "48",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 4,
+        "strength": 12,
+        "ap": -3,
+        "damage": "D6+1",
+        "keywords": [
+          "TWIN-LINKED"
+        ],
+        "description": "twin-linked"
+      },
+      {
+        "id": "castellum_stronghold_whirlwind_castellan_launcher_9",
+        "name": "Whirlwind castellan launcher",
+        "range": "72",
+        "type": "ranged",
+        "attacks": "D6+3",
+        "skill": 4,
+        "strength": 8,
+        "ap": -2,
+        "damage": 2,
+        "keywords": [
+          "BLAST",
+          "INDIRECT FIRE"
+        ],
+        "description": "blast, indirect fire"
+      }
+    ],
+    "keywords": [
+      "UNALIGNED FORCES",
+      "UNALIGNED",
+      "CASTELLUM STRONGHOLD",
+      "FORTIFICATION",
+      "TITANIC",
+      "VEHICLE",
+      "TRANSPORT"
+    ],
+    "abilities": [
+      {
+        "id": "castellum_stronghold_ability_1",
+        "name": "Unaligned Forces",
+        "description": "You can include <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units in your army even if they do not have the Faction keyword you selected in the Select Army Faction step. The combined points value of <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units you can include in your army depends on the battle size, as follows:<br><ul><li><b>Incursion:</b> Up to 250 pts</li><li><b>Strike Force:</b> Up to 500 pts</li><li><b>Onslaught:</b> Up to 1000 pts</li></ul>No <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> models can be your <span class=\"kwb\">WARLORD</span>.",
+        "type": "Faction"
+      },
+      {
+        "id": "castellum_stronghold_ability_2",
+        "name": "Deadly Demise 3D6",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "castellum_stronghold_ability_3",
+        "name": "Firing Deck 45",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">FIRING DECK</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some transports have firing hatches, ports or platforms from which embarked passengers can shoot.</p>Some <span class=\"kwb\">TRANSPORT</span> models have ‘Firing Deck x’ listed in their abilities. Each time such a model is selected to shoot in the <a href=\"/wh40k10ed/the-rules/core-rules/#SHOOTING-PHASE\">Shooting phase</a>, you can select up to ‘x’ models <span class=\"tooltip00070\" data-tooltip-content=\"#tooltip_content00070\"><span class=\"tt kwbu\">embarked</span></span> within it whose units have not already shot this phase. Then, for each of those embarked models, you can select one ranged weapon that embarked model is equipped with (excluding weapons with the <span class=\"kwb2 bluefont\">[ONE SHOT]</span> ability). Until that <span class=\"kwb\">TRANSPORT</span> model has resolved all of its attacks, it counts as being equipped with all of the weapons you selected in this way, in addition to its other weapons. Until the end of the phase, those selected models’ units are not eligible to shoot.<br><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Firing Deck ‘x’:</b> Each time this <span class=\"kwb\">TRANSPORT</span> shoots, select one weapon (excluding weapons with the <span class=\"kwb2 bluefont\">[ONE SHOT]</span> ability) from up to ‘x’ models embarked within it whose units have not shot this phase; this <span class=\"kwb\">TRANSPORT</span> counts as being equipped with those weapons as well. Until the end of the phase, those selected models’ units are not eligible to shoot.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "castellum_stronghold_ability_4",
+        "name": "Comms Antenna",
+        "description": "In your Command phase, if one or more <span class=\"kwb\">CHARACTER</span> models are embarked within this <span class=\"kwb\">FORTIFICATION</span>, roll one D6: on a 5+, you gain 1CP.",
+        "type": "Wargear"
+      },
+      {
+        "id": "castellum_stronghold_ability_5",
+        "name": "Reinforced Cover",
+        "description": "Each time a ranged attack is allocated to a model, if that model is not fully visible to every model in the attacking unit because of this <span class=\"kwb\">FORTIFICATION</span>, that model has the Benefit of Cover against that attack.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "castellum_stronghold_ability_6",
+        "name": "Stronghold",
+        "description": "Friendly <span class=\"kwb\">INFANTRY</span> models can be set up or end any type of move on top of the roof section of this <span class=\"kwb\">FORTIFICATION</span>. Any friendly model can be set up or end any type of move on the ramp or platform section of this <span class=\"kwb\">FORTIFICATION</span>.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "castellum_stronghold_ability_7",
+        "name": "FORTIFICATION",
+        "description": "While an enemy unit is only within Engagement Range of one or more Fortifications from your army: <br><ul><li>That unit can still be selected as the target of ranged attacks, but each time such an attack is made, unless it is made with a Pistol, subtract 1 from the Hit roll. </li><li>Models in that unit do not need to take Desperate Escape tests due to Falling Back while Battle-shocked, except for those that will move over enemy models when doing so.</li></ul>",
+        "type": "Fortification (левая колонка)"
+      },
+      {
+        "id": "castellum_stronghold_ability_8",
+        "name": "MIGHTY EDIFICE",
+        "description": "You can only include this <span class=\"kwb\">FORTIFICATION</span> in your army in games of Onslaught size or greater.",
+        "type": "Fortification (левая колонка)"
+      }
+    ],
+    "pointsOptions": []
+  },
+  {
+    "id": "firestorm_redoubt",
+    "name": "Firestorm Redoubt",
+    "factionId": "UN",
+    "factionName": "Unaligned Forces",
+    "models": [
+      {
+        "id": "firestorm_redoubt_model_1",
+        "name": "Firestorm Redoubt",
+        "toughness": 13,
+        "save": 2,
+        "wounds": 18
+      }
+    ],
+    "weapons": [
+      {
+        "id": "firestorm_redoubt_battle_cannon_1",
+        "name": "Battle cannon",
+        "range": "48",
+        "type": "ranged",
+        "attacks": "D6+3",
+        "skill": 5,
+        "strength": 9,
+        "ap": -1,
+        "damage": 3,
+        "keywords": [
+          "BLAST"
+        ],
+        "description": "blast"
+      },
+      {
+        "id": "firestorm_redoubt_icarus_lascannon_2",
+        "name": "Icarus lascannon",
+        "range": "48",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 5,
+        "strength": 12,
+        "ap": -3,
+        "damage": "D6+1",
+        "keywords": [
+          "ANTI-FLY 2+"
+        ],
+        "description": "anti-fly 2+"
+      },
+      {
+        "id": "firestorm_redoubt_punisher_gatling_cannon_3",
+        "name": "Punisher gatling cannon",
+        "range": "24",
+        "type": "ranged",
+        "attacks": 20,
+        "skill": 5,
+        "strength": 6,
+        "ap": 0,
+        "damage": 1,
+        "keywords": []
+      },
+      {
+        "id": "firestorm_redoubt_quad_gun_4",
+        "name": "Quad-gun",
+        "range": "48",
+        "type": "ranged",
+        "attacks": 4,
+        "skill": 5,
+        "strength": 9,
+        "ap": -1,
+        "damage": 3,
+        "keywords": [
+          "ANTI-FLY 3+",
+          "TWIN-LINKED"
+        ],
+        "description": "anti-fly 3+, twin-linked"
+      },
+      {
+        "id": "firestorm_redoubt_quad_lascannon_5",
+        "name": "Quad lascannon",
+        "range": "48",
+        "type": "ranged",
+        "attacks": 2,
+        "skill": 5,
+        "strength": 12,
+        "ap": -3,
+        "damage": "D6+1",
+        "keywords": [
+          "ANTI-FLY 2+",
+          "TWIN-LINKED"
+        ],
+        "description": "anti-fly 2+, twin-linked"
+      }
+    ],
+    "keywords": [
+      "UNALIGNED FORCES",
+      "UNALIGNED",
+      "TRANSPORT",
+      "VEHICLE",
+      "WALL OF MARTYRS",
+      "FIRESTORM REDOUBT",
+      "FORTIFICATION"
+    ],
+    "abilities": [
+      {
+        "id": "firestorm_redoubt_ability_1",
+        "name": "Unaligned Forces",
+        "description": "You can include <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units in your army even if they do not have the Faction keyword you selected in the Select Army Faction step. The combined points value of <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units you can include in your army depends on the battle size, as follows:<br><ul><li><b>Incursion:</b> Up to 250 pts</li><li><b>Strike Force:</b> Up to 500 pts</li><li><b>Onslaught:</b> Up to 1000 pts</li></ul>No <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> models can be your <span class=\"kwb\">WARLORD</span>.",
+        "type": "Faction"
+      },
+      {
+        "id": "firestorm_redoubt_ability_2",
+        "name": "Deadly Demise D6",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "firestorm_redoubt_ability_3",
+        "name": "Firing Deck 10",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">FIRING DECK</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some transports have firing hatches, ports or platforms from which embarked passengers can shoot.</p>Some <span class=\"kwb\">TRANSPORT</span> models have ‘Firing Deck x’ listed in their abilities. Each time such a model is selected to shoot in the <a href=\"/wh40k10ed/the-rules/core-rules/#SHOOTING-PHASE\">Shooting phase</a>, you can select up to ‘x’ models <span class=\"tooltip00070\" data-tooltip-content=\"#tooltip_content00070\"><span class=\"tt kwbu\">embarked</span></span> within it whose units have not already shot this phase. Then, for each of those embarked models, you can select one ranged weapon that embarked model is equipped with (excluding weapons with the <span class=\"kwb2 bluefont\">[ONE SHOT]</span> ability). Until that <span class=\"kwb\">TRANSPORT</span> model has resolved all of its attacks, it counts as being equipped with all of the weapons you selected in this way, in addition to its other weapons. Until the end of the phase, those selected models’ units are not eligible to shoot.<br><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Firing Deck ‘x’:</b> Each time this <span class=\"kwb\">TRANSPORT</span> shoots, select one weapon (excluding weapons with the <span class=\"kwb2 bluefont\">[ONE SHOT]</span> ability) from up to ‘x’ models embarked within it whose units have not shot this phase; this <span class=\"kwb\">TRANSPORT</span> counts as being equipped with those weapons as well. Until the end of the phase, those selected models’ units are not eligible to shoot.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "firestorm_redoubt_ability_4",
+        "name": "Roof Access",
+        "description": "Friendly <span class=\"kwb\">INFANTRY</span> models can be set up or end any type of move on top of the roof section of this <span class=\"kwb\">FORTIFICATION</span>.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "firestorm_redoubt_ability_5",
+        "name": "Reinforced Cover",
+        "description": "Each time a ranged attack is allocated to a model, if that model is not fully visible to every model in the attacking unit because of this <span class=\"kwb\">FORTIFICATION</span>, that model has the Benefit of Cover against that attack.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "firestorm_redoubt_ability_6",
+        "name": "Comms Antenna",
+        "description": "In your Command phase, if one or more <span class=\"kwb\">CHARACTER</span> models are embarked within this Fortification, roll one D6: on a 5+, you gain 1CP.",
+        "type": "Wargear"
+      },
+      {
+        "id": "firestorm_redoubt_ability_7",
+        "name": "FORTIFICATION",
+        "description": "While an enemy unit is only within Engagement Range of one or more Fortifications from your army: <br><ul><li>That unit can still be selected as the target of ranged attacks, but each time such an attack is made, unless it is made with a Pistol, subtract 1 from the Hit roll. </li><li>Models in that unit do not need to take Desperate Escape tests due to Falling Back while Battle-shocked, except for those that will move over enemy models when doing so.</li></ul>",
+        "type": "Fortification (левая колонка)"
+      }
+    ],
+    "points": 260,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 260,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "fortress_of_redemption",
+    "name": "Fortress Of Redemption",
+    "factionId": "UN",
+    "factionName": "Unaligned Forces",
+    "models": [
+      {
+        "id": "fortress_of_redemption_model_1",
+        "name": "Fortress Of Redemption",
+        "toughness": 13,
+        "save": 2,
+        "wounds": 30
+      }
+    ],
+    "weapons": [
+      {
+        "id": "fortress_of_redemption_heavy_bolter_1",
+        "name": "Heavy bolter",
+        "range": "36",
+        "type": "ranged",
+        "attacks": 3,
+        "skill": 4,
+        "strength": 5,
+        "ap": -1,
+        "damage": 2,
+        "keywords": [
+          "SUSTAINED HITS 1"
+        ],
+        "description": "sustained hits 1"
+      },
+      {
+        "id": "fortress_of_redemption_redemptor_lascannons_2",
+        "name": "Redemptor lascannons",
+        "range": "48",
+        "type": "ranged",
+        "attacks": 2,
+        "skill": 4,
+        "strength": 14,
+        "ap": -3,
+        "damage": "D6+1",
+        "keywords": [
+          "ANTI-FLY 2+"
+        ],
+        "description": "anti-fly 2+"
+      },
+      {
+        "id": "fortress_of_redemption_redemptor_missile_silo_superfrag_3",
+        "name": "Redemptor missile silo – superfrag",
+        "range": "48",
+        "type": "ranged",
+        "attacks": "2D6+2",
+        "skill": 4,
+        "strength": 5,
+        "ap": 0,
+        "damage": 1,
+        "keywords": [
+          "BLAST"
+        ],
+        "description": "blast"
+      },
+      {
+        "id": "fortress_of_redemption_redemptor_missile_silo_superkrak_4",
+        "name": "Redemptor missile silo – superkrak",
+        "range": "48",
+        "type": "ranged",
+        "attacks": 2,
+        "skill": 4,
+        "strength": 10,
+        "ap": -2,
+        "damage": "D6+1",
+        "keywords": []
+      }
+    ],
+    "keywords": [
+      "UNALIGNED FORCES",
+      "UNALIGNED",
+      "FORTRESS OF REDEMPTION",
+      "TOWERING",
+      "VEHICLE",
+      "TITANIC",
+      "TRANSPORT",
+      "FORTIFICATION"
+    ],
+    "abilities": [
+      {
+        "id": "fortress_of_redemption_ability_1",
+        "name": "Unaligned Forces",
+        "description": "You can include <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units in your army even if they do not have the Faction keyword you selected in the Select Army Faction step. The combined points value of <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units you can include in your army depends on the battle size, as follows:<br><ul><li><b>Incursion:</b> Up to 250 pts</li><li><b>Strike Force:</b> Up to 500 pts</li><li><b>Onslaught:</b> Up to 1000 pts</li></ul>No <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> models can be your <span class=\"kwb\">WARLORD</span>.",
+        "type": "Faction"
+      },
+      {
+        "id": "fortress_of_redemption_ability_2",
+        "name": "Deadly Demise 2D6",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "fortress_of_redemption_ability_3",
+        "name": "Firing Deck 20",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">FIRING DECK</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some transports have firing hatches, ports or platforms from which embarked passengers can shoot.</p>Some <span class=\"kwb\">TRANSPORT</span> models have ‘Firing Deck x’ listed in their abilities. Each time such a model is selected to shoot in the <a href=\"/wh40k10ed/the-rules/core-rules/#SHOOTING-PHASE\">Shooting phase</a>, you can select up to ‘x’ models <span class=\"tooltip00070\" data-tooltip-content=\"#tooltip_content00070\"><span class=\"tt kwbu\">embarked</span></span> within it whose units have not already shot this phase. Then, for each of those embarked models, you can select one ranged weapon that embarked model is equipped with (excluding weapons with the <span class=\"kwb2 bluefont\">[ONE SHOT]</span> ability). Until that <span class=\"kwb\">TRANSPORT</span> model has resolved all of its attacks, it counts as being equipped with all of the weapons you selected in this way, in addition to its other weapons. Until the end of the phase, those selected models’ units are not eligible to shoot.<br><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Firing Deck ‘x’:</b> Each time this <span class=\"kwb\">TRANSPORT</span> shoots, select one weapon (excluding weapons with the <span class=\"kwb2 bluefont\">[ONE SHOT]</span> ability) from up to ‘x’ models embarked within it whose units have not shot this phase; this <span class=\"kwb\">TRANSPORT</span> counts as being equipped with those weapons as well. Until the end of the phase, those selected models’ units are not eligible to shoot.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "fortress_of_redemption_ability_4",
+        "name": "Roof Access",
+        "description": "Friendly <span class=\"kwb\">INFANTRY</span> models can be set up or end any type of move on top of the roof section of this <span class=\"kwb\">FORTIFICATION</span>.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "fortress_of_redemption_ability_5",
+        "name": "Vantage Point",
+        "description": "While a model is on top of the tower roof of this <span class=\"kwb\">FORTIFICATION</span>, improve the Armour Penetration characteristic of ranged weapons equipped by that model by 1.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "fortress_of_redemption_ability_6",
+        "name": "Reinforced Cover",
+        "description": "Each time a ranged attack is allocated to a model, if that model is not fully visible to every model in the attacking unit because of this <span class=\"kwb\">FORTIFICATION</span>, that model has the Benefit of Cover against that attack.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "fortress_of_redemption_ability_7",
+        "name": "FORTIFICATION",
+        "description": "While an enemy unit is only within Engagement Range of one or more Fortifications from your army: <br><ul><li>That unit can still be selected as the target of ranged attacks, but each time such an attack is made, unless it is made with a Pistol, subtract 1 from the Hit roll. </li><li>Models in that unit do not need to take Desperate Escape tests due to Falling Back while Battle-shocked, except for those that will move over enemy models when doing so.</li></ul>",
+        "type": "Fortification (левая колонка)"
+      }
+    ],
+    "points": 480,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 480,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "guardian_drone",
+    "name": "Guardian Drone",
+    "factionId": "UN",
+    "factionName": "Unaligned Forces",
+    "models": [
+      {
+        "id": "guardian_drone_model_1",
+        "name": "Guardian Drone",
+        "toughness": 7,
+        "save": 3,
+        "wounds": 7
+      }
+    ],
+    "weapons": [
+      {
+        "id": "guardian_drone_destroyer_pulse_1",
+        "name": "Destroyer pulse",
+        "range": "18",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 4,
+        "strength": 8,
+        "ap": -2,
+        "damage": 2,
+        "keywords": [
+          "PISTOL"
+        ],
+        "description": "pistol"
+      },
+      {
+        "id": "guardian_drone_guardian_salvo_launchers_2",
+        "name": "Guardian salvo launchers",
+        "range": "24",
+        "type": "ranged",
+        "attacks": "D6",
+        "skill": 4,
+        "strength": 5,
+        "ap": -1,
+        "damage": 1,
+        "keywords": [
+          "BLAST"
+        ],
+        "description": "blast"
+      },
+      {
+        "id": "guardian_drone_manipulator_limbs_3",
+        "name": "Manipulator limbs",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 4,
+        "skill": 4,
+        "strength": 5,
+        "ap": 0,
+        "damage": 1,
+        "keywords": []
+      }
+    ],
+    "keywords": [
+      "UNALIGNED FORCES",
+      "UNALIGNED",
+      "MONSTER",
+      "GUARDIAN DRONE"
+    ],
+    "abilities": [
+      {
+        "id": "guardian_drone_ability_1",
+        "name": "Feel No Pain 5+",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">FEEL NO PAIN</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some warriors refuse to be laid low, even by what should be fatal wounds.</p>Some models have ‘Feel No Pain x+’ listed in their abilities. Each time a model with this ability suffers damage and so would lose a wound (including wounds lost due to <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span>), roll one D6: if the result is greater than or equal to the number denoted by ‘x’, that wound is ignored and is not lost. If a model has more than one Feel No Pain ability, you can only use one of those abilities each time that model suffers damage and so would lose a wound.<br><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Feel No Pain x+:</b> Each time this model would lose a wound, roll one D6: if the result equals or exceeds ‘x’, that wound is not lost.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "guardian_drone_ability_2",
+        "name": "Unaligned Forces",
+        "description": "You can include <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units in your army even if they do not have the Faction keyword you selected in the Select Army Faction step. The combined points value of <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units you can include in your army depends on the battle size, as follows:<br><ul><li><b>Incursion:</b> Up to 250 pts</li><li><b>Strike Force:</b> Up to 500 pts</li><li><b>Onslaught:</b> Up to 1000 pts</li></ul>No <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> models can be your <span class=\"kwb\">WARLORD</span>.",
+        "type": "Faction"
+      },
+      {
+        "id": "guardian_drone_ability_3",
+        "name": "Drone Commander (Aura)",
+        "description": "While a friendly Spindle Drones unit is within 6\" of this model, each time a model in that unit makes an attack, add 1 to the Hit roll.",
+        "type": "Datasheet"
+      }
+    ],
+    "points": 45,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 45,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "imperial_fortress_walls",
+    "name": "Imperial Fortress Walls",
+    "factionId": "UN",
+    "factionName": "Unaligned Forces",
+    "models": [
+      {
+        "id": "imperial_fortress_walls_model_1",
+        "name": "Imperial Fortress Walls",
+        "toughness": 14,
+        "save": 2,
+        "wounds": 80
+      }
+    ],
+    "weapons": [
+      {
+        "id": "imperial_fortress_walls_twin_long_barrelled_autocannon_1",
+        "name": "Twin long-barrelled autocannon",
+        "range": "60",
+        "type": "ranged",
+        "attacks": 2,
+        "skill": 4,
+        "strength": 9,
+        "ap": -1,
+        "damage": 3,
+        "keywords": [
+          "TWIN-LINKED"
+        ],
+        "description": "twin-linked"
+      },
+      {
+        "id": "imperial_fortress_walls_twin_heavy_bolter_2",
+        "name": "Twin heavy bolter",
+        "range": "36",
+        "type": "ranged",
+        "attacks": 3,
+        "skill": 4,
+        "strength": 5,
+        "ap": -1,
+        "damage": 2,
+        "keywords": [
+          "SUSTAINED HITS 1",
+          "TWIN-LINKED"
+        ],
+        "description": "sustained hits 1, twin-linked"
+      },
+      {
+        "id": "imperial_fortress_walls_twin_lascannon_3",
+        "name": "Twin lascannon",
+        "range": "48",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 4,
+        "strength": 12,
+        "ap": -3,
+        "damage": "D6+1",
+        "keywords": [
+          "TWIN-LINKED"
+        ],
+        "description": "twin-linked"
+      }
+    ],
+    "keywords": [
+      "UNALIGNED FORCES",
+      "UNALIGNED",
+      "TITANIC",
+      "VEHICLE",
+      "TOWERING",
+      "TRANSPORT",
+      "IMPERIAL FORTRESS WALLS",
+      "FORTIFICATION"
+    ],
+    "abilities": [
+      {
+        "id": "imperial_fortress_walls_ability_1",
+        "name": "Unaligned Forces",
+        "description": "You can include <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units in your army even if they do not have the Faction keyword you selected in the Select Army Faction step. The combined points value of <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units you can include in your army depends on the battle size, as follows:<br><ul><li><b>Incursion:</b> Up to 250 pts</li><li><b>Strike Force:</b> Up to 500 pts</li><li><b>Onslaught:</b> Up to 1000 pts</li></ul>No <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> models can be your <span class=\"kwb\">WARLORD</span>.",
+        "type": "Faction"
+      },
+      {
+        "id": "imperial_fortress_walls_ability_2",
+        "name": "Deadly Demise 3D6",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "imperial_fortress_walls_ability_3",
+        "name": "Firing Deck 30",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">FIRING DECK</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some transports have firing hatches, ports or platforms from which embarked passengers can shoot.</p>Some <span class=\"kwb\">TRANSPORT</span> models have ‘Firing Deck x’ listed in their abilities. Each time such a model is selected to shoot in the <a href=\"/wh40k10ed/the-rules/core-rules/#SHOOTING-PHASE\">Shooting phase</a>, you can select up to ‘x’ models <span class=\"tooltip00070\" data-tooltip-content=\"#tooltip_content00070\"><span class=\"tt kwbu\">embarked</span></span> within it whose units have not already shot this phase. Then, for each of those embarked models, you can select one ranged weapon that embarked model is equipped with (excluding weapons with the <span class=\"kwb2 bluefont\">[ONE SHOT]</span> ability). Until that <span class=\"kwb\">TRANSPORT</span> model has resolved all of its attacks, it counts as being equipped with all of the weapons you selected in this way, in addition to its other weapons. Until the end of the phase, those selected models’ units are not eligible to shoot.<br><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Firing Deck ‘x’:</b> Each time this <span class=\"kwb\">TRANSPORT</span> shoots, select one weapon (excluding weapons with the <span class=\"kwb2 bluefont\">[ONE SHOT]</span> ability) from up to ‘x’ models embarked within it whose units have not shot this phase; this <span class=\"kwb\">TRANSPORT</span> counts as being equipped with those weapons as well. Until the end of the phase, those selected models’ units are not eligible to shoot.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "imperial_fortress_walls_ability_4",
+        "name": "Reinforced Cover",
+        "description": "Each time a ranged attack is allocated to a model, if that model is not fully visible to every model in the attacking unit because of this <span class=\"kwb\">FORTIFICATION</span>, that model has the Benefit of Cover against that attack.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "imperial_fortress_walls_ability_5",
+        "name": "Battlements",
+        "description": "Friendly <span class=\"kwb\">INFANTRY</span> models can be set up or end any type of move on top of the flat platform section of this <span class=\"kwb\">FORTIFICATION</span>.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "imperial_fortress_walls_ability_6",
+        "name": "Fortress",
+        "description": "When this <span class=\"kwb\">FORTIFICATION</span> is set up, all parts of it must be set up in contact with another part.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "imperial_fortress_walls_ability_7",
+        "name": "FORTIFICATION",
+        "description": "While an enemy unit is only within Engagement Range of one or more Fortifications from your army: <br><ul><li>That unit can still be selected as the target of ranged attacks, but each time such an attack is made, unless it is made with a Pistol, subtract 1 from the Hit roll. </li><li>Models in that unit do not need to take Desperate Escape tests due to Falling Back while Battle-shocked, except for those that will move over enemy models when doing so.</li></ul>",
+        "type": "Fortification (левая колонка)"
+      },
+      {
+        "id": "imperial_fortress_walls_ability_8",
+        "name": "MIGHTY EDIFICE",
+        "description": "You can only include this <span class=\"kwb\">FORTIFICATION</span> in your army in games of Onslaught(Up to 1000 pts) size or greater.",
+        "type": "Primarch"
+      }
+    ],
+    "pointsOptions": []
+  },
+  {
+    "id": "macro_cannon_aquila_strongpoint",
+    "name": "Macro-cannon Aquila Strongpoint",
+    "factionId": "UN",
+    "factionName": "Unaligned Forces",
+    "models": [
+      {
+        "id": "macro_cannon_aquila_strongpoint_model_1",
+        "name": "Macro-cannon Aquila Strongpoint",
+        "toughness": 13,
+        "save": 2,
+        "wounds": 30
+      }
+    ],
+    "weapons": [
+      {
+        "id": "macro_cannon_aquila_strongpoint_aquila_macro_cannon_1",
+        "name": "Aquila macro-cannon",
+        "range": "72",
+        "type": "ranged",
+        "attacks": "D6+6",
+        "skill": 5,
+        "strength": 16,
+        "ap": -4,
+        "damage": 4,
+        "keywords": []
+      },
+      {
+        "id": "macro_cannon_aquila_strongpoint_heavy_bolter_2",
+        "name": "Heavy bolter",
+        "range": "36",
+        "type": "ranged",
+        "attacks": 3,
+        "skill": 4,
+        "strength": 5,
+        "ap": -1,
+        "damage": 2,
+        "keywords": [
+          "SUSTAINED HITS 1"
+        ],
+        "description": "sustained hits 1"
+      }
+    ],
+    "keywords": [
+      "UNALIGNED FORCES",
+      "UNALIGNED",
+      "FORTIFICATION",
+      "MACRO-CANNON AQUILA STRONGPOINT",
+      "WALL OF MARTYRS",
+      "TRANSPORT",
+      "VEHICLE",
+      "TITANIC"
+    ],
+    "abilities": [
+      {
+        "id": "macro_cannon_aquila_strongpoint_ability_1",
+        "name": "Unaligned Forces",
+        "description": "You can include <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units in your army even if they do not have the Faction keyword you selected in the Select Army Faction step. The combined points value of <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units you can include in your army depends on the battle size, as follows:<br><ul><li><b>Incursion:</b> Up to 250 pts</li><li><b>Strike Force:</b> Up to 500 pts</li><li><b>Onslaught:</b> Up to 1000 pts</li></ul>No <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> models can be your <span class=\"kwb\">WARLORD</span>.",
+        "type": "Faction"
+      },
+      {
+        "id": "macro_cannon_aquila_strongpoint_ability_2",
+        "name": "Deadly Demise 2D6",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "macro_cannon_aquila_strongpoint_ability_3",
+        "name": "Firing Deck 15",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">FIRING DECK</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some transports have firing hatches, ports or platforms from which embarked passengers can shoot.</p>Some <span class=\"kwb\">TRANSPORT</span> models have ‘Firing Deck x’ listed in their abilities. Each time such a model is selected to shoot in the <a href=\"/wh40k10ed/the-rules/core-rules/#SHOOTING-PHASE\">Shooting phase</a>, you can select up to ‘x’ models <span class=\"tooltip00070\" data-tooltip-content=\"#tooltip_content00070\"><span class=\"tt kwbu\">embarked</span></span> within it whose units have not already shot this phase. Then, for each of those embarked models, you can select one ranged weapon that embarked model is equipped with (excluding weapons with the <span class=\"kwb2 bluefont\">[ONE SHOT]</span> ability). Until that <span class=\"kwb\">TRANSPORT</span> model has resolved all of its attacks, it counts as being equipped with all of the weapons you selected in this way, in addition to its other weapons. Until the end of the phase, those selected models’ units are not eligible to shoot.<br><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Firing Deck ‘x’:</b> Each time this <span class=\"kwb\">TRANSPORT</span> shoots, select one weapon (excluding weapons with the <span class=\"kwb2 bluefont\">[ONE SHOT]</span> ability) from up to ‘x’ models embarked within it whose units have not shot this phase; this <span class=\"kwb\">TRANSPORT</span> counts as being equipped with those weapons as well. Until the end of the phase, those selected models’ units are not eligible to shoot.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "macro_cannon_aquila_strongpoint_ability_4",
+        "name": "Roof Access",
+        "description": "Friendly <span class=\"kwb\">INFANTRY</span> models can be set up or end any type of move on top of the roof section of this <span class=\"kwb\">FORTIFICATION</span>.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "macro_cannon_aquila_strongpoint_ability_5",
+        "name": "Tremor Quake",
+        "description": "In your Shooting phase, just after selecting a target for this model’s Aquila macro-cannon, the target unit and every other enemy <span class=\"kwb\">INFANTRY</span> unit within 3\" of that unit must take a Battle-shock test.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "macro_cannon_aquila_strongpoint_ability_6",
+        "name": "Reinforced Cover",
+        "description": "Each time a ranged attack is allocated to a model, if that model is not fully visible to every model in the attacking unit because of this <span class=\"kwb\">FORTIFICATION</span>, that model has the Benefit of Cover against that attack.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "macro_cannon_aquila_strongpoint_ability_7",
+        "name": "FORTIFICATION",
+        "description": "While an enemy unit is only within Engagement Range of one or more Fortifications from your army: <br><ul><li>That unit can still be selected as the target of ranged attacks, but each time such an attack is made, unless it is made with a Pistol, subtract 1 from the Hit roll. </li><li>Models in that unit do not need to take Desperate Escape tests due to Falling Back while Battle-shocked, except for those that will move over enemy models when doing so.</li></ul>",
+        "type": "Fortification (левая колонка)"
+      }
+    ],
+    "points": 550,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 550,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "plasma_obliterator",
+    "name": "Plasma Obliterator",
+    "factionId": "UN",
+    "factionName": "Unaligned Forces",
+    "models": [
+      {
+        "id": "plasma_obliterator_model_1",
+        "name": "Plasma Obliterator",
+        "toughness": 13,
+        "save": 2,
+        "wounds": 18
+      }
+    ],
+    "weapons": [
+      {
+        "id": "plasma_obliterator_plasma_obliterator_standard_1",
+        "name": "Plasma obliterator – standard",
+        "range": "48",
+        "type": "ranged",
+        "attacks": "D6+3",
+        "skill": 5,
+        "strength": 9,
+        "ap": -3,
+        "damage": 3,
+        "keywords": [
+          "BLAST"
+        ],
+        "description": "blast"
+      },
+      {
+        "id": "plasma_obliterator_plasma_obliterator_supercharge_2",
+        "name": "Plasma obliterator – supercharge",
+        "range": "48",
+        "type": "ranged",
+        "attacks": "D6+3",
+        "skill": 5,
+        "strength": 10,
+        "ap": -4,
+        "damage": 4,
+        "keywords": [
+          "BLAST",
+          "HAZARDOUS"
+        ],
+        "description": "blast, hazardous"
+      }
+    ],
+    "keywords": [
+      "UNALIGNED",
+      "UNALIGNED FORCES",
+      "VEHICLE",
+      "PLASMA OBLITERATOR",
+      "TOWERING",
+      "TRANSPORT",
+      "FORTIFICATION"
+    ],
+    "abilities": [
+      {
+        "id": "plasma_obliterator_ability_1",
+        "name": "Unaligned Forces",
+        "description": "You can include <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units in your army even if they do not have the Faction keyword you selected in the Select Army Faction step. The combined points value of <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units you can include in your army depends on the battle size, as follows:<br><ul><li><b>Incursion:</b> Up to 250 pts</li><li><b>Strike Force:</b> Up to 500 pts</li><li><b>Onslaught:</b> Up to 1000 pts</li></ul>No <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> models can be your <span class=\"kwb\">WARLORD</span>.",
+        "type": "Faction"
+      },
+      {
+        "id": "plasma_obliterator_ability_2",
+        "name": "Deadly Demise D6",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "plasma_obliterator_ability_3",
+        "name": "Firing Deck 10",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">FIRING DECK</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some transports have firing hatches, ports or platforms from which embarked passengers can shoot.</p>Some <span class=\"kwb\">TRANSPORT</span> models have ‘Firing Deck x’ listed in their abilities. Each time such a model is selected to shoot in the <a href=\"/wh40k10ed/the-rules/core-rules/#SHOOTING-PHASE\">Shooting phase</a>, you can select up to ‘x’ models <span class=\"tooltip00070\" data-tooltip-content=\"#tooltip_content00070\"><span class=\"tt kwbu\">embarked</span></span> within it whose units have not already shot this phase. Then, for each of those embarked models, you can select one ranged weapon that embarked model is equipped with (excluding weapons with the <span class=\"kwb2 bluefont\">[ONE SHOT]</span> ability). Until that <span class=\"kwb\">TRANSPORT</span> model has resolved all of its attacks, it counts as being equipped with all of the weapons you selected in this way, in addition to its other weapons. Until the end of the phase, those selected models’ units are not eligible to shoot.<br><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Firing Deck ‘x’:</b> Each time this <span class=\"kwb\">TRANSPORT</span> shoots, select one weapon (excluding weapons with the <span class=\"kwb2 bluefont\">[ONE SHOT]</span> ability) from up to ‘x’ models embarked within it whose units have not shot this phase; this <span class=\"kwb\">TRANSPORT</span> counts as being equipped with those weapons as well. Until the end of the phase, those selected models’ units are not eligible to shoot.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "plasma_obliterator_ability_4",
+        "name": "Emergency Plasma Vents",
+        "description": "Each time this <span class=\"kwb\">FORTIFICATION</span> suffers a mortal wound as the result of a failed Hazardous test, roll one D6: on a 4+, that wound is not lost.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "plasma_obliterator_ability_5",
+        "name": "Reinforced Cover",
+        "description": "Each time a ranged attack is allocated to a model, if that model is not fully visible to every model in the attacking unit because of this <span class=\"kwb\">FORTIFICATION</span>, that model has the Benefit of Cover against that attack.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "plasma_obliterator_ability_6",
+        "name": "FORTIFICATION",
+        "description": "While an enemy unit is only within Engagement Range of one or more Fortifications from your army: <br><ul><li>That unit can still be selected as the target of ranged attacks, but each time such an attack is made, unless it is made with a Pistol, subtract 1 from the Hit roll. </li><li>Models in that unit do not need to take Desperate Escape tests due to Falling Back while Battle-shocked, except for those that will move over enemy models when doing so.</li></ul>",
+        "type": "Fortification (левая колонка)"
+      }
+    ],
+    "points": 225,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 225,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "primaris_redoubt",
+    "name": "Primaris Redoubt",
+    "factionId": "UN",
+    "factionName": "Unaligned Forces",
+    "models": [
+      {
+        "id": "primaris_redoubt_model_1",
+        "name": "Primaris Redoubt",
+        "toughness": 12,
+        "save": 3,
+        "invulnerableSave": 5,
+        "wounds": 18
+      }
+    ],
+    "weapons": [
+      {
+        "id": "primaris_redoubt_battle_cannon_1",
+        "name": "Battle cannon",
+        "range": "48",
+        "type": "ranged",
+        "attacks": "D6+3",
+        "skill": 4,
+        "strength": 9,
+        "ap": -1,
+        "damage": 3,
+        "keywords": [
+          "BLAST"
+        ],
+        "description": "BLAST"
+      },
+      {
+        "id": "primaris_redoubt_heavy_bolter_2",
+        "name": "Heavy bolter",
+        "range": "36",
+        "type": "ranged",
+        "attacks": 3,
+        "skill": 4,
+        "strength": 5,
+        "ap": -1,
+        "damage": 2,
+        "keywords": [
+          "SUSTAINED HITS 1"
+        ],
+        "description": "SUSTAINED HITS 1"
+      },
+      {
+        "id": "primaris_redoubt_multi_melta_3",
+        "name": "Multi-melta",
+        "range": "18",
+        "type": "ranged",
+        "attacks": 2,
+        "skill": 4,
+        "strength": 9,
+        "ap": -4,
+        "damage": "D6",
+        "keywords": [
+          "MELTA 2"
+        ],
+        "description": "MELTA 2"
+      },
+      {
+        "id": "primaris_redoubt_primaris_icarus_lascannon_4",
+        "name": "Primaris Icarus lascannon",
+        "range": "48",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 4,
+        "strength": 12,
+        "ap": -3,
+        "damage": "D6+1",
+        "keywords": [
+          "ANTI-FLY 2+"
+        ],
+        "description": "anti-fly 2+"
+      },
+      {
+        "id": "primaris_redoubt_primaris_icarus_quad_lascannon_5",
+        "name": "Primaris Icarus quad lascannon",
+        "range": "48",
+        "type": "ranged",
+        "attacks": 2,
+        "skill": 4,
+        "strength": 12,
+        "ap": -3,
+        "damage": "D6+1",
+        "keywords": [
+          "ANTI-FLY 2+",
+          "TWIN-LINKED"
+        ],
+        "description": "anti-fly 2+, twin-linked"
+      },
+      {
+        "id": "primaris_redoubt_primaris_air_defence_missiles_6",
+        "name": "Primaris air defence missiles",
+        "range": "48",
+        "type": "ranged",
+        "attacks": "D6",
+        "skill": 4,
+        "strength": 6,
+        "ap": -2,
+        "damage": 2,
+        "keywords": [
+          "ANTI-FLY 2+"
+        ],
+        "description": "anti-fly 2+"
+      },
+      {
+        "id": "primaris_redoubt_primaris_castellan_launcher_7",
+        "name": "Primaris castellan launcher",
+        "range": "72",
+        "type": "ranged",
+        "attacks": "D6+1",
+        "skill": 4,
+        "strength": 6,
+        "ap": 0,
+        "damage": 1,
+        "keywords": [
+          "BLAST",
+          "INDIRECT FIRE"
+        ],
+        "description": "blast, indirect fire"
+      },
+      {
+        "id": "primaris_redoubt_primaris_quad_gun_8",
+        "name": "Primaris quad-gun",
+        "range": "48",
+        "type": "ranged",
+        "attacks": 4,
+        "skill": 4,
+        "strength": 8,
+        "ap": -1,
+        "damage": 2,
+        "keywords": []
+      },
+      {
+        "id": "primaris_redoubt_primaris_redoubt_turbo_laser_destructor_9",
+        "name": "Primaris Redoubt turbo-laser destructor",
+        "range": "96",
+        "type": "ranged",
+        "attacks": "D3+1",
+        "skill": 4,
+        "strength": 16,
+        "ap": -3,
+        "damage": "D6+3",
+        "keywords": [
+          "BLAST"
+        ],
+        "description": "blast"
+      },
+      {
+        "id": "primaris_redoubt_primaris_vengeance_launcher_10",
+        "name": "Primaris vengeance launcher",
+        "range": "72",
+        "type": "ranged",
+        "attacks": "D3+1",
+        "skill": 4,
+        "strength": 7,
+        "ap": -1,
+        "damage": 2,
+        "keywords": [
+          "BLAST",
+          "INDIRECT FIRE"
+        ],
+        "description": "blast, indirect fire"
+      },
+      {
+        "id": "primaris_redoubt_twin_heavy_bolter_11",
+        "name": "Twin heavy bolter",
+        "range": "36",
+        "type": "ranged",
+        "attacks": 3,
+        "skill": 4,
+        "strength": 5,
+        "ap": -1,
+        "damage": 2,
+        "keywords": [
+          "SUSTAINED HITS 1",
+          "TWIN-LINKED"
+        ],
+        "description": "SUSTAINED HITS 1, TWIN-LINKED"
+      },
+      {
+        "id": "primaris_redoubt_twin_heavy_flamer_12",
+        "name": "Twin heavy flamer",
+        "range": "12",
+        "type": "ranged",
+        "attacks": "D6",
+        "skill": 0,
+        "strength": 5,
+        "ap": -1,
+        "damage": 1,
+        "keywords": [
+          "IGNORES COVER",
+          "TORRENT",
+          "TWIN-LINKED"
+        ],
+        "description": "IGNORES COVER, TORRENT, TWIN-LINKED"
+      },
+      {
+        "id": "primaris_redoubt_twin_lascannon_13",
+        "name": "Twin lascannon",
+        "range": "48",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 4,
+        "strength": 12,
+        "ap": -3,
+        "damage": "D6+1",
+        "keywords": [
+          "TWIN-LINKED"
+        ],
+        "description": "TWIN-LINKED"
+      }
+    ],
+    "keywords": [
+      "UNALIGNED FORCES",
+      "UNALIGNED",
+      "PRIMARIS REDOUBT",
+      "VEHICLE",
+      "FORTIFICATION"
+    ],
+    "abilities": [
+      {
+        "id": "primaris_redoubt_ability_1",
+        "name": "Unaligned Forces",
+        "description": "You can include <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units in your army even if they do not have the Faction keyword you selected in the Select Army Faction step. The combined points value of <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units you can include in your army depends on the battle size, as follows:<br><ul><li><b>Incursion:</b> Up to 250 pts</li><li><b>Strike Force:</b> Up to 500 pts</li><li><b>Onslaught:</b> Up to 1000 pts</li></ul>No <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> models can be your <span class=\"kwb\">WARLORD</span>.",
+        "type": "Faction"
+      },
+      {
+        "id": "primaris_redoubt_ability_2",
+        "name": "Deadly Demise D6",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "primaris_redoubt_ability_3",
+        "name": "Gates",
+        "description": "When this <span class=\"kwb\">FORTIFICATION</span> is first set up on the battlefield, each gate section can be set up with its gate open or closed. In your Command phase, you can open or close the gate of each of this model’s gate sections. While a gate is open, models can move and draw line of sight through it as if it were not there.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "primaris_redoubt_ability_4",
+        "name": "Battlements",
+        "description": "Friendly <span class=\"kwb\">INFANTRY</span> models can be set up or end any type of move on top of the flat battlement sections of this <span class=\"kwb\">FORTIFICATION</span>.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "primaris_redoubt_ability_5",
+        "name": "Reinforced Cover",
+        "description": "Each time a ranged attack is allocated to a model, if that model is not fully visible to every model in the attacking unit because of this <span class=\"kwb\">FORTIFICATION</span>, that model has the Benefit of Cover against that attack.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "primaris_redoubt_ability_6",
+        "name": "FORTIFICATION",
+        "description": "While an enemy unit is only within Engagement Range of one or more Fortifications from your army: <br><ul><li>That unit can still be selected as the target of ranged attacks, but each time such an attack is made, unless it is made with a Pistol, subtract 1 from the Hit roll. </li><li>Models in that unit do not need to take Desperate Escape tests due to Falling Back while Battle-shocked, except for those that will move over enemy models when doing so.</li></ul>",
+        "type": "Fortification (левая колонка)"
+      }
+    ],
+    "points": 220,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 220,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "skyshield_landing_pad",
+    "name": "Skyshield Landing Pad",
+    "factionId": "UN",
+    "factionName": "Unaligned Forces",
+    "models": [
+      {
+        "id": "skyshield_landing_pad_model_1",
+        "name": "Skyshield Landing Pad",
+        "toughness": 12,
+        "save": 3,
+        "invulnerableSave": 5,
+        "wounds": 16
+      }
+    ],
+    "weapons": [],
+    "keywords": [
+      "UNALIGNED FORCES",
+      "UNALIGNED",
+      "SKYSHIELD LANDING PAD",
+      "FORTIFICATION"
+    ],
+    "abilities": [
+      {
+        "id": "skyshield_landing_pad_ability_1",
+        "name": "Unaligned Forces",
+        "description": "You can include <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units in your army even if they do not have the Faction keyword you selected in the Select Army Faction step. The combined points value of <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units you can include in your army depends on the battle size, as follows:<br><ul><li><b>Incursion:</b> Up to 250 pts</li><li><b>Strike Force:</b> Up to 500 pts</li><li><b>Onslaught:</b> Up to 1000 pts</li></ul>No <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> models can be your <span class=\"kwb\">WARLORD</span>.",
+        "type": "Faction"
+      },
+      {
+        "id": "skyshield_landing_pad_ability_2",
+        "name": "Deadly Demise D3",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "skyshield_landing_pad_ability_3",
+        "name": "Skyshield",
+        "description": "Friendly <span class=\"kwb\">INFANTRY</span> models and friendly units that can Fly can be set up or end any type of move on top of the platform section of this <span class=\"kwb\">FORTIFICATION</span>. While such a model is on the platform section of this <span class=\"kwb\">FORTIFICATION</span>, that model has a 5+ invulnerable save against ranged attacks.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "skyshield_landing_pad_ability_4",
+        "name": "Repair Aircraft",
+        "description": "At the end of your Movement phase, if there is a friendly Aircraft model on top of this <span class=\"kwb\">FORTIFICATION</span>, that <span class=\"kwb\">AIRCRAFT</span> regains up to D3 lost wounds.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "skyshield_landing_pad_ability_5",
+        "name": "Reinforced Cover",
+        "description": "Each time a ranged attack is allocated to a model, if that model is not fully visible to every model in the attacking unit because of this <span class=\"kwb\">FORTIFICATION</span>, that model has the Benefit of Cover against that attack.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "skyshield_landing_pad_ability_6",
+        "name": "FORTIFICATION",
+        "description": "While an enemy unit is only within Engagement Range of one or more Fortifications from your army: <br><ul><li>That unit can still be selected as the target of ranged attacks, but each time such an attack is made, unless it is made with a Pistol, subtract 1 from the Hit roll. </li><li>Models in that unit do not need to take Desperate Escape tests due to Falling Back while Battle-shocked, except for those that will move over enemy models when doing so.</li></ul>",
+        "type": "Fortification (левая колонка)"
+      }
+    ],
+    "points": 125,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 125,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "spindle_drones",
+    "name": "Spindle Drones",
+    "factionId": "UN",
+    "factionName": "Unaligned Forces",
+    "models": [
+      {
+        "id": "spindle_drones_model_1",
+        "name": "Spindle Drones",
+        "toughness": 4,
+        "save": 4,
+        "wounds": 2
+      }
+    ],
+    "weapons": [
+      {
+        "id": "spindle_drones_drone_pulse_1",
+        "name": "Drone pulse",
+        "range": "18",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 4,
+        "strength": 4,
+        "ap": 0,
+        "damage": 1,
+        "keywords": [
+          "PISTOL"
+        ],
+        "description": "pistol"
+      },
+      {
+        "id": "spindle_drones_close_combat_weapon_2",
+        "name": "Close combat weapon",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 1,
+        "skill": 4,
+        "strength": 3,
+        "ap": 0,
+        "damage": 1,
+        "keywords": []
+      }
+    ],
+    "keywords": [
+      "UNALIGNED FORCES",
+      "UNALIGNED",
+      "SPINDLE DRONES",
+      "INFANTRY"
+    ],
+    "abilities": [
+      {
+        "id": "spindle_drones_ability_1",
+        "name": "Unaligned Forces",
+        "description": "You can include <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units in your army even if they do not have the Faction keyword you selected in the Select Army Faction step. The combined points value of <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units you can include in your army depends on the battle size, as follows:<br><ul><li><b>Incursion:</b> Up to 250 pts</li><li><b>Strike Force:</b> Up to 500 pts</li><li><b>Onslaught:</b> Up to 1000 pts</li></ul>No <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> models can be your <span class=\"kwb\">WARLORD</span>.",
+        "type": "Faction"
+      },
+      {
+        "id": "spindle_drones_ability_2",
+        "name": "Feel No Pain 5+",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">FEEL NO PAIN</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some warriors refuse to be laid low, even by what should be fatal wounds.</p>Some models have ‘Feel No Pain x+’ listed in their abilities. Each time a model with this ability suffers damage and so would lose a wound (including wounds lost due to <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span>), roll one D6: if the result is greater than or equal to the number denoted by ‘x’, that wound is ignored and is not lost. If a model has more than one Feel No Pain ability, you can only use one of those abilities each time that model suffers damage and so would lose a wound.<br><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Feel No Pain x+:</b> Each time this model would lose a wound, roll one D6: if the result equals or exceeds ‘x’, that wound is not lost.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "spindle_drones_ability_3",
+        "name": "Threat Level Rising",
+        "description": "Each time a model in this unit makes an attack, add 1 to the Hit roll if this unit is below its Starting Strength, and add 1 to the Wound roll as well if this unit is Below Half-strength.",
+        "type": "Datasheet"
+      }
+    ],
+    "points": 35,
+    "pointsDescription": "4 models",
+    "pointsOptions": [
+      {
+        "description": "4 models",
+        "cost": 35,
+        "modelCount": 4
+      }
+    ]
+  },
+  {
+    "id": "the_archivist",
+    "name": "The Archivist",
+    "factionId": "UN",
+    "factionName": "Unaligned Forces",
+    "models": [
+      {
+        "id": "the_archivist_model_1",
+        "name": "The Archivist",
+        "toughness": 6,
+        "save": 3,
+        "wounds": 6
+      }
+    ],
+    "weapons": [
+      {
+        "id": "the_archivist_atomic_disassembler_1",
+        "name": "Atomic disassembler",
+        "range": "18",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 3,
+        "strength": 8,
+        "ap": -2,
+        "damage": 2,
+        "keywords": [
+          "IGNORES COVER",
+          "PISTOL"
+        ],
+        "description": "ignores cover, pistol"
+      },
+      {
+        "id": "the_archivist_eradicator_glove_2",
+        "name": "Eradicator glove",
+        "range": "Melee",
+        "type": "melee",
+        "attacks": 4,
+        "skill": 4,
+        "strength": 8,
+        "ap": -2,
+        "damage": 2,
+        "keywords": []
+      }
+    ],
+    "keywords": [
+      "UNALIGNED",
+      "EPIC HERO",
+      "THE ARCHIVIST",
+      "MONSTER",
+      "CHARACTER"
+    ],
+    "abilities": [
+      {
+        "id": "the_archivist_ability_1",
+        "name": "Unaligned Forces",
+        "description": "You can include <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units in your army even if they do not have the Faction keyword you selected in the Select Army Faction step. The combined points value of <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units you can include in your army depends on the battle size, as follows:<br><ul><li><b>Incursion:</b> Up to 250 pts</li><li><b>Strike Force:</b> Up to 500 pts</li><li><b>Onslaught:</b> Up to 1000 pts</li></ul>No <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> models can be your <span class=\"kwb\">WARLORD</span>.",
+        "type": "Faction"
+      },
+      {
+        "id": "the_archivist_ability_2",
+        "name": "Lone Operative",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">LONE OPERATIVE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Assassins and other covert agents are difficult to track and pinpoint in the swirling maelstrom of battle.</p>Unless part of an Attached unit (see <span class=\"tooltip00010\" data-tooltip-content=\"#tooltip_content00010\"><span class=\"tt kwbu\">Leader</span></span>), this unit can only be selected as the target of a ranged attack if the attacking model is within 12\".</div>",
+        "type": "Core"
+      },
+      {
+        "id": "the_archivist_ability_3",
+        "name": "Fearsome Assault",
+        "description": "At the start of the Fight phase, each enemy unit within Engagement Range of one or more units with this ability must take a Battle-shock test.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "the_archivist_ability_4",
+        "name": "Disruptive Influence (Aura)",
+        "description": "While an enemy unit is within 6\" of this model, each time that unit takes a Battle-shock or Leadership test, subtract 1 from that test.",
+        "type": "Datasheet"
+      }
+    ],
+    "points": 70,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 70,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "vengeance_weapon_battery",
+    "name": "Vengeance Weapon Battery",
+    "factionId": "UN",
+    "factionName": "Unaligned Forces",
+    "models": [
+      {
+        "id": "vengeance_weapon_battery_model_1",
+        "name": "Vengeance Weapon Battery",
+        "toughness": 13,
+        "save": 2,
+        "wounds": 10
+      }
+    ],
+    "weapons": [
+      {
+        "id": "vengeance_weapon_battery_battle_cannon_1",
+        "name": "Battle cannon",
+        "range": "48",
+        "type": "ranged",
+        "attacks": "D6+3",
+        "skill": 5,
+        "strength": 9,
+        "ap": -1,
+        "damage": 3,
+        "keywords": [
+          "BLAST"
+        ],
+        "description": "blast"
+      },
+      {
+        "id": "vengeance_weapon_battery_punisher_gatling_cannon_2",
+        "name": "Punisher gatling cannon",
+        "range": "24",
+        "type": "ranged",
+        "attacks": 20,
+        "skill": 5,
+        "strength": 6,
+        "ap": 0,
+        "damage": 1,
+        "keywords": []
+      },
+      {
+        "id": "vengeance_weapon_battery_quad_lascannon_3",
+        "name": "Quad-lascannon",
+        "range": "48",
+        "type": "ranged",
+        "attacks": 2,
+        "skill": 5,
+        "strength": 12,
+        "ap": -3,
+        "damage": "D6+1",
+        "keywords": [
+          "ANTI-FLY 2+",
+          "TWIN-LINKED"
+        ],
+        "description": "anti-fly 2+, twin-linked"
+      }
+    ],
+    "keywords": [
+      "UNALIGNED",
+      "UNALIGNED FORCES",
+      "WALL OF MARTYRS",
+      "FORTIFICATION",
+      "VEHICLE",
+      "VENGEANCE WEAPON BATTERY"
+    ],
+    "abilities": [
+      {
+        "id": "vengeance_weapon_battery_ability_1",
+        "name": "Unaligned Forces",
+        "description": "You can include <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units in your army even if they do not have the Faction keyword you selected in the Select Army Faction step. The combined points value of <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units you can include in your army depends on the battle size, as follows:<br><ul><li><b>Incursion:</b> Up to 250 pts</li><li><b>Strike Force:</b> Up to 500 pts</li><li><b>Onslaught:</b> Up to 1000 pts</li></ul>No <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> models can be your <span class=\"kwb\">WARLORD</span>.",
+        "type": "Faction"
+      },
+      {
+        "id": "vengeance_weapon_battery_ability_2",
+        "name": "Deadly Demise D3",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "vengeance_weapon_battery_ability_3",
+        "name": "Automated Defences",
+        "description": "Each time this model makes a ranged attack that targets the closest enemy unit: <br><ul><li>If that attack is made with a Punisher gatling cannon and the target is not a <span class=\"kwb\">MONSTER</span> or <span class=\"kwb\">VEHICLE</span>, add 1 to the Hit roll. </li><li>If that attack is made with a battle cannon and the target is a <span class=\"kwb\">MONSTER</span> or <span class=\"kwb\">VEHICLE</span>, add 1 to the Hit roll. </li><li>If that attack is made with a quad-lascannon and the target can Fly, add 1 to the Hit roll.</li></ul>",
+        "type": "Datasheet"
+      },
+      {
+        "id": "vengeance_weapon_battery_ability_4",
+        "name": "Reinforced Cover",
+        "description": "Each time a ranged attack is allocated to a model, if that model is not fully visible to every model in the attacking unit because of this <span class=\"kwb\">FORTIFICATION</span>, that model has the Benefit of Cover against that attack.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "vengeance_weapon_battery_ability_5",
+        "name": "FORTIFICATION",
+        "description": "While an enemy unit is only within Engagement Range of one or more Fortifications from your army: <br><ul><li>That unit can still be selected as the target of ranged attacks, but each time such an attack is made, unless it is made with a Pistol, subtract 1 from the Hit roll. </li><li>Models in that unit do not need to take Desperate Escape tests due to Falling Back while Battle-shocked, except for those that will move over enemy models when doing so.</li></ul>",
+        "type": "Fortification (левая колонка)"
+      }
+    ],
+    "points": 140,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 140,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "void_shield_generator",
+    "name": "Void Shield Generator",
+    "factionId": "UN",
+    "factionName": "Unaligned Forces",
+    "models": [
+      {
+        "id": "void_shield_generator_model_1",
+        "name": "Void Shield Generator",
+        "toughness": 12,
+        "save": 3,
+        "invulnerableSave": 4,
+        "wounds": 16
+      }
+    ],
+    "weapons": [],
+    "keywords": [
+      "UNALIGNED",
+      "UNALIGNED FORCES",
+      "VOID SHIELD GENERATOR",
+      "FORTIFICATION"
+    ],
+    "abilities": [
+      {
+        "id": "void_shield_generator_ability_1",
+        "name": "Unaligned Forces",
+        "description": "You can include <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units in your army even if they do not have the Faction keyword you selected in the Select Army Faction step. The combined points value of <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units you can include in your army depends on the battle size, as follows:<br><ul><li><b>Incursion:</b> Up to 250 pts</li><li><b>Strike Force:</b> Up to 500 pts</li><li><b>Onslaught:</b> Up to 1000 pts</li></ul>No <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> models can be your <span class=\"kwb\">WARLORD</span>.",
+        "type": "Faction"
+      },
+      {
+        "id": "void_shield_generator_ability_2",
+        "name": "Deadly Demise D6",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "void_shield_generator_ability_3",
+        "name": "Reinforced Cover",
+        "description": "Each time a ranged attack is allocated to a model, if that model is not fully visible to every model in the attacking unit because of this <span class=\"kwb\">FORTIFICATION</span>, that model has the Benefit of Cover against that attack.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "void_shield_generator_ability_4",
+        "name": "Projected Void Shields (Aura)",
+        "description": "While a friendly model is wholly within 6\" of this <span class=\"kwb\">FORTIFICATION</span>, that model has a 4+ invulnerable save against ranged attacks.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "void_shield_generator_ability_5",
+        "name": "FORTIFICATION",
+        "description": "While an enemy unit is only within Engagement Range of one or more Fortifications from your army: <br><ul><li>That unit can still be selected as the target of ranged attacks, but each time such an attack is made, unless it is made with a Pistol, subtract 1 from the Hit roll. </li><li>Models in that unit do not need to take Desperate Escape tests due to Falling Back while Battle-shocked, except for those that will move over enemy models when doing so.</li></ul>",
+        "type": "Fortification (левая колонка)"
+      }
+    ],
+    "points": 155,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 155,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "vortex_missile_strongpoint",
+    "name": "Vortex Missile Strongpoint",
+    "factionId": "UN",
+    "factionName": "Unaligned Forces",
+    "models": [
+      {
+        "id": "vortex_missile_strongpoint_model_1",
+        "name": "Vortex Missile Strongpoint",
+        "toughness": 13,
+        "save": 2,
+        "wounds": 30
+      }
+    ],
+    "weapons": [
+      {
+        "id": "vortex_missile_strongpoint_heavy_bolter_1",
+        "name": "Heavy bolter",
+        "range": "36",
+        "type": "ranged",
+        "attacks": 3,
+        "skill": 4,
+        "strength": 5,
+        "ap": -1,
+        "damage": 2,
+        "keywords": [
+          "SUSTAINED HITS 1"
+        ],
+        "description": "sustained hits 1"
+      },
+      {
+        "id": "vortex_missile_strongpoint_vortex_missile_battery_2",
+        "name": "Vortex missile battery",
+        "range": "72",
+        "type": "ranged",
+        "attacks": "D6+3",
+        "skill": 5,
+        "strength": 16,
+        "ap": -4,
+        "damage": "D6",
+        "keywords": [
+          "BLAST",
+          "DEVASTATING WOUNDS",
+          "HAZARDOUS",
+          "INDIRECT FIRE"
+        ],
+        "description": "blast, devastating wounds, hazardous, indirect fire"
+      }
+    ],
+    "keywords": [
+      "UNALIGNED",
+      "UNALIGNED FORCES",
+      "VORTEX MISSILE STRONGPOINT",
+      "WALL OF MARTYRS",
+      "TRANSPORT",
+      "VEHICLE",
+      "TITANIC",
+      "FORTIFICATION"
+    ],
+    "abilities": [
+      {
+        "id": "vortex_missile_strongpoint_ability_1",
+        "name": "Unaligned Forces",
+        "description": "You can include <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units in your army even if they do not have the Faction keyword you selected in the Select Army Faction step. The combined points value of <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units you can include in your army depends on the battle size, as follows:<br><ul><li><b>Incursion:</b> Up to 250 pts</li><li><b>Strike Force:</b> Up to 500 pts</li><li><b>Onslaught:</b> Up to 1000 pts</li></ul>No <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> models can be your <span class=\"kwb\">WARLORD</span>.",
+        "type": "Faction"
+      },
+      {
+        "id": "vortex_missile_strongpoint_ability_2",
+        "name": "Deadly Demise 2D6",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "vortex_missile_strongpoint_ability_3",
+        "name": "Firing Deck 15",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">FIRING DECK</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some transports have firing hatches, ports or platforms from which embarked passengers can shoot.</p>Some <span class=\"kwb\">TRANSPORT</span> models have ‘Firing Deck x’ listed in their abilities. Each time such a model is selected to shoot in the <a href=\"/wh40k10ed/the-rules/core-rules/#SHOOTING-PHASE\">Shooting phase</a>, you can select up to ‘x’ models <span class=\"tooltip00070\" data-tooltip-content=\"#tooltip_content00070\"><span class=\"tt kwbu\">embarked</span></span> within it whose units have not already shot this phase. Then, for each of those embarked models, you can select one ranged weapon that embarked model is equipped with (excluding weapons with the <span class=\"kwb2 bluefont\">[ONE SHOT]</span> ability). Until that <span class=\"kwb\">TRANSPORT</span> model has resolved all of its attacks, it counts as being equipped with all of the weapons you selected in this way, in addition to its other weapons. Until the end of the phase, those selected models’ units are not eligible to shoot.<br><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Firing Deck ‘x’:</b> Each time this <span class=\"kwb\">TRANSPORT</span> shoots, select one weapon (excluding weapons with the <span class=\"kwb2 bluefont\">[ONE SHOT]</span> ability) from up to ‘x’ models embarked within it whose units have not shot this phase; this <span class=\"kwb\">TRANSPORT</span> counts as being equipped with those weapons as well. Until the end of the phase, those selected models’ units are not eligible to shoot.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "vortex_missile_strongpoint_ability_4",
+        "name": "Roof Access",
+        "description": "Friendly <span class=\"kwb\">INFANTRY</span> models can be set up or end any type of move on top of the roof section of this <span class=\"kwb\">FORTIFICATION</span>.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "vortex_missile_strongpoint_ability_5",
+        "name": "Vortex",
+        "description": "In your Shooting phase, each time you select a target for this model’s vortex missile battery, roll one D6 for the target unit and one D6 for every other enemy unit within 3\" of the target unit. On a 4+, the unit being rolled for is struck by the vortex; after resolving all of this model’s attacks against the target unit, each unit struck by the vortex suffers D3 mortal wounds.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "vortex_missile_strongpoint_ability_6",
+        "name": "Reinforced Cover",
+        "description": "Each time a ranged attack is allocated to a model, if that model is not fully visible to every model in the attacking unit because of this <span class=\"kwb\">FORTIFICATION</span>, that model has the Benefit of Cover against that attack.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "vortex_missile_strongpoint_ability_7",
+        "name": "FORTIFICATION",
+        "description": "While an enemy unit is only within Engagement Range of one or more Fortifications from your army: <br><ul><li>That unit can still be selected as the target of ranged attacks, but each time such an attack is made, unless it is made with a Pistol, subtract 1 from the Hit roll. </li><li>Models in that unit do not need to take Desperate Escape tests due to Falling Back while Battle-shocked, except for those that will move over enemy models when doing so.</li></ul>",
+        "type": "Fortification (левая колонка)"
+      }
+    ],
+    "points": 525,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 525,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "wall_of_martyrs_bunker",
+    "name": "Wall Of Martyrs Bunker",
+    "factionId": "UN",
+    "factionName": "Unaligned Forces",
+    "models": [
+      {
+        "id": "wall_of_martyrs_bunker_model_1",
+        "name": "Wall Of Martyrs Bunker",
+        "toughness": 13,
+        "save": 2,
+        "wounds": 10
+      }
+    ],
+    "weapons": [
+      {
+        "id": "wall_of_martyrs_bunker_icarus_lascannon_1",
+        "name": "Icarus lascannon",
+        "range": "48",
+        "type": "ranged",
+        "attacks": 1,
+        "skill": 5,
+        "strength": 12,
+        "ap": -3,
+        "damage": "D6+1",
+        "keywords": [
+          "ANTI-FLY 2+"
+        ],
+        "description": "anti-fly 2+"
+      },
+      {
+        "id": "wall_of_martyrs_bunker_quad_gun_2",
+        "name": "Quad-gun",
+        "range": "48",
+        "type": "ranged",
+        "attacks": 4,
+        "skill": 5,
+        "strength": 9,
+        "ap": -1,
+        "damage": 3,
+        "keywords": [
+          "ANTI-FLY 3+",
+          "TWIN-LINKED"
+        ],
+        "description": "anti-fly 3+, twin-linked"
+      }
+    ],
+    "keywords": [
+      "UNALIGNED FORCES",
+      "UNALIGNED",
+      "TRANSPORT",
+      "VEHICLE",
+      "BUNKER",
+      "WALL OF MARTYRS",
+      "FORTIFICATION"
+    ],
+    "abilities": [
+      {
+        "id": "wall_of_martyrs_bunker_ability_1",
+        "name": "Deadly Demise D3",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">DEADLY DEMISE</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">From detonating ammo stores to corrosive innards or frenzied death throes, some targets are deadly even in defeat.</p>Some models have ‘Deadly Demise x’ listed in their abilities. When such a model is <span class=\"tooltip00001\" data-tooltip-content=\"#tooltip_content00001\"><span class=\"tt kwbu\">destroyed</span></span>, roll one D6 before removing it from play (if such a model is a <a href=\"/wh40k10ed/the-rules/core-rules/#Transports\"><span class=\"kwb\">TRANSPORT</span></a>, roll before any embarked models <span class=\"tooltip00002\" data-tooltip-content=\"#tooltip_content00002\"><span class=\"tt kwbu\">disembark</span></span>). On a 6, each unit within 6\" of that model suffers a number of <span class=\"tooltip00005\" data-tooltip-content=\"#tooltip_content00005\"><span class=\"tt kwbu\">mortal</span> <span class=\"tt kwbu\">wounds</span></span> denoted by ‘x’ (if this is a random number, roll separately for each unit within 6\").<br><br><div class=\"redExample\"><b>Example:</b> A <span class=\"kwb\">TRANSPORT</span> model with the Deadly Demise D3 ability is destroyed. Before any models disembark and before removing it from play, its controlling player rolls one D6, getting a 6. There are three units within 6\" of that destroyed model, so its controlling player rolls one D3 for each of them, inflicting mortal wounds accordingly.</div><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Deadly Demise x:</b> When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers ‘x’ mortal wounds.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "wall_of_martyrs_bunker_ability_2",
+        "name": "Firing Deck 6",
+        "description": "<div class=\"Corner33 abWrap BreakInsideAvoid\"><div class=\"abFlex\"><div class=\"abDiamondWrap\"><div class=\"abDiamond\"><div class=\"abIcon\"></div></div></div><div class=\"abLine\"></div><div class=\"abNameWrap\"><div class=\"abName\">FIRING DECK</div></div></div><p style=\"padding-bottom:8px\" class=\"ShowFluff stratLegend2\">Some transports have firing hatches, ports or platforms from which embarked passengers can shoot.</p>Some <span class=\"kwb\">TRANSPORT</span> models have ‘Firing Deck x’ listed in their abilities. Each time such a model is selected to shoot in the <a href=\"/wh40k10ed/the-rules/core-rules/#SHOOTING-PHASE\">Shooting phase</a>, you can select up to ‘x’ models <span class=\"tooltip00070\" data-tooltip-content=\"#tooltip_content00070\"><span class=\"tt kwbu\">embarked</span></span> within it whose units have not already shot this phase. Then, for each of those embarked models, you can select one ranged weapon that embarked model is equipped with (excluding weapons with the <span class=\"kwb2 bluefont\">[ONE SHOT]</span> ability). Until that <span class=\"kwb\">TRANSPORT</span> model has resolved all of its attacks, it counts as being equipped with all of the weapons you selected in this way, in addition to its other weapons. Until the end of the phase, those selected models’ units are not eligible to shoot.<br><br><div class=\"BreakInsideAvoid frameLight Corner14\" style=\"\"><ul class=\"redSquare\"><li><b>Firing Deck ‘x’:</b> Each time this <span class=\"kwb\">TRANSPORT</span> shoots, select one weapon (excluding weapons with the <span class=\"kwb2 bluefont\">[ONE SHOT]</span> ability) from up to ‘x’ models embarked within it whose units have not shot this phase; this <span class=\"kwb\">TRANSPORT</span> counts as being equipped with those weapons as well. Until the end of the phase, those selected models’ units are not eligible to shoot.</li></ul></div></div>",
+        "type": "Core"
+      },
+      {
+        "id": "wall_of_martyrs_bunker_ability_3",
+        "name": "Unaligned Forces",
+        "description": "You can include <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units in your army even if they do not have the Faction keyword you selected in the Select Army Faction step. The combined points value of <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units you can include in your army depends on the battle size, as follows:<br><ul><li><b>Incursion:</b> Up to 250 pts</li><li><b>Strike Force:</b> Up to 500 pts</li><li><b>Onslaught:</b> Up to 1000 pts</li></ul>No <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> models can be your <span class=\"kwb\">WARLORD</span>.",
+        "type": "Faction"
+      },
+      {
+        "id": "wall_of_martyrs_bunker_ability_4",
+        "name": "Roof Access",
+        "description": "Friendly <span class=\"kwb\">INFANTRY</span> models can be set up or end any type of move on top of the roof section of this <span class=\"kwb\">FORTIFICATION</span>.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "wall_of_martyrs_bunker_ability_5",
+        "name": "Inviolable Bastion",
+        "description": "Each time an attack is allocated to this <span class=\"kwb\">FORTIFICATION</span>, subtract 1 from the Damage characteristic of that attack.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "wall_of_martyrs_bunker_ability_6",
+        "name": "Reinforced Cover",
+        "description": "Each time a ranged attack is allocated to a model, if that model is not fully visible to every model in the attacking unit because of this <span class=\"kwb\">FORTIFICATION</span>, that model has the Benefit of Cover against that attack.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "wall_of_martyrs_bunker_ability_7",
+        "name": "Comms Antenna",
+        "description": "In your Command phase, if one or more <span class=\"kwb\">CHARACTER</span> models are embarked within this <span class=\"kwb\">FORTIFICATION</span>, roll one D6: on a 5+, you gain 1CP.",
+        "type": "Wargear"
+      },
+      {
+        "id": "wall_of_martyrs_bunker_ability_8",
+        "name": "FORTIFICATION",
+        "description": "While an enemy unit is only within Engagement Range of one or more Fortifications from your army: <br><ul><li>That unit can still be selected as the target of ranged attacks, but each time such an attack is made, unless it is made with a Pistol, subtract 1 from the Hit roll. </li><li>Models in that unit do not need to take Desperate Escape tests due to Falling Back while Battle-shocked, except for those that will move over enemy models when doing so.</li></ul>",
+        "type": "Fortification (левая колонка)"
+      }
+    ],
+    "points": 180,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 180,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "wall_of_martyrs_defence_emplacement",
+    "name": "Wall Of Martyrs Defence Emplacement",
+    "factionId": "UN",
+    "factionName": "Unaligned Forces",
+    "models": [
+      {
+        "id": "wall_of_martyrs_defence_emplacement_model_1",
+        "name": "Wall Of Martyrs Defence Emplacement",
+        "toughness": 12,
+        "save": 2,
+        "wounds": 10
+      }
+    ],
+    "weapons": [],
+    "keywords": [
+      "UNALIGNED FORCES",
+      "UNALIGNED",
+      "WALL OF MARTYRS",
+      "FORTIFICATION",
+      "DEFENCE EMPLACEMENT"
+    ],
+    "abilities": [
+      {
+        "id": "wall_of_martyrs_defence_emplacement_ability_1",
+        "name": "Unaligned Forces",
+        "description": "You can include <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units in your army even if they do not have the Faction keyword you selected in the Select Army Faction step. The combined points value of <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units you can include in your army depends on the battle size, as follows:<br><ul><li><b>Incursion:</b> Up to 250 pts</li><li><b>Strike Force:</b> Up to 500 pts</li><li><b>Onslaught:</b> Up to 1000 pts</li></ul>No <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> models can be your <span class=\"kwb\">WARLORD</span>.",
+        "type": "Faction"
+      },
+      {
+        "id": "wall_of_martyrs_defence_emplacement_ability_2",
+        "name": "Defence Line",
+        "description": "While an <span class=\"kwb\">INFANTRY</span> model has the Benefit of Cover as a result of this Fortification(see below), that model has a 4+ invulnerable save.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "wall_of_martyrs_defence_emplacement_ability_3",
+        "name": "Trench Line",
+        "description": "Friendly <span class=\"kwb\">INFANTRY</span> models can be set up or end any type of move on top of the flat platform section of this <span class=\"kwb\">FORTIFICATION</span>.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "wall_of_martyrs_defence_emplacement_ability_4",
+        "name": "Reinforced Cover",
+        "description": "Each time a ranged attack is allocated to a model, if that model is not fully visible to every model in the attacking unit because of this <span class=\"kwb\">FORTIFICATION</span>, that model has the Benefit of Cover against that attack.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "wall_of_martyrs_defence_emplacement_ability_5",
+        "name": "FORTIFICATION",
+        "description": "While an enemy unit is only within Engagement Range of one or more Fortifications from your army: <br><ul><li>That unit can still be selected as the target of ranged attacks, but each time such an attack is made, unless it is made with a Pistol, subtract 1 from the Hit roll. </li><li>Models in that unit do not need to take Desperate Escape tests due to Falling Back while Battle-shocked, except for those that will move over enemy models when doing so.</li></ul>",
+        "type": "Fortification (левая колонка)"
+      }
+    ],
+    "points": 140,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 140,
+        "modelCount": 1
+      }
+    ]
+  },
+  {
+    "id": "wall_of_martyrs_defence_line",
+    "name": "Wall Of Martyrs Defence Line",
+    "factionId": "UN",
+    "factionName": "Unaligned Forces",
+    "models": [
+      {
+        "id": "wall_of_martyrs_defence_line_model_1",
+        "name": "Wall Of Martyrs Defence Line",
+        "toughness": 12,
+        "save": 2,
+        "wounds": 10
+      }
+    ],
+    "weapons": [],
+    "keywords": [
+      "UNALIGNED FORCES",
+      "UNALIGNED",
+      "DEFENCE LINE",
+      "WALL OF MARTYRS",
+      "FORTIFICATION"
+    ],
+    "abilities": [
+      {
+        "id": "wall_of_martyrs_defence_line_ability_1",
+        "name": "Unaligned Forces",
+        "description": "You can include <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units in your army even if they do not have the Faction keyword you selected in the Select Army Faction step. The combined points value of <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> units you can include in your army depends on the battle size, as follows:<br><ul><li><b>Incursion:</b> Up to 250 pts</li><li><b>Strike Force:</b> Up to 500 pts</li><li><b>Onslaught:</b> Up to 1000 pts</li></ul>No <span class=\"kwb\">UNALIGNED</span> <span class=\"kwb\">FORCES</span> models can be your <span class=\"kwb\">WARLORD</span>.",
+        "type": "Faction"
+      },
+      {
+        "id": "wall_of_martyrs_defence_line_ability_2",
+        "name": "Defence Line",
+        "description": "When this <span class=\"kwb\">FORTIFICATION</span> is set up, all parts of it must be set up within 1\" of another part. While an <span class=\"kwb\">INFANTRY</span> model has the Benefit of Cover as a result of this <span class=\"kwb\">FORTIFICATION</span> (see in <span class=\"kwb\">FORTIFICATION</span> section), that model has a 4+ invulnerable save.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "wall_of_martyrs_defence_line_ability_3",
+        "name": "Trench Line",
+        "description": "Friendly <span class=\"kwb\">INFANTRY</span> models can be set up or end any type of move on top of the flat platform section of this <span class=\"kwb\">FORTIFICATION</span>.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "wall_of_martyrs_defence_line_ability_4",
+        "name": "Reinforced Cover",
+        "description": "Each time a ranged attack is allocated to a model, if that model is not fully visible to every model in the attacking unit because of this <span class=\"kwb\">FORTIFICATION</span>, that model has the Benefit of Cover against that attack.",
+        "type": "Datasheet"
+      },
+      {
+        "id": "wall_of_martyrs_defence_line_ability_5",
+        "name": "FORTIFICATION",
+        "description": "While an enemy unit is only within Engagement Range of one or more Fortifications from your army: <br><ul><li>That unit can still be selected as the target of ranged attacks, but each time such an attack is made, unless it is made with a Pistol, subtract 1 from the Hit roll. </li><li>Models in that unit do not need to take Desperate Escape tests due to Falling Back while Battle-shocked, except for those that will move over enemy models when doing so.</li></ul>",
+        "type": "Fortification (левая колонка)"
+      }
+    ],
+    "points": 140,
+    "pointsDescription": "1 model",
+    "pointsOptions": [
+      {
+        "description": "1 model",
+        "cost": 140,
+        "modelCount": 1
+      },
+      {
+        "description": "2 models",
+        "cost": 280,
+        "modelCount": 2
+      }
+    ]
+  }
+]

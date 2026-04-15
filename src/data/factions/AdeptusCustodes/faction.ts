@@ -1,26 +1,28 @@
 import type { FactionConfig } from "../../../types/faction";
+import type { NormalizedDetachment } from "../../../types/wahapedia";
 import { adeptusCustodesArmyRules } from "./armyRules";
-import { auricChampionsDetachment } from "./detachments/auricChampions";
-import { blackShipGuardiansDetachment } from "./detachments/blackShipGuardians";
-import { lionsOfTheEmperorDetachment } from "./detachments/lionsOfTheEmperor";
-import { nullMaidenVigilDetachment } from "./detachments/nullMaidenVigil";
-import { shieldHostDetachment } from "./detachments/shieldHost";
-import { solarSpearheadDetachment } from "./detachments/solarSpearhead";
-import { talonsOfTheEmperorDetachment } from "./detachments/talonsOfTheEmperor";
-import { voyagersInDarknessDetachment } from "./detachments/voyagersInDarkness";
+import { getAdeptusCustodesDetachmentFromNormalized } from "./detachments/fromNormalized";
 
-export const adeptusCustodesFactionConfig: FactionConfig = {
-  id: "adeptus-custodes",
-  faction: "Adeptus Custodes",
-  armyRules: adeptusCustodesArmyRules,
-  detachments: [
-    shieldHostDetachment,
-    talonsOfTheEmperorDetachment,
-    nullMaidenVigilDetachment,
-    auricChampionsDetachment,
-    voyagersInDarknessDetachment,
-    blackShipGuardiansDetachment,
-    solarSpearheadDetachment,
-    lionsOfTheEmperorDetachment,
-  ],
-};
+const adeptusCustodesDetachmentIds = [
+  "shield_host",
+  "talons_of_the_emperor",
+  "null_maiden_vigil",
+  "auric_champions",
+  "voyagers_in_darkness",
+  "black_ship_guardians",
+  "solar_spearhead",
+  "lions_of_the_emperor",
+] as const;
+
+export function getAdeptusCustodesFactionConfig(
+  detachments: NormalizedDetachment[]
+): FactionConfig {
+  return {
+    id: "adeptus-custodes",
+    faction: "Adeptus Custodes",
+    armyRules: adeptusCustodesArmyRules,
+    detachments: adeptusCustodesDetachmentIds.map((id) =>
+      getAdeptusCustodesDetachmentFromNormalized(id, detachments)
+    ),
+  };
+}
