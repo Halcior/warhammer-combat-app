@@ -3,7 +3,7 @@
 const UI_KEY = "df_ui_session_v1";
 
 type UISession = {
-  view: "calculator" | "armies" | "workspace";
+  view: "calculator" | "armies" | "workspace" | "updates";
   workspaceArmyA: string | null;
   workspaceArmyB: string | null;
 };

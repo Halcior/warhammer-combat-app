@@ -1,9 +1,10 @@
-export type AppView = "calculator" | "armies" | "workspace";
+export type AppView = "calculator" | "armies" | "workspace" | "updates";
 
 const TABS: { id: AppView; label: string }[] = [
   { id: "calculator", label: "Calculator" },
   { id: "armies", label: "My Armies" },
   { id: "workspace", label: "Battle Workspace" },
+  { id: "updates", label: "Updates" },
 ];
 
 type Props = {

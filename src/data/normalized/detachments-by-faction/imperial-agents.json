@@ -1,0 +1,607 @@
+[
+  {
+    "id": "imperialis_fleet",
+    "name": "Imperialis Fleet",
+    "factionId": "AoI",
+    "factionName": "Imperial Agents",
+    "abilities": [
+      {
+        "id": "imperialis_fleet_ability_1",
+        "name": "At all Costs",
+        "description": "At the start of your Command phase, you can select one of the following to apply:<div style=\"height:8px\"></div><div class=\"BreakInsideAvoid\"><table max-width=\"480px\" border=\"0\" cellpadding=\"3\" style=\"border-width:0px\"><tbody><tbody><tr><td class=\"td_w\"><p style=\"display:block\" class=\"impact18\">Eliminate At All Costs</p><p>Select one enemy unit on the battlefield. Until the start of your next <a href=\"/wh40k10ed/the-rules/core-rules/#COMMAND-PHASE\">Command phase</a>, each time an <span class=\"tooltip00218\" data-tooltip-content=\"#tooltip_content00218\" data-tooltip-anchor=\"#tooltip_content00218\"><span class=\"kwb kwbu\">AGENTS</span> <span class=\"kwb2 kwbu\">OF</span> <span class=\"kwb2 kwbu\">THE</span> <span class=\"kwb kwbu\">IMPERIUM</span></span> model from your army makes an attack that targets that enemy unit, add 1 to the <span class=\"tooltip00020\" data-tooltip-content=\"#tooltip_content00020\"><span class=\"tt kwbu\">Hit</span> <span class=\"tt kwbu\">roll</span></span>.</p></td></tr></tbody></tbody></table></div><div class=\"BreakInsideAvoid\"><table max-width=\"480px\" border=\"0\" cellpadding=\"3\" style=\"border-width:0px\"><tbody><tbody><tr><td class=\"td_w\"><p style=\"display:block\" class=\"impact18\">Acquire At All Costs</p><p>Select one <span class=\"tooltip00145\" data-tooltip-content=\"#tooltip_content00145\"><span class=\"tt kwbu\">objective</span> <span class=\"tt kwbu\">marker</span></span> on the battlefield. Until the start of your next <a href=\"/wh40k10ed/the-rules/core-rules/#COMMAND-PHASE\">Command phase</a>, while an <span class=\"tooltip00218\" data-tooltip-content=\"#tooltip_content00218\" data-tooltip-anchor=\"#tooltip_content00218\"><span class=\"kwb kwbu\">AGENTS</span> <span class=\"kwb2 kwbu\">OF</span> <span class=\"kwb2 kwbu\">THE</span> <span class=\"kwb kwbu\">IMPERIUM</span></span> unit from your army is within range of that objective marker, improve the Leadership and Objective Control characteristics of models in that unit by 1 and models in that unit have a 5+ <span class=\"tooltip00044\" data-tooltip-content=\"#tooltip_content00044\"><span class=\"tt kwbu\">invulnerable</span> <span class=\"tt kwbu\">save</span></span>.</p></td></tr></tbody></tbody></table></div>"
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "imperialis_fleet_enhancement_1",
+        "name": "Clandestine Operation",
+        "description": "AGENTS OF THE IMPERIUM model only. At the start of the Declare Battle Formations step, you can select up to three AGENTS OF THE IMPERIUM INFANTRy units from your army (excluding GREy KNIGHTS TERMINATOR SqUAD units) - those units gain the Infiltrators ability.",
+        "points": 15
+      },
+      {
+        "id": "imperialis_fleet_enhancement_2",
+        "name": "Combat Landers",
+        "description": "VOIDFARERS model only. At the start of the Declare Battle Formations step, you can select up to three <span class=\"kwb\">VOIDFARERS</span> units from your army - those units gain the Deep Strike ability.",
+        "points": 10
+      },
+      {
+        "id": "imperialis_fleet_enhancement_3",
+        "name": "Digital Weapons",
+        "description": "AGENTS OF THE IMPERIUM model only. Each time the bearer is selected to fight, roll three D6: for each 4+, one enemy unit within Engagement Range of the bearer suffers 1 mortal wound. Mortal wounds inflicted by this Enhancement are allocated as if they had the [PRECISION] ability.",
+        "points": 10
+      },
+      {
+        "id": "imperialis_fleet_enhancement_4",
+        "name": "Fleetmaster",
+        "description": "VOIDFARERS model only. Once per battle round, you can target the bearer’s unit with the Violent Acquisition, Masters of the Void or Close-quarters Barrage Stratagems for 0CP.",
+        "points": 20
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "imperialis_fleet_stratagem_1",
+        "name": "CLOSE-QUARTERS BARRAGE",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One VOIDFARERS unit from your army.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes a ranged attack that targets a unit within 12\", improve the Strength and Armour Penetration characteristics of that attack by 1.",
+        "cpCost": 1,
+        "type": "Imperialis Fleet – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "imperialis_fleet_stratagem_2",
+        "name": "MASTERS OF THE VOID",
+        "description": "WHEN: Your Movement phase.<br><br>TARGET: One VOIDFARERS CHARACTER unit from your army.<br><br>EFFECT: Until the end of the phase, each AGENTS OF THE IMpERIUM unit from your army that is arriving from Strategic Reserves this turn can be set up within your opponent’s deployment zone (all other restrictions still apply).",
+        "cpCost": 1,
+        "type": "Imperialis Fleet – Epic Deed Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "imperialis_fleet_stratagem_3",
+        "name": "SELFLESS BODYGUARD",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One AGENTS OF THE IMpERIUM Attached unit that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time an attack with the [PRECISION] ability is allocated to a <span class=\"kwb\">CHARACTER</span> model in your unit, if there are one or more Bodyguard models in your unit, roll one D6: on a 2+, that attack is allocated to a Bodyguard model of your choice in your unit instead.",
+        "cpCost": 1,
+        "type": "Imperialis Fleet – Epic Deed Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "imperialis_fleet_stratagem_4",
+        "name": "VIOLENT ACQUISITION",
+        "description": "<b>WHEN:</b> Your Shooting phase or the Fight phase.<br><br><b>TARGET:</b> One AGENTS OF THE IMpERIUM unit from your army.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack that targets an enemy unit within range of an objective marker, that attack has the [SUSTAINED HITS 1], [LANCE] and [IGNORES COVER] abilities.",
+        "cpCost": 2,
+        "type": "Imperialis Fleet – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "imperialis_fleet_stratagem_5",
+        "name": "EMPEROR’S WILL",
+        "description": "<b>WHEN:</b> Your Movement phase.<br><br><b>TARGET:</b> One AGENTS OF THE IMpERIUM unit from your army.<br><br><b>EFFECT:</b> Until the end of the phase, your unit is eligible to shoot in a turn in which it Advanced or Fell Back.",
+        "cpCost": 1,
+        "type": "Imperialis Fleet – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "imperialis_fleet_stratagem_6",
+        "name": "DISPLACER FIELD",
+        "description": "<b>WHEN:</b> Your opponent's Shooting phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One AGENTS OF THE IMpERIUM CHARACTER unit from your army (excluding OFFICIO ASSASSINORUM units) that was selected as the target of one or more of the attacking unit's attacks.<br><br><b>EFFECT:</b> Until the end of the phase, models in your unit have a 4+ invulnerable save and, after the attacking unit has resolved its attacks, unless your unit is within Engagement Range of one or more enemy units, it can make a Normal move of up to 6\" (when doing so, models in this unit move as if they have the Fly keyword).",
+        "cpCost": 1,
+        "type": "Imperialis Fleet – Wargear Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      }
+    ]
+  },
+  {
+    "id": "interdiction_team",
+    "name": "Interdiction Team",
+    "factionId": "AoI",
+    "factionName": "Imperial Agents",
+    "abilities": [
+      {
+        "id": "interdiction_team_ability_1",
+        "name": "Chastisor Auto-Vox",
+        "description": "In your opponent’s Command phase, each enemy unit within 3\" of one or more ADEPTUS ARbiTES units from your army must take a Battle-shock test. If that enemy unit is also Below Half-strength, subtract 1 from that test. This Detachment rule cannot cause a unit to take two Battle-shock tests in the same phase."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "interdiction_team_enhancement_1",
+        "name": "Manhunter’s Helm",
+        "description": "Proctor-Exactant model only. At the start of the first battle round, select one enemy unit to be your Priority Target. Each time an ADEPTUS ARbiTES model from your army makes an attack that targets your Priority Target, if the bearer is on the battlefield, add 1 to the Wound roll. Each time your Priority Target is destroyed, if the bearer is on the battlefield, you can select a new enemy unit to be your Priority Target.",
+        "points": 0
+      },
+      {
+        "id": "interdiction_team_enhancement_2",
+        "name": "Vasov’s Auto-Oppressor",
+        "description": "Proctor-Exactant model only. At the end of your Movement phase, you can select one enemy unit visible to the bearer. Until the start of your next Movement phase, halve the Move characteristic of models in that unit and halve Advance and Charge rolls made for it.",
+        "points": 0
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "interdiction_team_stratagem_1",
+        "name": "DUTY AND DEATH",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One ADEPTUS ARBITES unit from your army that was selected as the target of one or more of the attacking unit's attacks.<br><br><b>EFFECT:</b> Until the end of the phase, models in your unit have the Feel No Pain 4+ ability.",
+        "cpCost": 1,
+        "type": "Interdiction Team – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "interdiction_team_stratagem_2",
+        "name": "CRACKDOWN",
+        "description": "<b>WHEN:</b> Fight phase.<br><br><b>TARGET:</b> One ADEPTUS ARBITES unit from your army.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack, you can re-roll the Hit roll and you can re-roll the Wound roll.",
+        "cpCost": 1,
+        "type": "Interdiction Team – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "interdiction_team_stratagem_3",
+        "name": "ARBITRARY EXECUTION",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One ADEPTUS ARBITES unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, Arbites shotpistols equipped by models in your unit have an Attacks characteristic of 2 and the [LETHAL HITS] ability, and models in your unit can target enemy units that are not within Engagement Range of them (provided they are otherwise eligible targets).",
+        "cpCost": 1,
+        "type": "Interdiction Team – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "interdiction_team_stratagem_4",
+        "name": "INESCAPABLE JUDGEMENT",
+        "description": "<b>WHEN:</b> Your opponent's Movement phase, just after an enemy unit is selected to Fall Back.<br><br><b>TARGET:</b> One ADEPTUS ARBITES unit from your army within Engagement Range of that enemy unit.<br><br><b>EFFECT:</b> Until the end of the phase, when that enemy unit Falls Back, models in it must take Desperate Escape tests as if their unit was Battle-shocked. When doing so, if that enemy unit is also Battle-shocked by other means, subtract 1 from each of those Desperate Escape tests.",
+        "cpCost": 1,
+        "type": "Interdiction Team – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      }
+    ]
+  },
+  {
+    "id": "ordo_hereticus_purgation_force",
+    "name": "Ordo Hereticus Purgation Force",
+    "factionId": "AoI",
+    "factionName": "Imperial Agents",
+    "abilities": [
+      {
+        "id": "ordo_hereticus_purgation_force_ability_1",
+        "name": "Root out Heresy",
+        "description": "Ranged weapons equipped by ADEPTUS ARbITES, INqUISITOR, INqUISITORIAl AGENTS and ORDO HERETICUS models from your army have the [IGNORES COvER] ability.<br><br>Each time an <span class=\"kwb\">ADEPTUS</span> <span class=\"kwb\">ARBITES</span>, <span class=\"kwb\">INQUISITOR</span>, <span class=\"kwb\">INQUISITORIAL</span> <span class=\"kwb\">AGENTS</span> or <span class=\"kwb\">ORDO</span> <span class=\"kwb\">HERETICUS</span> model from your army makes an attack that targets a <span class=\"kwb\">CHAOS</span> unit containing 5 or more models, that attack has the [SUSTAINED HITS 1] ability."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "ordo_hereticus_purgation_force_enhancement_1",
+        "name": "Ignis Judicium",
+        "description": "INqUISITOR or MINISTORUM PRIEST model only. The bearers ranged weapons have the [DEVASTATING WOUNDS], [MELTA 1] and [PRECISION] abilities.",
+        "points": 10
+      },
+      {
+        "id": "ordo_hereticus_purgation_force_enhancement_2",
+        "name": "Liber Heresius",
+        "description": "INqUISITOR or MINISTORUM PRIEST model only. After both players have deployed their armies, select up to three AGENTS OF THE IMPERIUM units from your army and redeploy them. When doing so, you can set those units up in Strategic Reserves if you wish, regardless of how many units are already in Strategic Reserves.",
+        "points": 10
+      },
+      {
+        "id": "ordo_hereticus_purgation_force_enhancement_3",
+        "name": "No Escape (Aura)",
+        "description": "INqUISITOR model only. While an enemy unit is within 6\" of the bearer, each time it is selected to Fall Back it must first take a Leadership test. If that test is failed, that unit must Remain Stationary this phase instead.",
+        "points": 25
+      },
+      {
+        "id": "ordo_hereticus_purgation_force_enhancement_4",
+        "name": "Witch Hunter",
+        "description": "INqUISITOR or MINISTORUM PRIEST model only. While the bearer is leading a unit, each time a model in that unit makes an attack that targets a PSyKER unit, you can re-roll the Hit roll.",
+        "points": 15
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "ordo_hereticus_purgation_force_stratagem_1",
+        "name": "DISPENSE JUSTICE",
+        "description": "<b>WHEN:</b> Your Shooting phase or the Fight phase.<br><br><b>TARGET:</b> One ADEpTUS ARbITES, INQUISITORIAl AGENTS or ORDO HERETICUS unit from your army that has not been selected to shoot or fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, weapons equipped by models in your unit have the [LETHAL HITS] ability.",
+        "cpCost": 1,
+        "type": "Purgation Force – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "ordo_hereticus_purgation_force_stratagem_2",
+        "name": "EXECUTION ORDER",
+        "description": "<b>WHEN:</b> Your Command phase.<br><br><b>TARGET:</b> One ADEpTUS ARbITES, INQUISITORIAl AGENTS or ORDO HERETICUS INFANTRy unit from your army.<br><br><b>EFFECT:</b> Select one enemy <span class=\"kwb\">CHARACTER</span> unit on the battlefield. Until the start of your next Command phase, each time a model in your unit targets that <span class=\"kwb\">CHARACTER</span> unit, its weapons have the [PRECISION] ability.",
+        "cpCost": 2,
+        "type": "Purgation Force – Epic Deed Stratagem",
+        "turn": "Your turn",
+        "phase": "Command phase"
+      },
+      {
+        "id": "ordo_hereticus_purgation_force_stratagem_3",
+        "name": "INVIOLATE JURISDICTION",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One ADEpTUS ARbITES, INQUISITORIAl AGENTS or ORDO HERETICUS INFANTRy unit from your army within range of an objective marker and that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, models in your unit have the Feel No Pain 5+ ability.",
+        "cpCost": 1,
+        "type": "Purgation Force – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "ordo_hereticus_purgation_force_stratagem_4",
+        "name": "LINE OF FIRE",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One ADEpTUS ARbITES, INQUISITORIAl AGENTS or ORDO HERETICUS unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, models in your unit can target enemy units that are within Engagement Range of one or more friendly units with ranged weapons (excluding Blast weapons), provided the target is within 12\".",
+        "cpCost": 1,
+        "type": "Purgation Force – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "ordo_hereticus_purgation_force_stratagem_5",
+        "name": "EXACT PUNISHMENT",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase, just after an AGENTS OF THE IMpERIUM unit from your army is destroyed as the result of an enemy unit's attacks.<br><br><b>TARGET:</b> One ADEpTUS ARbITES, INQUISITORIAl AGENTS or ORDO HERETICUS unit from your army that was within 6\" of the destroyed unit (you cannot target the destroyed unit with the Stratagem).<br><br><b>EFFECT:</b> After the attacking unit has shot, your unit can shoot as if it were your Shooting phase, but when resolving those attacks it can only target that enemy unit (and only if it is an eligible target).",
+        "cpCost": 1,
+        "type": "Purgation Force – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "ordo_hereticus_purgation_force_stratagem_6",
+        "name": "STUN GRENADES",
+        "description": "<b>WHEN:</b> Start of any phase (excluding the Command phase).<br><br><b>TARGET:</b> One ADEpTUS ARbITES, INQUISITORIAl AGENTS or ORDO HERETICUS GRENADES unit from your army that is not within Engagement Range of one or more enemy units.<br><br><b>EFFECT:</b> Select one enemy unit (excluding <span class=\"kwb\">MONSTERS</span> or <span class=\"kwb\">VEHICLES</span>) within 8\" of and visible to your unit. That enemy unit must take a Battle-shock test and, until the end of the phase, each time a model in that unit makes an attack, subtract 1 from the Hit roll.",
+        "cpCost": 1,
+        "type": "Purgation Force – Wargear Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Any phase"
+      }
+    ]
+  },
+  {
+    "id": "ordo_malleus_daemon_hunters",
+    "name": "Ordo Malleus Daemon Hunters",
+    "factionId": "AoI",
+    "factionName": "Imperial Agents",
+    "abilities": [
+      {
+        "id": "ordo_malleus_daemon_hunters_ability_1",
+        "name": "Destroy the Daemonic",
+        "description": "Each time an INqUISITOR, INqUISITORIAl AGENTS or ORDO MAllEUS model from your army makes an attack, re-roll a Hit roll of 1 and, if the target of that attack is a <span class=\"kwb\">DAEMON</span> unit, re-roll a Wound roll of 1 as well."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "ordo_malleus_daemon_hunters_enhancement_1",
+        "name": "Daemon Slayer",
+        "description": "INqUISITOR model only. Add 1 to the Attacks characteristic of the bearers melee weapons, and those weapons have the [ANTI-DAEMON 3+] ability.",
+        "points": 10
+      },
+      {
+        "id": "ordo_malleus_daemon_hunters_enhancement_2",
+        "name": "Formidable Resolve",
+        "description": "INqUISITOR model only. Improve the bearer’s Leadership and Wounds characteristics by 1. Once per battle, at the start of any phase, you can select one friendly Battle-shocked unit within 12\" of the bearer. That unit is no longer Battle-shocked.",
+        "points": 5
+      },
+      {
+        "id": "ordo_malleus_daemon_hunters_enhancement_3",
+        "name": "Gift of the Prescient",
+        "description": "INqUISITOR model only. Once per battle, if the bearer is on the battlefield, you can use the Rapid Ingress Stratagem for 0CP. When doing so, you must target a GREy KNIGHTS TERMINATOR SqUAD unit from your army, and when using that Stratagem, that unit can be set up anywhere on the battlefield that is more than 3\" away from all enemy units.",
+        "points": 20
+      },
+      {
+        "id": "ordo_malleus_daemon_hunters_enhancement_4",
+        "name": "Grimoire of True Names (Aura)",
+        "description": "INqUISITOR model only. While an enemy unit is within 9\" of the bearer, worsen the Leadership characteristic of models in that unit by 1. In addition, while an enemy <span class=\"kwb\">DAEMON</span> unit is within 9\" of the bearer, each time a model in that <span class=\"kwb\">DAEMON</span> unit makes an attack, subtract 1 from the Hit roll and subtract 1 from the Wound roll.",
+        "points": 10
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "ordo_malleus_daemon_hunters_stratagem_1",
+        "name": "STEEL HEART",
+        "description": "<b>WHEN:</b> Your Movement phase, just after a GREy KNIGHTS TERMINATOR SQUAD unit from your army Falls Back.<br><br><b>TARGET:</b> That <span class=\"kwb\">GREY</span> <span class=\"kwb\">KNIGHTS</span> <span class=\"kwb\">TERMINATOR</span> <span class=\"kwb\">SQUAD</span> unit.<br><br><b>EFFECT:</b> Until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it Fell Back.",
+        "cpCost": 1,
+        "type": "Daemon Hunters – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "ordo_malleus_daemon_hunters_stratagem_2",
+        "name": "RITES OF EXORCISM",
+        "description": "<b>WHEN:</b> Your Shooting phase or the Fight phase.<br><br><b>TARGET:</b> One INQUISITOR, INQUISITORIAl AGENTS or ORDO MAllEUS unit from your army.<br><br><b>EFFECT:</b> Select one enemy <span class=\"kwb\">DAEMON</span> unit within 12\" and visible to your unit. That unit must take a Battle-shock test. If that test is failed, then until the end of the phase, each time a friendly AGENTS OF THE IMpERIUM unit makes an attack that targets that <span class=\"kwb\">DAEMON</span> unit, that attack has the [DEVASTATING WOUNDS] ability.",
+        "cpCost": 1,
+        "type": "Daemon Hunters – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "ordo_malleus_daemon_hunters_stratagem_3",
+        "name": "RITUAL OF WARDING",
+        "description": "<b>WHEN:</b> Start of any Command phase.<br><br><b>TARGET:</b> One INQUISITOR, INQUISITORIAl AGENTS or ORDO MAllEUS unit from your army that is within range of an objective marker you control.<br><br><b>EFFECT:</b> That objective marker is said to be Warded and remains under your control, even if you have no models within range of it, until your opponent controls it at the start or end of any turn. While an objective marker is Warded and under your control, enemy <span class=\"kwb\">DAEMON</span> units cannot be set up on the battlefield within 6\" of it.",
+        "cpCost": 1,
+        "type": "Daemon Hunters – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Command phase"
+      },
+      {
+        "id": "ordo_malleus_daemon_hunters_stratagem_4",
+        "name": "HEXAGRAMMIC WARDS",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One ORDO MAllEUS unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, all Psychic weapons equipped by models in the attacking unit have the [HAZARDOUS] ability.",
+        "cpCost": 1,
+        "type": "Daemon Hunters – Wargear Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "ordo_malleus_daemon_hunters_stratagem_5",
+        "name": "TRUESILVER ARMOUR",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase orthe Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One GREy KNIGHTS TERMINATOR SQUAD unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.",
+        "cpCost": 1,
+        "type": "Daemon Hunters – Wargear Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "ordo_malleus_daemon_hunters_stratagem_6",
+        "name": "PSYBOLT AMMUNITION",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One GREy KNIGHTS TERMINATOR SQUAD unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, ranged weapons equipped by models in your unit have the [LETHAL HITS] and [PSYCHIC] abilities.",
+        "cpCost": 1,
+        "type": "Daemon Hunters – Wargear Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      }
+    ]
+  },
+  {
+    "id": "ordo_xenos_alien_hunters",
+    "name": "Ordo Xenos Alien Hunters",
+    "factionId": "AoI",
+    "factionName": "Imperial Agents",
+    "abilities": [
+      {
+        "id": "ordo_xenos_alien_hunters_ability_1",
+        "name": "Deathwatch Mission Tactics",
+        "description": "At the start of your Command phase, you can select one of the Mission Tactics listed below. Until the start of your next Command phase, that Mission Tactic is active and its effects apply to all DEATHwATCH units from your army. Each Mission Tactic can only be selected once per battle.<div style=\"height:8px\"></div><div class=\"BreakInsideAvoid\"><table max-width=\"480px\" border=\"0\" cellpadding=\"3\" style=\"border-width:0px\"><tbody><tbody><tr><td class=\"td_w\"><p style=\"display:block\" class=\"impact18\">Furor Tactics</p><p class=\"ShowFluff legend2\">The warriors of the Deathwatch are often sorely outnumbered by swarming foes, yet by striking for maximum indiscriminate carnage they soon even the odds.</p><p>While this Mission Tactic is active, weapons equipped by <span class=\"tooltip00217\" data-tooltip-content=\"#tooltip_content00217\" data-tooltip-anchor=\"#tooltip_content00217\"><span class=\"kwb kwbu\">DEATHWATCH</span></span> units from your army have the <span class=\"kwb2 bluefont\"><span class=\"tooltip00012\" data-tooltip-content=\"#tooltip_content00012\"><span class=\"tt kwbu\">[SUSTAINED</span> <span class=\"tt kwbu\">HITS</span> <span class=\"tt kwbu\">1]</span></span></span> ability.</p></td></tr></tbody></tbody></table></div><div class=\"BreakInsideAvoid\"><table max-width=\"480px\" border=\"0\" cellpadding=\"3\" style=\"border-width:0px\"><tbody><tbody><tr><td class=\"td_w\"><p style=\"display:block\" class=\"impact18\">Malleus Tactics</p><p class=\"ShowFluff legend2\">Even the largest behemoth has a weak point, and the Deathwatch find them all.</p><p>While this Mission Tactic is active, weapons equipped by <span class=\"tooltip00217\" data-tooltip-content=\"#tooltip_content00217\" data-tooltip-anchor=\"#tooltip_content00217\"><span class=\"kwb kwbu\">DEATHWATCH</span></span> units from your army have the <span class=\"kwb2 bluefont\"><span class=\"tooltip00126\" data-tooltip-content=\"#tooltip_content00126\"><span class=\"tt kwbu\">[LETHAL</span> <span class=\"tt kwbu\">HITS]</span></span></span> ability.</p></td></tr></tbody></tbody></table></div><div class=\"BreakInsideAvoid\"><table max-width=\"480px\" border=\"0\" cellpadding=\"3\" style=\"border-width:0px\"><tbody><tbody><tr><td class=\"td_w\"><p style=\"display:block\" class=\"impact18\">Purgatus Tactics</p><p class=\"ShowFluff legend2\">Adopting Purgatus tactics, the Deathwatch focus their ire upon the commanders of the enemy host.</p><p>While this Mission Tactic is active, each time a <span class=\"tooltip00217\" data-tooltip-content=\"#tooltip_content00217\" data-tooltip-anchor=\"#tooltip_content00217\"><span class=\"kwb kwbu\">DEATHWATCH</span></span> model from your army makes an attack, on a <span class=\"tooltip00021\" data-tooltip-content=\"#tooltip_content00021\"><span class=\"tt kwbu\">Critical</span> <span class=\"tt kwbu\">Wound</span></span>, that attack has the <span class=\"kwb2 bluefont\"><span class=\"tooltip00050\" data-tooltip-content=\"#tooltip_content00050\"><span class=\"tt kwbu\">[PRECISION]</span></span></span> ability.</p></td></tr></tbody></tbody></table></div>"
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "ordo_xenos_alien_hunters_enhancement_1",
+        "name": "Amulet of Auto-Chastisement",
+        "description": "<span class=\"kwb\">WATCH</span> <span class=\"kwb\">MASTER</span> model only. At the start of your opponents Shooting phase, select one enemy <span class=\"kwb\">VEHICLE</span> unit (excluding <span class=\"kwb\">TITANIC</span> units) within 12\" of and visible to the bearer. That unit must take a Leadership test. If that test is passed, until the end of the phase, each time a model in that unit makes an attack, subtract 1 from the Hit roll; if that test is failed, that unit is not eligible to shoot this phase.",
+        "points": 25
+      },
+      {
+        "id": "ordo_xenos_alien_hunters_enhancement_2",
+        "name": "Beacon Angelis",
+        "description": "WATCH MASTER model only. Models in the bearer’s unit have the Deep Strike ability. In addition, you can target the bearer’s unit with the Rapid Ingress Stratagem for 0CP.",
+        "points": 30
+      },
+      {
+        "id": "ordo_xenos_alien_hunters_enhancement_3",
+        "name": "Blackweave Shroud",
+        "description": "<span class=\"kwb\">AGENTS</span> <span class=\"kwb2\">OF</span> <span class=\"kwb2\">THE</span> <span class=\"kwb\">IMPERIUM</span> model only. The bearer has the Feel No Pain 4+ ability.",
+        "points": 15
+      },
+      {
+        "id": "ordo_xenos_alien_hunters_enhancement_4",
+        "name": "Universal Anathema",
+        "description": "AGENTS OF THE IMPERIUM model only. Melee weapons equipped by the bearer have the [ANTI-INFANTRy 2+] and [ANTI-MONSTER 4+] abilities.",
+        "points": 10
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "ordo_xenos_alien_hunters_stratagem_1",
+        "name": "ARMOUR OF CONTEMPT",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One DEATHwATCH unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.",
+        "cpCost": 1,
+        "type": "Alien Hunters – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "ordo_xenos_alien_hunters_stratagem_2",
+        "name": "ADAPTIVE TACTICS",
+        "description": "<b>WHEN:</b> Your Command phase.<br><br><b>TARGET:</b> One DEATHwATCH unit from your army.<br><br><b>EFFECT:</b> Select the Furor Tactics, Malleus Tactics or Purgatus Tactics. Until the start of your next Command phase, that Deathwatch Mission Tactic is active for your unit instead of any other Deathwatch Mission Tactic that is active for your army, even if you have already selected that Deathwatch Mission Tactic this battle.",
+        "cpCost": 1,
+        "type": "Alien Hunters – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Command phase"
+      },
+      {
+        "id": "ordo_xenos_alien_hunters_stratagem_3",
+        "name": "RAPID TACTICAL RELOCATION",
+        "description": "<b>WHEN:</b> End of your opponent’s Fight phase.<br><br><b>TARGET:</b> One INQUISITOR or DEATHwATCH INFANTRy unit from your army.<br><br><b>EFFECT:</b> Remove your unit from the battlefield. In the Reinforcements step of your next Movement phase, set your unit up anywhere on the battlefield that is more than 9” horizontally away from all enemy models.<br><br><b>RESTRICTIONS:</b> You cannot select a unit that is within Engagement Range of one or more enemy units.",
+        "cpCost": 1,
+        "type": "Alien Hunters – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "ordo_xenos_alien_hunters_stratagem_4",
+        "name": "KRAKEN ROUNDS",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One DEATHwATCH INFANTRy unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, improve the Armour Penetration characteristic of ranged weapons equipped by models in your unit by 1 and improve the Range characteristic of those weapons by 6\".<br><br><b>RESTRICTIONS:</b> You cannot select any units that have already been targeted with either the Dragonfire Rounds or Hellfire Rounds Stratagems this phase.",
+        "cpCost": 1,
+        "type": "Alien Hunters – Wargear Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "ordo_xenos_alien_hunters_stratagem_5",
+        "name": "DRAGONFIRE ROUNDS",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One DEATHwATCH INFANTRy unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, ranged weapons equipped by models in your unit have the [ASSAULT] and [IGNORES COVER] abilities.<br><br><b>RESTRICTIONS:</b> You cannot select any units that have already been targeted with either the Kraken Rounds or Hellfire Rounds Stratagems this phase.",
+        "cpCost": 1,
+        "type": "Alien Hunters – Wargear Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "ordo_xenos_alien_hunters_stratagem_6",
+        "name": "HELLFIRE ROUNDS",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One DEATHwATCH INFANTRy unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, ranged weapons (excluding Devastating Wounds weapons) equipped by models in your unit have the [ANTI-INFANTRY 2+] and [ANTI-MONSTER 5+] abilities.<br><br><b>RESTRICTIONS:</b> You cannot select any units that have already been targeted with either the Kraken Rounds or Dragonfire Rounds Stratagems this phase.",
+        "cpCost": 1,
+        "type": "Alien Hunters – Wargear Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      }
+    ]
+  },
+  {
+    "id": "veiled_blade_elimination_force",
+    "name": "Veiled Blade Elimination Force",
+    "factionId": "AoI",
+    "factionName": "Imperial Agents",
+    "abilities": [
+      {
+        "id": "veiled_blade_elimination_force_ability_1",
+        "name": "Extremis Sanction",
+        "description": "Officio Assassinorum units from your army can use the Overkill, Soulless Horror and Shieldbreaker abilities twice per battle, instead of once per battle (but cannot use such an ability more than once in the same battle round).<br><br>When mustering your army, each <span class=\"kwb\">OFFICIO</span> <span class=\"kwb\">ASSASSINORUM</span> unit from your army has the relevant Extremis ability shown on the right, and you must increase the points cost of each of those units by the amount shown. If this causes your army to exceed the points limit for the battle you are playing, you cannot include that unit in your army."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "veiled_blade_elimination_force_enhancement_1",
+        "name": "Decoy Targets",
+        "description": "Callidus Assassin models only. Twice per battle, in your Movement phase, you can select one other friendly Infantry model that is on the battlefield and not within Engagement Range of one or more enemy units. The selected model is destroyed (ignoring any rules that are triggered when a model is destroyed) and this model is removed from the battlefield and set up again as close as possible to where that destroyed model was and not within Engagement Range of one or more enemy units. This ability cannot be used more than once in the same battle round.",
+        "points": 40
+      },
+      {
+        "id": "veiled_blade_elimination_force_enhancement_2",
+        "name": "Esoteric Explosives",
+        "description": "Culexus Assassin models only. Each time this model is targeted with the Grenades Stratagem, 1 mortal wound is inflicted for each D6 roll of 3+ instead of for each 4+.",
+        "points": 40
+      },
+      {
+        "id": "veiled_blade_elimination_force_enhancement_3",
+        "name": "Intraneural Biotech",
+        "description": "Eversor Assassin models only. Once per battle round, you can target this model with the Heroic Intervention or Counter-offensive Stratagem for 0CP, and can do so even if you have already used that Stratagem on a different unit this phase.",
+        "points": 35
+      },
+      {
+        "id": "veiled_blade_elimination_force_enhancement_4",
+        "name": "Micromelta Rounds",
+        "description": "Vindicare Assassin models only. This model’s exitus rifle has the [ANTI-MONSTER 4+] and [ANTI-VEHICLE 4+] abilities.",
+        "points": 45
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "veiled_blade_elimination_force_stratagem_1",
+        "name": "PRIME TARGET",
+        "description": "<b>WHEN:</b> Your Shooting phase or the Fight phase.<br><br><b>TARGET:</b> One Agents of the Imperium unit from your army that has not been selected to shoot or fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack that targets a <span class=\"kwb\">CHARACTER</span> unit, re-roll a Wound roll of 1. If that attack is made by an Officio Assassinorum model and it targets the enemy <span class=\"kwb\">WARLORD</span>, you can re-roll the Wound roll instead.",
+        "cpCost": 1,
+        "type": "Veiled Blade Elimination Force – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "veiled_blade_elimination_force_stratagem_2",
+        "name": "HYPERSTIMMS",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Agents of the Imperium Character unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, add 1 to the Toughness characteristic of models in your unit. In addition, if it is an Eversor Assassin unit, until the end of the phase, it has the Feel No Pain 4+ ability.",
+        "cpCost": 2,
+        "type": "Veiled Blade Elimination Force – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "veiled_blade_elimination_force_stratagem_3",
+        "name": "BLIND GRENADES",
+        "description": "<b>WHEN:</b> Your opponent’s Charge phase, just after an enemy unit has declared a charge.<br><br><b>TARGET:</b> One Agents of the Imperium Grenades or Vindicare Assassin unit from your army that was selected as one of the targets of that charge and is not within Engagement Range of one or more enemy units.<br><br><b>EFFECT:</b> Until the end of the phase, subtract 1 from Charge rolls made for that enemy unit, or, if your unit is a <span class=\"kwb\">VINDICARE</span> <span class=\"kwb\">ASSASSIN</span>, subtract 2 from Charge rolls made for that enemy unit instead.",
+        "cpCost": 1,
+        "type": "Veiled Blade Elimination Force – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Charge phase"
+      },
+      {
+        "id": "veiled_blade_elimination_force_stratagem_4",
+        "name": "ENSNARING TRAP",
+        "description": "<b>WHEN:</b> End of your opponent’s Charge phase.<br><br><b>TARGET:</b> One Agents of the Imperium Infantry unit from your army that is within 6\" of one or more enemy units and would be eligible to declare a charge against one or more of those enemy units.<br><br><b>EFFECT:</b> Your unit can declare a charge. When doing so, you must select one or more of those enemy units as the targets of that charge, and your unit does not receive a Charge bonus this turn. In addition, if it is a Callidus Assassin unit and it makes a Charge move as a result of this Stratagem, until the end of the turn, each time a model in your unit makes a melee attack, add 1 to the Wound roll.",
+        "cpCost": 1,
+        "type": "Veiled Blade Elimination Force – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Charge phase"
+      },
+      {
+        "id": "veiled_blade_elimination_force_stratagem_5",
+        "name": "ORBITAL OVERSIGHT",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Agents of the Imperium Infantry unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, your unit can only be selected as the target of a ranged attack if the attacking model is within 18\", or, if your unit has the Lone Operative ability, if the attacking model is within 6\".",
+        "cpCost": 1,
+        "type": "Veiled Blade Elimination Force – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "veiled_blade_elimination_force_stratagem_6",
+        "name": "WILL‑SAPPING SALVO",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Agents of the Imperium Infantry unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, ranged weapons equipped by models in your unit have the [SUSTAINED HITS 1] ability. In addition, if it is a Culexus Assassin unit, until the end of the phase, change the Damage characteristic of ranged weapons equipped by models in your unit to 3.",
+        "cpCost": 1,
+        "type": "Veiled Blade Elimination Force – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      }
+    ]
+  },
+  {
+    "id": "voidship_s_company",
+    "name": "Voidship’s Company",
+    "factionId": "AoI",
+    "factionName": "Imperial Agents",
+    "abilities": [
+      {
+        "id": "voidship_s_company_ability_1",
+        "name": "Beseechment Codes",
+        "description": "In your Movement phase, each time a VOiDFARERS unit from your army makes a Normal move, while that unit is moving it can attempt to operate a closed Hatchway that it is within 1\" of at any point during the move. It cannot do this, however, if there are one or more enemy units also within 1\" of that Hatchway. If that <span class=\"kwb\">VOIDFARERS</span> unit does attempt to operate that Hatchway, it cannot operate a Hatchway again this turn."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "voidship_s_company_enhancement_1",
+        "name": "Lathimon’s Flock",
+        "description": "VOiDFARERS model only. In the Deploy Armies step, your opponent must deploy their entire army before you deploy yours. If both players have this rule, they must roll off and deploy their armies normally. In addition, IMPERiAL NAvY BREACHERS units from your army gain the Infiltrators ability.",
+        "points": 0
+      },
+      {
+        "id": "voidship_s_company_enhancement_2",
+        "name": "Heirloom Blade",
+        "description": "VOiDFARERS model only. Once per battle, when the bearer’s unit is selected to light, it can use this Enhancement. If it does, until the end of the phase, improve every characteristic of the bearer’s monomolecular cane-rapier by 1.",
+        "points": 0
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "voidship_s_company_stratagem_1",
+        "name": "AMMO RATIONS",
+        "description": "<b>WHEN:</b> Start of your Shooting phase.<br><br><b>TARGET:</b> One or more VOIDfARERS units from your army.<br><br><b>EFFECT:</b> Select one enemy unit. Until the end of the phase, each time a model in one of your units makes an attack that targets that enemy unit, improve the Armour Penetration characteristic of that attack by 1.",
+        "cpCost": 1,
+        "type": "Voidship’s Company – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "voidship_s_company_stratagem_2",
+        "name": "BREACH AND CLEAR",
+        "description": "<b>WHEN:</b> Your Movement phase, just after an IMPERIAL NAvY BREAcHERS unit from yourarmy opens a Hatchway.<br><br><b>TARGET:</b> That <span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">NAVY</span> <span class=\"kwb\">BREACHERS</span> unit.<br><br><b>EFFECT:</b> Until the end of the turn, each time a model in your unit makes an attack, if that model is on the opposite side of the Hatchway from the side it started the turn on, add 1 to the Hit roll and add 1 to the Wound roll.",
+        "cpCost": 1,
+        "type": "Voidship’s Company – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "voidship_s_company_stratagem_3",
+        "name": "BOARDING DRILL",
+        "description": "<b>WHEN:</b> Start of your Shooting phase.<br><br><b>TARGET:</b> One VOIDfARERS unit from your army.<br><br><b>EFFECT:</b> Until the end of the phase, your unit is eligible to shoot or perform a Tactical Manoeuvre in a turn in which it Fell Back.",
+        "cpCost": 1,
+        "type": "Voidship’s Company – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "voidship_s_company_stratagem_4",
+        "name": "SHIP’S WATCH",
+        "description": "<b>WHEN:</b> Your opponent's Movement or Charge phase.<br><br><b>TARGET:</b> Up to two VOIDSMEN-AT-ARMS units from your army that have not fired Overwatch this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in one of your units makes an attack while firing Overwatch, an unmodified Hit roll of 5+ is required to score a hit, instead of an unmodified 6. When doing so, models in your units can ignore other models in their unit for the purposes of visibility, and each time a model in one of your units makes an attack, if that unit contains a Canid model, a successful unmodified Hit roll of 5+ scores a Critical Hit.",
+        "cpCost": 1,
+        "type": "Voidship’s Company – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement or Charge phase"
+      }
+    ]
+  }
+]

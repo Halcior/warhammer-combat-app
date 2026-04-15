@@ -1,0 +1,1412 @@
+[
+  {
+    "id": "armoured_warhost",
+    "name": "Armoured Warhost",
+    "factionId": "AE",
+    "factionName": "Aeldari",
+    "abilities": [
+      {
+        "id": "armoured_warhost_ability_1",
+        "name": "Skilled Crews",
+        "description": "Ranged weapons equipped by Aeldari Vehicle models from your army have the [ASSAULT] ability and you can re-roll Advance rolls made for Aeldari Vehicle Fly units from your army."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "armoured_warhost_enhancement_1",
+        "name": "Guiding Presence",
+        "description": "Aeldari Psyker model only. At the start of your Shooting phase, select one friendly Aeldari Vehicle model within 9\" of the bearer. Until the end of the phase, each time that model makes an attack, add 1 to the Hit roll.",
+        "points": 25
+      },
+      {
+        "id": "armoured_warhost_enhancement_2",
+        "name": "Harmonisation Matrix",
+        "description": "<span class=\"kwb\">AELDARI</span> model only. In your Command phase, if the bearer (or any Transport it is embarked within) is within range of an objective marker you control, roll one D6: on a 3+, you gain 1CP.",
+        "points": 30
+      },
+      {
+        "id": "armoured_warhost_enhancement_3",
+        "name": "Spirit Stone of Raelyth",
+        "description": "Aeldari Psyker model only. While the bearer is within 3\" of one or more friendly Aeldari Vehicle units, the bearer has the Lone Operative ability. In your Command phase, you can select one friendly <span class=\"kwb\">AELDARI</span> <span class=\"kwb\">VEHICLE</span> model within 3\" of the bearer. That model regains up to D3 lost wounds.",
+        "points": 20
+      },
+      {
+        "id": "armoured_warhost_enhancement_4",
+        "name": "Guileful Strategist",
+        "description": "<span class=\"kwb\">AELDARI</span> model only. If your army includes the bearer, after both players have deployed their armies, select up to three Aeldari Vehicle units from your army and redeploy them. When doing so, any of those units can be placed into Strategic Reserves, regardless of how many units are already in Strategic Reserves.",
+        "points": 15
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "armoured_warhost_stratagem_1",
+        "name": "LAYERED WARDS",
+        "description": "<b>WHEN:</b> Any phase, just after a mortal wound is allocated to an <span class=\"kwb\">AELDARI</span> <span class=\"kwb\">VEHICLE</span> unit from your army.<br><br><b>TARGET:</b> That Aeldari Vehicle unit.<br><br><b>EFFECT:</b> Until the end of the phase, models in your unit have the Feel No Pain 5+ ability against mortal wounds.",
+        "cpCost": 1,
+        "type": "Armoured Warhost – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Any phase"
+      },
+      {
+        "id": "armoured_warhost_stratagem_2",
+        "name": "VECTORED ENGINES",
+        "description": "<b>WHEN:</b> Your Movement phase, just after an <span class=\"kwb\">AELDARI</span> <span class=\"kwb\">VEHICLE</span> unit from your army that can <span class=\"kwb\">FLY</span> Falls Back.<br><br><b>TARGET:</b> That Aeldari Fly Vehicle unit.<br><br><b>EFFECT:</b> Until the end of the turn, your unit is eligible to shoot in a turn in which it Fell Back.",
+        "cpCost": 1,
+        "type": "Armoured Warhost – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "armoured_warhost_stratagem_3",
+        "name": "SOULSIGHT",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Aeldari Vehicle unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time your unit is selected to shoot, you can re-roll one Hit roll, one Wound roll and one Damage roll made for a model in your unit. If you are using fast dice rolling, you can select one of those rolls to re-roll before moving onto the next step of the attack sequence.",
+        "cpCost": 1,
+        "type": "Armoured Warhost – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "armoured_warhost_stratagem_4",
+        "name": "ANTI‑GRAV REPULSION",
+        "description": "<b>WHEN:</b> Your opponent’s Charge phase, just after an enemy unit has declared a charge.<br><br><b>TARGET:</b> One Aeldari Vehicle unit from your army that can Fly and was selected as a target of that charge.<br><br><b>EFFECT:</b> Until the end of the phase, subtract 2 from Charge rolls made for that enemy unit.",
+        "cpCost": 1,
+        "type": "Armoured Warhost – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Charge phase"
+      },
+      {
+        "id": "armoured_warhost_stratagem_5",
+        "name": "CLOUDSTRIKE",
+        "description": "<b>WHEN:</b> Start of the Reinforcements step of your Movement phase.<br><br><b>TARGET:</b> One Aeldari Vehicle unit from your army that can Fly and is in Strategic Reserves.<br><br><b>EFFECT:</b> Until the end of the phase, your unit has the Deep Strike ability. When your unit is set up on the battlefield using the Deep Strike ability, it can be set up anywhere on the battlefield that is more than 6\" horizontally away from all enemy units, but if it does, until the end of the turn, it is not eligible to declare a charge. In addition, if your unit is a Transport, each unit that disembarks from it this turn must be set up more than 6\" horizontally from all enemy units and until the end of the turn, is not eligible to declare a charge.",
+        "cpCost": 1,
+        "type": "Armoured Warhost – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "armoured_warhost_stratagem_6",
+        "name": "SWIFT DEPLOYMENT",
+        "description": "<b>WHEN:</b> Your Movement phase.<br><br><b>TARGET:</b> One Aeldari Transport unit from your army.<br><br><b>EFFECT:</b> Until the end of the phase, units can disembark from your <span class=\"kwb\">TRANSPORT</span> after it has Advanced. Units that do so count as having made a Normal move that phase, and cannot declare a charge in the same turn, but can otherwise act normally.",
+        "cpCost": 1,
+        "type": "Armoured Warhost – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      }
+    ]
+  },
+  {
+    "id": "aspect_host",
+    "name": "Aspect Host",
+    "factionId": "AE",
+    "factionName": "Aeldari",
+    "abilities": [
+      {
+        "id": "aspect_host_ability_1",
+        "name": "Path of the Warrior",
+        "description": "Each time an Aspect Warriors or Avatar of Khaine unit from your army is selected to shoot or fight, select one of the following abilities for it to gain until the end of the phase:<br><ul><li>Each time a model in this unit makes an attack, re-roll a Hit roll of 1.</li><li>Each time a model in this unit makes an attack, re-roll a Wound roll of 1.</li></ul>"
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "aspect_host_enhancement_1",
+        "name": "Aspect of Murder",
+        "description": "Autarch or Autarch Wayleaper model only. Add 1 to the Damage characteristic of melee weapons equipped by the bearer, and those weapons have the [precision] ability.",
+        "points": 25
+      },
+      {
+        "id": "aspect_host_enhancement_2",
+        "name": "Mantle of Wisdom",
+        "description": "Autarch or Autarch Wayleaper model only. While the bearer is leading an Aspect Warriors unit, each time that unit is selected to shoot or fight, until the end of the phase, models in that unit gain both of the abilities from the Path of the Warrior Detachment rule.",
+        "points": 30
+      },
+      {
+        "id": "aspect_host_enhancement_3",
+        "name": "Shimmerstone",
+        "description": "Autarch or Autarch Wayleaper model only. While the bearer is leading an Aspect Warriors unit, each time a ranged attack targets that unit, subtract 1 from the Wound roll.",
+        "points": 15
+      },
+      {
+        "id": "aspect_host_enhancement_4",
+        "name": "Strategic Savant",
+        "description": "Autarch or Autarch Wayleaper model only. While the bearer is leading an Aspect Warriors unit, add 1 to the Objective Control characteristic of models in that unit.",
+        "points": 15
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "aspect_host_stratagem_1",
+        "name": "WARRIOR FOCUS",
+        "description": "<b>WHEN:</b> Your Shooting phase or the Fight phase.<br><br><b>TARGET:</b> One Aspect Warriors or Avatar of Khaine unit from your army that has not been selected to shoot or fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack, you can ignore any or all modifiers to that attack’s Ballistic Skill, Weapon skill, Strength, Armour Penetration and Damage characteristics and/or any or all modifiers to the Hit roll.",
+        "cpCost": 1,
+        "type": "Aspect Host – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "aspect_host_stratagem_2",
+        "name": "DOOM INESCAPABLE",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Avatar of Khaine model from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, your model’s Wailing Doom ranged weapon has a Range characteristic of 18\" and a Damage characteristic of 8.",
+        "cpCost": 1,
+        "type": "Aspect Host – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "aspect_host_stratagem_3",
+        "name": "PRETERNATURAL PRECISION",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Aspect Warriors unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Each time you use this Stratagem, you can remove one Aspect Shrine token your unit has (see datasheets). Then, select one of the following abilities, or select two of the following abilities if you removed an Aspect Shrine token during this usage of this Stratagem: [IGNORES COVER], [LETHAL HITS], [SUSTAINED HITS 1]. Until the end of the phase, ranged weapons equipped by models in your unit have the selected abilities.",
+        "cpCost": 1,
+        "type": "Aspect Host – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "aspect_host_stratagem_4",
+        "name": "TO THEIR FINAL BREATH",
+        "description": "<b>WHEN:</b> Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Aspect Warriors or Avatar of Khaine unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Each time you use this Stratagem, you can remove one Aspect Shrine token your unit has (see datasheets). Then, until the end of the phase, each time a model in your unit is destroyed, if that model has not fought this phase, roll one D6, adding 1 to the result if you removed an Aspect Shrine token during this usage of this Stratagem. On a 4+, do not remove the destroyed model from play; it can fight after the attacking unit has finished making its attacks, and is then removed from play.",
+        "cpCost": 1,
+        "type": "Aspect Host – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "aspect_host_stratagem_5",
+        "name": "SKYBORNE SANCTUARY",
+        "description": "<b>WHEN:</b> End of the Fight phase.<br><br><b>TARGET:</b> One Asuryani unit from your army that was eligible to fight this phase and one friendly Transport it is able to embark within.<br><br><b>EFFECT:</b> If your <span class=\"kwb\">ASURYANI</span> unit is not within Engagement Range of one or more enemy units and is wholly within 6\" of that <span class=\"kwb\">TRANSPORT</span>, it can embark within it.",
+        "cpCost": 1,
+        "type": "Aspect Host – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "aspect_host_stratagem_6",
+        "name": "KHAINE’S VENGEANCE",
+        "description": "<b>WHEN:</b> Your opponent’s Movement phase, just after an enemy unit (excluding <span class=\"kwb\">MONSTERS</span> and <span class=\"kwb\">VEHICLES</span>) is selected to Fall Back.<br><br><b>TARGET:</b> One Aspect Warriors or Avatar of Khaine unit from your army that is within Engagement Range of that enemy unit.<br><br><b>EFFECT:</b> All models in that enemy unit must take a Desperate Escape test. When doing so, if that enemy unit is Battle-shocked, subtract 1 from each of those tests.",
+        "cpCost": 1,
+        "type": "Aspect Host – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      }
+    ]
+  },
+  {
+    "id": "corsair_coterie",
+    "name": "Corsair Coterie",
+    "factionId": "AE",
+    "factionName": "Aeldari",
+    "abilities": [
+      {
+        "id": "corsair_coterie_ability_1",
+        "name": "Relentless Raiders",
+        "description": "While an objective marker is under your control, each time an enemy unit ends a Normal, Advance, Fall Back or Charge move within range of that objective marker, roll one D6: on a 2+, that enemy unit suffers D3 mortal wounds.<br><br>Anhrathe units from your army have the following ability:<br><br><b>Void Thieves:</b> At the end of a phase, if this unit is within range of an objective marker you control, that objective marker remains under your control until your opponent’s Level of Control over that objective marker is greater than yours at the end of a phase."
+      },
+      {
+        "id": "corsair_coterie_ability_2",
+        "name": "Veterans of the Void",
+        "description": "Each time you add an Anhrathe unit to your army, it can be given up to one Corsair Enhancement. Each Corsair Enhancement included in your army must be unique. If a unit is given a Corsair Enhancement, you must increase the points cost of that unit by the amount shown. If this causes your army to exceed the points limit for the battle you are playing, you cannot include that unit in your army."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "corsair_coterie_enhancement_1",
+        "name": "Infamy (Aura)",
+        "description": "Anhrathe unit only. While an enemy unit is within 3\" of this unit, subtract 1 from the Objective Control characteristic of models in that unit (to a minimum of 1).",
+        "points": 25
+      },
+      {
+        "id": "corsair_coterie_enhancement_2",
+        "name": "Webway Pathstone",
+        "description": "Anhrathe unit only. Models in this unit have the Deep Strike ability. In addition, once per battle, at the end of your opponent’s turn, if this unit is not within Engagement Range of one or more enemy units, it can use this ability. If it does, remove this unit from the battlefield and place it into Strategic Reserves.",
+        "points": 25
+      },
+      {
+        "id": "corsair_coterie_enhancement_3",
+        "name": "Archraider",
+        "description": "Anhrathe Character unit only. At the start of the battle, select one <span class=\"kwb\">CHARACTER</span> model in this unit. That model has the following ability:<br><br><b>Lord of Deceit (Aura):</b> Each time your opponent targets a unit from their army with a Stratagem, if that unit is within 12\" of this model, increase the cost of that use of that Stratagem by 1CP.",
+        "points": 35
+      },
+      {
+        "id": "corsair_coterie_enhancement_4",
+        "name": "Voidstone",
+        "description": "Anhrathe Infantry unit only. Models in this unit have a 5+ invulnerable save.",
+        "points": 15
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "corsair_coterie_stratagem_1",
+        "name": "PIRATES’ DUE",
+        "description": "<b>WHEN:</b> The Fight phase.<br><br><b>TARGET:</b> One <span class=\"kwb\">AELDARI</span> unit from your army that has not been selected to fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack, re-roll a Wound roll of 1. If your unit has the Anhrathe keyword, then until the end of the phase, each time a model in your unit makes an attack that targets an enemy unit within range of an objective marker, you can re-roll the Wound roll instead.",
+        "cpCost": 1,
+        "type": "Corsair Coterie – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "corsair_coterie_stratagem_2",
+        "name": "CLOAK AND SHADOW",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Aeldari Infantry unit from your army that is within range of an objective marker that you control and that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, models in your unit have the Stealth ability and your unit can only be selected as the target of a ranged attack if the attacking model is within 18\".",
+        "cpCost": 1,
+        "type": "Corsair Coterie – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "corsair_coterie_stratagem_3",
+        "name": "INTO THE BREACH",
+        "description": "<b>WHEN:</b> Your Shooting phase, just after an Anhrathe unit from your army destroyed one or more enemy units.<br><br><b>TARGET:</b> That <span class=\"kwb\">ANHRATHE</span> unit.<br><br><b>EFFECT:</b> After your unit has resolved all of its shooting attacks, it can make a Normal move of up to D6+1\".",
+        "cpCost": 1,
+        "type": "Corsair Coterie – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "corsair_coterie_stratagem_4",
+        "name": "OUTCAST AMBUSH",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Rangers or Shroud Runners unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, ranged weapons equipped by models in your unit have the [IGNORES COVER] and [RAPID FIRE 1] abilities, and until the end of the phase, improve the Armour Penetration characteristic of those weapons by 1.",
+        "cpCost": 1,
+        "type": "Corsair Coterie – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "corsair_coterie_stratagem_5",
+        "name": "LETHAL RUSE",
+        "description": "<b>WHEN:</b> Your Movement phase, just after an <span class=\"kwb\">AELDARI</span> unit from your army Falls Back.<br><br><b>TARGET:</b> That <span class=\"kwb\">AELDARI</span> unit.<br><br><b>EFFECT:</b> Until the end of the turn, your unit is eligible to declare a charge in a turn in which it Fell Back. If it is an Anhrathe unit, also select one enemy unit your unit was within Engagement Range of at the start of the phase, and roll six D6: for each 4+, that enemy unit suffers 1 mortal wound.",
+        "cpCost": 1,
+        "type": "Corsair Coterie – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "corsair_coterie_stratagem_6",
+        "name": "VENGEFUL SORROW",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase, just after an enemy unit has shot.<br><br><b>TARGET:</b> One Aeldari Infantry unit from your army, if one or more models in that unit were destroyed as a result of those attacks, and if that <span class=\"kwb\">AELDARI</span> unit is neither Battle-shocked nor within Engagement Range of one or more enemy units.<br><br><b>EFFECT:</b> Your unit can make a Surge move. To do so, roll one D6 and add 1 to the roll: models in your unit move a number of inches up to this result, but your unit must end that move as close as possible to the closest enemy unit (excluding <span class=\"kwb\">AIRCRAFT</span>). When doing so, those models can be moved within Engagement Range of that enemy unit.",
+        "cpCost": 1,
+        "type": "Corsair Coterie – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      }
+    ]
+  },
+  {
+    "id": "devoted_of_ynnead",
+    "name": "Devoted of Ynnead",
+    "factionId": "AE",
+    "factionName": "Aeldari",
+    "abilities": [
+      {
+        "id": "devoted_of_ynnead_ability_1",
+        "name": "Strength from Death",
+        "description": "You can use the following rules:<br><br><div class=\"BreakInsideAvoid\"><table max-width=\"480px\" border=\"0\" cellpadding=\"3\" style=\"border-width:0px\"><tbody><tbody><tr><td class=\"td_w\"><p style=\"display:block\" class=\"impact18\">Lethal Intent</p><p>At the end of your opponent’s <a href=\"/wh40k10ed/the-rules/core-rules/#SHOOTING-PHASE\">Shooting phase</a>, if one or more <span class=\"tooltip00205\" data-tooltip-content=\"#tooltip_content00205\" data-tooltip-anchor=\"#tooltip_content00205\"><span class=\"kwb kwbu\">YNNARI</span></span> units from your army were destroyed this phase, select one <span class=\"tooltip00206\" data-tooltip-content=\"#tooltip_content00206\" data-tooltip-anchor=\"#tooltip_content00206\"><span class=\"kwb kwbu\">YNNARI</span> <span class=\"kwb kwbu\">INFANTRY</span></span> or <a class=\"kwbOne\" href=\"/wh40k10ed/factions/aeldari/Ynnari-Reavers\"><span class=\"kwb kwbo\">YNNARI</span> <span class=\"kwb kwbo\">MOUNTED</span></a> unit from your army that was within 6\" of your destroyed unit. That unit can make a <span class=\"tooltip00039\" data-tooltip-content=\"#tooltip_content00039\"><span class=\"tt kwbu\">Normal</span> <span class=\"tt kwbu\">move</span></span> of up to D6+1\".</p></td></tr></tbody></tbody></table></div><div class=\"BreakInsideAvoid\"><table max-width=\"480px\" border=\"0\" cellpadding=\"3\" style=\"border-width:0px\"><tbody><tbody><tr><td class=\"td_w\"><p style=\"display:block\" class=\"impact18\">Lethal Surge</p><p>Once per turn, when a <span class=\"tooltip00205\" data-tooltip-content=\"#tooltip_content00205\" data-tooltip-anchor=\"#tooltip_content00205\"><span class=\"kwb kwbu\">YNNARI</span></span> unit from your army performs the <span class=\"tooltip00207\" data-tooltip-content=\"#tooltip_content00207\"><span class=\"tt kwbu\">Fade</span> <span class=\"tt kwbu\">Back</span></span> Agile Manoeuvre, it can make a Lethal Surge move instead of a <span class=\"tooltip00039\" data-tooltip-content=\"#tooltip_content00039\"><span class=\"tt kwbu\">Normal</span> <span class=\"tt kwbu\">move</span></span>. If it does, roll one D6 and add 1 to the result: that unit can be moved a number of inches up to the total. When doing so, those models can be moved within <span class=\"tooltip00031\" data-tooltip-content=\"#tooltip_content00031\"><span class=\"tt kwbu\">Engagement</span> <span class=\"tt kwbu\">Range</span></span> of the enemy unit that just triggered that Agile Manoeuvre.</p></td></tr></tbody></tbody></table></div><div class=\"BreakInsideAvoid\"><table max-width=\"480px\" border=\"0\" cellpadding=\"3\" style=\"border-width:0px\"><tbody><tbody><tr><td class=\"td_w\"><p style=\"display:block\" class=\"impact18\">Lethal Reprisal</p><p>At the start of the <a href=\"/wh40k10ed/the-rules/core-rules/#FIGHT-PHASE\">Fight phase</a>, select one <span class=\"tooltip00205\" data-tooltip-content=\"#tooltip_content00205\" data-tooltip-anchor=\"#tooltip_content00205\"><span class=\"kwb kwbu\">YNNARI</span></span> unit from your army (excluding <span class=\"kwb\">TITANIC</span> units) that is below its <span class=\"tooltip00199\" data-tooltip-content=\"#tooltip_content00199\"><span class=\"tt kwbu\">Starting</span> <span class=\"tt kwbu\">Strength</span></span>. Until the end of the phase, that unit has the <span class=\"tooltip00135\" data-tooltip-content=\"#tooltip_content00135\"><span class=\"tt kwbu\">Fights</span> <span class=\"tt kwbu\">First</span></span> ability.</p></td></tr></tbody></tbody></table></div><br><span class=\"hi_custom\">SERVANTS OF THE WHISPERING GOD</span><br><ul><li>You can include Ynnari units in your army, even though they do not have the <span class=\"kwb\">ASURYANI</span> Faction keyword.</li><li>Asuryani units (excluding Epic Heroes) from your army gain the <span class=\"kwb\">YNNARI</span> keyword.</li><li>You must include Yvraine and/or The Yncarne in your army, and one of those models must be your <span class=\"kwb\">WARLORD</span>.</li></ul>"
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "devoted_of_ynnead_enhancement_1",
+        "name": "Gaze of Ynnead",
+        "description": "Farseer model only. The bearer’s Eldritch Storm weapon has the [devastating wounds] ability.",
+        "points": 15
+      },
+      {
+        "id": "devoted_of_ynnead_enhancement_2",
+        "name": "Storm of Whispers",
+        "description": "Warlock model only. In your Shooting phase, after the bearer has shot, select one enemy unit hit by one or more of those attacks. That unit must take a Battle-shock test.",
+        "points": 10
+      },
+      {
+        "id": "devoted_of_ynnead_enhancement_3",
+        "name": "Borrowed Vigour",
+        "description": "Archon model only. Add 2 to the Attacks characteristic of the bearer’s melee weapons.",
+        "points": 10
+      },
+      {
+        "id": "devoted_of_ynnead_enhancement_4",
+        "name": "Morbid Might",
+        "description": "Succubus model only. Each time the bearer makes a melee attack, you can re-roll the Wound roll.",
+        "points": 15
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "devoted_of_ynnead_stratagem_1",
+        "name": "SOULSIGHT",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Ynnari unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, ranged weapons equipped by models in your unit have the [LETHAL HITS] and [IGNORES COVER] abilities.",
+        "cpCost": 1,
+        "type": "Devoted of Ynnead – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "devoted_of_ynnead_stratagem_2",
+        "name": "EMISSARIES OF YNNEAD",
+        "description": "<b>WHEN:</b> Fight phase, just after a Ynnari Infantry unit from your army has selected its targets.<br><br><b>TARGET:</b> That <span class=\"kwb\">YNNARI</span> <span class=\"kwb\">INFANTRY</span> unit.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack, re-roll a Hit roll of 1. If your unit is below its Starting Strength, you can re-roll the Hit roll instead.",
+        "cpCost": 1,
+        "type": "Devoted of Ynnead – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "devoted_of_ynnead_stratagem_3",
+        "name": "MACABRE RESILIENCE",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Ynnari Infantry or Ynnari Mounted unit from your army (excluding Wraith Construct units) that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time an attack targets your unit, subtract 1 from the Wound roll.",
+        "cpCost": 1,
+        "type": "Devoted of Ynnead – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "devoted_of_ynnead_stratagem_4",
+        "name": "PARTING THE VEIL",
+        "description": "<b>WHEN:</b> Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Ynnari unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit is destroyed, if that model has not fought this phase, do not remove it from play. The destroyed model can fight after the attacking unit has finished making its attacks, and is then removed from play.",
+        "cpCost": 2,
+        "type": "Devoted of Ynnead – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "devoted_of_ynnead_stratagem_5",
+        "name": "PALL OF DREAD",
+        "description": "<b>WHEN:</b> Any phase.<br><br><b>TARGET:</b> One Ynnari unit from your army that was just destroyed while it was within range of one or more objective markers you controlled at the end of the previous phase. You can use this Stratagem on that unit even though it was just destroyed.<br><br><b>EFFECT:</b> Select one of those objective markers. That objective marker remains under your control until your opponent’s Level of Control over that objective marker is greater than yours at the end of a phase.",
+        "cpCost": 1,
+        "type": "Devoted of Ynnead – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Any phase"
+      },
+      {
+        "id": "devoted_of_ynnead_stratagem_6",
+        "name": "DEATH ANSWERS DEATH",
+        "description": "<b>WHEN:</b> End of your opponent’s Shooting phase.<br><br><b>TARGET:</b> One Ynnari unit from your army (excluding Wraith Construct units), if one or more models in that unit were destroyed this phase.<br><br><b>EFFECT:</b> Your unit can shoot as if it were your Shooting phase.",
+        "cpCost": 1,
+        "type": "Devoted of Ynnead – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      }
+    ]
+  },
+  {
+    "id": "eldritch_raiders",
+    "name": "Eldritch Raiders",
+    "factionId": "AE",
+    "factionName": "Aeldari",
+    "abilities": [
+      {
+        "id": "eldritch_raiders_ability_1",
+        "name": "Yriel’s Own",
+        "description": "<span class=\"kwb\">AELDARI</span> units in your army are eligible to declare a charge in a turn in which they Advanced. In addition, each time an Anhrathe, Rangers or Shroud Runners unit from your army Advances, you can re-roll the Advance roll."
+      },
+      {
+        "id": "eldritch_raiders_ability_2",
+        "name": "Veterans of the Void",
+        "description": "Each time you add an Anhrathe unit to your army, it can be given up to one Corsair Enhancement. Each Corsair Enhancement included in your army must be unique. If a unit is given a Corsair Enhancement, you must increase the points cost of that unit by the amount shown. If this causes your army to exceed the points limit for the battle you are playing, you cannot include that unit in your army."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "eldritch_raiders_enhancement_1",
+        "name": "Pirate Prince",
+        "description": "Prince Yriel unit only. Each time you spend a Battle Focus token to enable this unit to perform an Agile Manoeuvre, roll one D6: on a 3+, you gain 1 Battle Focus token.",
+        "points": 15
+      },
+      {
+        "id": "eldritch_raiders_enhancement_2",
+        "name": "Alacritous Assault",
+        "description": "Anhrathe unit only. Melee weapons equipped by models in this unit have the [LANCE] ability.",
+        "points": 20
+      },
+      {
+        "id": "eldritch_raiders_enhancement_3",
+        "name": "Exotic Munitions",
+        "description": "Anhrathe unit only. Ranged weapons equipped by models in this unit have the [ANTI-MONSTER 5+] and [ANTI-VEHICLE 5+] abilities.",
+        "points": 15
+      },
+      {
+        "id": "eldritch_raiders_enhancement_4",
+        "name": "Adrenal Infusions",
+        "description": "Anhrathe Infantry unit only. This unit can perform the Fade Back Agile Manoeuvre without spending a Battle Focus token to do so. It can do so even if other units have done so in the same phase, and doing so does not prevent other units from performing the same Agile Manoeuvre in the same phase.",
+        "points": 20
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "eldritch_raiders_stratagem_1",
+        "name": "NO PREY TOO BIG",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Anhrathe, Rangers or Shroud Runners unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack, if the Strength characteristic of that attack is less than the highest Toughness characteristic of models in the target unit, add 1 to the Wound roll.",
+        "cpCost": 1,
+        "type": "Eldritch Raiders – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "eldritch_raiders_stratagem_2",
+        "name": "YRIEL’S EXAMPLE",
+        "description": "<b>WHEN:</b> Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Aeldari Infantry unit from your army (excluding Wraith Construct units) that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, models in your unit have the Feel No Pain 5+ ability.",
+        "cpCost": 1,
+        "type": "Eldritch Raiders – Epic Deed Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "eldritch_raiders_stratagem_3",
+        "name": "WITHDRAW AND REINFORCE",
+        "description": "<b>WHEN:</b> End of your opponent’s Fight phase.<br><br><b>TARGET:</b> One Anhrathe unit from your army that is not within Engagement Range of one or more enemy units.<br><br><b>EFFECT:</b> Remove your unit from the battlefield and place it into Strategic Reserves. If that unit is below Starting Strength, return all destroyed models (excluding <span class=\"kwb\">CHARACTER</span> models) to that unit.",
+        "cpCost": 1,
+        "type": "Eldritch Raiders – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "eldritch_raiders_stratagem_4",
+        "name": "RAIDERS’ SPOILS",
+        "description": "<b>WHEN:</b> Command phase.<br><br><b>TARGET:</b> One Anhrathe unit from your army that is within Engagement Range of one or more enemy units.<br><br><b>EFFECT:</b> Until the start of the next Command phase, add 1 to the Objective Control characteristic of models in your unit.",
+        "cpCost": 1,
+        "type": "Eldritch Raiders – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Command phase"
+      },
+      {
+        "id": "eldritch_raiders_stratagem_5",
+        "name": "RUTHLESS KILLERS",
+        "description": "<b>WHEN:</b> Your Shooting phase or the Fight phase.<br><br><b>TARGET:</b> One Corsair Voidscarred unit from your army that has not been selected to shoot or Fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack, add 1 to the Damage characteristic of that attack.",
+        "cpCost": 1,
+        "type": "Eldritch Raiders – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "eldritch_raiders_stratagem_6",
+        "name": "IMPEDING FIRE",
+        "description": "<b>WHEN:</b> Start of your opponent’s Charge phase.<br><br><b>TARGET:</b> One Rangers, Shroud Runners or Starfang unit from your army.<br><br><b>EFFECT:</b> Select one enemy unit (excluding <span class=\"kwb\">TITANIC</span> units) visible to and within 36\" of your unit. Until the end of the phase, each time that enemy unit declares a charge, subtract 2 from the Charge roll (this is not cumulative with any other negative modifiers to that Charge roll).",
+        "cpCost": 1,
+        "type": "Eldritch Raiders – Wargear Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Charge phase"
+      }
+    ]
+  },
+  {
+    "id": "ghosts_of_the_webway",
+    "name": "Ghosts of the Webway",
+    "factionId": "AE",
+    "factionName": "Aeldari",
+    "abilities": [
+      {
+        "id": "ghosts_of_the_webway_ability_1",
+        "name": "Acrobatic Onslaught",
+        "description": "Each time a Harlequins model from your army makes a Charge move, it can move through enemy models.<br><br><span class=\"hi_custom\">TRAVELLING PLAYERS</span><br><ul><li>Troupe units from your army gain the <span class=\"kwb\">BATTLELINE</span> keyword and <span class=\"kwb\">TROUPE</span> models in those units have an Objective Control characteristic of 2.</li><li>You can include up to three of each of the following models in your army: Death Jester, Shadowseer, Troupe Master.</li></ul>"
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "ghosts_of_the_webway_enhancement_1",
+        "name": "Cegorach’s Coil",
+        "description": "Troupe Master model only. Each time the bearer’s unit ends a Charge move, select one enemy unit within Engagement Range of the bearer’s unit, then roll one D6 for each model in the bearer’s unit that is within Engagement Range of that enemy unit: for each 4+, that enemy unit suffers 1 mortal wound (to a maximum of 6 mortal wounds).",
+        "points": 25
+      },
+      {
+        "id": "ghosts_of_the_webway_enhancement_2",
+        "name": "Mask of Secrets",
+        "description": "Harlequins model only. Each time an enemy unit (excluding <span class=\"kwb\">MONSTERS</span> and <span class=\"kwb\">VEHICLES</span>) within Engagement Range of the bearer’s unit Falls Back, all models in that enemy unit must take a Desperate Escape test. When doing so, if that enemy unit is Battle-shocked, subtract 1 from each of those tests.",
+        "points": 15
+      },
+      {
+        "id": "ghosts_of_the_webway_enhancement_3",
+        "name": "Murder’s Jest",
+        "description": "Death Jester model only. Each time the bearer makes an attack that targets a unit that is Below Half-strength, each successful Hit roll scores a Critical Hit.",
+        "points": 20
+      },
+      {
+        "id": "ghosts_of_the_webway_enhancement_4",
+        "name": "Mistweave",
+        "description": "Shadowseer model only. While the bearer is leading a unit, models in that unit have the Infiltrators ability.",
+        "points": 15
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "ghosts_of_the_webway_stratagem_1",
+        "name": "EXIT THE STAGE",
+        "description": "<b>WHEN:</b> End of your opponent’s Fight phase.<br><br><b>TARGET:</b> One Harlequins unit from your army that is not within Engagement Range of one or more enemy units.<br><br><b>EFFECT:</b> Remove your unit from the battlefield and place it into Strategic Reserves.",
+        "cpCost": 1,
+        "type": "Ghosts of the Webway – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "ghosts_of_the_webway_stratagem_2",
+        "name": "BLOODY DANCE",
+        "description": "<b>WHEN:</b> End of your opponent’s Charge phase.<br><br><b>TARGET:</b> One Harlequins Infantry or Harlequins Mounted unit from your army that is within 6\" of one or more enemy units and would be eligible to declare a charge against one or more of those enemy units if it were your Charge phase.<br><br><b>EFFECT:</b> Your unit now declares a charge that only targets one or more of those enemy units, and you resolve that charge.<br><br><b>RESTRICTIONS:</b> Note that even if this charge is successful, your unit does not receive any Charge bonus this turn.",
+        "cpCost": 1,
+        "type": "Ghosts of the Webway – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Charge phase"
+      },
+      {
+        "id": "ghosts_of_the_webway_stratagem_3",
+        "name": "TRICKSTERS’ RETORT",
+        "description": "<b>WHEN:</b> Your opponent’s Movement phase, just after an enemy unit ends a Normal, Advance or Fall Back move.<br><br><b>TARGET:</b> One Troupe unit from your army that is within 9\" of that enemy unit.<br><br><b>EFFECT:</b> Your unit can make a Normal move of up to 6\".",
+        "cpCost": 1,
+        "type": "Ghosts of the Webway – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "ghosts_of_the_webway_stratagem_4",
+        "name": "MOCKING FLIGHT",
+        "description": "<b>WHEN:</b> Your Movement phase, just after a Harlequins unit from your army Falls Back.<br><br><b>TARGET:</b> That <span class=\"kwb\">HARLEQUINS</span> unit.<br><br><b>EFFECT:</b> Until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it Fell Back.",
+        "cpCost": 1,
+        "type": "Ghosts of the Webway – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "ghosts_of_the_webway_stratagem_5",
+        "name": "HEROES’ FALL",
+        "description": "<b>WHEN:</b> Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Harlequins unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit is destroyed, if that model has not fought this phase, roll one D6. On a 4+, do not remove the destroyed model from play; it can fight after the attacking unit has finished making its attacks, and is then removed from play.",
+        "cpCost": 1,
+        "type": "Ghosts of the Webway – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "ghosts_of_the_webway_stratagem_6",
+        "name": "STAGED DEATH",
+        "description": "<b>WHEN:</b> Any phase.<br><br><b>TARGET:</b> One Harlequins Character model from your army that was just destroyed. You can use this Stratagem on that model even though it was just destroyed.<br><br><b>EFFECT:</b> At the end of the phase, set your model back up on the battlefield as close as possible to where it was destroyed and not within Engagement Range of any enemy units, with half of its starting number of wounds remaining.<br><br><b>RESTRICTIONS:</b> Each model can only be targeted with this Stratagem once per battle.",
+        "cpCost": 1,
+        "type": "Ghosts of the Webway – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Any phase"
+      }
+    ]
+  },
+  {
+    "id": "guardian_battlehost",
+    "name": "Guardian Battlehost",
+    "factionId": "AE",
+    "factionName": "Aeldari",
+    "abilities": [
+      {
+        "id": "guardian_battlehost_ability_1",
+        "name": "Defend at All Costs",
+        "description": "Each time a Dire Avenger, Guardian, Support Weapon or War Walker model from your army makes an attack, if that model’s unit and/or the target unit are within range of one or more objective markers, add 1 to the Hit roll."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "guardian_battlehost_enhancement_1",
+        "name": "Craftworld’s Champion",
+        "description": "Asuryani model only. The bearer has an Objective Control characteristic of 5.",
+        "points": 25
+      },
+      {
+        "id": "guardian_battlehost_enhancement_2",
+        "name": "Ethereal Pathway",
+        "description": "Asuryani model only. In the Deploy Armies step, select up to two Guardians units from your army. Models in the selected units have the Infiltrators ability.",
+        "points": 30
+      },
+      {
+        "id": "guardian_battlehost_enhancement_3",
+        "name": "Protector of the Paths",
+        "description": "Asuryani model only. While the bearer is leading a Dire Avengers or Guardians unit, once per battle round, you can target the bearer’s unit with the Fire Overwatch Stratagem for 0CP, and while resolving that Stratagem, hits are scored on unmodified Hit rolls of 5+, or unmodified Hit rolls of 4+ instead if the bearer’s unit is within range of an objective marker you control.",
+        "points": 20
+      },
+      {
+        "id": "guardian_battlehost_enhancement_4",
+        "name": "Breath of Vaul",
+        "description": "Asuryani model only. While the bearer is leading a Storm Guardians unit, each time you roll to determine the number of attacks made with a flamer equipped by a model in that unit, you can re-roll the result, and each time you make a Damage roll for a model equipped with a fusion gun in that unit, you can re-roll the result.",
+        "points": 10
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "guardian_battlehost_stratagem_1",
+        "name": "BLADES OF ASURYAN",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Dire Avengers or Guardians unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, ranged weapons equipped by models in your unit have the [PISTOL] ability.",
+        "cpCost": 1,
+        "type": "Guardian Battlehost – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "guardian_battlehost_stratagem_2",
+        "name": "SHIELD NODES",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Dire Avengers or Guardians unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> If your unit is within range of one or more objective markers, until the end of the phase, each time an attack targets your unit, subtract 1 from the Wound roll.",
+        "cpCost": 1,
+        "type": "Guardian Battlehost – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "guardian_battlehost_stratagem_3",
+        "name": "WARDING SALVOES",
+        "description": "<b>WHEN:</b> Your Shooting phase or the Fight phase.<br><br><b>TARGET:</b> One Dire Avengers or Guardians unit from your army that has not been selected to shoot or fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack that targets an enemy unit within range of one or more objective markers, you can re-roll the Wound roll.",
+        "cpCost": 1,
+        "type": "Guardian Battlehost – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "guardian_battlehost_stratagem_4",
+        "name": "VAUL’S VENGEANCE",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase or the Fight phase, just after an enemy unit destroys a Dire Avengers or Guardians unit from your army.<br><br><b>TARGET:</b> One War Walkers unit from your army.<br><br><b>EFFECT:</b> After that enemy unit has finished making its attacks, your unit can shoot as if it were your Shooting phase, but when resolving those attacks, it can only target that enemy unit (and only if it is an eligible target).<br><br><b>RESTRICTIONS:</b> You can only use this Stratagem once per battle round.",
+        "cpCost": 1,
+        "type": "Guardian Battlehost – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "guardian_battlehost_stratagem_5",
+        "name": "TIME TO STRIKE",
+        "description": "<b>WHEN:</b> Your Movement phase.<br><br><b>TARGET:</b> One Storm Guardians unit from your army that has not been selected to move this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time your unit Advances, do not make an Advance roll. Instead, until the end of the phase, add 6\" to the Move characteristic of models in your unit. Until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it Advanced.",
+        "cpCost": 1,
+        "type": "Guardian Battlehost – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "guardian_battlehost_stratagem_6",
+        "name": "COST OF VICTORY",
+        "description": "<b>WHEN:</b> End of your opponent’s Fight phase.<br><br><b>TARGET:</b> One Guardians unit from your army.<br><br><b>EFFECT:</b> If your unit is not within Engagement Range of one or more enemy units, remove it from the battlefield and place it into Strategic Reserves. When doing so, return every destroyed <span class=\"kwb\">GUARDIANS</span> model to your unit.",
+        "cpCost": 1,
+        "type": "Guardian Battlehost – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Fight phase"
+      }
+    ]
+  },
+  {
+    "id": "khaine_s_arrow",
+    "name": "Khaine’s Arrow",
+    "factionId": "AE",
+    "factionName": "Aeldari",
+    "abilities": [
+      {
+        "id": "khaine_s_arrow_ability_1",
+        "name": "Unerring Strike",
+        "description": "In your Movement phase, each time an <span class=\"kwb\">AELDARI</span> unit from your army makes a Normal move, while making that move it can attempt to operate a closed Hatchway that is within 1\" of it at any point during that move, provided there are no enemy units within 1\" of that Hatchway. If that <span class=\"kwb\">AELDARI</span> unit does attempt to operate that Hatchway, reduce the distance each model in that unit can move this phase by 2\" (if this makes it impossible for that unit to gel within 1\" of that Hatchway it wishes to operate, then it cannot attempt to do so), and it cannot operate a Hatchway again this turn."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "khaine_s_arrow_enhancement_1",
+        "name": "Runes of Sanctuary (Psychic)",
+        "description": "PSYKER model only. Once per turn, in your opponents Shooting phase, when a friendly <span class=\"kwb\">AELDARI</span> unit within 9\" of and visible to the bearer is selected as the target of a ranged attack, the bearer can use this Enhancement. If it does, until the end of the phase, each time an attack targets that friendly <span class=\"kwb\">AELDARI</span> unit, worsen the Armour Penetration characteristic of that attack by 1.",
+        "points": 0
+      },
+      {
+        "id": "khaine_s_arrow_enhancement_2",
+        "name": "Shieldmaster",
+        "description": "Once per turn, in your Movement phase, after the bearer has moved, you can close one open Hatchway it moved through this phase (this can be done in addition to operating a Hatchway using the Unerring Strike Detachment rule).",
+        "points": 0
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "khaine_s_arrow_stratagem_1",
+        "name": "FOCUSED FUSILLADE",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One DIRE AvENGERS, FIRE DRAGONS, SwOOPING HAwKS or WARP SPIDERS unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack, add 1 to the Wound roll.",
+        "cpCost": 1,
+        "type": "Khaine’s Arrow – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "khaine_s_arrow_stratagem_2",
+        "name": "BLADEFOCUS",
+        "description": "<b>WHEN:</b> Fight phase.<br><br><b>TARGET:</b> One HOwLING BANSHEES or STRIKING ScORPIONS unit from your army that has not been selected to fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack, if it made a Charge move this turn, you can re-roll the Hit roll.",
+        "cpCost": 1,
+        "type": "Khaine’s Arrow – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "khaine_s_arrow_stratagem_3",
+        "name": "VOID GHOSTS",
+        "description": "<b>WHEN:</b> Your opponent's Shooting phase or the Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One <span class=\"kwb\">AELDARI</span> unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time an attack targets your unit, subtract 1 from the Hit roll.",
+        "cpCost": 1,
+        "type": "Khaine’s Arrow – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "khaine_s_arrow_stratagem_4",
+        "name": "CRITICAL CAPTURE",
+        "description": "<b>WHEN:</b> Your Command phase.<br><br><b>TARGET:</b> One <span class=\"kwb\">AELDARI</span> unit from your army (excluding CHARAcTER units).<br><br><b>EFFECT:</b> Until the start of your next Command phase, add 1 to the Objective Control characteristic of models in your unit. In addition, at the end of your turn, select one objective marker you control that your unit is within range of. That objective marker is Secured by your army.",
+        "cpCost": 1,
+        "type": "Khaine’s Arrow – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Command phase"
+      }
+    ]
+  },
+  {
+    "id": "protector_host",
+    "name": "Protector Host",
+    "factionId": "AE",
+    "factionName": "Aeldari",
+    "abilities": [
+      {
+        "id": "protector_host_ability_1",
+        "name": "Determined Defence",
+        "description": "Each time an attack targets a GUARDiANS or DiRE AvENGERS unit from your army, if that unit is within range of an objective marker, add 1 to any armour saving throw made against that attack."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "protector_host_enhancement_1",
+        "name": "Grace of Khaine",
+        "description": "Each time the bearer makes an attack, re-roll a Hit roll of 1, re-roll a Wound roll of 1 and re-roll a Damage roll of 1.",
+        "points": 0
+      },
+      {
+        "id": "protector_host_enhancement_2",
+        "name": "Rallying Cry",
+        "description": "In the Deploy Armies step, when the bearer is set up in an Entry Zone, you can set up two friendly GUARDiANS units within that Entry Zone instead of any other units.",
+        "points": 0
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "protector_host_stratagem_1",
+        "name": "VOID GHOSTS",
+        "description": "<b>WHEN:</b> Your opponent's Shooting phase or the Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One <span class=\"kwb\">AELDARI</span> unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time an attack targets your unit, subtract 1 from the Hit roll.",
+        "cpCost": 1,
+        "type": "Protector Host – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "protector_host_stratagem_2",
+        "name": "SHURIKEN STORM",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One <span class=\"kwb\">AELDARI</span> unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, add 1 to the Strength characteristic of Avenger shuriken catapults, shuriken catapults, shuriken pistols and shuriken cannons equipped by models in your unit.",
+        "cpCost": 1,
+        "type": "Protector Host – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "protector_host_stratagem_3",
+        "name": "RAPID AMBUSH",
+        "description": "<b>WHEN:</b> Your opponent’s Movement phase, just after an enemy unit opens a Hatchway.<br><br><b>TARGET:</b> One DIRE AvENGERS or GUARDIANS unit from your army that has not fired Overwatch this phase and is wholly on the opposite side of that Hatchway from that enemy unit.<br><br><b>EFFECT:</b> If that enemy unit is within 9\" of and visible to your unit, roll one D6: on a 2-5, that enemy unit suffers 1 mortal wound; on a 6, that enemy unit suffers 2 mortal wounds. If that enemy unit suffers one or more mortal wounds in this way, your unit can then make a Normal move of up to D6”.<br><br><b>RESTRICTIONS:</b> Until the end of the turn, your unit cannot fire Overwatch.",
+        "cpCost": 1,
+        "type": "Protector Host – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "protector_host_stratagem_4",
+        "name": "SHIELD OF BLADES",
+        "description": "<b>WHEN:</b> Your opponent’s Movement or Charge phase.<br><br><b>TARGET:</b> One DIRE AvENGERS or GUARDIAN DEfENDERS unit from your army that has not fired Overwatch this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack while firing Overwatch, an unmodified Hit roll of 5+ is required to score a hit, instead of an unmodified 6.",
+        "cpCost": 1,
+        "type": "Protector Host – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement or Charge phase"
+      }
+    ]
+  },
+  {
+    "id": "seer_council",
+    "name": "Seer Council",
+    "factionId": "AE",
+    "factionName": "Aeldari",
+    "abilities": [
+      {
+        "id": "seer_council_ability_1",
+        "name": "Strands of Fate",
+        "description": "At the start of the first battle round, you generate Fate dice by rolling a number of D6 based on the battle size, as shown below. Keep your Fate dice to one side - this is your Fate dice pool.<br><br><div class=\"BreakInsideAvoid\"  style=\"\"\"><table width=\"0\" border=\"0\" bordercolor=\"#888\" cellpadding=\"4\" cellspacing=\"0\" style=\"border-collapse:collapse;border-width:0px\"><tbody><tr><td><table class=\" customTable tablefont\" border=\"1\" bordercolor=\"#888\" cellpadding=\"4\" style=\"border-collapse:collapse;border-color:#888888;border-width:0px\"><tbody><tr><td style=\"border-width:1px 1px 1px 1px;border-style:none none none none;background-color:rgb(22,105,114);color:rgb(255,255,255);text-align:left;vertical-align:middle;font-size:22px;width:240px;height:0px;\"><b>BATTLE SIZE</b></td><td style=\"border-width:1px 1px 1px 1px;border-style:none none none none;background-color:rgb(22,105,114);color:rgb(255,255,255);text-align:center;vertical-align:middle;font-size:22px;width:240px;height:0px;\"><b>NUMBER OF D6</b></td></tr><tr><td style=\"border-width:1px 1px 1px 1px;border-style:none none none none;text-align:left;vertical-align:middle;font-size:18px;width:240px;height:0px;\">Incursion</td><td style=\"border-width:1px 1px 1px 1px;border-style:none none none none;text-align:center;vertical-align:middle;font-size:18px;width:240px;height:0px;\"><b>3</b></td></tr><tr><td style=\"border-width:1px 1px 1px 1px;border-style:dotted none dotted none;text-align:left;vertical-align:middle;font-size:18px;width:240px;height:0px;\">Strike Force</td><td style=\"border-width:1px 1px 1px 1px;border-style:dotted none dotted none;text-align:center;vertical-align:middle;font-size:18px;width:240px;height:0px;\"><b>6</b></td></tr><tr><td style=\"border-width:1px 1px 1px 1px;border-style:none none dotted none;text-align:left;vertical-align:middle;font-size:18px;width:240px;height:0px;\">Onslaught</td><td style=\"border-width:1px 1px 1px 1px;border-style:none none dotted none;text-align:center;vertical-align:middle;font-size:18px;width:240px;height:0px;\"><b>9</b></td></tr></tbody></table></td></tr></tbody></table></div><br>Each time you use one of the Stratagems below, if your Fate dice pool contains one or more Fate dice showing the corresponding value in the table below, you can discard one of those corresponding Fate dice. If you do, reduce the CP cost of that usage of that Stratagem by 1CP.<br><br><div class=\"BreakInsideAvoid\"  style=\"\"\"><table width=\"0\" border=\"0\" bordercolor=\"#888\" cellpadding=\"4\" cellspacing=\"0\" style=\"border-collapse:collapse;border-width:0px\"><tbody><tr><td><table class=\" customTable tablefont\" border=\"1\" bordercolor=\"#888\" cellpadding=\"4\" style=\"border-collapse:collapse;border-color:#888888;border-width:0px\"><tbody><tr><td style=\"border-width:1px 1px 1px 1px;border-style:none none none none;background-color:rgb(22,105,114);color:rgb(255,255,255);text-align:left;vertical-align:middle;font-size:22px;width:240px;height:0px;\"><b>STRATAGEM</b></td><td style=\"border-width:1px 1px 1px 1px;border-style:none none none none;background-color:rgb(22,105,114);color:rgb(255,255,255);text-align:center;vertical-align:middle;font-size:22px;width:240px;height:0px;\"><b>FATE DICE VALUE</b></td></tr><tr><td style=\"border-width:1px 1px 1px 1px;border-style:none none none none;text-align:left;vertical-align:middle;font-size:18px;width:240px;height:0px;\"><span class=\"tooltip00209\" data-tooltip-content=\"#tooltip_content00209\"><span class=\"tt kwbu\">Presentiment</span> <span class=\"tt kwbu\">of</span> <span class=\"tt kwbu\">Dread</span></span></td><td style=\"border-width:1px 1px 1px 1px;border-style:none none none none;text-align:center;vertical-align:middle;font-size:18px;width:240px;height:0px;\"><b>1</b></td></tr><tr><td style=\"border-width:1px 1px 1px 1px;border-style:dotted none dotted none;text-align:left;vertical-align:middle;font-size:18px;width:240px;height:0px;\"><span class=\"tooltip00212\" data-tooltip-content=\"#tooltip_content00212\"><span class=\"tt kwbu\">Forewarned</span></span></td><td style=\"border-width:1px 1px 1px 1px;border-style:dotted none dotted none;text-align:center;vertical-align:middle;font-size:18px;width:240px;height:0px;\"><b>2</b></td></tr><tr><td style=\"border-width:1px 1px 1px 1px;border-style:none none dotted none;text-align:left;vertical-align:middle;font-size:18px;width:240px;height:0px;\"><span class=\"tooltip00213\" data-tooltip-content=\"#tooltip_content00213\"><span class=\"tt kwbu\">Unshrouded</span> <span class=\"tt kwbu\">Truth</span></span></td><td style=\"border-width:1px 1px 1px 1px;border-style:none none dotted none;text-align:center;vertical-align:middle;font-size:18px;width:240px;height:0px;\"><b>3</b></td></tr><tr><td style=\"border-width:1px 1px 1px 1px;border-style:dotted none dotted none;text-align:left;vertical-align:middle;font-size:18px;width:240px;height:0px;\"><span class=\"tooltip00214\" data-tooltip-content=\"#tooltip_content00214\"><span class=\"tt kwbu\">Fate</span> <span class=\"tt kwbu\">Inescapable</span></span></td><td style=\"border-width:1px 1px 1px 1px;border-style:dotted none dotted none;text-align:center;vertical-align:middle;font-size:18px;width:240px;height:0px;\"><b>4</b></td></tr><tr><td style=\"border-width:1px 1px 1px 1px;border-style:none none dotted none;text-align:left;vertical-align:middle;font-size:18px;width:240px;height:0px;\"><span class=\"tooltip00215\" data-tooltip-content=\"#tooltip_content00215\"><span class=\"tt kwbu\">Isha’s</span> <span class=\"tt kwbu\">Fury</span></span></td><td style=\"border-width:1px 1px 1px 1px;border-style:none none dotted none;text-align:center;vertical-align:middle;font-size:18px;width:240px;height:0px;\"><b>5</b></td></tr><tr><td style=\"border-width:1px 1px 1px 1px;border-style:none none dotted none;text-align:left;vertical-align:middle;font-size:18px;width:240px;height:0px;\"><span class=\"tooltip00216\" data-tooltip-content=\"#tooltip_content00216\"><span class=\"tt kwbu\">Psychic</span> <span class=\"tt kwbu\">Shield</span></span></td><td style=\"border-width:1px 1px 1px 1px;border-style:none none dotted none;text-align:center;vertical-align:middle;font-size:18px;width:240px;height:0px;\"><b>6</b></td></tr></tbody></table></td></tr></tbody></table></div>"
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "seer_council_enhancement_1",
+        "name": "Lucid Eye",
+        "description": "Asuryani Psyker model only. In your Command phase, you can add 1 to or subtract 1 from the value of one Fate dice in your Fate dice pool.",
+        "points": 30
+      },
+      {
+        "id": "seer_council_enhancement_2",
+        "name": "Runes of Warding",
+        "description": "Asuryani Psyker model only. Models in the bearer’s unit have the Feel No Pain 4+ ability against mortal wounds, Psychic Attacks and Critical Wounds caused by attacks with the [devastating wounds] ability.",
+        "points": 25
+      },
+      {
+        "id": "seer_council_enhancement_3",
+        "name": "Stone of Eldritch Fury",
+        "description": "Asuryani Psyker model only. Add 12\" to the Range characteristic of ranged Psychic weapons equipped by the bearer.",
+        "points": 15
+      },
+      {
+        "id": "seer_council_enhancement_4",
+        "name": "Torc of Morai-Heg",
+        "description": "Asuryani Psyker model only. Once per turn, when your opponent targets a unit from their army within 12\" of the bearer with a Stratagem, the bearer can use this Enhancement. If it does, increase the CP cost of that usage of that Stratagem by 1CP.",
+        "points": 20
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "seer_council_stratagem_1",
+        "name": "FATE INESCAPABLE",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Asuryani Infantry unit from your army (excluding Wraith Construct units) that has not been selected to shoot this phase and is within 9\" of one or more friendly Asuryani Psyker models.<br><br><b>EFFECT:</b> Until the end of the phase, ranged weapons equipped by models in your unit have the [IGNORES COVER] ability and each time a model in your unit makes an attack, on a Critical Wound, improve the Armour Penetration characteristic of that attack by 1.",
+        "cpCost": 1,
+        "type": "Seer Council – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "seer_council_stratagem_2",
+        "name": "ISHA’S FURY",
+        "description": "<b>WHEN:</b> Your opponent’s Movement phase, just after an enemy unit ends a Normal, Advance or Fall Back move.<br><br><b>TARGET:</b> One Asuryani Psyker model from your army within 9\" of that enemy unit.<br><br><b>EFFECT:</b> Roll six D6: for each 3+, that enemy unit suffers 1 mortal wound.",
+        "cpCost": 1,
+        "type": "Seer Council – Epic Deed Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "seer_council_stratagem_3",
+        "name": "PRESENTIMENT OF DREAD",
+        "description": "<b>WHEN:</b> Command phase.<br><br><b>TARGET:</b> One Asuryani Psyker model from your army.<br><br><b>EFFECT:</b> Select one enemy unit within 18\" of and visible to your model. That enemy unit must take a Battle-shock test, subtracting 1 from that test.",
+        "cpCost": 1,
+        "type": "Seer Council – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Command phase"
+      },
+      {
+        "id": "seer_council_stratagem_4",
+        "name": "PSYCHIC SHIELD",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Asuryani Infantry unit from your army (excluding Wraith Construct units) that was selected as the target of one or more of the attacking unit’s attacks and is within 9\" of one or more friendly Asuryani Psyker models.<br><br><b>EFFECT:</b> Until the end of the phase, your unit can only be selected as the target of a ranged attack if the attacking model is within 18\".",
+        "cpCost": 1,
+        "type": "Seer Council – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "seer_council_stratagem_5",
+        "name": "FOREWARNED",
+        "description": "<b>WHEN:</b> Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Asuryani Infantry unit from your army (excluding Wraith Construct units) that was selected as the target of one or more of the attacking unit’s attacks and is within 9\" of one or more friendly Asuryani Psyker models.<br><br><b>EFFECT:</b> Until the end of the phase, each time an attack targets your unit, subtract 1 from the Hit roll and subtract 1 from the Wound roll.",
+        "cpCost": 1,
+        "type": "Seer Council – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "seer_council_stratagem_6",
+        "name": "UNSHROUDED TRUTH",
+        "description": "<b>WHEN:</b> Your Movement phase.<br><br><b>TARGET:</b> One Asuryani Infantry unit from your army (excluding Wraith Construct units) that has not been selected to move this phase, was not set up on the battlefield this phase, and is within 9\" of one or more friendly Asuryani Psyker models.<br><br><b>EFFECT:</b> Remove your unit from the battlefield and set it up again anywhere on the battlefield that is more than 9\" horizontally away from all enemy models.<br><br><b>RESTRICTIONS:</b> Until the end of the phase, your unit is not eligible to be selected to move.",
+        "cpCost": 1,
+        "type": "Seer Council – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      }
+    ]
+  },
+  {
+    "id": "serpent_s_brood",
+    "name": "Serpent’s Brood",
+    "factionId": "AE",
+    "factionName": "Aeldari",
+    "abilities": [
+      {
+        "id": "serpent_s_brood_ability_1",
+        "name": "Boons of the Brood",
+        "description": "Weapons equipped by Harlequins Mounted and Harlequins Vehicle models from your army have the [SUSTAINED HITS 1] ability.<br><br>Each time a Harlequins unit from your army disembarks from a Transport, until the end of the turn, that unit’s weapons have the [SUSTAINED HITS 1] ability.<br><br><span class=\"hi_custom\">TRAVELLING PLAYERS</span><br><ul><li>Troupe units from your army gain the <span class=\"kwb\">BATTLELINE</span> keyword, and <span class=\"kwb\">TROUPE</span> models in those units have an Objective Control characteristic of 2.</li><li>You can include up to three of each of the following models in your army: Death Jester, Shadowseer, Troupe Master.</li></ul>"
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "serpent_s_brood_enhancement_1",
+        "name": "Key of Ghosts",
+        "description": "Harlequins model only (excluding Solitaire models). Models in the bearer’s unit have the Scouts 6\" ability.",
+        "points": 20
+      },
+      {
+        "id": "serpent_s_brood_enhancement_2",
+        "name": "Weavers’ Wail",
+        "description": "Troupe Master model only. Add 3 to the Strength and add 1 to the Attacks characteristics of the bearer’s melee weapons.",
+        "points": 20
+      },
+      {
+        "id": "serpent_s_brood_enhancement_3",
+        "name": "Fanged Leer",
+        "description": "Death Jester model only. When using the bearer’s Cruel Amusement ability, you can select two of the abilities for its shrieker cannon to gain, instead of one.",
+        "points": 10
+      },
+      {
+        "id": "serpent_s_brood_enhancement_4",
+        "name": "Shedskin Raiment",
+        "description": "Shadowseer model only. After both players have deployed their armies, select up to three Harlequins units from your army and redeploy them. When doing so, you can set those units up in Strategic Reserves, regardless of how many units are already in Strategic Reserves.",
+        "points": 25
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "serpent_s_brood_stratagem_1",
+        "name": "SKYWARD LUNGE",
+        "description": "<b>WHEN:</b> End of your opponent’s Fight phase.<br><br><b>TARGET:</b> One Harlequins Vehicle or Harlequins Mounted unit from your army.<br><br><b>EFFECT:</b> If your unit is not within Engagement Range of one or more enemy units, you can remove it from the battlefield and place it into Strategic Reserves.",
+        "cpCost": 1,
+        "type": "Serpent’s Brood – Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "serpent_s_brood_stratagem_2",
+        "name": "FANGS OF THE BROOD",
+        "description": "<b>WHEN:</b> Start of the Fight phase.<br><br><b>TARGET:</b> One Troupe unit from your army.<br><br><b>EFFECT:</b> Until the end of the phase, when using your unit’s Dance of Death ability, you can select three of the abilities for your unit to gain, instead of one.",
+        "cpCost": 1,
+        "type": "Serpent’s Brood – Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "serpent_s_brood_stratagem_3",
+        "name": "VENOMOUS WRATH",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Harlequins Vehicle unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> After your unit has shot, if it is not within Engagement Range of one or more enemy units, it can make a Normal move of up to 6\". Until the end of the turn, your unit is not eligible to declare a charge.",
+        "cpCost": 1,
+        "type": "Serpent’s Brood – Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "serpent_s_brood_stratagem_4",
+        "name": "STRIKING STRIDE",
+        "description": "<b>WHEN:</b> Your Charge phase.<br><br><b>TARGET:</b> One Harlequins unit from your army.<br><br><b>EFFECT:</b> Until the end of the phase, your unit is eligible to declare a charge in a turn in which it Advanced.",
+        "cpCost": 1,
+        "type": "Serpent’s Brood – Stratagem",
+        "turn": "Your turn",
+        "phase": "Charge phase"
+      },
+      {
+        "id": "serpent_s_brood_stratagem_5",
+        "name": "WEAVERS’ COILS",
+        "description": "<b>WHEN:</b> End of your Fight phase.<br><br><b>TARGET:</b> One Harlequins Mounted unit from your army that was eligible to fight this phase.<br><br><b>EFFECT:</b> If your unit is not within Engagement Range of one or more enemy units, it can make a Normal move. Otherwise, your unit can make a Fall Back move of up to 6\".",
+        "cpCost": 1,
+        "type": "Serpent’s Brood – Stratagem",
+        "turn": "Your turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "serpent_s_brood_stratagem_6",
+        "name": "WEAVING STRIDE",
+        "description": "<b>WHEN:</b> Your opponent’s Movement phase, just after an enemy unit ends a Normal, Advance or Fall Back move.<br><br><b>TARGET:</b> One Harlequins Infantry unit from your army that is within 9\" of that enemy unit.<br><br><b>EFFECT:</b> Your unit can make a Normal move of up to 6\".",
+        "cpCost": 1,
+        "type": "Serpent’s Brood – Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      }
+    ]
+  },
+  {
+    "id": "spirit_conclave",
+    "name": "Spirit Conclave",
+    "factionId": "AE",
+    "factionName": "Aeldari",
+    "abilities": [
+      {
+        "id": "spirit_conclave_ability_1",
+        "name": "Shepherds of the Dead",
+        "description": "Each time an Asuryani Psyker model from your army is destroyed by an enemy unit, that enemy unit gains a Vengeful Dead token. Each time a Wraith Construct model from your army makes an attack that targets a unit with one or more Vengeful Dead tokens, add 1 to the Hit roll and add 1 to the Wound roll.<br><br><span class=\"kwb\">ASURYANI</span> <span class=\"kwb\">PSYKER</span> models from your army have the following ability:<br><br><b>Spirit Guides (Aura):</b> While a Wraithblades, Wraithguard or Wraithlord unit from your army is within 12\" of this model, that unit has the Battle Focus ability.<br><br><span class=\"hi_custom\">KEYWORDS</span><br><span class=\"kwb\">WRAITHBLADES</span> and <span class=\"kwb\">WRAITHGUARD</span> units from your army gain the <span class=\"kwb\">BATTLELINE</span> keyword."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "spirit_conclave_enhancement_1",
+        "name": "Light of Clarity",
+        "description": "Spiritseer model only. In your Command phase, select one friendly Wraith Construct unit within 12\" of the bearer. Until the start of your next Command phase, add 1 to the Objective Control characteristic of <span class=\"kwb\">INFANTRY</span> models in that unit and add 3 to the Objective Control characteristic of <span class=\"kwb\">MONSTER</span> models in that unit.",
+        "points": 30
+      },
+      {
+        "id": "spirit_conclave_enhancement_2",
+        "name": "Stave of Kurnous",
+        "description": "Spiritseer model only. In your Command phase, select one friendly Wraith Construct unit within 12\" of the bearer (excluding <span class=\"kwb\">TITANIC</span> units). Until the start of your next Command phase, each time a model in that unit makes an attack, on a Critical Wound, that attack has the [precision] ability.",
+        "points": 15
+      },
+      {
+        "id": "spirit_conclave_enhancement_3",
+        "name": "Rune of Mists",
+        "description": "Spiritseer model only. In your Command phase, select one friendly Wraith Construct unit within 12\" of the bearer. Until the start of your next Command phase, each time a ranged attack targets that unit, unless the attacking model is within 18\", models in that unit have the Benefit of Cover against that attack.",
+        "points": 10
+      },
+      {
+        "id": "spirit_conclave_enhancement_4",
+        "name": "Higher Duty",
+        "description": "Spiritseer model only. Once per turn, when an enemy unit ends a Normal, Advance or Fall Back move within 9\" of the bearer, the bearer’s unit can make a Normal move of up to 6\".",
+        "points": 25
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "spirit_conclave_stratagem_1",
+        "name": "CRUSHING STRIDES",
+        "description": "<b>WHEN:</b> Your Charge phase, just after a Wraithblades, Wraithlord or Wraithknight unit from your army ends a Charge move.<br><br><b>TARGET:</b> That <span class=\"kwb\">WRAITHBLADES</span>, <span class=\"kwb\">WRAITHLORD</span> or <span class=\"kwb\">WRAITHKNIGHT</span> unit.<br><br><b>EFFECT:</b> Select one enemy unit within Engagement Range of your unit and roll one D6 for each <span class=\"kwb\">WRAITHBLADES</span> model in your unit, or roll four D6 if your unit has the <span class=\"kwb\">WRAITHLORD</span> keyword, or roll six D6 if your unit has the <span class=\"kwb\">WRAITHKNIGHT</span> keyword: for each 3+, that enemy unit suffers 1 mortal wound.",
+        "cpCost": 1,
+        "type": "Spirit Conclave – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Charge phase"
+      },
+      {
+        "id": "spirit_conclave_stratagem_2",
+        "name": "BLADES FROM BEYOND",
+        "description": "<b>WHEN:</b> Fight phase.<br><br><b>TARGET:</b> One Wraithblades, Wraithlord or Wraithknight unit from your army that has not been selected to fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, melee weapons equipped by models in your unit have the [DEVASTATING WOUNDS] ability.",
+        "cpCost": 1,
+        "type": "Spirit Conclave – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "spirit_conclave_stratagem_3",
+        "name": "WRAITHBONE ARMOUR",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Wraith Construct unit from your army (excluding TiTANic units] that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time an attack is allocated to a model in your unit, subtract 1 from the Damage characteristic of that attack.",
+        "cpCost": 1,
+        "type": "Spirit Conclave – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "spirit_conclave_stratagem_4",
+        "name": "SEER’S EYE",
+        "description": "<b>WHEN:</b> Your Shooting phase or the Fight phase.<br><br><b>TARGET:</b> One Aeldari Psyker model from your army and one friendly Wraith Construct unit within 12\" of it that has not been selected to shoot or fight this phase.<br><br><b>EFFECT:</b> Select one enemy unit visible to your <span class=\"kwb\">PSYKER</span> model. Until the end of the phase, each time a model in your <span class=\"kwb\">WRAITH</span> <span class=\"kwb\">CONSTRUCT</span> unit makes an attack that targets that enemy unit, you can ignore any or all modifiers to the Armour Penetration and/or Damage characteristics of that attack.",
+        "cpCost": 1,
+        "type": "Spirit Conclave – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "spirit_conclave_stratagem_5",
+        "name": "SPIRIT TOKEN",
+        "description": "<b>WHEN:</b> Start of your Movement phase.<br><br><b>TARGET:</b> One Wraithblades or Wraithguard unit from your army.<br><br><b>EFFECT:</b> Select one objective marker you control that your unit is within range of. That objective marker remains under your control until your opponent’s Level of Control over that objective marker is greater than yours at the end of a phase.",
+        "cpCost": 1,
+        "type": "Spirit Conclave – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "spirit_conclave_stratagem_6",
+        "name": "SOUL BRIDGE",
+        "description": "<b>WHEN:</b> Your Command phase.<br><br><b>TARGET:</b> One Wraithblades, Wraithguard or Wraithlord unit from your army and one Asuryani Psyker model from your army.<br><br><b>EFFECT:</b> Until the start of your next Command phase, your <span class=\"kwb\">WRAITHBLADES</span>, <span class=\"kwb\">WRAITHGUARD</span> or <span class=\"kwb\">WRAITHLORD</span> unit is considered to be within 12\" of your <span class=\"kwb\">PSYKER</span> model for the purposes of the Psychic Guidance and Spirit Guides abilities.",
+        "cpCost": 1,
+        "type": "Spirit Conclave – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Command phase"
+      }
+    ]
+  },
+  {
+    "id": "star_dancer_masque",
+    "name": "Star-dancer Masque",
+    "factionId": "AE",
+    "factionName": "Aeldari",
+    "abilities": [
+      {
+        "id": "star_dancer_masque_ability_1",
+        "name": "Faolchú’s Last Flight",
+        "description": "Each time an <span class=\"kwb\">AELDARI</span> model from your army is destroyed by a melee attack, if it has not fought this phase, roll one D6: on a 3+, do not remove it from play. The destroyed model can fight after the attacking model’s unit has finished making its attacks, and is then removed from play."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "star_dancer_masque_enhancement_1",
+        "name": "Prismatic Garb",
+        "description": "Enemy units cannot fire Overwatch at the bearer.",
+        "points": 0
+      },
+      {
+        "id": "star_dancer_masque_enhancement_2",
+        "name": "Path of Eldanesh",
+        "description": "The bearer has the Fights First ability and, each time the bearer opens a Hatchway, until the end of the turn, improve the Armour Penetration characteristic of melee weapons equipped by the bearer by 1.",
+        "points": 0
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "star_dancer_masque_stratagem_1",
+        "name": "VOID GHOSTS",
+        "description": "<b>WHEN:</b> Your opponent's Shooting phase or the Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One <span class=\"kwb\">AELDARI</span> unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time an attack targets your unit, subtract 1 from the Hit roll.",
+        "cpCost": 1,
+        "type": "Star-dancer Masque – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "star_dancer_masque_stratagem_2",
+        "name": "DARTING STRIKES",
+        "description": "<b>WHEN:</b> Fight phase.<br><br><b>TARGET:</b> One <span class=\"kwb\">AELDARI</span> unit from your army that has not been selected to fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack, you can re-roll the Wound roll.",
+        "cpCost": 1,
+        "type": "Star-dancer Masque – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "star_dancer_masque_stratagem_3",
+        "name": "SERPENT STRIKE",
+        "description": "<b>WHEN:</b> Fight phase, just after an <span class=\"kwb\">AELDARI</span> unit from your army destroys an enemy unit.<br><br><b>TARGET:</b> That <span class=\"kwb\">AELDARI</span> unit.<br><br><b>EFFECT:</b> Until the end of the phase, each time your unit makes a Consolidation move, it can move up to D3+3\" instead of up to 3\" and, if it cannot end that move within Engagement Range of one or more enemy units that are visible to it (and in Unit Coherency), it can still make that Consolidation move, and when doing so can move in any direction.",
+        "cpCost": 1,
+        "type": "Star-dancer Masque – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "star_dancer_masque_stratagem_4",
+        "name": "ACROBATIC LEAPS",
+        "description": "<b>WHEN:</b> Your Movement phase.<br><br><b>TARGET:</b> One <span class=\"kwb\">AELDARI</span> unit from your army that has not been selected to move this phase.<br><br><b>EFFECT:</b> Until the end of the phase, Desperate Escape tests taken for models in your unit are automatically passed, and each time your unit makes a Normal, Advance or Fall Back move, models in your unit can move through other models as if they were not there.",
+        "cpCost": 1,
+        "type": "Star-dancer Masque – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      }
+    ]
+  },
+  {
+    "id": "warhost",
+    "name": "Warhost",
+    "factionId": "AE",
+    "factionName": "Aeldari",
+    "abilities": [
+      {
+        "id": "warhost_ability_1",
+        "name": "Martial Grace",
+        "description": "<ul><li>At the start of the battle round, you receive 1 additional Battle Focus token.</li><li>Each time a unit from your army performs the Swift as the Wind Agile Manoeuvre, until the end of the phase, add an additional 1\" to the Move characteristic of models in that unit.</li><li>Each time a unit from your army performs an Agile Manoeuvre that involves rolling a D6, add 1 to the result.</li></ul>"
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "warhost_enhancement_1",
+        "name": "Phoenix Gem",
+        "description": "Asuryani model only. The first time the bearer is destroyed, remove it from play, then, at the end of the phase, roll one D6: on a 2+, set the bearer back up on the battlefield as close as possible to where it was destroyed and not within Engagement Range of one or more enemy units, with its full wounds remaining.",
+        "points": 35
+      },
+      {
+        "id": "warhost_enhancement_2",
+        "name": "Timeless Strategist",
+        "description": "Asuryani model only. At the start of the battle round, if the bearer is on the battlefield (or any Transport it is embarked within is on the battlefield), you receive 1 additional Battle Focus token.",
+        "points": 15
+      },
+      {
+        "id": "warhost_enhancement_3",
+        "name": "Gift of Foresight",
+        "description": "Asuryani model only. Once per battle round, you can target the bearer’s unit with the Command Re-roll Stratagem for 0CP.",
+        "points": 15
+      },
+      {
+        "id": "warhost_enhancement_4",
+        "name": "Psychic Destroyer",
+        "description": "Asuryani Psyker model only. Add 1 to the Damage characteristic of ranged Psychic weapons equipped by the bearer.",
+        "points": 30
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "warhost_stratagem_1",
+        "name": "LIGHTNING-FAST REACTIONS",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Asuryani unit from your army (excluding Wraith Construct units) that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time an attack targets your unit, subtract 1 from the Hit roll.",
+        "cpCost": 1,
+        "type": "Warhost – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "warhost_stratagem_2",
+        "name": "BLITZING FIREPOWER",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Asuryani unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, ranged weapons equipped by models in your unit have the [SUSTAINED HITS 1] ability while targeting an enemy unit within 12\". If such a weapon already has that ability, until the end of the phase, each time an attack is made with that weapon, an unmodified Hit roll of 5+ scores a Critical Hit.",
+        "cpCost": 1,
+        "type": "Warhost – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "warhost_stratagem_3",
+        "name": "SKYBORNE SANCTUARY",
+        "description": "<b>WHEN:</b> End of the Fight phase.<br><br><b>TARGET:</b> One Asuryani unit from your army that was eligible to fight this phase and one friendly Transport it is able to embark within.<br><br><b>EFFECT:</b> If your <span class=\"kwb\">ASURYANI</span> unit is not within Engagement Range of one or more enemy units and is wholly within 6\" of that <span class=\"kwb\">TRANSPORT</span>, it can embark within it.",
+        "cpCost": 1,
+        "type": "Warhost – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "warhost_stratagem_4",
+        "name": "FEIGNED RETREAT",
+        "description": "<b>WHEN:</b> Your Movement phase, just after an Asuryani unit from your army Falls Back.<br><br><b>TARGET:</b> That <span class=\"kwb\">ASURYANI</span> unit.<br><br><b>EFFECT:</b> Until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it Fell Back.",
+        "cpCost": 1,
+        "type": "Warhost – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "warhost_stratagem_5",
+        "name": "FIRE AND FADE",
+        "description": "<b>WHEN:</b> Your Shooting phase, just after an Asuryani Infantry unit from your army (excluding Aircraft, Asurmen and Wraith Construct units) has shot.<br><br><b>TARGET:</b> That <span class=\"kwb\">ASURYANI</span> unit.<br><br><b>EFFECT:</b> Your unit can make a Normal move of up to D6+1\".<br><br><b>RESTRICTIONS:</b> Until the end of the turn, your unit is not eligible to declare a charge or embark within a Transport.",
+        "cpCost": 1,
+        "type": "Warhost – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "warhost_stratagem_6",
+        "name": "WEBWAY TUNNEL",
+        "description": "<b>WHEN:</b> End of your opponent’s Fight phase.<br><br><b>TARGET:</b> One Asuryani Infantry unit from your army that is wholly within 9\" of one or more battlefield edges.<br><br><b>EFFECT:</b> If your unit is not within Engagement Range of one or more enemy units, remove it from the battlefield and place it into Strategic Reserves.",
+        "cpCost": 1,
+        "type": "Warhost – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Fight phase"
+      }
+    ]
+  },
+  {
+    "id": "windrider_host",
+    "name": "Windrider Host",
+    "factionId": "AE",
+    "factionName": "Aeldari",
+    "abilities": [
+      {
+        "id": "windrider_host_ability_1",
+        "name": "Ride the Wind",
+        "description": "In the Declare Battle Formations step you can set up Asuryani Mounted and Vyper units from your army in Reserves. During the battle, such units can be set up on the battlefield as if they were arriving from Strategic Reserves. For the purposes of setting up <span class=\"kwb\">ASURYANI</span> <span class=\"kwb\">MOUNTED</span> or <span class=\"kwb\">VYPER</span> units from your army on the battlefield, treat the current battle round number as being one higher than it actually is.<br><br>In addition, at the end of your opponent’s turn, you can select a number of <span class=\"kwb\">ASURYANI</span> <span class=\"kwb\">MOUNTED</span> or <span class=\"kwb\">VYPER</span> units from your army (excluding units within Engagement Range of one or more enemy units), then remove those units from the battlefield and place them into Strategic Reserves. The maximum number of units you can select depends on the battle size, as shown below.<br><br><div class=\"BreakInsideAvoid\"  style=\"\"\"><table width=\"0\" border=\"0\" bordercolor=\"#888\" cellpadding=\"4\" cellspacing=\"0\" style=\"border-collapse:collapse;border-width:0px\"><tbody><tr><td><table class=\" customTable tablefont\" border=\"1\" bordercolor=\"#888\" cellpadding=\"4\" style=\"border-collapse:collapse;border-color:#888888;border-width:0px\"><tbody><tr><td style=\"border-width:1px 1px 1px 1px;border-style:none none none none;background-color:rgb(22,105,114);color:rgb(255,255,255);text-align:left;vertical-align:middle;font-size:22px;width:240px;height:0px;\"><b>BATTLE SIZE</b></td><td style=\"border-width:1px 1px 1px 1px;border-style:none none none none;background-color:rgb(22,105,114);color:rgb(255,255,255);text-align:center;vertical-align:middle;font-size:22px;width:240px;height:0px;\"><b>NUMBER OF UNITS</b></td></tr><tr><td style=\"border-width:1px 1px 1px 1px;border-style:none none none none;text-align:left;vertical-align:middle;font-size:18px;width:240px;height:0px;\">Incursion</td><td style=\"border-width:1px 1px 1px 1px;border-style:none none none none;text-align:center;vertical-align:middle;font-size:18px;width:240px;height:0px;\"><b>1</b></td></tr><tr><td style=\"border-width:1px 1px 1px 1px;border-style:dotted none dotted none;text-align:left;vertical-align:middle;font-size:18px;width:240px;height:0px;\">Strike Force</td><td style=\"border-width:1px 1px 1px 1px;border-style:dotted none dotted none;text-align:center;vertical-align:middle;font-size:18px;width:240px;height:0px;\"><b>2</b></td></tr><tr><td style=\"border-width:1px 1px 1px 1px;border-style:none none dotted none;text-align:left;vertical-align:middle;font-size:18px;width:240px;height:0px;\">Onslaught</td><td style=\"border-width:1px 1px 1px 1px;border-style:none none dotted none;text-align:center;vertical-align:middle;font-size:18px;width:240px;height:0px;\"><b>3</b></td></tr></tbody></table></td></tr></tbody></table></div><br><span class=\"hi_custom\">KEYWORDS</span><br>Windriders units from your army gain the <span class=\"kwb\">BATTLELINE</span> keyword."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "windrider_host_enhancement_1",
+        "name": "Firstdrawn Blade",
+        "description": "Asuryani Mounted model only. Models in the bearer’s unit have the Scouts 9\" ability.",
+        "points": 10
+      },
+      {
+        "id": "windrider_host_enhancement_2",
+        "name": "Mirage Field",
+        "description": "Asuryani Mounted model only. Each time an attack targets the bearer’s unit, subtract 1 from the Hit roll.",
+        "points": 25
+      },
+      {
+        "id": "windrider_host_enhancement_3",
+        "name": "Seersight Strike",
+        "description": "Asuryani Mounted Psyker model only. Psychic weapons equipped by the bearer have the [anti-monster 2+] and [anti-vehicle 2+] abilities.",
+        "points": 15
+      },
+      {
+        "id": "windrider_host_enhancement_4",
+        "name": "Echoes of Ulthanesh",
+        "description": "Asuryani Mounted model only. In your Command phase, roll one D6, adding 1 to the result if the bearer is not within your deployment zone, and adding an additional 1 to the result if the bearer is within your opponent’s deployment zone: on a 5+, you gain 1CP.",
+        "points": 20
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "windrider_host_stratagem_1",
+        "name": "FOCUSED FIREPOWER",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Asuryani Mounted or VYPER unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack, improve the Armour Penetration characteristic of that attack by 1.",
+        "cpCost": 1,
+        "type": "Windrider Host – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "windrider_host_stratagem_2",
+        "name": "SPIRALLING EVASION",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Asuryani Mounted or VYPER unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, models in your unit have a 4+ invulnerable save.",
+        "cpCost": 1,
+        "type": "Windrider Host – Battle Tactic Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "windrider_host_stratagem_3",
+        "name": "DEATH FROM ON HIGH",
+        "description": "<b>WHEN:</b> Your Shooting phase or the Fight phase.<br><br><b>TARGET:</b> One Asuryani Mounted or VYPER unit from your army that was set upon the battlefield from Reserves this turn and has not been selected to shoot or fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack, you can re-roll the Wound roll.",
+        "cpCost": 1,
+        "type": "Windrider Host – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "windrider_host_stratagem_4",
+        "name": "WIND OF BLADES",
+        "description": "<b>WHEN:</b> Your Movement phase.<br><br><b>TARGET:</b> One Asuryani Mounted or Vyper unit from your army that has not been selected to move this phase.<br><br><b>EFFECT:</b> Until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it Advanced or Fell Back.",
+        "cpCost": 1,
+        "type": "Windrider Host – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "windrider_host_stratagem_5",
+        "name": "OVERFLIGHT",
+        "description": "<b>WHEN:</b> End of your Shooting phase or the end of the Fight phase.<br><br><b>TARGET:</b> One Asuryani Mounted unit from your army that destroyed one or more enemy units this phase.<br><br><b>EFFECT:</b> Your unit can make a Normal move of up to 7\".",
+        "cpCost": 1,
+        "type": "Windrider Host – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "windrider_host_stratagem_6",
+        "name": "DARING RIDERS",
+        "description": "<b>WHEN:</b> The Reinforcements step of your Movement phase.<br><br><b>TARGET:</b> One Asuryani Mounted or VYPER unit from your army in Reserves.<br><br><b>EFFECT:</b> Until the end of the phase, when setting up your unit on the battlefield from Reserves, it can be set up anywhere on the battlefield that is more than 6\" horizontally away from all enemy units. When doing so, if your unit is set up within 9\" horizontally of one or more enemy units, until the end of the turn, it is not eligible to declare a charge.",
+        "cpCost": 1,
+        "type": "Windrider Host – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      }
+    ]
+  },
+  {
+    "id": "wraiths_of_the_void",
+    "name": "Wraiths of the Void",
+    "factionId": "AE",
+    "factionName": "Aeldari",
+    "abilities": [
+      {
+        "id": "wraiths_of_the_void_ability_1",
+        "name": "Wraith-Marked",
+        "description": "In your Command phase, you can select one <span class=\"kwb\">AELDARI</span> unit from your army within range of an objective marker you control. That unit must take a Leadership test, subtracting 2 from the result if it has the WRAiTH CONSTRUCT keyword: if passed, that objective marker is Secured by your army."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "wraiths_of_the_void_enhancement_1",
+        "name": "Direct Guidance",
+        "description": "At the end of your Movement phase, select one friendly WRAiTH CONSTRUCT unit within 6\" of and visible to the bearer. Until the end of the turn, that <span class=\"kwb\">WRAITH</span> <span class=\"kwb\">CONSTRUCT</span> unit is eligible to shoot and declare a charge in a turn in which it Fell Back.",
+        "points": 0
+      },
+      {
+        "id": "wraiths_of_the_void_enhancement_2",
+        "name": "Song of Renewal",
+        "description": "In your Command phase, the bearer can use this Enhancement. If it does, select one friendly WRAiTH CONSTRUCT unit within 6\" of and visible to the bearer. Return one destroyed model to that <span class=\"kwb\">WRAITH</span> <span class=\"kwb\">CONSTRUCT</span> unit with its full wounds remaining.<br><br>The bearer can only use this Enhancement up to two times.",
+        "points": 0
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "wraiths_of_the_void_stratagem_1",
+        "name": "GUARDIAN CONSTRUCTS",
+        "description": "<b>WHEN:</b> Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One WRAITH CONSTRUcT unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time an attack targets your unit, if the attacking model is wholly on the opposite side of a Hatchway from your unit, subtract 1 from the Wound roll.",
+        "cpCost": 1,
+        "type": "Wraiths of the Void – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "wraiths_of_the_void_stratagem_2",
+        "name": "WRAITHSIGHT",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One <span class=\"kwb\">AELDARI</span> unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, ranged weapons equipped by models in your unit have the [IGNORES COVER] ability. In addition, each time a model in your unit makes an attack, you can ignore any or all modifiers to that attack's Ballistic Skill characteristic and/or to the Hit roll.",
+        "cpCost": 1,
+        "type": "Wraiths of the Void – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "wraiths_of_the_void_stratagem_3",
+        "name": "D-STRIKE",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One WRAITH CONSTRUcT unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Select one closed Hatchway that is visible to and within range of one or more of the ranged weapons equipped by models in your unit. Open that Hatchway and, until the end of the battle, that Hatchway cannot be closed. For each enemy unit within 3\" of that Hatchway and wholly on the opposite side of it from your unit, until the start of your next Shooting phase, that enemy unit is stunned. While a unit is stunned, each time a model in that unit makes an attack, subtract 1 from the Hit roll.<br><br><b>RESTRICTIONS:</b> Until the end of the phase, your unit is not eligible to shoot.",
+        "cpCost": 1,
+        "type": "Wraiths of the Void – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "wraiths_of_the_void_stratagem_4",
+        "name": "UNFLINCHING FIRE",
+        "description": "<b>WHEN:</b> Your opponent’s Movement or Charge phase.<br><br><b>TARGET:</b> One <span class=\"kwb\">AELDARI</span> unit from your army that has not fired Overwatch this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack while firing Overwatch, an unmodified Hit roll of 5+ is required to score a hit, instead of an unmodified 6.",
+        "cpCost": 1,
+        "type": "Wraiths of the Void – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement or Charge phase"
+      }
+    ]
+  }
+]

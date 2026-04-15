@@ -1,0 +1,489 @@
+[
+  {
+    "id": "houndpack_lance",
+    "name": "Houndpack Lance",
+    "factionId": "QT",
+    "factionName": "Chaos Knights",
+    "abilities": [
+      {
+        "id": "houndpack_lance_ability_1",
+        "name": "Marked Prey",
+        "description": "At the start of your Command phase, select one unit from your opponent’s army. Until the start of your next Command phase, each time a War Dog model from your army makes an attack that targets that enemy unit, if that unit is visible to the attacking model, that attack has the [SUSTAINED HITS 1] ability.<br><br><span class=\"h_custom\">KEYWORDS</span><br>While using the Houndpack Lance Detachment, the following rules apply:<br><ul><li>Your army must include three or more <span class=\"kwb\">WAR</span> <span class=\"kwb\">DOG</span> units.</li><li><span class=\"kwb\">WAR</span> <span class=\"kwb\">DOG</span> units from your army have the <span class=\"kwb\">BATTLELINE</span> keyword.</li><li>When mustering your army, select three <span class=\"kwb\">WAR</span> <span class=\"kwb\">DOG</span> units from your army. Until the end of the battle, those units have the <span class=\"kwb\">CHARACTER</span> keyword.*</li></ul><br>*<b>Designer’s Note:</b> <i>This means that the selected units can be given Enhancements and one of them can be selected as your <span class=\"kwb\">WARLORD</span>.</i>"
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "houndpack_lance_enhancement_1",
+        "name": "Preyslayer’s Mantle",
+        "description": "War Dog model only. The bearer has the Super-heavy Walker ability.",
+        "points": 15
+      },
+      {
+        "id": "houndpack_lance_enhancement_2",
+        "name": "Final Howl (Aura)",
+        "description": "War Dog model only. While a friendly War Dog model is within 6\" of the bearer, each time that model makes an attack, re-roll a Wound roll of 1.",
+        "points": 20
+      },
+      {
+        "id": "houndpack_lance_enhancement_3",
+        "name": "Loping Predator",
+        "description": "War Dog model only. The bearer’s ranged weapons have the [assault] ability.",
+        "points": 10
+      },
+      {
+        "id": "houndpack_lance_enhancement_4",
+        "name": "Panoply of the Cursed Knight",
+        "description": "War Dog model only. Each time an attack targets the bearer, worsen the Armour Penetration characteristic of that attack by 1.",
+        "points": 15
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "houndpack_lance_stratagem_1",
+        "name": "VOX-HOWL",
+        "description": "<b>WHEN:</b> Start of the Shooting phase or the start of the Fight phase.<br><br><b>TARGET:</b> One War Dog Character unit from your army.<br><br><b>EFFECT:</b> Each enemy unit within 6\" of your unit must take a Battle-shock test. Each friendly <span class=\"kwb\">WAR</span> <span class=\"kwb\">DOG</span> unit that is within 6\" of your unit and is Battle-shocked must take a Leadership test; if that test is passed, that unit is no longer Battle-shocked.<br><br><b>RESTRICTIONS:</b> You can only use this Stratagem once per turn.",
+        "cpCost": 2,
+        "type": "Houndpack Lance – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "houndpack_lance_stratagem_2",
+        "name": "HUNGRY FOR COMBAT",
+        "description": "<b>WHEN:</b> Start of the Fight phase.<br><br><b>TARGET:</b> Two or more War Dog units from your army within Engagement Range of the same enemy unit.<br><br><b>EFFECT:</b> Select one enemy unit within Engagement Range of those <span class=\"kwb\">WAR</span> <span class=\"kwb\">DOG</span> units. Until the end of the phase, models in those <span class=\"kwb\">WAR</span> <span class=\"kwb\">DOG</span> units can only target that enemy unit, but each time a model in one of those <span class=\"kwb\">WAR</span> <span class=\"kwb\">DOG</span> units makes an attack, an unmodified Hit roll of 5+ scores a Critical Hit.",
+        "cpCost": 1,
+        "type": "Houndpack Lance – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "houndpack_lance_stratagem_3",
+        "name": "ANIMALISTIC RAGE",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase or the Fight phase, just after a War Dog unit from your army that has not yet fought is destroyed.<br><br><b>TARGET:</b> That <span class=\"kwb\">WAR</span> <span class=\"kwb\">DOG</span> unit. You can use this Stratagem on that unit even though it was just destroyed.<br><br><b>EFFECT:</b> Before resolving your unit’s Deadly Demise ability, it can either shoot or fight. When doing so, it must target only the enemy unit that just destroyed it, and can only do so if that enemy unit is an eligible target. After it has done so and after any Consolidation moves have been made, resolve your unit’s Deadly Demise ability as normal.",
+        "cpCost": 1,
+        "type": "Houndpack Lance – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "houndpack_lance_stratagem_4",
+        "name": "ENCIRCLING PACK",
+        "description": "<b>WHEN:</b> End of your opponent’s Fight phase.<br><br><b>TARGET:</b> One War Dog unit from your army that is wholly within 12\" of one or more battlefield edges and not within Engagement Range of one or more enemy units.<br><br><b>EFFECT:</b> Remove your unit from the battlefield and place it into Strategic Reserves.",
+        "cpCost": 1,
+        "type": "Houndpack Lance – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "houndpack_lance_stratagem_5",
+        "name": "HARRYING HOUNDS",
+        "description": "<b>WHEN:</b> Your opponent’s Movement phase, just after an enemy unit ends a Normal, Advance or Fall Back move.<br><br><b>TARGET:</b> One War Dog unit from your army that is within 9\" of that enemy unit.<br><br><b>EFFECT:</b> Your unit can make a Normal move of up to 6\".",
+        "cpCost": 1,
+        "type": "Houndpack Lance – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "houndpack_lance_stratagem_6",
+        "name": "CUNNING HUNTER",
+        "description": "<b>WHEN:</b> Your Movement phase, just after a War Dog unit from your army Falls Back.<br><br><b>TARGET:</b> That <span class=\"kwb\">WAR</span> <span class=\"kwb\">DOG</span> unit.<br><br><b>EFFECT:</b> Until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it Fell Back.",
+        "cpCost": 1,
+        "type": "Houndpack Lance – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      }
+    ]
+  },
+  {
+    "id": "iconoclast_fiefdom",
+    "name": "Iconoclast Fiefdom",
+    "factionId": "QT",
+    "factionName": "Chaos Knights",
+    "abilities": [
+      {
+        "id": "iconoclast_fiefdom_ability_1",
+        "name": "Dreaded Masters",
+        "description": "Titanic Chaos Knights units from your army have the following abilities:<br><br><b>Dread Tyrants (Aura):</b> While a friendly Damned unit is within 9\" of this unit, each time a model in that unit makes an attack, re-roll a Hit roll of 1 and re-roll a Wound roll of 1.<br><br>Chaos Knights units from your army have the following abilities:<br><br><b>Dark Sacrifice:</b> Each time a <span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> unit with this ability is selected to shoot or fight, it can make a Dark Sacrifice. If it does, select one friendly <span class=\"kwb\">DAMNED</span> unit within 6\". That <span class=\"kwb\">DAMNED</span> unit must take a Leadership test: if passed, destroy D3 models in that <span class=\"kwb\">DAMNED</span> unit; if failed, destroy D3+3 models in that <span class=\"kwb\">DAMNED</span> unit. In either case, then select one of the following abilities for your <span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> unit’s weapons to have until the end of the phase: [LETHAL HITS]; [SUSTAINED HITS 1].<br><br><span class=\"hi_custom\">WRETCHED THRALLS</span><br>You can include Damned units in your army (see Codex: Chaos Space Marines). The combined points cost of such units depends on your battle size:<br><ul><li><b>Incursion:</b> Up to 250 pts</li><li><b>Strike Force:</b> Up to 500 pts</li><li><b>Onslaught:</b> Up to 750 pts</li></ul><br>No <span class=\"kwb\">DAMNED</span> models from your army can be your <span class=\"kwb\">WARLORD</span>."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "iconoclast_fiefdom_enhancement_1",
+        "name": "Profane Altar",
+        "description": "<span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> model only. Each time the bearer makes a Dark Sacrifice, the maximum number of models are destroyed in the selected Damned unit (i.e. 3 if the unit’s Leadership test is passed, or 6 if it is failed) but, until the end of the phase, the bearer’s weapons have both [LETHAL HITS] and [SUSTAINED HITS 1].",
+        "points": 20
+      },
+      {
+        "id": "iconoclast_fiefdom_enhancement_2",
+        "name": "Pave the Way",
+        "description": "<span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> model only. At the start of the Declare Battle Formations step, you can select up to three Damned units from your army. The selected units have the Scouts 6\" ability.",
+        "points": 15
+      },
+      {
+        "id": "iconoclast_fiefdom_enhancement_3",
+        "name": "Tyrant’s Banner",
+        "description": "<span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> model only. Each time the bearer makes a Dark Sacrifice, select one visible friendly Damned unit to take a Leadership test instead of a friendly <span class=\"kwb\">DAMNED</span> unit within 6\".",
+        "points": 5
+      },
+      {
+        "id": "iconoclast_fiefdom_enhancement_4",
+        "name": "Diabolical Resilience",
+        "description": "<span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> model only. The bearer has the Feel No Pain 6+ ability and you can ignore any or all modifiers to its Move characteristic and/or to any Advance or Charge rolls made for it.",
+        "points": 35
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "iconoclast_fiefdom_stratagem_1",
+        "name": "SOUL HUNGER",
+        "description": "<b>WHEN:</b> Fight phase, just after a <span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> unit from your army has fought.<br><br><b>TARGET:</b> That Chaos Knights unit.<br><br><b>EFFECT:</b> If one or more models were destroyed as a result of those attacks, your unit regains up to D3 lost wounds. If one or more models from Battle-shocked units were destroyed as a result of those attacks, your unit regains up to D3+2 lost wounds instead.",
+        "cpCost": 1,
+        "type": "Iconoclast Fiefdom – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "iconoclast_fiefdom_stratagem_2",
+        "name": "WRETCHED MASSES",
+        "description": "<b>WHEN:</b> Any phase.<br><br><b>TARGET:</b> One Damned unit (excluding Accursed Cultists) from your army that was just destroyed. You can use this Stratagem on that unit even though it was just destroyed.<br><br><b>EFFECT:</b> Add a new unit to your army identical to your destroyed unit, in Strategic Reserves, at its Starting Strength and with all of its wounds remaining.<br><br><b>RESTRICTIONS:</b> You can only use this Stratagem once per battle. This Stratagem cannot be used to return destroyed <span class=\"kwb\">CHARACTER</span> units to Attached units.",
+        "cpCost": 2,
+        "type": "Iconoclast Fiefdom – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Any phase"
+      },
+      {
+        "id": "iconoclast_fiefdom_stratagem_3",
+        "name": "WORTHLESS CHATTEL",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Damned unit from your army.<br><br><b>EFFECT:</b> Until the end of the phase, enemy units are not considered to be within Engagement Range of your unit for the purposes of selecting targets of ranged weapons. Until the end of the phase, each time an enemy model loses a wound, while that model’s unit is within Engagement Range of your unit, roll one D6: on a 4+, one model from your unit is destroyed after the attacking unit has finished making its attacks.",
+        "cpCost": 1,
+        "type": "Iconoclast Fiefdom – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "iconoclast_fiefdom_stratagem_4",
+        "name": "AVENGE THE MASTERS!",
+        "description": "<b>WHEN:</b> Any phase.<br><br><b>TARGET:</b> One Chaos Knights unit from your army that was just destroyed. You can use this Stratagem on that unit even though it was just destroyed.<br><br><b>EFFECT:</b> Until the end of the battle, the enemy unit that destroyed your unit is Marked. Each time a Damned model from your army makes an attack that targets a Marked unit, that attack has the [LETHAL HITS] ability.",
+        "cpCost": 1,
+        "type": "Iconoclast Fiefdom – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Any phase"
+      },
+      {
+        "id": "iconoclast_fiefdom_stratagem_5",
+        "name": "PRESERVE THE IDOLS",
+        "description": "<b>WHEN:</b> Your opponent’s Movement phase, just after an enemy unit ends a Normal, Advance or Fall Back move.<br><br><b>TARGET:</b> One Chaos Knights unit from your army that is within 9\" of that enemy unit.<br><br><b>EFFECT:</b> Select one Damned unit from your army that is not Battle-shocked, not within Engagement Range of one or more enemy units and is within 6\" of your unit. That <span class=\"kwb\">DAMNED</span> unit can make a Normal move of up to 6\", but it must end this move closer to that enemy unit than when it started the move.",
+        "cpCost": 1,
+        "type": "Iconoclast Fiefdom – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "iconoclast_fiefdom_stratagem_6",
+        "name": "UNRESTRAINED RAGE",
+        "description": "<b>WHEN:</b> Your Movement phase, just after a <span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> unit from your army Advances or Falls Back.<br><br><b>TARGET:</b> That Chaos Knights unit.<br><br><b>EFFECT:</b> Until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it Advanced or Fell Back.",
+        "cpCost": 1,
+        "type": "Iconoclast Fiefdom – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      }
+    ]
+  },
+  {
+    "id": "infernal_lance",
+    "name": "Infernal Lance",
+    "factionId": "QT",
+    "factionName": "Chaos Knights",
+    "abilities": [
+      {
+        "id": "infernal_lance_ability_1",
+        "name": "Malefic Surge",
+        "description": "In your Command phase, one or more Chaos Knights units from your army can make a Malefic Surge. Each one that does must first take a Leadership test; if that test is failed, that unit suffers D3 mortal wounds. Then, until the start of your next Command phase, that unit is Empowered. While a unit is Empowered it can use one of the Malefic Surge abilities below. Once that unit has used a Malefic Surge ability, it is no longer Empowered.<br><ul><li><b>Unholy Hunger:</b> When a model in this unit makes a Normal, Advance or Fall Back move, until the end of the phase, add 3\" to its Move characteristic.</li><li><b>Diabolic Power:</b> When this unit is selected to shoot or fight, select either the [LETHAL HITS] or [SUSTAINED HITS 1] ability. Until the end of the phase, weapons equipped by models in this unit have the selected ability.</li><li><b>Unnatural Fortitude:</b> When this unit is selected as the target of an attack, until the end of the phase, select one of the following:<br><ul><li>Models in this unit have a 5+ invulnerable save.</li><li>Models in this unit have the Feel No Pain 6+ ability.</li></ul></li></ul><br><b>Designer’s Note:</b> <i>We recommend placing a token next to Chaos Knights models that are Empowered, removing it once they have used a Malefic Surge ability, and removing all unused tokens at the start of your Command phase.</i>"
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "infernal_lance_enhancement_1",
+        "name": "Knight Diabolus",
+        "description": "<span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> model only. Improve the Weapon Skill characteristic of the bearer’s melee weapons by 1. While the bearer is using the Diabolic Power ability, its melee weapons have the [LANCE] ability.",
+        "points": 25
+      },
+      {
+        "id": "infernal_lance_enhancement_2",
+        "name": "Blasphemous Engine",
+        "description": "<span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> model only. Add 2 to the bearer’s Wounds characteristic. Each time the bearer’s unit makes a Malefic Surge, you can re-roll the Leadership test taken to see if it suffers any mortal wounds.",
+        "points": 35
+      },
+      {
+        "id": "infernal_lance_enhancement_3",
+        "name": "Fleshmetal Fusion",
+        "description": "<span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> model only. Add 1 to the bearer’s Toughness characteristic. While the bearer is using the Unnatural Fortitude ability, each time an attack with a Damage characteristic of 1 is allocated to the bearer, add 1 to any armour saving throw made against that attack.",
+        "points": 35
+      },
+      {
+        "id": "infernal_lance_enhancement_4",
+        "name": "Bestial Aspect",
+        "description": "<span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> model only. The bearer’s ranged weapons have the [assault] ability. While the bearer is using the Unholy Hunger ability, it can ignore any or all modifiers to its Move characteristic and/or to Advance rolls made for its unit.",
+        "points": 20
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "infernal_lance_stratagem_1",
+        "name": "HELLFORGED CONSTRUCTION",
+        "description": "<b>WHEN:</b> Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Chaos Knights unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.",
+        "cpCost": 1,
+        "type": "Infernal Lance – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "infernal_lance_stratagem_2",
+        "name": "PROFANE SYMBIOSIS",
+        "description": "<b>WHEN:</b> End of any phase.<br><br><b>TARGET:</b> One Chaos Knights unit from your army that is not Empowered.<br><br><b>EFFECT:</b> Your unit makes a Malefic Surge.<br><br><b>RESTRICTIONS:</b> You cannot select the same unit as the target of this Stratagem more than once per battle round.",
+        "cpCost": 1,
+        "type": "Infernal Lance – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Any phase"
+      },
+      {
+        "id": "infernal_lance_stratagem_3",
+        "name": "CORRUPTING TAINT",
+        "description": "<b>WHEN:</b> Your Command phase, just after a Chaos Knights Character unit from your army makes a Malefic Surge.<br><br><b>TARGET:</b> That <span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> <span class=\"kwb\">CHARACTER</span> unit.<br><br><b>EFFECT:</b> Select one objective marker your unit is within range of that you control. That objective marker remains under your control until your opponent’s Level of Control over that objective marker is greater than yours at the end of a phase.",
+        "cpCost": 1,
+        "type": "Infernal Lance – Epic Deed Stratagem",
+        "turn": "Your turn",
+        "phase": "Command phase"
+      },
+      {
+        "id": "infernal_lance_stratagem_4",
+        "name": "UNLEASH BALEFIRE",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Chaos Knights unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> After your unit has shot, select one enemy unit hit by one or more of those attacks. That enemy unit must take a Battle-shock test; if the test is failed, until the end of your opponent’s next turn, it is aflame. While a unit is aflame, subtract 2\" from its Move characteristic and subtract 2 from Charge rolls made for it.",
+        "cpCost": 1,
+        "type": "Infernal Lance – Wargear Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "infernal_lance_stratagem_5",
+        "name": "DIABOLIC BULWARK",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Chaos Knights unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, models in your unit have a 4+ invulnerable save.",
+        "cpCost": 1,
+        "type": "Infernal Lance – Wargear Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "infernal_lance_stratagem_6",
+        "name": "WARP VISION",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Chaos Knights unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, ranged weapons equipped by models in your unit have the [IGNORES COVER] ability.",
+        "cpCost": 1,
+        "type": "Infernal Lance – Wargear Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      }
+    ]
+  },
+  {
+    "id": "lords_of_dread",
+    "name": "Lords of Dread",
+    "factionId": "QT",
+    "factionName": "Chaos Knights",
+    "abilities": [
+      {
+        "id": "lords_of_dread_ability_1",
+        "name": "Tyrannical Court",
+        "description": "Improve the Objective Control characteristic of Chaos Knights Character models from your army by 2. In addition, once per battle round, if your <span class=\"kwb\">WARLORD</span> is on the battlefield, you can use the Claimed for the Dark Gods Stratagem for 0CP."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "lords_of_dread_enhancement_1",
+        "name": "Throne Mechanicum of Skulls",
+        "description": "<span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> model only. You can re-roll Charge rolls made for the bearer’s unit. In addition, once per battle, in your Charge phase, the bearer can use this Enhancement. If it does, until the end of the phase, the bearer’s unit is eligible to declare a charge in a turn in which it Advanced.",
+        "points": 25
+      },
+      {
+        "id": "lords_of_dread_enhancement_2",
+        "name": "Blade of Celerity",
+        "description": "<span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> model only. The bearer’s ranged weapons have the [ASSAULT] ability. In addition, once per battle, in the Fight phase, the bearer can use this Enhancement. If it does, until the end of the phase, models in the bearer’s unit have the Fights First ability.",
+        "points": 35
+      },
+      {
+        "id": "lords_of_dread_enhancement_3",
+        "name": "Warp-borne Stalker",
+        "description": "<span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> model only. The bearer has the Deep Strike ability. In addition, once per battle, at the end of your opponent’s turn, if the bearer is not within Engagement Range of one or more enemy units, you can remove it from the battlefield and place it into Strategic Reserves.",
+        "points": 25
+      },
+      {
+        "id": "lords_of_dread_enhancement_4",
+        "name": "Putrid Carapace",
+        "description": "<span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> model only. The bearer has a Save characteristic of 2+. In addition, once per battle, at the start of either player’s Command phase, the bearer can use this Enhancement. If it does, the bearer regains up to D6 lost wounds.",
+        "points": 30
+      },
+      {
+        "id": "lords_of_dread_enhancement_5",
+        "name": "Mirror of Fates",
+        "description": "<span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> model only. Once per battle round, you can target the bearer’s unit with the Command Re-roll Stratagem for 0CP, and can do so even if another unit from your army has already been targeted by that Stratagem this phase. In addition, you gain Lord of Deceit ability:<br><br><b>Lord of Deceit (Aura):</b> Each time your opponent targets a unit from their army with a Stratagem, if that unit is within 12\" of this model, increase the cost of that use of that Stratagem by 1CP.",
+        "points": 30
+      },
+      {
+        "id": "lords_of_dread_enhancement_6",
+        "name": "Blessing of the Dark Master",
+        "description": "<span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> model only. The bearer has the Stealth ability. In addition, once per battle, after you make a saving throw for the bearer, you can change the Damage characteristic of that attack to 0.",
+        "points": 20
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "lords_of_dread_stratagem_1",
+        "name": "TROPHY HUNTER",
+        "description": "<b>WHEN:</b> Fight phase, just before a Chaos Knights Character unit from your army consolidates.<br><br><b>TARGET:</b> That <span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> <span class=\"kwb\">CHARACTER</span> unit.<br><br><b>EFFECT:</b> Until the end of the phase, each time your unit Consolidates, models in it can move an additional 3\" as long as your unit can end that move within Engagement Range of one or more enemy units.",
+        "cpCost": 1,
+        "type": "Lords of Dread – Epic Deed Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "lords_of_dread_stratagem_2",
+        "name": "TITANIC DUEL",
+        "description": "<b>WHEN:</b> Your Shooting phase or the Fight phase.<br><br><b>TARGET:</b> One Chaos Knights Character unit from your army that has not been selected to shoot or fight this phase.<br><br><b>EFFECT:</b> Select one enemy <span class=\"kwb\">MONSTER</span> or <span class=\"kwb\">VEHICLE</span> unit. Until the end of the phase, each time a model in your unit makes an attack that targets that enemy unit, re-roll a Hit roll of 1 and re-roll a Wound roll of 1. Each time a model in your unit makes an attack that targets that enemy unit, if that enemy unit is <span class=\"kwb\">TITANIC</span>, you can re-roll the Hit roll and you can re-roll the Wound roll instead.",
+        "cpCost": 1,
+        "type": "Lords of Dread – Epic Deed Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "lords_of_dread_stratagem_3",
+        "name": "RUNES OF DISDAIN",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Chaos Knights Character unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time an attack is allocated to a model in your unit, subtract 1 from the Damage characteristic of that attack.",
+        "cpCost": 2,
+        "type": "Lords of Dread – Epic Deed Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "lords_of_dread_stratagem_4",
+        "name": "CLAIMED FOR THE DARK GODS",
+        "description": "<b>WHEN:</b> Start of your Command phase.<br><br><b>TARGET:</b> One Chaos Knights Character unit from your army that is within range of one or more objective markers you control.<br><br><b>EFFECT:</b> Select one of those objective markers. That objective marker remains under your control, with a Level of Control of 5 (unless it would otherwise be higher), until your opponent’s Level of Control over that objective marker is greater than yours at the end of a phase.",
+        "cpCost": 1,
+        "type": "Lords of Dread – Epic Deed Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Command phase"
+      },
+      {
+        "id": "lords_of_dread_stratagem_5",
+        "name": "SPITEFUL DEMISE",
+        "description": "<b>WHEN:</b> Any phase, just after a Chaos Knights Character unit from your army is destroyed.<br><br><b>TARGET:</b> That <span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> <span class=\"kwb\">CHARACTER</span> unit. You can use this Stratagem on that unit even though it was just destroyed.<br><br><b>EFFECT:</b> When rolling to determine whether mortal wounds are inflicted by your unit’s Deadly Demise ability, that model’s Deadly Demise ability inflicts mortal wounds on a D6 roll of a 4+ instead of on a 6.",
+        "cpCost": 1,
+        "type": "Lords of Dread – Epic Deed Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Any phase"
+      },
+      {
+        "id": "lords_of_dread_stratagem_6",
+        "name": "CRUSHED LIKE VERMIN",
+        "description": "<b>WHEN:</b> Your Movement phase, just after a Chaos Knights Character unit from your army ends a Normal move.<br><br><b>TARGET:</b> That <span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> <span class=\"kwb\">CHARACTER</span> unit.<br><br><b>EFFECT:</b> Select one enemy unit (excluding <span class=\"kwb\">MONSTERS</span> and <span class=\"kwb\">VEHICLES</span>) that your unit moved over during that move and roll six D6: for each 4+, that enemy unit suffers 1 mortal wound. If one or more models are destroyed as a result of this Stratagem, that enemy unit must take a Battle-shock test.",
+        "cpCost": 1,
+        "type": "Lords of Dread – Epic Deed Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      }
+    ]
+  },
+  {
+    "id": "traitoris_lance",
+    "name": "Traitoris Lance",
+    "factionId": "QT",
+    "factionName": "Chaos Knights",
+    "abilities": [
+      {
+        "id": "traitoris_lance_ability_1",
+        "name": "Paragons of Terror",
+        "description": "At the start of the first battle round, after selecting one or more Dread abilities to be active for your army, you can select one additional Dread ability to be active for your army (this additional Dread ability cannot be randomly selected)."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "traitoris_lance_enhancement_1",
+        "name": "Nightmare’s Master",
+        "description": "<span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> model only. At the start of the Fight phase, each enemy unit within Engagement Range of the bearer must take a Battle-shock test.",
+        "points": 20
+      },
+      {
+        "id": "traitoris_lance_enhancement_2",
+        "name": "Tyrant’s Shadow",
+        "description": "<span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> model only. At the end of your Command phase, select one objective marker the bearer is within range of and that you control. That objective marker remains under your control until your opponent’s Level of Control over that objective marker is greater than yours at the end of a phase. In addition, until you lose control of that objective marker, it has the Deathly Terror ability as if it were a <span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> model from your army.",
+        "points": 25
+      },
+      {
+        "id": "traitoris_lance_enhancement_3",
+        "name": "Malevolent Heraldry",
+        "description": "<span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> model only. Each time you roll dice to randomly select which Dread abilities are active for your army, if the bearer is on the battlefield, you can re-roll one or both results rolled.",
+        "points": 30
+      },
+      {
+        "id": "traitoris_lance_enhancement_4",
+        "name": "Veil of Medrengard",
+        "description": "<span class=\"kwb\">CHAOS</span> <span class=\"kwb\">KNIGHTS</span> model only. The bearer has a 4+ invulnerable save against ranged attacks, and a 5+ invulnerable save against melee attacks.",
+        "points": 35
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "traitoris_lance_stratagem_1",
+        "name": "CONQUERORS WITHOUT MERCY",
+        "description": "<b>WHEN:</b> Fight phase.<br><br><b>TARGET:</b> One Chaos Knights model from your army that made a Charge move this turn and has not been selected to fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, improve the Armour Penetration characteristic of melee weapons equipped by your model by 1. After your model has finished making its attacks this phase, if it destroyed one or more enemy units this phase, each enemy unit within 6\" of your model must take a Battle-shock test.",
+        "cpCost": 1,
+        "type": "Traitoris Lance – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "traitoris_lance_stratagem_2",
+        "name": "IMPERIOUS ADVANCE",
+        "description": "<b>WHEN:</b> Your Movement phase or your Charge phase.<br><br><b>TARGET:</b> Up to two War Dog units from your army or one Titanic Chaos Knights unit from your army.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in one of your units makes a Normal, Advance, Fall Back or Charge move, it can move through models and terrain features. When doing so, it can move within Engagement Range of such models but, unless it made a Charge move, cannot end that move within Engagement Range of them, and any Desperate Escape test is automatically passed (the Super-heavy Walker ability does not apply while using this Stratagem).",
+        "cpCost": 1,
+        "type": "Traitoris Lance – Epic Deed Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement or Charge phase"
+      },
+      {
+        "id": "traitoris_lance_stratagem_3",
+        "name": "DISDAIN FOR THE WEAK",
+        "description": "<b>WHEN:</b> Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Chaos Knights unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, models in your unit have the Feel No Pain 6+ ability, and the Feel No Pain 5+ ability against attacks made by Battle-shocked models.",
+        "cpCost": 1,
+        "type": "Traitoris Lance – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "traitoris_lance_stratagem_4",
+        "name": "STORM OF DARKNESS",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Chaos Knights unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, models in your unit have the Stealth ability, and each time an attack targets your unit, models in it have the Benefit of Cover against that attack.",
+        "cpCost": 1,
+        "type": "Traitoris Lance – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "traitoris_lance_stratagem_5",
+        "name": "A LONG LEASH",
+        "description": "<b>WHEN:</b> Your Command phase.<br><br><b>TARGET:</b> One Abhorrent unit from your army and up to two friendly War Dog units.<br><br><b>EFFECT:</b> Until the start of your next Command phase, those <span class=\"kwb\">WAR</span> <span class=\"kwb\">DOG</span> units are treated as being within range of any Aura abilities your <span class=\"kwb\">ABHORRENT</span> unit has.",
+        "cpCost": 1,
+        "type": "Traitoris Lance – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Command phase"
+      },
+      {
+        "id": "traitoris_lance_stratagem_6",
+        "name": "PTERRORSHADES",
+        "description": "<b>WHEN:</b> Any phase, just after an enemy unit fails a Battle-shock test.<br><br><b>TARGET:</b> One Chaos Knights unit from your army that is within 12\" of that enemy unit.<br><br><b>EFFECT:</b> Roll six D6: for each 4+, that enemy unit suffers 1 mortal wound and one model in your unit regains up to 1 lost wound.<br><br><b>RESTRICTIONS:</b> You can only use this Stratagem once per battle round.",
+        "cpCost": 1,
+        "type": "Traitoris Lance – Wargear Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Any phase"
+      }
+    ]
+  }
+]

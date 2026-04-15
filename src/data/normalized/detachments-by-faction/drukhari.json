@@ -1,0 +1,832 @@
+[
+  {
+    "id": "covenite_coterie",
+    "name": "Covenite Coterie",
+    "factionId": "DRU",
+    "factionName": "Drukhari",
+    "abilities": [
+      {
+        "id": "covenite_coterie_ability_1",
+        "name": "Stitchflesh Abominations",
+        "description": "Each time an attack targets a Haemonculus Covens unit from your army, if the Strength characteristic of that attack is greater than the Toughness characteristic of your unit, subtract 1 from the Wound roll."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "covenite_coterie_enhancement_1",
+        "name": "Master Regenesist",
+        "description": "Haemonculus model only. Each time the bearer uses its Fleshcraft ability, you can return up to D3+3 destroyed Bodyguard models to the bearer’s unit instead of D3+1.",
+        "points": 25
+      },
+      {
+        "id": "covenite_coterie_enhancement_2",
+        "name": "Master Nemesine",
+        "description": "Haemonculus model only. The bearer’s weapons have the [anti-beast 2+] and [anti-monster 4+] abilities.",
+        "points": 5
+      },
+      {
+        "id": "covenite_coterie_enhancement_3",
+        "name": "Master Artisan",
+        "description": "Haemonculus model only. Add 1 to the bearers Wounds characteristic and add 1 to the Toughness characteristic of models in the bearer’s unit.",
+        "points": 20
+      },
+      {
+        "id": "covenite_coterie_enhancement_4",
+        "name": "Master Repugnomancer (Aura)",
+        "description": "Haemonculus model only. Add 3\" to the range of the bearer’s Fear Incarnate ability, and each time a friendly Drukhari unit within 9\" of the bearer fails a Battle-shock test or is destroyed, roll one D6: on a 4+, you gain 1 Pain token.",
+        "points": 15
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "covenite_coterie_stratagem_1",
+        "name": "CONNOISSEURS OF PAIN",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Drukhari unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Spend 1 Pain token. Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1. At the end of the phase, if your unit is still on the battlefield and it is a Haemonculus Covens unit, you gain 1 Pain token.",
+        "cpCost": 1,
+        "type": "Covenite Coterie – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "covenite_coterie_stratagem_2",
+        "name": "SYMPHONY OF SUFFERING",
+        "description": "<b>WHEN:</b> Fight phase, just after a Drukhari unit from your army destroys an enemy unit.<br><br><b>TARGET:</b> That <span class=\"kwb\">DRUKHARI</span> unit.<br><br><b>EFFECT:</b> Each enemy unit within 9\" of and visible to your unit must take a Battle-shock test, subtracting 1 from that test if your unit is a Haemonculus Covens unit.",
+        "cpCost": 1,
+        "type": "Covenite Coterie – Epic Deed Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "covenite_coterie_stratagem_3",
+        "name": "POISONER’S ART",
+        "description": "<b>WHEN:</b> Fight phase, just after a Haemonculus Covens unit from your army has fought.<br><br><b>TARGET:</b> That <span class=\"kwb\">HAEMONCULUS</span> <span class=\"kwb\">COVENS</span> unit.<br><br><b>EFFECT:</b> Select one enemy unit (excluding <span class=\"kwb\">VEHICLES</span>) hit by one or more of your unit’s attacks this phase. Until the end of the battle, that enemy unit is poisoned. At the start of each Command phase, roll one D6 for each poisoned unit on the battlefield: on a 4+, that unit suffers D3 mortal wounds.",
+        "cpCost": 1,
+        "type": "Covenite Coterie – Epic Deed Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "covenite_coterie_stratagem_4",
+        "name": "POSTMORTALITY",
+        "description": "<b>WHEN:</b> Any phase.<br><br><b>TARGET:</b> One Haemonculus model from your army that was just destroyed. You can use this Stratagem on that model even though it was just destroyed.<br><br><b>EFFECT:</b> Spend 1-3 Pain tokens. At the end of the phase, set the destroyed model back up on the battlefield, as close as possible to where it was destroyed and not within Engagement Range of any enemy units, with a number of wounds remaining equal to the number of Pain tokens you just spent.<br><br><b>RESTRICTIONS:</b> You cannot use this Stratagem if you have 0 Pain tokens, and you cannot target the same <span class=\"kwb\">HAEMONCULUS</span> model with this Stratagem more than once per battle.",
+        "cpCost": 1,
+        "type": "Covenite Coterie – Epic Deed Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Any phase"
+      },
+      {
+        "id": "covenite_coterie_stratagem_5",
+        "name": "DISTILLERS OF FEAR",
+        "description": "<b>WHEN:</b> Fight phase.<br><br><b>TARGET:</b> One Haemonculus Covens unit from your army that has not been selected to fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack that targets an enemy unit that is Battle-shocked, that attack has the [DEVASTATING WOUNDS] ability.",
+        "cpCost": 2,
+        "type": "Covenite Coterie – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "covenite_coterie_stratagem_6",
+        "name": "ENFOLDING NIGHTMARE",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase, just after an enemy unit has shot.<br><br><b>TARGET:</b> One Haemonculus Covens unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Roll one D6: your unit can be moved a number of inches up to the result, but it must end that move as close as possible to the closest enemy unit (excluding <span class=\"kwb\">AIRCRAFT</span>). When doing so, those models can be moved within Engagement Range of that enemy unit.",
+        "cpCost": 1,
+        "type": "Covenite Coterie – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      }
+    ]
+  },
+  {
+    "id": "kabalite_cartel",
+    "name": "Kabalite Cartel",
+    "factionId": "DRU",
+    "factionName": "Drukhari",
+    "abilities": [
+      {
+        "id": "kabalite_cartel_ability_1",
+        "name": "Murderous Agenda",
+        "description": "At the start of the first battle round, select one of the Contracts below, then select one unit from your opponent’s army that matches the ‘Contract’ description in that Contract. Until that Contract is completed, that unit is your Contract unit and Kabal and Blades for Hire units from your army have the ability stated in that Contract. At the start of your Command phase, if your Contract unit is destroyed, that Contract is completed and you gain 3 Pain tokens.<br><br><span class=\"hi_custom\">Trophy Hunters</span><br><b>Contract:</b> One <span class=\"kwb\">CHARACTER</span> unit.<br><b>Ability:</b> Each time a <span class=\"kwb\">KABAL</span> or <span class=\"kwb\">BLADES</span> <span class=\"kwb2\">FOR</span> <span class=\"kwb\">HIRE</span> model in this unit makes an attack that targets the Contract unit, that attack has the [precision] ability.<br><br><span class=\"hi_custom\">Sow Fear and Terror</span><br><b>Contract:</b> One <span class=\"kwb\">INFANTRY</span> or <span class=\"kwb\">MOUNTED</span> unit (excluding units containing only <span class=\"kwb\">CHARACTER</span> models). At the start of your Command phase, this Contract is completed if all non-<span class=\"kwb\">CHARACTER</span> models in that unit are destroyed.<br><b>Ability:</b> Each time a <span class=\"kwb\">KABAL</span> or <span class=\"kwb\">BLADES</span> <span class=\"kwb2\">FOR</span> <span class=\"kwb\">HIRE</span> model in this unit makes an attack that targets an <span class=\"kwb\">INFANTRY</span> or <span class=\"kwb\">MOUNTED</span> unit, that attack has the [sustained hits 1] ability.<br><br><span class=\"hi_custom\">Show of Strength</span><br><b>Contract:</b> One <span class=\"kwb\">MONSTER</span> or <span class=\"kwb\">VEHICLE</span> unit.<br><b>Ability:</b> Each time a <span class=\"kwb\">KABAL</span> or <span class=\"kwb\">BLADES</span> <span class=\"kwb2\">FOR</span> <span class=\"kwb\">HIRE</span> model in this unit makes an attack that targets a <span class=\"kwb\">MONSTER</span> or <span class=\"kwb\">VEHICLE</span> unit, that attack has the [lethal hits] ability."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "kabalite_cartel_enhancement_1",
+        "name": "Leechbite Plate",
+        "description": "Archon model only. The bearer has a Save characteristic of 3+. At the start of either player’s Command phase, you can spend 1 Pain token: if you do, the bearer regains all of its lost wounds.",
+        "points": 5
+      },
+      {
+        "id": "kabalite_cartel_enhancement_2",
+        "name": "Webway Awl",
+        "description": "Archon model only. Models in the bearer’s unit have the Deep Strike ability, and you can target the bearer’s unit with the Rapid Ingress Stratagem for 0CP.",
+        "points": 25
+      },
+      {
+        "id": "kabalite_cartel_enhancement_3",
+        "name": "Informant Network",
+        "description": "Archon model only. At the start of the Declare Battle Formations step, select up to three Kabalite Warriors and/or Hand of the Archon units from your army; those units gain the Infiltrators ability.",
+        "points": 30
+      },
+      {
+        "id": "kabalite_cartel_enhancement_4",
+        "name": "Towering Arrogance",
+        "description": "Archon model only. While the bearer is leading a unit, improve the Leadership and Objective Control characteristics of models in that unit by 1.",
+        "points": 20
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "kabalite_cartel_stratagem_1",
+        "name": "MAKING A POINT",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Kabalite Warriors or Hand of the Archon unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, improve the Ballistic Skill and Armour Penetration characteristics of ranged weapons equipped by models in your unit by 1.",
+        "cpCost": 1,
+        "type": "Kabalite Cartel – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "kabalite_cartel_stratagem_2",
+        "name": "TAKEN ALIVE",
+        "description": "<b>WHEN:</b> Fight phase.<br><br><b>TARGET:</b> One Drukhari unit from your army that has not been selected to fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack, add 1 to the Hit roll. If your Contract unit is destroyed as a result of those attacks, every unit in your opponent’s army must take a Battle-shock test. You cannot gain more than 3 Pain tokens as a result of failed Battle-shock tests caused by this Stratagem.",
+        "cpCost": 1,
+        "type": "Kabalite Cartel – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "kabalite_cartel_stratagem_3",
+        "name": "ENEMIES WITHOUT NUMBER",
+        "description": "<b>WHEN:</b> Your Command phase, just after you complete a Contract.<br><br><b>TARGET:</b> One Archon <span class=\"kwb\">WARLORD</span> from your army.<br><br><b>EFFECT:</b> Select one new Contract (this can be one you have already completed), then select one unit from your opponent’s army that is on the battlefield and matches the ‘Contract’ description in that Contract. Until that Contract is completed, that unit is your Contract unit and the Murderous Agenda Detachment rule applies as normal.",
+        "cpCost": 1,
+        "type": "Kabalite Cartel – Epic Deed Stratagem",
+        "turn": "Your turn",
+        "phase": "Command phase"
+      },
+      {
+        "id": "kabalite_cartel_stratagem_4",
+        "name": "TAILORED TOXINS",
+        "description": "<b>WHEN:</b> Your Shooting phase or the Fight phase.<br><br><b>TARGET:</b> One Kabal or Blades for Hire unit from your army that has not been selected to shoot or fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack that targets your Contract unit, an unmodified Hit roll of 5+ scores a Critical Hit.",
+        "cpCost": 1,
+        "type": "Kabalite Cartel – Epic Deed Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "kabalite_cartel_stratagem_5",
+        "name": "DOUBLE-CROSS",
+        "description": "<b>WHEN:</b> Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Kabal or Blades for Hire unit from your army that was selected as the target of one or more of the attacking unit’s attacks, and one friendly Drukhari unit (excluding Vehicles).<br><br><b>EFFECT:</b> Until the end of the phase, each time you would allocate an attack to a model in your <span class=\"kwb\">KABAL</span> or <span class=\"kwb\">BLADES</span> <span class=\"kwb2\">FOR</span> <span class=\"kwb\">HIRE</span> unit, if your <span class=\"kwb\">DRUKHARI</span> unit is within Engagement Range of the attacking model, no saving throw is made for that attack; instead, your <span class=\"kwb\">DRUKHARI</span> unit suffers a number of mortal wounds equal to the Damage characteristic of that attack.",
+        "cpCost": 1,
+        "type": "Kabalite Cartel – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "kabalite_cartel_stratagem_6",
+        "name": "DEADLY DECEIVERS",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Kabal or Blades for Hire unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, your unit can only be selected as the target of a ranged attack if the attacking model is within 18\".",
+        "cpCost": 1,
+        "type": "Kabalite Cartel – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      }
+    ]
+  },
+  {
+    "id": "kabalite_corsairs",
+    "name": "Kabalite Corsairs",
+    "factionId": "DRU",
+    "factionName": "Drukhari",
+    "abilities": [
+      {
+        "id": "kabalite_corsairs_ability_1",
+        "name": "Raid and Pillage",
+        "description": "Each time a DRUKHARi unit from your army destroys an enemy unit, if that enemy unit was within range of an objective marker controlled by your opponent at the start of the phase, you gain 1 Pain token. In addition, in your Command phase, you can select one objective marker you control that has one or more KAbAL units from your army within range of it, then expend 1 Pain token from your Pain token pool. If you do, that objective marker is Secured by your army."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "kabalite_corsairs_enhancement_1",
+        "name": "Dark Charisma",
+        "description": "The bearer has an Objective Control characteristic of 5 and you can re-roll Battle-shock tests taken for the bearer.",
+        "points": 0
+      },
+      {
+        "id": "kabalite_corsairs_enhancement_2",
+        "name": "Malevolent Cunning",
+        "description": "The first time in each battle round that your opponent targets a unit from their army that is within 3\" of the bearer with a Stratagem, increase that Stratagems cost by 1CP for that usage.",
+        "points": 0
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "kabalite_corsairs_stratagem_1",
+        "name": "ELUSIVE DUELLISTS",
+        "description": "<b>WHEN:</b> Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One <span class=\"kwb\">DRUKHARI</span> unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time an attack targets your unit, subtract 1 from the Hit roll and, if your unit has the INcUBI keyword, models in your unit have a 4+ invulnerable save.",
+        "cpCost": 1,
+        "type": "Kabalite Corsairs – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "kabalite_corsairs_stratagem_2",
+        "name": "DECKPLATE SWEEPERS",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One KABAL unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, improve the Armour Penetration characteristic of splinter cannons, splinter rifles and splinter pistols equipped by models in your unit by 1.",
+        "cpCost": 1,
+        "type": "Kabalite Corsairs – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "kabalite_corsairs_stratagem_3",
+        "name": "TAKE THEM ALIVE",
+        "description": "<b>WHEN:</b> Your Shooting phase, just after a KABAL unit from your army has shot.<br><br><b>TARGET:</b> That <span class=\"kwb\">KABAL</span> unit.<br><br><b>EFFECT:</b> Select one enemy unit hit by one or more of your unit’s attacks this phase (excluding those made with Pistols). That enemy unit must take a Battle-shock test, subtracting 1 from the result if your unit is within 6” of it.",
+        "cpCost": 1,
+        "type": "Kabalite Corsairs – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "kabalite_corsairs_stratagem_4",
+        "name": "OPPORTUNISTIC THIEVES",
+        "description": "<b>WHEN:</b> End of your Fight phase.<br><br><b>TARGET:</b> One KABAL unit from your army that is not within Engagement Range of one or more enemy units.<br><br><b>EFFECT:</b> Select one objective marker you do not control that is visible to your unit. Your unit can make a Normal move of up to D6\", but if it does, every model in that unit must end that move as close as possible to that objective marker.",
+        "cpCost": 1,
+        "type": "Kabalite Corsairs – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Fight phase"
+      }
+    ]
+  },
+  {
+    "id": "painbringers",
+    "name": "Painbringers",
+    "factionId": "DRU",
+    "factionName": "Drukhari",
+    "abilities": [
+      {
+        "id": "painbringers_ability_1",
+        "name": "Regenerative Agony",
+        "description": "Each time four or more Feel No Pain rolls are successful for HAEMONCULUS COvENS models from your army in a single phase, you gain 1 Pain token. In addition, each battle round, the first time a <span class=\"kwb\">HAEMONCULUS</span> <span class=\"kwb\">COVENS</span> unit from your army becomes Empowered in that battle round, roll one D6: on a 2-5, one model in that unit regains 1 lost wound or, if that unit has the WRACKS keyword, one destroyed model is returned to it with its full wounds remaining; on a 6, one model in that unit regains up to 2 lost wounds or, if that unit has the <span class=\"kwb\">WRACKS</span> keyword, one destroyed model is returned to it with its full wounds remaining."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "painbringers_enhancement_1",
+        "name": "Rending Chain-Flails",
+        "description": "Each time an enemy unit within Engagement Range of the bearer is selected to Fall Back, roll one D6: on a 2-4, that enemy unit suffers 1 mortal wound; on a 5+, that enemy unit suffers 2 mortal wounds.",
+        "points": 0
+      },
+      {
+        "id": "painbringers_enhancement_2",
+        "name": "Vile Surgeon",
+        "description": "The bearers Haemonculus tools and scissorhands have a Damage characteristic of 3 while targeting <span class=\"kwb\">CHARACTER</span> units.",
+        "points": 0
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "painbringers_stratagem_1",
+        "name": "MOULDED MUSCULATURE",
+        "description": "<b>WHEN:</b> Fight phase.<br><br><b>TARGET:</b> One HAEMONcULUS COvENS unit from your army that has not been selected to fight this phase.<br><br><b>EFFECT:</b> Select any number of models in your unit. Until the end of the phase, improve the Strength and Armour Penetration characteristics of melee weapons equipped by the selected models by 1, and each time you select targets for attacks made by those models, they must target an enemy unit that is wholly on the opposite side of a Hatchway from them.",
+        "cpCost": 1,
+        "type": "Painbringers – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "painbringers_stratagem_2",
+        "name": "UNFEELING ABOMINATIONS",
+        "description": "<b>WHEN:</b> Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One HAEMONcULUS COvENS unit from your army that was selected as the target of one or more of the attacking unit's attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit is destroyed, if that model has not fought this phase, roll one D6, adding 1 if your unit has the GROTESqUES keyword: on a 4+, do not remove the destroyed model from play; it can fight after the attacking unit has finished making its attacks, and is then removed from play.<br><br><b>RESTRICTIONS:</b> If your unit has the <span class=\"kwb\">GROTESQUES</span> keyword, until the end of the phase, it loses the Mindless Killing Machines ability.",
+        "cpCost": 1,
+        "type": "Painbringers – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "painbringers_stratagem_3",
+        "name": "TERRIFYING AURA",
+        "description": "<b>WHEN:</b> Your opponent's Shooting phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One HAEMONcULUS COvENS unit from your army that was selected as the target of one or more of the attacking unit's attacks and is within 6\" of the attacking unit.<br><br><b>EFFECT:</b> That enemy unit must take a Leadership test, subtracting 1 if it is within 3\" of your unit: if failed, until the end of the phase, each time a model in that enemy unit makes an attack that targets your unit, an unmodified Hit roll of 6 is required to score a hit, irrespective of the attacking weapon’s Ballistic Skill or any modifiers.",
+        "cpCost": 1,
+        "type": "Painbringers – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "painbringers_stratagem_4",
+        "name": "HORRIFYING FORM",
+        "description": "<b>WHEN:</b> End of any phase, when an objective marker Secured by your army would be Seized by an enemy unit.<br><br><b>TARGET:</b> One HAEMONcULUS COvENS unit from your army within range of that objective marker.<br><br><b>EFFECT:</b> Until the end of your next turn, while you have one or more <span class=\"kwb\">DRUKHARI</span> units within range of that objective marker (excluding Battle-shocked units), that objective marker remains Secured by your army and cannot be Seized by enemy units.<br><br><b>RESTRICTIONS:</b> You can only use this Stratagem once per battle round.",
+        "cpCost": 1,
+        "type": "Painbringers – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Any phase"
+      }
+    ]
+  },
+  {
+    "id": "realspace_raiders",
+    "name": "Realspace Raiders",
+    "factionId": "DRU",
+    "factionName": "Drukhari",
+    "abilities": [
+      {
+        "id": "realspace_raiders_ability_1",
+        "name": "Alliance of Agony",
+        "description": "At the start of the battle, you gain 2 Pain tokens for each of the following combinations your army contains (these do not need to be in the same Attached unit):<br><ul><li>One or more Archon models and one or more Kabalite Warriors units.</li><li>One or more Succubus models and one or more Wyches units.</li><li>One or more Haemonculus models and one or more Wracks units.</li></ul><br><b>Designer’s Note:</b> <i>These are all cumulative, so if your army contains at least one of all of the combinations listed above, you start the battle with 6 Pain tokens.</i>"
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "realspace_raiders_enhancement_1",
+        "name": "Dark Vitality",
+        "description": "<span class=\"kwb\">DRUKHARI</span> model only. The bearer’s unit is always Empowered - you do not need to spend any Pain tokens to activate that unit’s Pain abilities.",
+        "points": 25
+      },
+      {
+        "id": "realspace_raiders_enhancement_2",
+        "name": "Labyrinthine Cunning",
+        "description": "Archon model only. At the start of your Command phase, if the bearer is on the battlefield, you can do one of the following:<br><ul><li>Spend 1 Pain token and gain 1CP.</li><li>Roll one D6: on a 4+, you gain 1CP.</li></ul>",
+        "points": 25
+      },
+      {
+        "id": "realspace_raiders_enhancement_3",
+        "name": "Eye of Spite",
+        "description": "Succubus model only. Improve the Attacks and Armour Penetration characteristics of the bearer’s melee weapons by 1. Each time the bearer’s unit is selected to fight, you can spend 1 Pain token; if you do, until the end of the phase, improve the Attacks and Armour Penetration characteristics of the bearer’s melee weapons by 2 instead.",
+        "points": 15
+      },
+      {
+        "id": "realspace_raiders_enhancement_4",
+        "name": "Crucible of Malediction",
+        "description": "Haemonculus model only. Once per battle, in your Shooting phase, the bearer can use this Enhancement. If it does, you can spend 1 Pain token. Then, each enemy unit within 12\" of the bearer must take a Battle-shock test, subtracting 1 from that test if you spent 1 Pain token. Each time a <span class=\"kwb\">PSYKER</span> unit fails that test, it suffers 3 mortal wounds.",
+        "points": 20
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "realspace_raiders_stratagem_1",
+        "name": "INSENSIBLE TO PAIN",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Haemonculus Covens unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time an attack is allocated to a model in your unit, subtract 1 from the Damage characteristic of that attack.",
+        "cpCost": 2,
+        "type": "Realspace Raiders – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "realspace_raiders_stratagem_2",
+        "name": "INSTINCTIVE SPITE",
+        "description": "<b>WHEN:</b> Start of your Shooting phase or the start of the Fight phase.<br><br><b>TARGET:</b> Up to two Drukhari Battleline units from your army, or one other Drukhari unit from your army.<br><br><b>EFFECT:</b> You can spend 1 Pain token. Until the end of the phase, each time a model in each of those units makes an attack that targets an enemy unit that is Below Half-strength, add 1 to the Hit roll. If you spent 1 Pain token, add 1 to the Wound roll as well.",
+        "cpCost": 1,
+        "type": "Realspace Raiders – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "realspace_raiders_stratagem_3",
+        "name": "FIGHTING SHADOWS",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Drukhari unit from your army (excluding Haemonculus Covens units) that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time an attack targets your unit, subtract 1 from the Hit roll.",
+        "cpCost": 1,
+        "type": "Realspace Raiders – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "realspace_raiders_stratagem_4",
+        "name": "EAGER FOR THE KILL",
+        "description": "<b>WHEN:</b> Start of your Movement phase.<br><br><b>TARGET:</b> Up to two Wyches units from your army, or one other Drukhari unit from your army, that have not been selected to move this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time one of those units Advances, do not make an Advance roll for it. Instead, until the end of the phase, add 6\" to the Move characteristic of models in that unit (this is not cumulative with the Reavers’ Matchless Swiftness ability).",
+        "cpCost": 1,
+        "type": "Realspace Raiders – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "realspace_raiders_stratagem_5",
+        "name": "DARK HARVEST",
+        "description": "<b>WHEN:</b> Start of the Fight phase.<br><br><b>TARGET:</b> Up to two Wracks units from your army, or one other Drukhari unit from your army.<br><br><b>EFFECT:</b> Until the end of the phase, melee weapons equipped by models in each of those units have the [LETHAL HITS] ability.",
+        "cpCost": 1,
+        "type": "Realspace Raiders – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "realspace_raiders_stratagem_6",
+        "name": "RAID AND FADE",
+        "description": "<b>WHEN:</b> End of your Shooting phase.<br><br><b>TARGET:</b> Up to two Kabalite Warriors units from your army, or one other Drukhari unit from your army (excluding ScouRGES and Aircraft).<br><br><b>EFFECT:</b> Each of those units can make a Normal move of up to 6\".<br><br><b>RESTRICTIONS:</b> You cannot select units that are within Engagement Range of one or more enemy units. Until the end of the turn, those units are not eligible to declare a charge.",
+        "cpCost": 2,
+        "type": "Realspace Raiders – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      }
+    ]
+  },
+  {
+    "id": "reaper_s_wager",
+    "name": "Reaper’s Wager",
+    "factionId": "DRU",
+    "factionName": "Drukhari",
+    "abilities": [
+      {
+        "id": "reaper_s_wager_ability_1",
+        "name": "Callous Competition",
+        "description": "At the start of the battle, Drukhari units from your army are winning the wager.<br><br>Each time a <span class=\"kwb\">DRUKHARI</span> unit from your army destroys an enemy unit, <span class=\"kwb\">DRUKHARI</span> units from your army are winning the wager.<br><br>Each time a Harlequins unit from your army destroys an enemy unit, <span class=\"kwb\">HARLEQUIN</span> units from your army are winning the wager.<br><br>While <span class=\"kwb\">DRUKHARI</span> units from your army are winning the wager, <span class=\"kwb\">HARLEQUIN</span> units from your army are losing the wager, and vice versa.<br><br>Each time a <span class=\"kwb\">DRUKHARI</span> or <span class=\"kwb\">HARLEQUINS</span> model from your army makes an attack, if that model’s unit is winning the wager, re-roll a Hit roll of 1. If that model’s unit is losing the wager, re-roll a Hit roll of 1 and re-roll a Wound roll of 1 instead.<br><br><span class=\"hi_custom\">HARLEQUINS</span><br>You can include Harlequins units in your army (see Codex: Aeldari). The combined points cost of such units depends on your battle size:<br><ul><li><b>Incursion:</b> Up to 500 pts</li><li><b>Strike Force:</b> Up to 1000 pts</li><li><b>Onslaught:</b> Up to 1500 pts</li></ul><br>No <span class=\"kwb\">HARLEQUINS</span> models from your army can be your <span class=\"kwb\">WARLORD</span>. If you select this Detachment, you cannot use the Corsairs and Travelling Players army rule."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "reaper_s_wager_enhancement_1",
+        "name": "Archraider",
+        "description": "Harlequins or Drukhari model only. In the Declare Battle Formations step, if the bearer starts the battle embarked within a Dedicated Transport, that <span class=\"kwb\">DEDICATED</span> <span class=\"kwb\">TRANSPORT</span> has the Scouts 9\" ability.",
+        "points": 15
+      },
+      {
+        "id": "reaper_s_wager_enhancement_2",
+        "name": "Webway Walker",
+        "description": "Harlequins or Drukhari model only. Models in the bearer’s unit have the Deep Strike ability. Each time the bearer’s unit is set up on the battlefield using the Deep Strike ability, if that unit is currently losing the wager, until the end of the turn, you can re-roll Charge rolls made for that unit.",
+        "points": 15
+      },
+      {
+        "id": "reaper_s_wager_enhancement_3",
+        "name": "Reaper’s Cowl",
+        "description": "Harlequins model only. Models in the bearer’s unit have the Stealth and Infiltrators abilities.",
+        "points": 25
+      },
+      {
+        "id": "reaper_s_wager_enhancement_4",
+        "name": "Conductor of Torment",
+        "description": "Drukhari model only. In your Command phase, you<br>can do one of the following:<br><ul><li>If your <span class=\"kwb\">DRUKHARI</span> units are currently losing the wager, you can gain 1 Pain token. If you do, <span class=\"kwb\">DRUKHARI</span> units from your army are now winning the wager.</li><li>If your <span class=\"kwb\">DRUKHARI</span> units are currently winning the wager, you can discard 1 Pain token. If you do, Harlequins units from your army are now winning the wager.</li></ul>",
+        "points": 20
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "reaper_s_wager_stratagem_1",
+        "name": "MURDERER’S CIRCUS",
+        "description": "<b>WHEN:</b> Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Drukhari or Harlequins unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time an attack targets your unit, subtract 1 from the Hit roll.",
+        "cpCost": 1,
+        "type": "Reaper’s Wager – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "reaper_s_wager_stratagem_2",
+        "name": "MALICIOUS FRENZY",
+        "description": "<b>WHEN:</b> Your Shooting phase or the Fight phase.<br><br><b>TARGET:</b> One Drukhari or Harlequins unit from your army that has not been selected to shoot or fight this phase.<br><br><b>EFFECT:</b> Select [LETHAL HITS] or [SUSTAINED HITS 1]. Until the end of the phase, weapons equipped by models in your unit have the selected ability.",
+        "cpCost": 1,
+        "type": "Reaper’s Wager – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "reaper_s_wager_stratagem_3",
+        "name": "DANCE MACABRE",
+        "description": "<b>WHEN:</b> Your opponent’s Movement phase, just after an enemy unit ends a Normal, Advance or Fall Back move.<br><br><b>TARGET:</b> One Drukhari Infantry or Harlequins Infantry unit from your army that is within 9\" of that enemy unit.<br><br><b>EFFECT:</b> Your unit can make a Normal move of up to D6\". If your unit is currently losing the wager, it can make a Normal move of up to 6\" instead.",
+        "cpCost": 2,
+        "type": "Reaper’s Wager – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "reaper_s_wager_stratagem_4",
+        "name": "SCINTILLATING TEMPO",
+        "description": "<b>WHEN:</b> Your Movement phase or your Charge phase, just after a Drukhari or Harlequins unit from your army is selected to make a Normal, Advance or Fall Back move, is set up on the battlefield, or declares a charge.<br><br><b>TARGET:</b> That unit.<br><br><b>EFFECT:</b> Until the end of the turn, enemy units cannot use the Fire Overwatch Stratagem to shoot at your unit.",
+        "cpCost": 1,
+        "type": "Reaper’s Wager – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement or Charge phase"
+      },
+      {
+        "id": "reaper_s_wager_stratagem_5",
+        "name": "SHORTEN THE ODDS",
+        "description": "<b>WHEN:</b> Your Movement phase, just after a Drukhari or Harlequins unit from your army has Advanced.<br><br><b>TARGET:</b> That unit.<br><br><b>EFFECT:</b> Until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it Advanced.",
+        "cpCost": 1,
+        "type": "Reaper’s Wager – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "reaper_s_wager_stratagem_6",
+        "name": "FATEFUL ROLE",
+        "description": "<b>WHEN:</b> Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Drukhari or Harlequins unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit is destroyed, if that model has not fought this phase, roll one D6, adding 1 to the result if that unit is losing the wager: on a 4+, do not remove it from play. That destroyed model can fight after the attacking model’s unit has finished making its attacks, and is then removed from play.",
+        "cpCost": 1,
+        "type": "Reaper’s Wager – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      }
+    ]
+  },
+  {
+    "id": "ship_killer_cult",
+    "name": "Ship-killer Cult",
+    "factionId": "DRU",
+    "factionName": "Drukhari",
+    "abilities": [
+      {
+        "id": "ship_killer_cult_ability_1",
+        "name": "Appetite for Adulation",
+        "description": "In the Fight phase, if two or more enemy units were destroyed by DRUKHARi units from your army that phase, you gain 1 Pain token. In addition, each time a WYCH CULT unit from your army becomes Empowered in the Fight phase, until the end of the phase, melee weapons equipped by models in that unit have the [ANTi-iNFANTRY 4+] ability."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "ship_killer_cult_enhancement_1",
+        "name": "Stimm-Fervour",
+        "description": "The bearer is eligible to declare a charge in a turn in which it Advanced.",
+        "points": 0
+      },
+      {
+        "id": "ship_killer_cult_enhancement_2",
+        "name": "Blood-Drenched Champion",
+        "description": "In the Battle-shock step of your opponent’s Command phase, for each enemy unit that is below its Starting Strength and is within Engagement Range of the bearer, that unit must take a Battle-shock test. If that enemy unit is also Below Half-strength, subtract 1 from that test. This Enhancement cannot cause a unit to take two Battle-shock tests in the same phase.",
+        "points": 0
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "ship_killer_cult_stratagem_1",
+        "name": "HYPERAGILITY",
+        "description": "<b>WHEN:</b> Your opponent's Shooting phase or the Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One WYcH CULT unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time an attack targets your unit, subtract 1 from the Hit roll and subtract 1 from the Wound roll.",
+        "cpCost": 1,
+        "type": "Ship-killer Cult – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "ship_killer_cult_stratagem_2",
+        "name": "NO OBSTACLE",
+        "description": "<b>WHEN:</b> Your Charge phase.<br><br><b>TARGET:</b> One WYCH CULT unit from your army that opened a Hatchway this turn.<br><br><b>EFFECT:</b> Until the end of the phase, your unit can declare a charge that includes one or more targets that are not visible to it, provided each of those units that are not visible to it are wholly on the opposite side of that Hatchway from your unit.",
+        "cpCost": 1,
+        "type": "Ship-killer Cult – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Charge phase"
+      },
+      {
+        "id": "ship_killer_cult_stratagem_3",
+        "name": "TOYING WITH THE PREY",
+        "description": "<b>WHEN:</b> Fight phase, just after a WYcH CULT unit from your army has fought.<br><br><b>TARGET:</b> That <span class=\"kwb\">WYCH</span> <span class=\"kwb\">CULT</span> unit.<br><br><b>EFFECT:</b> If your unit destroyed one or more enemy models this phase, select one of those enemy models. Until the end of your opponent’s next turn, subtract 1 from the Objective Control characteristic of models in that enemy model's unit (to a minimum of l).",
+        "cpCost": 1,
+        "type": "Ship-killer Cult – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "ship_killer_cult_stratagem_4",
+        "name": "PHANTASM GRENADES",
+        "description": "<b>WHEN:</b> Your Movement phase, just after a WYcH CULT unit from your army ends a Normal move, before any enemy units fire Overwatch.<br><br><b>TARGET:</b> That <span class=\"kwb\">WYCH</span> <span class=\"kwb\">CULT</span> unit.<br><br><b>EFFECT:</b> Select one enemy unit within 9\" of and visible to your unit. That enemy unit must take a Battle-shock test, subtracting 1 from the result: if failed, until the end of the turn, that enemy unit cannot fire Overwatch.",
+        "cpCost": 1,
+        "type": "Ship-killer Cult – Wargear Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      }
+    ]
+  },
+  {
+    "id": "skysplinter_assault",
+    "name": "Skysplinter Assault",
+    "factionId": "DRU",
+    "factionName": "Drukhari",
+    "abilities": [
+      {
+        "id": "skysplinter_assault_ability_1",
+        "name": "Rain Of Cruelty",
+        "description": "Each time a Drukhari unit from your army disembarks from a Transport, until the end of the turn:<br><ul><li>Ranged weapons equipped by models in that disembarking unit have the [ignores cover] ability.</li><li>Melee weapons equipped by models in that disembarking unit have the [lance] ability.</li></ul>"
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "skysplinter_assault_enhancement_1",
+        "name": "Phantasmal Smoke",
+        "description": "<span class=\"kwb\">DRUKHARI</span> model only. While the bearer’s unit is wholly within 6\" of a friendly Drukhari Transport:<br><ul><li>Models in the bearer’s unit have the Stealth ability.</li><li>Each time a ranged attack targets the bearer’s unit, models in that unit have the Benefit of Cover against that attack.</li></ul>",
+        "points": 15
+      },
+      {
+        "id": "skysplinter_assault_enhancement_2",
+        "name": "Sadistic Fulcrum",
+        "description": "<span class=\"kwb\">DRUKHARI</span> model only. Each time you spend 1 Pain token to Empower the bearer’s unit in the Shooting phase, select one friendly Drukhari Transport within 6\" of the bearer’s unit; until the end of the phase, each time that <span class=\"kwb\">TRANSPORT</span> makes an attack, you can re-roll the Hit roll.",
+        "points": 15
+      },
+      {
+        "id": "skysplinter_assault_enhancement_3",
+        "name": "Spiteful Raider",
+        "description": "<span class=\"kwb\">DRUKHARI</span> model only. Each time the bearer’s unit destroys an enemy unit in the Fight phase, if that enemy unit was within range of one or more objective markers when the bearer’s unit was selected to fight, you gain 1 additional Pain token.",
+        "points": 10
+      },
+      {
+        "id": "skysplinter_assault_enhancement_4",
+        "name": "Nightmare Shroud",
+        "description": "<span class=\"kwb\">DRUKHARI</span> model only. Each time the bearer’s unit disembarks from a Transport, until the end of the turn, enemy units cannot use the Fire Overwatch Stratagem to shoot at the bearer’s unit.",
+        "points": 20
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "skysplinter_assault_stratagem_1",
+        "name": "SKYBORNE ANNIHILATION",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Drukhari unit from your army that has not been selected to shoot this phase and that disembarked from a Transport this turn.<br><br><b>EFFECT:</b> Until the end of the phase, ranged weapons equipped by models in your unit have the [SUSTAINED HITS 1] ability, or the [SUSTAINED HITS 2] ability if your unit is a Kabalite Warriors or Hand of the Archon unit.",
+        "cpCost": 1,
+        "type": "Skysplinter Assault – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "skysplinter_assault_stratagem_2",
+        "name": "SWOOPING MOCKERY",
+        "description": "<b>WHEN:</b> Your opponent’s Movement phase, just after an enemy unit ends a Normal, Advance or Fall Back move.<br><br><b>TARGET:</b> One Drukhari Transport from your army that is within 9\" of that enemy unit.<br><br><b>EFFECT:</b> Your <span class=\"kwb\">TRANSPORT</span> can make a Normal move of up to 6\".",
+        "cpCost": 1,
+        "type": "Skysplinter Assault – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "skysplinter_assault_stratagem_3",
+        "name": "VICIOUS BLADES",
+        "description": "<b>WHEN:</b> Fight phase, just after a Drukhari Transport from your army has selected its targets.<br><br><b>TARGET:</b> That <span class=\"kwb\">TRANSPORT</span>.<br><br><b>EFFECT:</b> After your <span class=\"kwb\">TRANSPORT</span> has fought, select one enemy unit that was the target of one or more of those attacks and roll one D6 for each model embarked within your <span class=\"kwb\">TRANSPORT</span>, adding 1 to the result if that embarked model is a Wracks model: for each 5+, that enemy unit suffers 1 mortal wound (to a maximum of 6 mortal wounds).",
+        "cpCost": 1,
+        "type": "Skysplinter Assault – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "skysplinter_assault_stratagem_4",
+        "name": "WRAITHLIKE RETREAT",
+        "description": "<b>WHEN:</b> End of the Fight phase.<br><br><b>TARGET:</b> One Drukhari Infantry unit from your army that fought this phase.<br><br><b>EFFECT:</b> Your unit can make a Normal or Fall Back move, but unless it is a Wyches unit, it must end that move wholly within 3\" horizontally and 5\" vertically of a friendly Drukhari Transport and must embark within that <span class=\"kwb\">TRANSPORT</span> at the end of that move (otherwise, it cannot make that move).",
+        "cpCost": 1,
+        "type": "Skysplinter Assault – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "skysplinter_assault_stratagem_5",
+        "name": "POUNCE ON THE PREY",
+        "description": "<b>WHEN:</b> Your Movement phase, just after a Drukhari Infantry unit from your army disembarks from a Transport that made a Normal move this phase.<br><br><b>TARGET:</b> That <span class=\"kwb\">INFANTRY</span> unit.<br><br><b>EFFECT:</b> Until the end of the turn, your unit is eligible to declare a charge.",
+        "cpCost": 1,
+        "type": "Skysplinter Assault – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "skysplinter_assault_stratagem_6",
+        "name": "NIGHT SHIELD",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Drukhari Vehicle unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, models in your unit have a 4+ invulnerable save.",
+        "cpCost": 1,
+        "type": "Skysplinter Assault – Wargear Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      }
+    ]
+  },
+  {
+    "id": "space_lane_raiders",
+    "name": "Space Lane Raiders",
+    "factionId": "DRU",
+    "factionName": "Drukhari",
+    "abilities": [
+      {
+        "id": "space_lane_raiders_ability_1",
+        "name": "Commorrite Rivalries",
+        "description": "Each time a DRUKHARi CHARACTER model from your army destroys an enemy <span class=\"kwb\">CHARACTER</span> unit, you gain 1 Pain token. In addition, each time you use the Battlefield Command Stratagem, you can expend 1 Pain token from your Pain token pool. If you do, decrease that Stratagems cost by 1CP for that usage."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "space_lane_raiders_enhancement_1",
+        "name": "Power and Greed",
+        "description": "The first time in each turn that the bearer is Empowered, roll one D6: on a 3+, you gain 1 Pain token.",
+        "points": 0
+      },
+      {
+        "id": "space_lane_raiders_enhancement_2",
+        "name": "Spiteful Demise",
+        "description": "When the bearer is destroyed, if it has not fought this phase, roll one D6: on a 2+, do not remove it from play. The bearer can fight after the attacking unit has finished making its attacks, and is then removed from play.",
+        "points": 0
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "space_lane_raiders_stratagem_1",
+        "name": "CREW-THIEVES",
+        "description": "<b>WHEN:</b> Fight phase.<br><br><b>TARGET:</b> One WRAcKS unit from your army that has not been selected to fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, melee weapons equipped by models in your unit have the [ANTI-INFANTRY 3+] ability.",
+        "cpCost": 1,
+        "type": "Space Lane Raiders – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "space_lane_raiders_stratagem_2",
+        "name": "SHIPBOARD SHADES",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One <span class=\"kwb\">DRUKHARI</span> unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time an attack targets your unit, subtract 1 from the Hit roll.",
+        "cpCost": 1,
+        "type": "Space Lane Raiders – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "space_lane_raiders_stratagem_3",
+        "name": "VOIDSHIP GLADIATORS",
+        "description": "<b>WHEN:</b> Your Movement phase.<br><br><b>TARGET:</b> One WYcHES unit from your army that has not been selected to move this phase.<br><br><b>EFFECT:</b> Roll one D6: on a 2+, until the end of the turn, enemy units cannot fire Overwatch at your unit.",
+        "cpCost": 1,
+        "type": "Space Lane Raiders – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "space_lane_raiders_stratagem_4",
+        "name": "VETERAN PIRATES",
+        "description": "<b>WHEN:</b> Your Shooting phase, just after a KABALITE WARRIORS unit from your army has shot.<br><br><b>TARGET:</b> That <span class=\"kwb\">KABALITE</span> <span class=\"kwb\">WARRIORS</span> unit.<br><br><b>EFFECT:</b> Your unit can make a Normal move of up to 3\".",
+        "cpCost": 1,
+        "type": "Space Lane Raiders – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      }
+    ]
+  },
+  {
+    "id": "spectacle_of_spite",
+    "name": "Spectacle of Spite",
+    "factionId": "DRU",
+    "factionName": "Drukhari",
+    "abilities": [
+      {
+        "id": "spectacle_of_spite_ability_1",
+        "name": "Combat Drugs",
+        "description": "At the start of your Command phase, select which Combat Drugs will be active for your army until the start of your next Command phase. To do so, either select one from the list below (you cannot select the same Combat Drug more than once per battle), or randomly select two by rolling two D6. When doing so randomly, Combat Drugs you have previously selected can become active again, but if you randomly select one that is already active for your army, it has no additional effect.<br><br><span class=\"hi_custom\">1. Adrenalight</span><br>Add 1 to the Attacks characteristic of melee weapons equipped by Wych Cult models from your army.<br><br><span class=\"hi_custom\">2. Hypex</span><br>Add 2\" to the Move characteristic of <span class=\"kwb\">WYCH</span> <span class=\"kwb\">CULT</span> models from your army.<br><br><span class=\"hi_custom\">3. Serpentin</span><br>Improve the Weapon Skill characteristic of melee weapons equipped by <span class=\"kwb\">WYCH</span> <span class=\"kwb\">CULT</span> models from your army by 1.<br><br><span class=\"hi_custom\">4. Painbringer</span><br>Add 1 to the Toughness characteristic of <span class=\"kwb\">WYCH</span> <span class=\"kwb\">CULT</span> models from your army.<br><br><span class=\"hi_custom\">5. Grave Lotus</span><br>Add 1 to the Strength characteristic of melee weapons equipped by <span class=\"kwb\">WYCH</span> <span class=\"kwb\">CULT</span> models from your army.<br><br><span class=\"hi_custom\">6. Splintermind</span><br>Improve the Leadership characteristic of <span class=\"kwb\">WYCH</span> <span class=\"kwb\">CULT</span> models from your army by 1, and improve the Ballistic Skill characteristic of ranged weapons equipped by <span class=\"kwb\">WYCH</span> <span class=\"kwb\">CULT</span> models from your army by 1."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "spectacle_of_spite_enhancement_1",
+        "name": "Pharmacophex",
+        "description": "Succubus model only. At the start of your Command phase, after selecting which Combat Drugs will be active for your army, roll one D6 and consult the Combat Drugs list. The result rolled applies to the bearer’s unit until the start of your next Command phase in addition to any other Combat Drugs that are active for your army. If you randomly select one that is already active for your army, it has no additional effect.",
+        "points": 15
+      },
+      {
+        "id": "spectacle_of_spite_enhancement_2",
+        "name": "Chronoshard",
+        "description": "Succubus model only. Once per battle, at the start of the Fight phase, the bearer can use this Enhancement. If it does, until the end of the phase, models in the bearer’s unit have the Fights First ability.",
+        "points": 15
+      },
+      {
+        "id": "spectacle_of_spite_enhancement_3",
+        "name": "Periapt of Torments",
+        "description": "Succubus model only. Enemy units cannot use the Fire Overwatch Stratagem to shoot at the bearer’s unit.",
+        "points": 25
+      },
+      {
+        "id": "spectacle_of_spite_enhancement_4",
+        "name": "Morghenna’s Curse",
+        "description": "Succubus model only. Improve the Armour Penetration and Damage characteristics of the bearers melee weapons by 1.",
+        "points": 20
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "spectacle_of_spite_stratagem_1",
+        "name": "DEADLY DEBUT",
+        "description": "<b>WHEN:</b> Fight phase.<br><br><b>TARGET:</b> One DRUKHARI unit from your army that made a Charge move this turn and has not been selected to fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, melee weapons equipped by models in your unit have the [LETHAL HITS] ability. If your unit is a Wyches unit, until the end of the phase, improve the Armour Penetration characteristic of melee weapons equipped by models in your unit by 1 as well.",
+        "cpCost": 1,
+        "type": "Spectacle of Spite – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "spectacle_of_spite_stratagem_2",
+        "name": "ACROBATIC DISPLAY",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Wych Cult unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, models in your unit have a 5+ invulnerable save.",
+        "cpCost": 1,
+        "type": "Spectacle of Spite – Battle Tactic Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "spectacle_of_spite_stratagem_3",
+        "name": "A CHALLENGE MET",
+        "description": "<b>WHEN:</b> End of your opponent’s Movement phase.<br><br><b>TARGET:</b> One WYCH CULT unit from your army that would be able to declare a charge if it were your Charge phase.<br><br><b>EFFECT:</b> Select one enemy unit within 9\" of your unit that was set up on the battlefield this phase or that ended a Normal or Advance move this phase. Your unit now declares a charge that targets only that enemy unit, and you resolve that charge.<br><br><b>RESTRICTIONS:</b> Even if that charge is successful, your unit does not receive any Charge bonus this turn.",
+        "cpCost": 2,
+        "type": "Spectacle of Spite – Battle Tactic Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "spectacle_of_spite_stratagem_4",
+        "name": "BERSERK FUGUE",
+        "description": "<b>WHEN:</b> Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Wych Cult unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit is destroyed, if that model has not fought this phase, do not remove it from play. The destroyed model can fight after the attacking unit has finished making its attacks, and is then removed from play.",
+        "cpCost": 2,
+        "type": "Spectacle of Spite – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "spectacle_of_spite_stratagem_5",
+        "name": "FEIGNED WEAKNESS",
+        "description": "<b>WHEN:</b> Your Movement phase, just after a Drukhari unit from your army Falls Back.<br><br><b>TARGET:</b> That <span class=\"kwb\">DRUKHARI</span> unit.<br><br><b>EFFECT:</b> Until the end of the turn, your unit is eligible to shoot and declare a charge in turn in which it Fell Back.",
+        "cpCost": 1,
+        "type": "Spectacle of Spite – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "spectacle_of_spite_stratagem_6",
+        "name": "PRETERNATURAL AGILITY",
+        "description": "<b>WHEN:</b> Start of your Movement or Charge phase.<br><br><b>TARGET:</b> One Wych Cult unit from your army.<br><br><b>EFFECT:</b> Until the end of the phase, each time your unit makes a Normal, Advance or Charge move, you can ignore any or all modifiers to its Move characteristic and to Advance and Charge rolls made for it and, until the end of the turn, each time a model in your unit makes such a move, it can move horizontally through models (when doing so, such a model can move within Engagement Range of such models but cannot end a Normal or Advance move within Engagement Range of them).",
+        "cpCost": 1,
+        "type": "Spectacle of Spite – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement or Charge phase"
+      }
+    ]
+  }
+]

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import "./App.css";
-import appLogo from "./assets/Nowe_LogoPNG.png";
+import appLogo from "./assets/Nowe_Logo_header.png";
 import { calculateExpectedDamage } from "./lib/combat";
 import { runSimulationByMode } from "./lib/combat/simulation/runSimulationByMode";
 
@@ -27,6 +27,7 @@ import { loadArmies } from "./lib/storage/armyStorage";
 import { CalculatorPage } from "./components/pages/CalculatorPage";
 import { ArmiesPage } from "./components/pages/ArmiesPage";
 import { WorkspacePage } from "./components/pages/WorkspacePage";
+import { UpdatesPage } from "./components/pages/UpdatesPage";
 import type { Unit } from "./types/combat";
 import type { NormalizedDetachment } from "./types/wahapedia";
 
@@ -380,6 +381,12 @@ function LoadedApp({ units, detachments }: LoadedAppProps) {
               >
                 Battle Workspace
               </button>
+              <button
+                className={`app-header__tab ${view === "updates" ? "app-header__tab--active" : ""}`}
+                onClick={() => setView("updates")}
+              >
+                Updates
+              </button>
             </nav>
 
           </div>
@@ -515,6 +522,8 @@ function LoadedApp({ units, detachments }: LoadedAppProps) {
             toggleDefenderUnitAbility={defenderUnitAbilityOptions.toggleRuleOption}
           />
         )}
+
+        {view === "updates" && <UpdatesPage />}
       </main>
     </div>
   );
@@ -527,7 +536,7 @@ function App() {
   useEffect(() => {
     let cancelled = false;
 
-    Promise.all([import("./data/loadAllUnits"), import("./data/detachments")])
+    Promise.all([import("./data/loadAllUnits"), import("./data/loadDetachments")])
       .then(async ([unitsModule, detachmentsModule]) => {
         const savedBattleSetup = loadBattleSetup();
         const savedUISession = loadUISession();
@@ -538,7 +547,10 @@ function App() {
           armies: savedArmies,
         });
 
-        const units = await unitsModule.loadUnitsForFactions(priorityFactions);
+        const [units, detachments] = await Promise.all([
+          unitsModule.loadUnitsForFactions(priorityFactions),
+          detachmentsModule.loadDetachmentsForFactions(priorityFactions),
+        ]);
 
         if (cancelled) {
           return;
@@ -546,7 +558,7 @@ function App() {
 
         setLoadedData({
           units,
-          detachments: detachmentsModule.detachments,
+          detachments,
         });
 
         void unitsModule
@@ -564,6 +576,31 @@ function App() {
               return {
                 ...current,
                 units: mergeUnitsById(current.units, remainingUnits),
+              };
+            });
+          })
+          .catch(() => {
+            // Background hydration is best-effort only.
+          });
+
+        void detachmentsModule
+          .loadRemainingDetachments(priorityFactions)
+          .then((remainingDetachments) => {
+            if (cancelled || remainingDetachments.length === 0) {
+              return;
+            }
+
+            setLoadedData((current) => {
+              if (!current) {
+                return current;
+              }
+
+              return {
+                ...current,
+                detachments: mergeDetachmentsById(
+                  current.detachments,
+                  remainingDetachments
+                ),
               };
             });
           })
@@ -647,4 +684,21 @@ function mergeUnitsById(existingUnits: Unit[], incomingUnits: Unit[]): Unit[] {
   });
 
   return Array.from(mergedUnits.values());
+}
+
+function mergeDetachmentsById(
+  existingDetachments: NormalizedDetachment[],
+  incomingDetachments: NormalizedDetachment[]
+): NormalizedDetachment[] {
+  const mergedDetachments = new Map(
+    existingDetachments.map((detachment) => [detachment.id, detachment])
+  );
+
+  incomingDetachments.forEach((detachment) => {
+    if (!mergedDetachments.has(detachment.id)) {
+      mergedDetachments.set(detachment.id, detachment);
+    }
+  });
+
+  return Array.from(mergedDetachments.values());
 }

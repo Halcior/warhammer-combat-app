@@ -1,0 +1,140 @@
+[
+  {
+    "factionName": "Adepta Sororitas",
+    "slug": "adepta-sororitas",
+    "fileName": "adepta-sororitas.json",
+    "detachmentCount": 7
+  },
+  {
+    "factionName": "Adeptus Custodes",
+    "slug": "adeptus-custodes",
+    "fileName": "adeptus-custodes.json",
+    "detachmentCount": 8
+  },
+  {
+    "factionName": "Adeptus Mechanicus",
+    "slug": "adeptus-mechanicus",
+    "fileName": "adeptus-mechanicus.json",
+    "detachmentCount": 9
+  },
+  {
+    "factionName": "Aeldari",
+    "slug": "aeldari",
+    "fileName": "aeldari.json",
+    "detachmentCount": 16
+  },
+  {
+    "factionName": "Astra Militarum",
+    "slug": "astra-militarum",
+    "fileName": "astra-militarum.json",
+    "detachmentCount": 9
+  },
+  {
+    "factionName": "Chaos Daemons",
+    "slug": "chaos-daemons",
+    "fileName": "chaos-daemons.json",
+    "detachmentCount": 11
+  },
+  {
+    "factionName": "Chaos Knights",
+    "slug": "chaos-knights",
+    "fileName": "chaos-knights.json",
+    "detachmentCount": 5
+  },
+  {
+    "factionName": "Chaos Space Marines",
+    "slug": "chaos-space-marines",
+    "fileName": "chaos-space-marines.json",
+    "detachmentCount": 16
+  },
+  {
+    "factionName": "Death Guard",
+    "slug": "death-guard",
+    "fileName": "death-guard.json",
+    "detachmentCount": 10
+  },
+  {
+    "factionName": "Drukhari",
+    "slug": "drukhari",
+    "fileName": "drukhari.json",
+    "detachmentCount": 10
+  },
+  {
+    "factionName": "Emperor’s Children",
+    "slug": "emperor-s-children",
+    "fileName": "emperor-s-children.json",
+    "detachmentCount": 7
+  },
+  {
+    "factionName": "Genestealer Cults",
+    "slug": "genestealer-cults",
+    "fileName": "genestealer-cults.json",
+    "detachmentCount": 9
+  },
+  {
+    "factionName": "Grey Knights",
+    "slug": "grey-knights",
+    "fileName": "grey-knights.json",
+    "detachmentCount": 8
+  },
+  {
+    "factionName": "Imperial Agents",
+    "slug": "imperial-agents",
+    "fileName": "imperial-agents.json",
+    "detachmentCount": 7
+  },
+  {
+    "factionName": "Imperial Knights",
+    "slug": "imperial-knights",
+    "fileName": "imperial-knights.json",
+    "detachmentCount": 5
+  },
+  {
+    "factionName": "Leagues of Votann",
+    "slug": "leagues-of-votann",
+    "fileName": "leagues-of-votann.json",
+    "detachmentCount": 9
+  },
+  {
+    "factionName": "Necrons",
+    "slug": "necrons",
+    "fileName": "necrons.json",
+    "detachmentCount": 12
+  },
+  {
+    "factionName": "Orks",
+    "slug": "orks",
+    "fileName": "orks.json",
+    "detachmentCount": 11
+  },
+  {
+    "factionName": "Space Marines",
+    "slug": "space-marines",
+    "fileName": "space-marines.json",
+    "detachmentCount": 40
+  },
+  {
+    "factionName": "T’au Empire",
+    "slug": "t-au-empire",
+    "fileName": "t-au-empire.json",
+    "detachmentCount": 8
+  },
+  {
+    "factionName": "Thousand Sons",
+    "slug": "thousand-sons",
+    "fileName": "thousand-sons.json",
+    "detachmentCount": 9
+  },
+  {
+    "factionName": "Tyranids",
+    "slug": "tyranids",
+    "fileName": "tyranids.json",
+    "detachmentCount": 12
+  },
+  {
+    "factionName": "World Eaters",
+    "slug": "world-eaters",
+    "fileName": "world-eaters.json",
+    "detachmentCount": 8
+  }
+]

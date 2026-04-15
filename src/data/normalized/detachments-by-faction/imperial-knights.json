@@ -1,0 +1,482 @@
+[
+  {
+    "id": "gate_warden_lance",
+    "name": "Gate Warden Lance",
+    "factionId": "QI",
+    "factionName": "Imperial Knights",
+    "abilities": [
+      {
+        "id": "gate_warden_lance_ability_1",
+        "name": "Dauntless Defenders",
+        "description": "At the start of the first battle round, select two objective markers on the battlefield to be your foundations. When you draw a line from any part of one of your foundations to the other, if any part of a model’s base (or any part of a model’s hull, for a model without a base) crosses that line, that model’s unit is said to be on your defensive line.<br><br>While an Imperial Knights unit from your army is on your defensive line, that unit has the following ability:<br><br><b>Against the Horde:</b> Each time a model in this unit makes an attack that targets a visible enemy unit, you can ignore any or all modifiers to the Hit roll, and weapons equipped by models in this unit have the [sustained hits 1] ability.<br><br>Each time one of your foundations is removed from the battlefield (e.g. by a Primary Mission rule), just after it is removed, select a new objective marker on the battlefield to be one of your foundations."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "gate_warden_lance_enhancement_1",
+        "name": "Acquisitor-at-Arms",
+        "description": "<span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> model only. While the bearer is on your defensive line and there are no enemy units on your defensive line, add the bearers Objective Control characteristic to that of each model affected by the bearers Bondsman ability.",
+        "points": 15
+      },
+      {
+        "id": "gate_warden_lance_enhancement_2",
+        "name": "Purgation’s Hand",
+        "description": "<span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> model only. Each time the bearer makes a melee attack, if the bearer is on your defensive line, re-roll a Hit roll of 1 and re-roll a Wound roll of 1.",
+        "points": 20
+      },
+      {
+        "id": "gate_warden_lance_enhancement_3",
+        "name": "Augury Halo",
+        "description": "<span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> model only. Each time the bearer makes a ranged attack, while the bearer is on your defensive line, weapons equipped by the bearer have the [ignores cover] ability.",
+        "points": 20
+      },
+      {
+        "id": "gate_warden_lance_enhancement_4",
+        "name": "Vengeful Tread",
+        "description": "<span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> model only. Once per turn, you can target the bearer with the Tank Shock Stratagem for 0CP.",
+        "points": 15
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "gate_warden_lance_stratagem_1",
+        "name": "MARSHAL THE DEFENCE",
+        "description": "<b>WHEN:</b> Your Movement phase.<br><br><b>TARGET:</b> Up to two Imperial Knights units from your army that have not been selected to move this phase.<br><br><b>EFFECT:</b> Until the end of the phase, add 3\" to the Move characteristic of models in your units.",
+        "cpCost": 1,
+        "type": "Gate Warden Lance – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "gate_warden_lance_stratagem_2",
+        "name": "TITANIC BOMBARDMENT",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Imperial Knights Titanic unit from your army that Remained Stationary this turn, that is on your defensive line and that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, ranged weapons equipped by models in your unit have the [SUSTAINED HITS 2] ability.",
+        "cpCost": 1,
+        "type": "Gate Warden Lance – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "gate_warden_lance_stratagem_3",
+        "name": "STEADFAST SUPERIORITY",
+        "description": "<b>WHEN:</b> Fight phase.<br><br><b>TARGET:</b> One Imperial Knights unit from your army that is within Engagement Range of one or more enemy units, that is on your defensive line and that has not already been selected to fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack, you can re-roll the Hit roll.",
+        "cpCost": 1,
+        "type": "Gate Warden Lance – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "gate_warden_lance_stratagem_4",
+        "name": "DRIVE THEM OUT!",
+        "description": "<b>WHEN:</b> Your Shooting phase or the Fight phase.<br><br><b>TARGET:</b> One Imperial Knights unit from your army that has not been selected to shoot or fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack that targets an enemy unit on your defensive line, an unmodified Hit roll of 5+ scores a Critical Hit.",
+        "cpCost": 1,
+        "type": "Gate Warden Lance – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "gate_warden_lance_stratagem_5",
+        "name": "FORTRESS OF INTIMIDATION",
+        "description": "<b>WHEN:</b> Start of your opponent’s Charge phase.<br><br><b>TARGET:</b> One Imperial Knights Titanic unit from your army that is on your defensive line.<br><br><b>EFFECT:</b> Until the end of the phase, each time an enemy unit selects your unit as a target of a charge, that unit must take a Battle-shock test, subtracting 1 from the result.",
+        "cpCost": 1,
+        "type": "Gate Warden Lance – Epic Deed Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Charge phase"
+      },
+      {
+        "id": "gate_warden_lance_stratagem_6",
+        "name": "LANCEBREAKER",
+        "description": "<b>WHEN:</b> Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Imperial Knights unit from your army that was selected as the target of one or more of the attacking unit’s attacks and is on your defensive line.<br><br><b>EFFECT:</b> Until the end of the phase, each time an attack targets your unit, if the Strength characteristic of that attack is greaterthan the Toughness characteristic of your unit, subtract 1 from the Wound roll",
+        "cpCost": 1,
+        "type": "Gate Warden Lance – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      }
+    ]
+  },
+  {
+    "id": "questor_forgepact",
+    "name": "Questor Forgepact",
+    "factionId": "QI",
+    "factionName": "Imperial Knights",
+    "abilities": [
+      {
+        "id": "questor_forgepact_ability_1",
+        "name": "Cogbound Alliance",
+        "description": "Imperial Knights units from your army have the following the ability:<br><br><b>Sacristan Pledge:</b> In your Command phase, one model in this unit regains 1 lost wound. If this unit is within 3\" of one or more friendly Tech-Priest models, one model in this unit regains up to D3 lost wounds instead.<br><br>Adeptus Mechanicus units from your army have the following ability:<br><br><b>Divine Inspiration:</b> Each time a model in this unit makes a ranged attack, re-roll a Hit roll of 1. If this unit is within 6\" of one or more friendly <span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> units, re-roll a Wound roll of 1 as well.<br><br><span class=\"hi_custom\">FORGE WORLD ALLIES</span><br>You can include the following <span class=\"kwb\">ADEPTUS</span> <span class=\"kwb\">MECHANICUS</span> units in your army: Tech-Priest Dominus; Tech-Priest Manipulus; Skitarii Marshal; Skitarii Rangers; Skitarii Vanguard. The combined points cost of such units depends on your battle size:<br><ul><li><b>Incursion:</b> Up to 250 pts</li><li><b>Strike Force:</b> Up to 500 pts</li><li><b>Onslaught:</b> Up to 750 pts</li></ul><br>No <span class=\"kwb\">ADEPTUS</span> <span class=\"kwb\">MECHANICUS</span> models from your army can be your <span class=\"kwb\">WARLORD</span>."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "questor_forgepact_enhancement_1",
+        "name": "Omnissian Champion",
+        "description": "<span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> model only. Add 4 to the bearer’s Wounds characteristic.",
+        "points": 30
+      },
+      {
+        "id": "questor_forgepact_enhancement_2",
+        "name": "Knight of the Opus Machina",
+        "description": "<span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> model only. Each time the bearer makes a ranged attack, if the bearer is within 6\" of one or more friendly Adeptus Mechanicus units, re-roll a Hit roll of 1.",
+        "points": 20
+      },
+      {
+        "id": "questor_forgepact_enhancement_3",
+        "name": "Magos Questoris",
+        "description": "Tech-Priest model only. While the bearer is within 3\" of one or more friendly Imperial Knights units, it has the Lone Operative ability. In your Command phase, select one friendly Imperial Knights model within 3\" of the bearer. That model regains up to 2 lost wounds.",
+        "points": 35
+      },
+      {
+        "id": "questor_forgepact_enhancement_4",
+        "name": "Vocifer Magnificat (Aura)",
+        "description": "<span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> model only. While an enemy unit is within 6\" of the bearer, worsen the Leadership characteristic of models in that unit by 1. While a friendly Adeptus Mechanicus unit is within 6\" of the bearer, improve the Leadership characteristic of models in that <span class=\"kwb\">ADEPTUS</span> <span class=\"kwb\">MECHANICUS</span> unit by 1.",
+        "points": 15
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "questor_forgepact_stratagem_1",
+        "name": "BONDED IMPERATIVE",
+        "description": "<b>WHEN:</b> Your Command phase, just before an Imperial Knights Character unit from your army uses a Bondsman ability.<br><br><b>TARGET:</b> That <span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> <span class=\"kwb\">CHARACTER</span> unit.<br><br><b>EFFECT:</b> When selecting targets for that use of that Bondsman ability, you can select one friendly Adeptus Mechanicus unit within 12\" of your unit in addition, or instead of selecting one Armiger model. Until the start of your next Command phase, every model in that <span class=\"kwb\">ADEPTUS</span> <span class=\"kwb\">MECHANICUS</span> unit is affected by that Bondsman ability.<br><br><b>RESTRICTIONS:</b> You cannot target a Knight Preceptor with this Stratagem.",
+        "cpCost": 1,
+        "type": "Questor Forgepact – Epic Deed Stratagem",
+        "turn": "Your turn",
+        "phase": "Command phase"
+      },
+      {
+        "id": "questor_forgepact_stratagem_2",
+        "name": "AGGRESSION BEGETS AGGRESSION",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Imperial Knights unit from your army or one Imperial Knights Character unit from your army and one friendly Adeptus Mechanicus unit that is within 6\" of that unit.<br><br><b>EFFECT:</b> Until the end of the phase, ranged weapons equipped by models in your units have the [ASSAULT] ability.",
+        "cpCost": 1,
+        "type": "Questor Forgepact – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "questor_forgepact_stratagem_3",
+        "name": "OMNISSIAH’S GRACE",
+        "description": "<b>WHEN:</b> Any phase, just after a mortal wound is allocated to an Imperial Knights or Adeptus Mechanicus unit from your army.<br><br><b>TARGET:</b> That <span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> or <span class=\"kwb\">ADEPTUS</span> <span class=\"kwb\">MECHANICUS</span> unit.<br><br><b>EFFECT:</b> Until the end of the phase, models in your unit have the Feel No Pain 5+ ability against mortal wounds.",
+        "cpCost": 1,
+        "type": "Questor Forgepact – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Any phase"
+      },
+      {
+        "id": "questor_forgepact_stratagem_4",
+        "name": "MACHINE FOCUS",
+        "description": "<b>WHEN:</b> Your Command phase.<br><br><b>TARGET:</b> One Imperial Knights unit from your army.<br><br><b>EFFECT:</b> Until the start of your next turn, your unit<br>can ignore any or all modifiers to the following: the Weapon Skill or Ballistic Skill characteristics of weapons equipped by its models; any Hit roll or Wound roll made for it.",
+        "cpCost": 1,
+        "type": "Questor Forgepact – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Command phase"
+      },
+      {
+        "id": "questor_forgepact_stratagem_5",
+        "name": "VENGEANCE OF THE MACHINE CULT",
+        "description": "<b>WHEN:</b> Any phase.<br><br><b>TARGET:</b> One Imperial Knights unit from your army that was just destroyed. You can use this Stratagem on that unit even though it was just destroyed.<br><br><b>EFFECT:</b> Until the end of the battle, the enemy unit that destroyed your unit is Marked. Each time an Adeptus Mechanicus model from your army makes an attack that targets a Marked unit, that attack has the [LETHAL HITS] ability.",
+        "cpCost": 1,
+        "type": "Questor Forgepact – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Any phase"
+      },
+      {
+        "id": "questor_forgepact_stratagem_6",
+        "name": "THRONEGHEIST FURY",
+        "description": "<b>WHEN:</b> Your opponent’s Movement phase, just after an enemy unit is set up or ends a Normal, Advance, or Fall Back move.<br><br><b>TARGET:</b> One Imperial Knights Titanic unit from your army that is within 24\" of and visible to that enemy unit.<br><br><b>EFFECT:</b> Select one ranged weapon equipped by a model in your unit. That model can shoot at that enemy unit (and only if it is an eligible target). When doing so, that model can only make attacks with that weapon and each time it makes a ranged attack, an unmodified Hit roll of 6 is required to score a hit, irrespective of the attacking weapon’s Ballistic Skill or any modifiers.",
+        "cpCost": 1,
+        "type": "Questor Forgepact – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      }
+    ]
+  },
+  {
+    "id": "questoris_companions",
+    "name": "Questoris Companions",
+    "factionId": "QI",
+    "factionName": "Imperial Knights",
+    "abilities": [
+      {
+        "id": "questoris_companions_ability_1",
+        "name": "Heroes of Legend",
+        "description": "At the start of your turn, if your current Oath is fulfilled, determine an additional Oath as described here, with the exception that you cannot select a Deed or Quality you have already selected (if you are randomly selecting the Deed and/or Quality and roll any result that you have already selected, select a Deed or Quality you have not already selected instead). If you cannot determine an additional Oath because you have already selected each Deed and each Quality, do not determine an additional Oath.<br><br>The Qualities from Oaths you have fulfilled continue to apply to all models in your army with the Code Chivalric ability. When the Deed for an additional Oath is completed, you instead gain 1CP, regardless of how you selected the Deed or Quality."
+      },
+      {
+        "id": "questoris_companions_ability_2",
+        "name": "Valour’s Reward",
+        "description": "The Enhancements shown below can become expended. You cannot use such Enhancements while they are expended. Each time you fulfil your Oath, each expended Enhancement is no longer expended."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "questoris_companions_enhancement_1",
+        "name": "Herald of Triumph",
+        "description": "<span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> model only. When the bearer ends a Charge move, it can use this Enhancement. If it does, this Enhancement is expended, then each enemy unit within Engagement Range of the bearer must take a Battle-shock test, subtracting 1 from the result.",
+        "points": 15
+      },
+      {
+        "id": "questoris_companions_enhancement_2",
+        "name": "Wyrmslayer Divination",
+        "description": "<span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> model only. In your Shooting phase, when the bearer is selected to shoot, it can use this Enhancement. If it does, this Enhancement is expended, then until the end of the phase, each time it makes an attack that targets a unit that can <span class=\"kwb\">FLY</span>, you can re-roll the Hit roll.",
+        "points": 10
+      },
+      {
+        "id": "questoris_companions_enhancement_3",
+        "name": "Pennant of Silvered Fury",
+        "description": "<span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> model only. When the bearer is selected to fight, it can use this Enhancement. If it does, this Enhancement is expended, then until the end of the phase, melee weapons equipped by the bearer have the [sustained hits 2] ability.",
+        "points": 15
+      },
+      {
+        "id": "questoris_companions_enhancement_4",
+        "name": "Crushing Condemnation",
+        "description": "<span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> model only. When the bearer is selected to fight, after resolving its attacks, if one or more enemy units were destroyed by those attacks, the bearer can use this Enhancement. If it does, this Enhancement is expended, then select one enemy unit that is not within Engagement Range of any units from your army and is within 12\" of and visible to the bearer. Roll six D6: for each 4+, that enemy unit suffers 1 mortal wound.",
+        "points": 10
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "questoris_companions_stratagem_1",
+        "name": "MOMENT OF GLORY",
+        "description": "<b>WHEN:</b> Fight phase, just before an Imperial Knights Titanic unit from your army Consolidates.<br><br><b>TARGET:</b> That <span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> <span class=\"kwb\">TITANIC</span> unit.<br><br><b>EFFECT:</b> Until the end of the phase, each time your unit Consolidates, models in it can move an additional 3\" provided your unit can end that move within Engagement Range of one or more enemy units.",
+        "cpCost": 1,
+        "type": "Questoris Companions – Epic Deed Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "questoris_companions_stratagem_2",
+        "name": "TITANIC DUEL",
+        "description": "<b>WHEN:</b> Your Shooting phase or the Fight phase.<br><br><b>TARGET:</b> One Imperial Knights Titanic model from your army that has not been selected to shoot or fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time your model makes an attack that targets a <span class=\"kwb\">MONSTER</span>, <span class=\"kwb\">TITANIC</span> or <span class=\"kwb\">WALKER</span> unit, add 1 to the Hit roll and add 1 to the Wound roll.",
+        "cpCost": 1,
+        "type": "Questoris Companions – Epic Deed Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "questoris_companions_stratagem_3",
+        "name": "DRIVEN BY THE PAST",
+        "description": "<b>WHEN:</b> Your Charge phase.<br><br><b>TARGET:</b> One Imperial Knights Titanic unit from your army.<br><br><b>EFFECT:</b> Until the end of the turn, your unit is eligible to declare a charge in a turn in which it Advanced.",
+        "cpCost": 1,
+        "type": "Questoris Companions – Epic Deed Stratagem",
+        "turn": "Your turn",
+        "phase": "Charge phase"
+      },
+      {
+        "id": "questoris_companions_stratagem_4",
+        "name": "COURAGEOUS STAND",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Imperial Knights Titanic unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, models in your unit have the Feel No Pain 6+ ability.",
+        "cpCost": 1,
+        "type": "Questoris Companions – Epic Deed Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "questoris_companions_stratagem_5",
+        "name": "UNSTOPPABLE WARRIOR",
+        "description": "<b>WHEN:</b> Your Movement phase, just after an Imperial Knights Titanic unit from your army Falls Back.<br><br><b>TARGET:</b> That <span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> <span class=\"kwb\">TITANIC</span> unit.<br><br><b>EFFECT:</b> Until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it Fell Back.",
+        "cpCost": 2,
+        "type": "Questoris Companions – Epic Deed Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "questoris_companions_stratagem_6",
+        "name": "HERO’S TREAD",
+        "description": "<b>WHEN:</b> End of your Command phase.<br><br><b>TARGET:</b> One Imperial Knights Titanic model from your army that is within range of an objective marker you control.<br><br><b>EFFECT:</b> Your Level of Control over that objective marker is 5 (unless it would otherwise be higher), until your opponent’s Level of Control over that objective marker is greater than yours at the end of a phase.",
+        "cpCost": 1,
+        "type": "Questoris Companions – Epic Deed Stratagem",
+        "turn": "Your turn",
+        "phase": "Command phase"
+      }
+    ]
+  },
+  {
+    "id": "spearhead_at_arms",
+    "name": "Spearhead-At-Arms",
+    "factionId": "QI",
+    "factionName": "Imperial Knights",
+    "abilities": [
+      {
+        "id": "spearhead_at_arms_ability_1",
+        "name": "Knightly Teachings",
+        "description": "Each time a model from your army uses its Bondsman ability, if no other model from your army has used that Bondsman ability that turn, you can select up to three friendly Armiger models (instead of one) within 12\" of that model, or within 15\" of that model while your army is Honoured (you still cannot select a model that is already being affected by a Bondsman ability). Until the start of your next Command phase, those models are affected by that Bondsman ability.<br><br><span class=\"hi_custom\">KEYWORDS</span><br><span class=\"kwb\">ARMIGER</span> models from your army gain the <span class=\"kwb\">BATTLELINE</span> keyword."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "spearhead_at_arms_enhancement_1",
+        "name": "Mentor’s Pride",
+        "description": "<span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> model only. While two or more Armiger models are under the effects of the bearers Bondsman ability, each time each of those <span class=\"kwb\">ARMIGER</span> models makes an attack, you can re-roll a Hit roll of 1.",
+        "points": 20
+      },
+      {
+        "id": "spearhead_at_arms_enhancement_2",
+        "name": "Fables of Nightmare",
+        "description": "<span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> model only. While two or more Armiger models are under the effects of the bearer’s Bondsman ability, melee weapons equipped by those <span class=\"kwb\">ARMIGER</span> models have the [precision] ability.",
+        "points": 10
+      },
+      {
+        "id": "spearhead_at_arms_enhancement_3",
+        "name": "Tales of Heroism",
+        "description": "<span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> model only. While two or more Armiger models are under the effects of the bearer’s Bondsman ability, each time one of those <span class=\"kwb\">ARMIGER</span> models makes a melee attack, you can ignore any or all modifiers to the Hit roll and/or the Wound roll.",
+        "points": 10
+      },
+      {
+        "id": "spearhead_at_arms_enhancement_4",
+        "name": "Martial Tuition",
+        "description": "<span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> model only. While two or more Armiger models arc under the effects of the bearer’s Bondsman ability, once per turn, you can target one of those <span class=\"kwb\">ARMIGER</span> models with the Counter-offensive Stratagem for 0CP.",
+        "points": 15
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "spearhead_at_arms_stratagem_1",
+        "name": "VIRTUE OF COURAGE",
+        "description": "<b>WHEN:</b> Start of the Fight phase.<br><br><b>TARGET:</b> One Armiger model from your army, or one Imperial Knights Titanic model from your army, and one or more friendly <span class=\"kwb\">ARMIGER</span> models affected by that model’s Bondsman ability.<br><br><b>EFFECT:</b> Select one enemy unit. Until the end of the phase, each time one of your <span class=\"kwb\">ARMIGER</span> models makes an attack that targets that enemy unit, add 1 to the Hit roll.",
+        "cpCost": 1,
+        "type": "Spearhead-At-Arms – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "spearhead_at_arms_stratagem_2",
+        "name": "THIN THEIR RANKS",
+        "description": "<b>WHEN:</b> Start of your Shooting phase.<br><br><b>TARGET:</b> One Armiger model from your army, or one Imperial Knights Titanic model from your army, and one or more friendly <span class=\"kwb\">ARMIGER</span> models affected by that model’s Bondsman ability.<br><br><b>EFFECT:</b> Until the end of the phase, ranged weapons equipped by your <span class=\"kwb\">ARMIGER</span> models have the [RAPID FIRE 1] ability.",
+        "cpCost": 1,
+        "type": "Spearhead-At-Arms – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "spearhead_at_arms_stratagem_3",
+        "name": "EXEMPLAR’S WISDOM",
+        "description": "<b>WHEN:</b> Your Shooting phase, just after an Imperial Knights Titanic model from your army has shot.<br><br><b>TARGET:</b> That <span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> <span class=\"kwb\">TITANIC</span> model, and one or more friendly Armiger models affected by that model’s Bondsman ability.<br><br><b>EFFECT:</b> Select one enemy unit hit by one or more of those attacks. Until the end of the phase, each time one of your <span class=\"kwb\">ARMIGER</span> models makes an attack that targets that enemy unit, improve the Armour Penetration characteristic of that attack by 1.",
+        "cpCost": 1,
+        "type": "Spearhead-At-Arms – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "spearhead_at_arms_stratagem_4",
+        "name": "LET DUTY BE YOUR SHIELD",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Armiger unit from your army that was selected as the target of one or more of the attacking units attacks.<br><br><b>EFFECT:</b> Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.",
+        "cpCost": 1,
+        "type": "Spearhead-At-Arms – Epic Deed Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "spearhead_at_arms_stratagem_5",
+        "name": "MANTLE OF THE MENTOR",
+        "description": "<b>WHEN:</b> Start of your Shooting phase.<br><br><b>TARGET:</b> One Armiger model from your army, or one Imperial Knights Titanic model from your army, and one or more friendly <span class=\"kwb\">ARMIGER</span> models affected by that model’s Bondsman ability.<br><br><b>EFFECT:</b> Until the end of the phase, your <span class=\"kwb\">ARMIGER</span> models are eligible to shoot in a turn in which they Fell Back.",
+        "cpCost": 1,
+        "type": "Spearhead-At-Arms – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "spearhead_at_arms_stratagem_6",
+        "name": "SQUIRES OFTHE HUNT",
+        "description": "<b>WHEN:</b> End of your opponent’s Fight phase.<br><br><b>TARGET:</b> One Armiger model from your army, or one Imperial Knights Titanic model from your army, and one or more friendly <span class=\"kwb\">ARMIGER</span> models affected by that model’s Bondsman ability.<br><br><b>EFFECT:</b> For each of your <span class=\"kwb\">ARMIGER</span> models that is within 9\" of one or more battlefield edges and not within Engagement Range of one or more enemy units, remove that <span class=\"kwb\">ARMIGER</span> model from the battlefield and place it into Strategic Reserves.",
+        "cpCost": 1,
+        "type": "Spearhead-At-Arms – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Fight phase"
+      }
+    ]
+  },
+  {
+    "id": "valourstrike_lance",
+    "name": "Valourstrike Lance",
+    "factionId": "QI",
+    "factionName": "Imperial Knights",
+    "abilities": [
+      {
+        "id": "valourstrike_lance_ability_1",
+        "name": "Bold Gallantry",
+        "description": "Each time an Imperial Knights unit from your army Advances, until the end of the turn, ranged weapons equipped by <span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> models from your army have the [ASSAULT] ability."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "valourstrike_lance_enhancement_1",
+        "name": "Bearer of the Iron Chalice",
+        "description": "<span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> model only. At the end of your Movement phase, select one other <span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> model from your army that is within 12\" of and visible to the bearer. That selected model regains up to D3 lost wounds, or up to 3 lost wounds if your army is Honoured.",
+        "points": 20
+      },
+      {
+        "id": "valourstrike_lance_enhancement_2",
+        "name": "Bearer of the Evanescent Ion",
+        "description": "<span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> model only. At the end of your Movement phase, select one other <span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> model from your army that is within 12\" of and visible to the bearer. Until the start of your next Movement phase, that selected model has the Stealth ability.",
+        "points": 15
+      },
+      {
+        "id": "valourstrike_lance_enhancement_3",
+        "name": "Bearer of the Judicant’s Helm",
+        "description": "<span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> model only. At the start of your Shooting phase, select one other <span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> model from your army that is within 12\" of and visible to the bearer. Until the end of the phase, ranged weapons equipped by that selected model have the [ignores cover] ability.",
+        "points": 25
+      },
+      {
+        "id": "valourstrike_lance_enhancement_4",
+        "name": "Bearer of the Lancer’s Sigil",
+        "description": "<span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> model only. At the start of your Charge phase, select one other <span class=\"kwb\">IMPERIAL</span> <span class=\"kwb\">KNIGHTS</span> model from your army that is within 12\" of and visible to the bearer. Until the end of the phase, you can re-roll Charge rolls made for that selected model.",
+        "points": 25
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "valourstrike_lance_stratagem_1",
+        "name": "FULL TILT",
+        "description": "<b>WHEN:</b> Your Movement phase.<br><br><b>TARGET:</b> One Imperial Knights unit from your army that has not been selected to move this phase.<br><br><b>EFFECT:</b> Until the end of the phase, add 2\" to the Move characteristic of your models and add 2 to Advance rolls made for those model’s units.",
+        "cpCost": 2,
+        "type": "Valourstrike Lance – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "valourstrike_lance_stratagem_2",
+        "name": "THUNDERSTOMP",
+        "description": "<b>WHEN:</b> Fight phase.<br><br><b>TARGET:</b> One Imperial Knights model from your army that has not been selected to fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, the Attacks characteristic of any armoured Feet melee weapons equipped by your model is 8, the Attacks characteristic of any titanic Feet melee weapons equipped by your model is 12, and improve the Armour Penetration characteristic of those weapons by 1.",
+        "cpCost": 1,
+        "type": "Valourstrike Lance – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "valourstrike_lance_stratagem_3",
+        "name": "RUN THEM THROUGH!",
+        "description": "<b>WHEN:</b> Fight phase.<br><br><b>TARGET:</b> One Imperial Knights unit from your army that has not been selected to fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, melee weapons equipped by your models have the [LANCE] ability.",
+        "cpCost": 1,
+        "type": "Valourstrike Lance – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "valourstrike_lance_stratagem_4",
+        "name": "VOW OF RETRIBUTION",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Imperial Knights unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, ranged weapons equipped by your models have the [LETHAL HITS] ability.",
+        "cpCost": 1,
+        "type": "Valourstrike Lance – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "valourstrike_lance_stratagem_5",
+        "name": "TACTICAL FOIL",
+        "description": "<b>WHEN:</b> Your opponent’s Movement phase, just after an enemy unit ends a Normal, Advance or Fall Back move.<br><br><b>TARGET:</b> One Imperial Knights model from your army that is within 9\" of that unit.<br><br><b>EFFECT:</b> Your model can make a Normal move of up to D6\".",
+        "cpCost": 1,
+        "type": "Valourstrike Lance – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "valourstrike_lance_stratagem_6",
+        "name": "ROTATE ION SHIELDS",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Imperial Knights unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, models in your unit have a 4+ invulnerable save.",
+        "cpCost": 1,
+        "type": "Valourstrike Lance – Wargear Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      }
+    ]
+  }
+]

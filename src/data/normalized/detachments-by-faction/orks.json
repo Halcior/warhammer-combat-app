@@ -1,0 +1,992 @@
+[
+  {
+    "id": "bully_boyz",
+    "name": "Bully Boyz",
+    "factionId": "ORK",
+    "factionName": "Orks",
+    "abilities": [
+      {
+        "id": "bully_boyz_ability_1",
+        "name": "Da Boss Is Watchin’",
+        "description": "At the start of your Command phase, in a turn in which you have not called a Waaagh!, if you have one or more Warboss models on the battlefield (or embarked within a Transport that is on the battlefield), you can call a Waaagh! for a second time this battle. When doing so, that second Waaagh! only counts as having been called for <span class=\"kwb\">WARBOSS</span>, Nobz and Meganobz units from your army."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "bully_boyz_enhancement_1",
+        "name": "Big Gob",
+        "description": "Infantry Warboss model only. At the start of the Fight phase, select one enemy unit within Engagement range of the bearer. That unit must take a Battle-shock test, and when doing so, subtract 1 from the result.",
+        "points": 20
+      },
+      {
+        "id": "bully_boyz_enhancement_2",
+        "name": "Da Biggest Boss",
+        "description": "Infantry Warboss model only. Add 2 to the bearer’s Wounds characteristic.",
+        "points": 15
+      },
+      {
+        "id": "bully_boyz_enhancement_3",
+        "name": "’Eadstompa",
+        "description": "Infantry Warboss model only. Each time the bearer makes an attack that targets a unit that is below its Starting Strength, re-roll a Wound roll of 1. If that unit is Below Half-strength, you can re-roll the Wound roll instead.",
+        "points": 10
+      },
+      {
+        "id": "bully_boyz_enhancement_4",
+        "name": "Tellyporta",
+        "description": "Warboss in Mega Armour model only. Models in the bearer’s unit have the Deep Strike ability.",
+        "points": 25
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "bully_boyz_stratagem_1",
+        "name": "HULKING BRUTES",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Nobz or Meganobz unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.",
+        "cpCost": 1,
+        "type": "Bully Boyz – Battle Tactic Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "bully_boyz_stratagem_2",
+        "name": "CUT’EM DOWN",
+        "description": "<b>WHEN:</b> Your opponent’s Movement phase, just after an enemy unit is selected to Fall Back.<br><br><b>TARGET:</b> One Nobz or Meganobz unit from your army within Engagement Range of that enemy unit.<br><br><b>EFFECT:</b> When that enemy unit Falls Back, all models in that enemy unit must take a Desperate Escape test. When doing so, if a Waaagh! is active for your unit, subtract 1 from each of those tests.",
+        "cpCost": 1,
+        "type": "Bully Boyz – Battle Tactic Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "bully_boyz_stratagem_3",
+        "name": "ARMED TO DATEEF",
+        "description": "<b>WHEN:</b> Your Shooting phase or the Fight phase.<br><br><b>TARGET:</b> One Nobz or Meganobz unit from your army that has not been selected to shoot or fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack, re-roll a Hit roll of 1. If a Waaagh! is active for your unit, you can re-roll the Hit roll instead.",
+        "cpCost": 1,
+        "type": "Bully Boyz – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "bully_boyz_stratagem_4",
+        "name": "CRUSHING IMPACT",
+        "description": "<b>WHEN:</b> Your Charge phase, just after a Nobz or Meganobz unit from your army ends a Charge move.<br><br><b>TARGET:</b> That <span class=\"kwb\">NOBZ</span> or <span class=\"kwb\">MEGANOBZ</span> unit.<br><br><b>EFFECT:</b> Select one enemy unit within Engagement Range of your unit, then roll one D6 for each model in your unit that is within Engagement Range of that enemy unit: for each 5+, that enemy unit suffers 1 mortal wound (to a maximum of 6 mortal wounds). If a Waaagh! is active for your unit, that enemy unit suffers 1 mortal wound for each 4+ instead.",
+        "cpCost": 1,
+        "type": "Bully Boyz – Epic Deed Stratagem",
+        "turn": "Your turn",
+        "phase": "Charge phase"
+      },
+      {
+        "id": "bully_boyz_stratagem_5",
+        "name": "TOO ARROGANT TO DIE",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Nobz or Meganobz unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit is destroyed, if that model has not shot or fought this phase, roll one D6, adding 2 to the result if a Waaagh! is active for your unit. On a 5+, do not remove the destroyed model from play; it can shoot or fight after the attacking unit has finished making its attacks, and is then removed from play.",
+        "cpCost": 1,
+        "type": "Bully Boyz – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "bully_boyz_stratagem_6",
+        "name": "ALWAYS LOOKIN’ FER A FIGHT",
+        "description": "<b>WHEN:</b> Fight phase, just after an enemy unit is destroyed.<br><br><b>TARGET:</b> One Nobz or Meganobz unit from your army that destroyed that enemy unit.<br><br><b>EFFECT:</b> Until the end of the phase, each time your unit makes a Consolidation move, it can move up to D3+3\" instead of up to 3\". If a Waaagh! is active for your unit, it can move up to 6\" instead.",
+        "cpCost": 1,
+        "type": "Bully Boyz – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      }
+    ]
+  },
+  {
+    "id": "da_big_hunt",
+    "name": "Da Big Hunt",
+    "factionId": "ORK",
+    "factionName": "Orks",
+    "abilities": [
+      {
+        "id": "da_big_hunt_ability_1",
+        "name": "Da Hunt Is On",
+        "description": "At the start of your Command phase, select one <span class=\"kwb\">MONSTER</span>, <span class=\"kwb\">VEHICLE</span> or <span class=\"kwb\">CHARACTER</span> unit from your opponent’s army. Until the start of your next Command phase, that enemy unit is your Prey:<br><ul><li>Each time a Beast Snagga unit from your army declares a charge that includes your Prey as one of the targets, you can re-roll the Charge roll.</li><li>Each time a <span class=\"kwb\">BEAST</span> <span class=\"kwb\">SNAGGA</span> model from your army makes an attack that targets your Prey, improve the Armour Penetration characteristic of that attack by 1.</li></ul>"
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "da_big_hunt_enhancement_1",
+        "name": "Glory Hog",
+        "description": "Beastboss on Squigosaur model only. Models in the bearer’s unit have the Scouts 9\" ability.",
+        "points": 30
+      },
+      {
+        "id": "da_big_hunt_enhancement_2",
+        "name": "Proper Killy",
+        "description": "Beast Snagga model only. Add 1 to the Damage characteristic of melee weapons equipped by the bearer.",
+        "points": 15
+      },
+      {
+        "id": "da_big_hunt_enhancement_3",
+        "name": "Skrag Every Stash!",
+        "description": "Beast Snagga model only. At the end of your Command phase, if the bearer is within range of an objective marker you control, that objective marker remains under your control, even if you have no models within range of it, until your opponent controls it at the start or end of any turn.",
+        "points": 25
+      },
+      {
+        "id": "da_big_hunt_enhancement_4",
+        "name": "Surly as a Squiggoth",
+        "description": "Beastboss on Squigosaur model only. While the bearer is leading a unit, each time an attack targets that unit, if the Strength characteristic of that attack is greater than the Toughness characteristic of that unit, subtract 1 from the Wound roll.",
+        "points": 20
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "da_big_hunt_stratagem_1",
+        "name": "STALKIN’ TAKTIKS",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Beast Snagga Infantry or Beast Snagga Mounted unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time a ranged attack targets your unit, models in your unit have the Benefit of Cover against that attack. In addition, if your unit has the <span class=\"kwb\">INFANTRY</span> keyword, until the end of the phase, models in your unit have the Stealth ability.",
+        "cpCost": 1,
+        "type": "Da Big Hunt – Battle Tactic Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "da_big_hunt_stratagem_2",
+        "name": "DRAG IT DOWN",
+        "description": "<b>WHEN:</b> Fight phase.<br><br><b>TARGET:</b> One Beast Snagga unit from your army that has not been selected to fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, melee weapons equipped by models in your unit have the [SUSTAINED HITS 1] ability. In addition, each time a model in your unit makes a melee attack that targets your Prey, a Critical Hit is scored on an unmodified Hit roll of 5+, instead of only a 6.",
+        "cpCost": 1,
+        "type": "Da Big Hunt – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "da_big_hunt_stratagem_3",
+        "name": "WHERE D’YA FINK YOU’RE GOING?",
+        "description": "<b>WHEN:</b> Your opponent’s Movement phase, just after an enemy unit ends a Fall Back move.<br><br><b>TARGET:</b> One Beast Snagga Infantry or Beast Snagga Mounted unit from your army that was within Engagement Range of that enemy unit at the start of the phase.<br><br><b>EFFECT:</b> If your unit is not within Engagement Range of one or more enemy units, it can make a Normal move of up to 6\".",
+        "cpCost": 1,
+        "type": "Da Big Hunt – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "da_big_hunt_stratagem_4",
+        "name": "UNSTOPPABLE MOMENTUM",
+        "description": "<b>WHEN:</b> Your Charge phase, just after a Beast Snagga Mounted unit from your army ends a Charge move.<br><br><b>TARGET:</b> That Beast Snagga unit.<br><br><b>EFFECT:</b> Select one enemy unit within Engagement Range of your unit and roll one D6 for each model in your unit: for each 4+, that enemy unit suffers 1 mortal wound (to a maximum of 6 mortal wounds). If that enemy unit is your Prey, roll three additional D6.",
+        "cpCost": 1,
+        "type": "Da Big Hunt – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Charge phase"
+      },
+      {
+        "id": "da_big_hunt_stratagem_5",
+        "name": "DAT ONE’S EVEN BIGGA!",
+        "description": "<b>WHEN:</b> Your Charge phase.<br><br><b>TARGET:</b> One Beast Snagga unit from your army.<br><br><b>EFFECT:</b> Until the end of the phase, your unit is eligible to charge in a turn in which it Advanced or Fell Back. In addition, you can re-roll Charge rolls made for your unit, provided one of the targets of that charge is your Prey.",
+        "cpCost": 1,
+        "type": "Da Big Hunt – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Charge phase"
+      },
+      {
+        "id": "da_big_hunt_stratagem_6",
+        "name": "INSTINCTIVE HUNTERS",
+        "description": "<b>WHEN:</b> End of your opponent’s Fight phase.<br><br><b>TARGET:</b> One Beast Snagga unit from your army that is not within Engagement Range of one or more enemy unit.<br><br><b>EFFECT:</b> Remove your unit from the battlefield and place it into Strategic Reserves.",
+        "cpCost": 1,
+        "type": "Da Big Hunt – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Fight phase"
+      }
+    ]
+  },
+  {
+    "id": "dread_mob",
+    "name": "Dread Mob",
+    "factionId": "ORK",
+    "factionName": "Orks",
+    "abilities": [
+      {
+        "id": "dread_mob_ability_1",
+        "name": "Try Dat Button!",
+        "description": "Each time a Mek, Orks Walker or Grots Vehicle unit from your army is selected to shoot or fight, roll one D6. Until the end of the phase, weapons equipped by models in that unit have the corresponding ability shown in the table below.<br><div class=\"BreakInsideAvoid\"  style=\"\"\"><table width=\"0\" border=\"0\" bordercolor=\"#888\" cellpadding=\"4\" cellspacing=\"0\" style=\"border-collapse:collapse;border-width:0px\"><tbody><tr><td><table class=\" customTable tablefont\" border=\"1\" bordercolor=\"#888\" cellpadding=\"4\" style=\"border-collapse:collapse;border-color:#888888;border-width:0px\"><tbody><tr><td style=\"border-width:1px 1px 1px 1px;border-style:none none solid none;background-color:rgb(70,91,24);color:rgb(254,254,254);text-align:center;vertical-align:middle;font-size:20px;width:160px;height:0px;\"><b>D6</b></td><td style=\"border-width:1px 1px 1px 1px;border-style:none none solid none;background-color:rgb(70,91,24);color:rgb(254,254,254);text-align:center;vertical-align:middle;font-size:20px;width:320px;height:0px;\"><b>BUTTON EFFECT</b></td></tr><tr><td style=\"border-width:1px 1px 1px 1px;border-style:none none dotted none;text-align:center;vertical-align:middle;font-size:18px;width:160px;height:0px;\"><img src=\"/wh40k10ed/img/d1.png\"> <img src=\"/wh40k10ed/img/d2.png\"></td><td style=\"border-width:1px 1px 1px 1px;border-style:none none dotted none;text-align:center;vertical-align:middle;font-size:18px;width:320px;height:0px;\"><b><span class=\"kwb2 bluefont\"><span class=\"tooltip00012\" data-tooltip-content=\"#tooltip_content00012\"><span class=\"tt kwbu\">[SUSTAINED</span> <span class=\"tt kwbu\">HITS</span> <span class=\"tt kwbu\">1]</span></span></span> ability.</b></td></tr><tr><td style=\"border-width:1px 1px 1px 1px;border-style:none none dotted none;text-align:center;vertical-align:middle;font-size:18px;width:160px;height:0px;\"><img src=\"/wh40k10ed/img/d3.png\"> <img src=\"/wh40k10ed/img/d4.png\"></td><td style=\"border-width:1px 1px 1px 1px;border-style:none none dotted none;text-align:center;vertical-align:middle;font-size:18px;width:320px;height:0px;\"><b><span class=\"kwb2 bluefont\"><span class=\"tooltip00126\" data-tooltip-content=\"#tooltip_content00126\"><span class=\"tt kwbu\">[LETHAL</span> <span class=\"tt kwbu\">HITS]</span></span></span> ability.</b></td></tr><tr><td style=\"border-width:1px 1px 1px 1px;border-style:none none dotted none;text-align:center;vertical-align:middle;font-size:18px;width:160px;height:0px;\"><img src=\"/wh40k10ed/img/d5.png\"> <img src=\"/wh40k10ed/img/d6.png\"></td><td style=\"border-width:1px 1px 1px 1px;border-style:none none dotted none;text-align:center;vertical-align:middle;font-size:18px;width:320px;height:0px;\"><b>Each time an attack is made with this weapon, on a <span class=\"tooltip00021\" data-tooltip-content=\"#tooltip_content00021\"><span class=\"tt kwbu\">Critical</span> <span class=\"tt kwbu\">Wound</span></span>, improve the Armour Penetration characteristic of that attack by 2.</b></td></tr></tbody></table></td></tr></tbody></table></div><br>Alternatively, when such a unit is selected to shoot or fight, you can select one of the abilities above instead of rolling the D6. If you do, until the end of the phase, weapons equipped by models in that unit have the [HAZARDOUS] ability as well.<br><br>If a weapon equipped by a model from you army has the [HAZARDOUS] ability from multiple sources, each time you take a Hazardous test for that weapon, it is failed on a roll of a 1 or a 2."
+      },
+      {
+        "id": "dread_mob_ability_2",
+        "name": "KEYWORDS",
+        "description": "Gretchin units from your army gain the <span class=\"kwb\">BATTLELINE</span> keyword."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "dread_mob_enhancement_1",
+        "name": "Gitfinder Googlez",
+        "description": "Mek model only. Ranged weapons equipped by models in the bearer’s unit have the [ignores cover] ability.",
+        "points": 10
+      },
+      {
+        "id": "dread_mob_enhancement_2",
+        "name": "Press It Fasta!",
+        "description": "Mek model only. Each time the bearer’s unit is selected to shoot, when rolling to determine which ability that unit’s weapons gain from the Try Dat Button! Detachment rule, roll one additional D6: until the end of the phase, ranged weapons equipped by models in that unit gain both Button Effects generated by those rolls. If a duplicate Button Effect is rolled, it has no additional effect.",
+        "points": 35
+      },
+      {
+        "id": "dread_mob_enhancement_3",
+        "name": "Smoky Gubbinz",
+        "description": "Mek model only. Models in the bearer’s unit have the Stealth ability.",
+        "points": 15
+      },
+      {
+        "id": "dread_mob_enhancement_4",
+        "name": "Supa-glowy Fing",
+        "description": "Mek model only. In your Command phase, select one enemy unit within 18\" of and visible to the bearer, then roll one D6: on a 1-2, that enemy unit must take a Battle-shock test; on a 3-4, that enemy unit suffers D3 mortal wounds; on a 5-6, until the start of your next Command phase, each time a model in that enemy unit makes an attack, subtract 1 from the Hit roll.",
+        "points": 20
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "dread_mob_stratagem_1",
+        "name": "BIGGER SHELLS FOR BIGGER GITZ",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Mek, Orks Walker or Grots Vehicle unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Each time you use this Stratagem, you can choose to push it. Until the end of the phase, each time a model in your unit makes an attack that targets a <span class=\"kwb\">MONSTER</span> or <span class=\"kwb\">VEHICLE</span>, add 1 to the Wound roll. If you chose to push it, add 1 to the Damage characteristic of that attack and, until the end of the phase, ranged weapons equipped by models in your unit have the [HAZARDOUS] ability as well.",
+        "cpCost": 1,
+        "type": "Dread Mob – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "dread_mob_stratagem_2",
+        "name": "KLANKIN’ KLAWS",
+        "description": "<b>WHEN:</b> Fight phase.<br><br><b>TARGET:</b> One Orks Walker unit from your army that has not been selected to fight this phase.<br><br><b>EFFECT:</b> Each time you use this Stratagem, you can choose to push it. Until the end of the phase, add 2 to the Strength characteristic of melee weapons equipped by models in your unit and, if you chose to push it, until the end of the phase, add 1 to the Damage characteristic of those weapons and they have the [HAZARDOUS] ability as well.",
+        "cpCost": 1,
+        "type": "Dread Mob – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "dread_mob_stratagem_3",
+        "name": "DAKKA! DAKKA! DAKKA!",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Orks Walker or Grots Vehicle unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Each time you use this Stratagem, you can choose to push it. Until the end of the phase, each time a model in your unit makes an attack, re-roll a Hit roll of 1. If you chose to push it, you can re-roll the Hit roll instead and, until the end of the phase, ranged weapons equipped by models in your unit have the [HAZARDOUS] ability as well.",
+        "cpCost": 1,
+        "type": "Dread Mob – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "dread_mob_stratagem_4",
+        "name": "EXTRA GUBBINZ",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Orks Walker or Grots Vehicle unit from your army (excluding <span class=\"kwb\">TITANIC</span> units) that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time an attack is allocated to a model in your unit, subtract 1 from the Damage characteristic of that attack.",
+        "cpCost": 1,
+        "type": "Dread Mob – Battle Tactic Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "dread_mob_stratagem_5",
+        "name": "CONNIVING RUNTS",
+        "description": "<b>WHEN:</b> Your opponent’s Movement phase, just after an enemy unit ends a Normal, Advance or Fall Back move.<br><br><b>TARGET:</b> One Gretchin unit from your army that is within 9\" of that enemy unit and not within Engagement Range of any enemy units.<br><br><b>EFFECT:</b> Roll one D6: on a 4+, that enemy unit suffers D3+1 mortal wounds. Your unit can then make a Normal move.",
+        "cpCost": 1,
+        "type": "Dread Mob – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "dread_mob_stratagem_6",
+        "name": "SUPERFUELLED BOILER",
+        "description": "<b>WHEN:</b> Your Movement phase, just after an Orks Walker unit from your army has been selected to Advance.<br><br><b>TARGET:</b> That Orks Walker unit.<br><br><b>EFFECT:</b> Until the end of the turn, you can re-roll Advance rolls made for your unit and ranged weapons equipped by models in your unit have the [ASSAULT] ability.",
+        "cpCost": 1,
+        "type": "Dread Mob – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      }
+    ]
+  },
+  {
+    "id": "freebooter_krew",
+    "name": "Freebooter Krew",
+    "factionId": "ORK",
+    "factionName": "Orks",
+    "abilities": [
+      {
+        "id": "freebooter_krew_ability_1",
+        "name": "Here Be Loot",
+        "description": "At the start of the battle round, select one objective marker. Until the start of the next battle round, that objective marker is your loot objective.<br><br>Each time a model in an Orks Infantry, Orks Mounted or Orks Walker unit from your army makes an attack, that attack has the [SUSTAINED HITS 1] ability if either or both of the following are true:<br><ul><li>That model’s unit is within range of your loot objective.</li><li>That attack targets a unit within range of your loot objective.</li></ul>"
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "freebooter_krew_enhancement_1",
+        "name": "Da Kaptin",
+        "description": "Warboss model only. Once per battle round, at the start of any phase, you can select one friendly <span class=\"kwb\">ORKS</span> unit that is Battle-shocked and within 12\" of the bearer. That unit suffers D3 mortal wounds and it is no longer Battle-shocked.",
+        "points": 10
+      },
+      {
+        "id": "freebooter_krew_enhancement_2",
+        "name": "Git-spotter Squig",
+        "description": "<span class=\"kwb\">ORKS</span> model only. Ranged weapons equipped by models in the bearer’s unit have the [IGNORES COVER] ability.",
+        "points": 20
+      },
+      {
+        "id": "freebooter_krew_enhancement_3",
+        "name": "Bionik Workshop",
+        "description": "Big Mek or Painboy model only. At the start of the battle, roll one D3 and compare the result to the list below. Until the end of the battle, models in the bearer’s unit have that bioniks ability.<br><ol><li><b>Bionik Legs:</b> Add 2\" to the Move characteristic of this model.</li><li><b>Bionik Arms:</b> Add 1 to the Strength characteristic of melee weapons equipped by this model.</li><li><b>Bionik Bonce:</b> Improve the Weapon Skill characteristic of melee weapons equipped by this model by 1.</li></ol>",
+        "points": 15
+      },
+      {
+        "id": "freebooter_krew_enhancement_4",
+        "name": "Razgit’s Magik Map",
+        "description": "<span class=\"kwb\">ORKS</span> model only. After both players have deployed their armies, select up to three Orks Infantry units from your army and redeploy them. When doing so, you can set those units up in Strategic Reserves, regardless of how many units are already in Strategic Reserves.",
+        "points": 25
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "freebooter_krew_stratagem_1",
+        "name": "BASH AND GRAB",
+        "description": "<b>WHEN:</b> The Fight phase.<br><br><b>TARGET:</b> One <span class=\"kwb\">ORKS</span> unit from your army that has not been selected to fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack that targets an enemy unit within range of the loot objective, you can re-roll the Wound roll.",
+        "cpCost": 1,
+        "type": "Freebooter Krew – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "freebooter_krew_stratagem_2",
+        "name": "BOARDIN’ RUSH",
+        "description": "<b>WHEN:</b> Your Movement phase.<br><br><b>TARGET:</b> One <span class=\"kwb\">ORKS</span> unit from your army that has not been selected to move this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time your unit Advances, do not make an Advance roll. Instead, until the end of the phase, add 6\" to the Move characteristic of models in your unit.",
+        "cpCost": 1,
+        "type": "Freebooter Krew – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "freebooter_krew_stratagem_3",
+        "name": "KRUMP AND RUN",
+        "description": "<b>WHEN:</b> Your opponent’s Movement phase, just after an enemy unit falls back.<br><br><b>TARGET:</b> One <span class=\"kwb\">ORKS</span> unit from your army that was within engagement range of that enemy unit at the start of the phase and is not within range of one or more enemy units.<br><br><b>EFFECT:</b> Your unit can make a Normal move of up to 6\".",
+        "cpCost": 1,
+        "type": "Freebooter Krew – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "freebooter_krew_stratagem_4",
+        "name": "ROLLING LOOT-HEAP",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Flash Gitz unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, ranged weapons equipped by models in your unit have the [ANTI-VEHICLE 4+] ability.",
+        "cpCost": 1,
+        "type": "Freebooter Krew – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "freebooter_krew_stratagem_5",
+        "name": "GRAB AND BASH",
+        "description": "<b>WHEN:</b> Your Command phase.<br><br><b>TARGET:</b> One Orks unit from your army (excluding Gretchin units) that is within range of the loot objective.<br><br><b>EFFECT:</b> Until the start of your next Command phase, the Waaagh! is active for your unit, even if you have already called a Waaagh! this battle.<br><br><b>Designer’s Note:</b> <i>This means that any abilities that are in effect while the Waaagh! is active for your army will be in effect for your unit.</i>",
+        "cpCost": 1,
+        "type": "Freebooter Krew – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Command phase"
+      },
+      {
+        "id": "freebooter_krew_stratagem_6",
+        "name": "DECK FRAGGERS",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One <span class=\"kwb\">ORKS</span> unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit targets an <span class=\"kwb\">INFANTRY</span> unit with a ranged weapon, that weapon has the [BLAST] ability.",
+        "cpCost": 1,
+        "type": "Freebooter Krew – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      }
+    ]
+  },
+  {
+    "id": "green_tide",
+    "name": "Green Tide",
+    "factionId": "ORK",
+    "factionName": "Orks",
+    "abilities": [
+      {
+        "id": "green_tide_ability_1",
+        "name": "Mob Mentality",
+        "description": "Each time an attack targets a Boyz unit from your army, models in that unit have a 6+ invulnerable save against that attack. Each time an attack targets a <span class=\"kwb\">BOYZ</span> unit from your army that contains 10 or more models, models in that unit have a 5+ invulnerable save against that attack.’"
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "green_tide_enhancement_1",
+        "name": "Bloodthirsty Belligerence",
+        "description": "Orks Infantry model only. While the bearer is leading a unit, you can re-roll Advance rolls made for that unit. While that unit contains 10 or more models, you can re-roll Charge rolls made for that unit as well.",
+        "points": 15
+      },
+      {
+        "id": "green_tide_enhancement_2",
+        "name": "Brutal But Kunnin’",
+        "description": "Orks Infantry model only. In your Command phase, if the bearer is on the battlefield (or is embarked within a <span class=\"kwb\">TRANSPORT</span> that is on the battlefield), roll one D6, adding 2 to the result if the bearer’s unit contains 10 or more models: on a 5+, you gain 1CP.",
+        "points": 25
+      },
+      {
+        "id": "green_tide_enhancement_3",
+        "name": "Ferocious Show Off",
+        "description": "Orks Infantry model only. Each time the bearer fights, while resolving those attacks, add 1 to the Strength characteristic of the bearers melee weapons. If the bearer’s unit contains 10 or more models, while resolving those attacks, add 3 to the Strength characteristic instead.",
+        "points": 10
+      },
+      {
+        "id": "green_tide_enhancement_4",
+        "name": "Raucous Warcaller",
+        "description": "Orks Infantry model only. While the bearer is leading a unit, that unit always counts as containing 10 or more models for the purposes of your Detachment rule and any Stratagems you use.",
+        "points": 20
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "green_tide_stratagem_1",
+        "name": "BULLDOZER BRUTALITY",
+        "description": "<b>WHEN:</b> Fight phase.<br><br><b>TARGET:</b> One Boyz unit from your army that has not been selected to fight this phase and is within Engagement Range of one or more enemy units.<br><br><b>EFFECT:</b> Until the end of the phase, each time your unit is selected to fight, when determining which models in your unit are eligible to fight, any models in your unit that are within 3\" of one or more enemy models are eligible to fight. When resolving those attacks, such models can target one of those enemy units that is within 3\" of them and within Engagement Range of their unit.",
+        "cpCost": 1,
+        "type": "Green Tide – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "green_tide_stratagem_2",
+        "name": "COMPETITIVE STREAK",
+        "description": "<b>WHEN:</b> Fight phase.<br><br><b>TARGET:</b> One Boyz unit from your army that has not been selected to fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack, re-roll a Wound roll of 1. If your unit contains 10 or more models, re-roll the Wound roll instead.",
+        "cpCost": 1,
+        "type": "Green Tide – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "green_tide_stratagem_3",
+        "name": "TIDE OF MUSCLE",
+        "description": "<b>WHEN:</b> Your Charge phase.<br><br><b>TARGET:</b> One Boyz unit from your army that has not declared a charge this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time your unit declares a charge, add 1 to the Charge roll and, if your unit contains 10 or more models, you can re-roll the Charge roll.’",
+        "cpCost": 1,
+        "type": "Green Tide – Epic Deed Stratagem",
+        "turn": "Your turn",
+        "phase": "Charge phase"
+      },
+      {
+        "id": "green_tide_stratagem_4",
+        "name": "COME ON LADZ!",
+        "description": "<b>WHEN:</b> Your Command phase.<br><br><b>TARGET:</b> One Boyz unit from your army.<br><br><b>EFFECT:</b> Return up to D3+2 destroyed models to your unit (excluding Character models).",
+        "cpCost": 1,
+        "type": "Green Tide – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Command phase"
+      },
+      {
+        "id": "green_tide_stratagem_5",
+        "name": "BRAGGIN’ RIGHTS",
+        "description": "<b>WHEN:</b> Your Command phase.<br><br><b>TARGET:</b> Two Boyz units from your army that are within 6\" of each other.<br><br><b>EFFECT:</b> Until the start of your next Command phase, while those two units are within 6\" of each other, they both count as containing 10 or more models for the purposes of your Detachment rule, any Enhancements models from your army have and any Stratagems you use.",
+        "cpCost": 1,
+        "type": "Green Tide – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Command phase"
+      },
+      {
+        "id": "green_tide_stratagem_6",
+        "name": "GO GET ’EM!",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Boyz unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> After the attacking unit has shot, your unit can make a Go Get ’Em! move. To do so, roll one D6: each model in your unit can move a distance in inches up to the result, but your unit must end that move as close as possible to the closest enemy unit. When doing so, those models can be moved within Engagement Range of that enemy unit. If your unit contains 10 or more models, you can re-roll the D6 to determine how far your unit can move.",
+        "cpCost": 1,
+        "type": "Green Tide – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      }
+    ]
+  },
+  {
+    "id": "kaptin_killers",
+    "name": "Kaptin Killers",
+    "factionId": "ORK",
+    "factionName": "Orks",
+    "abilities": [
+      {
+        "id": "kaptin_killers_ability_1",
+        "name": "Comin’ Through",
+        "description": "In your Movement phase, Desperate Escape tests taken for <span class=\"kwb\">ORKS</span> models from your army are automatically passed and each time an <span class=\"kwb\">ORKS</span> unit from your army makes a Normal, Advance or Fall Back move, it can move through other models as if they were not there, provided those other models have a lower Toughness characteristic than it."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "kaptin_killers_enhancement_1",
+        "name": "Tellyporta",
+        "description": "In the Deploy Armies step, select one MEGANObz unit from your army. Until the end of the battle, models in that unit have the Deep Strike ability.",
+        "points": 0
+      },
+      {
+        "id": "kaptin_killers_enhancement_2",
+        "name": "Gnasher Squig Crates",
+        "description": "WARbOSS model only. In your Command phase, you can select one NObz or MEGANObz unit from your army (excluding Battle-shocked units) that is within 6\" of the bearer and is within range of an objective marker. If there are no enemy models within range of that objective marker, it is Secured by your army.",
+        "points": 0
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "kaptin_killers_stratagem_1",
+        "name": "CORNERED AND KRUMPED",
+        "description": "<b>WHEN:</b> Your opponent’s Movement phase, just after an enemy unit is selected to Fall Back.<br><br><b>TARGET:</b> One <span class=\"kwb\">ORKS</span> unit from your army that is within Engagement Range of that enemy unit.<br><br><b>EFFECT:</b> Your unit can fight as if it were the Fight phase, but when doing so, models in your unit can only target that enemy unit (and only if it is an eligible target) and each time a model in your unit makes an attack, an unmodified Hit roll of 6 is required to score a hit.",
+        "cpCost": 1,
+        "type": "Kaptin Killers – Battle Tactic Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "kaptin_killers_stratagem_2",
+        "name": "PIT FIGHTER",
+        "description": "<b>WHEN:</b> Your Charge phase.<br><br><b>TARGET:</b> One WARBOSS model from your army.<br><br><b>EFFECT:</b> Until the end of the phase, your model is eligible to declare a charge in a turn in which it Fell Back.",
+        "cpCost": 1,
+        "type": "Kaptin Killers – Epic Deed Stratagem",
+        "turn": "Your turn",
+        "phase": "Charge phase"
+      },
+      {
+        "id": "kaptin_killers_stratagem_3",
+        "name": "PILE THROUGH",
+        "description": "<b>WHEN:</b> Your Movement phase, just after an <span class=\"kwb\">ORKS</span> unit from your army opens a Hatchway.<br><br><b>TARGET:</b> That <span class=\"kwb\">ORKS</span> unit.<br><br><b>EFFECT:</b> Until the end of the turn, your unit has the Fights First ability.",
+        "cpCost": 1,
+        "type": "Kaptin Killers – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "kaptin_killers_stratagem_4",
+        "name": "LOOT ON THE MOVE",
+        "description": "<b>WHEN:</b> Your Movement phase, just after an ORKS unit from your army opens a Hatchway.<br><br><b>TARGET:</b> That <span class=\"kwb\">ORKS</span> unit.<br><br><b>EFFECT:</b> Until the end of the battle, that Hatchway cannot be closed. Until the end of the turn, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.",
+        "cpCost": 1,
+        "type": "Kaptin Killers – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      }
+    ]
+  },
+  {
+    "id": "kult_of_speed",
+    "name": "Kult of Speed",
+    "factionId": "ORK",
+    "factionName": "Orks",
+    "abilities": [
+      {
+        "id": "kult_of_speed_ability_1",
+        "name": "Adrenaline Junkies",
+        "description": "Speed Freeks units from your army are eligible to shoot and declare a charge in a turn in which they Advanced or Fell Back."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "kult_of_speed_enhancement_1",
+        "name": "Fasta Than Yooz",
+        "description": "Orks Infantry model only. Each time the bearer’s unit disembarks from a <span class=\"kwb\">TRANSPORT</span> after that <span class=\"kwb\">TRANSPORT</span> has made a Normal move, the bearer’s unit is still eligible to declare a charge this turn.",
+        "points": 35
+      },
+      {
+        "id": "kult_of_speed_enhancement_2",
+        "name": "Speed Makes Right",
+        "description": "Orks model only. In your Command phase, if the bearer (or a <span class=\"kwb\">TRANSPORT</span> the bearer is embarked within) is within 9\" of one or more enemy units, roll one D6: on a 3+, you gain 1CP.",
+        "points": 25
+      },
+      {
+        "id": "kult_of_speed_enhancement_3",
+        "name": "Squig-hide Tyres",
+        "description": "Deffkilla Wartrike model only. Each time a model in the bearer’s unit makes a Consolidation move, it can move up to 6\" instead of up to 3\".",
+        "points": 15
+      },
+      {
+        "id": "kult_of_speed_enhancement_4",
+        "name": "Wazblasta",
+        "description": "Deffkilla Wartrike model only. In your Shooting phase, after the bearer’s unit has shot, if it is not within Engagement Range of one or more enemy units, it can make a Normal move of up to 6\". If it does, until the end of the turn, it is not eligible to declare a charge.",
+        "points": 10
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "kult_of_speed_stratagem_1",
+        "name": "FULL THROTTLE!",
+        "description": "<b>WHEN:</b> Your Charge phase, just after a <span class=\"kwb\">SPEED</span> <span class=\"kwb\">FREEKS</span> unit from your army ends a Charge move.<br><br><b>TARGET:</b> That Speed Freeks unit.<br><br><b>EFFECT:</b> Until the end of the turn, each time a model in your unit makes a melee attack, add 1 to the Wound roll.",
+        "cpCost": 1,
+        "type": "Kult of Speed – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Charge phase"
+      },
+      {
+        "id": "kult_of_speed_stratagem_2",
+        "name": "BLITZA FIRE",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Speed Freeks unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, ranged weapons equipped by models in your unit have the [LETHAL HITS] ability and, each time a model in your unit makes an attack that targets a unit within 9\", a Critical Hit is scored on an unmodified Hit roll of 5+, instead of only a 6.<br><br><b>RESTRICTIONS:</b> A unit cannot be targeted by this and the Dakkastorm Stratagem in the same phase.",
+        "cpCost": 1,
+        "type": "Kult of Speed – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "kult_of_speed_stratagem_3",
+        "name": "DAKKASTORM",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One Speed Freeks unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, ranged weapons equipped by models in your unit have the [SUSTAINED HITS 1] ability. While targeting a unit within 9\", they have the [SUSTAINED HITS 2] ability instead.<br><br><b>RESTRICTIONS:</b> A unit cannot be targeted by this and the Blitza Fire Stratagem in the same phase.",
+        "cpCost": 1,
+        "type": "Kult of Speed – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "kult_of_speed_stratagem_4",
+        "name": "SPEEDIEST FREEKS",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One Speed Freeks or Trukk unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, models in your unit have a 5+ invulnerable save. If your unit is a <span class=\"kwb\">VEHICLE</span> unit with an unmodified Toughness characteristic of 8 or less, until the end of the phase, models in your unit have a 4+ invulnerable save instead.",
+        "cpCost": 1,
+        "type": "Kult of Speed – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "kult_of_speed_stratagem_5",
+        "name": "MORE GITZ OVER ’ERE!",
+        "description": "<b>WHEN:</b> Your opponent’s Movement phase, just after an enemy unit ends a Normal, Advance or Fall Back move.<br><br><b>TARGET:</b> One Speed Freeks unit from your army that is within 9\" of that enemy unit and is not within Engagement Range of one or more enemy units.<br><br><b>EFFECT:</b> Your unit can make a Normal move of up to 6\".",
+        "cpCost": 1,
+        "type": "Kult of Speed – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "kult_of_speed_stratagem_6",
+        "name": "SQUIG FLINGIN’",
+        "description": "<b>WHEN:</b> Your Movement phase, just after a <span class=\"kwb\">SPEED</span> <span class=\"kwb\">FREEKS</span> or <span class=\"kwb\">TRUKK</span> unit from your army ends a Normal, Advance or Fall Back move.<br><br><b>TARGET:</b> That Speed Freeks or Trukk unit.<br><br><b>EFFECT:</b> Select one enemy unit within 9\" of your unit. That enemy unit must take a Battle-shock test and, when doing so, subtract 1 from the result.",
+        "cpCost": 1,
+        "type": "Kult of Speed – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      }
+    ]
+  },
+  {
+    "id": "more_dakka",
+    "name": "More Dakka!",
+    "factionId": "ORK",
+    "factionName": "Orks",
+    "abilities": [
+      {
+        "id": "more_dakka_ability_1",
+        "name": "Dakka! Dakka! Dakka!",
+        "description": "Ranged weapons equipped by Orks Infantry and Orks Walker models from your army have the [ASSAULT] ability.<br><br>While the Waaagh! is active for your army, during your Shooting phase, ranged weapons equipped by <span class=\"kwb\">ORKS</span> <span class=\"kwb\">INFANTRY</span> and <span class=\"kwb\">ORKS</span> <span class=\"kwb\">WALKER</span> models from your army have the [SUSTAINED HITS 1] ability"
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "more_dakka_enhancement_1",
+        "name": "Da Gobshot Thunderbuss",
+        "description": "<span class=\"kwb\">ORKS</span> model only. Ranged weapons equipped by the bearer have the [DEVASTATING WOUNDS] and [HAZARDOUS] abilities.",
+        "points": 15
+      },
+      {
+        "id": "more_dakka_enhancement_2",
+        "name": "Dead Shiny Shootas",
+        "description": "<span class=\"kwb\">ORKS</span> model only. Ranged weapons equipped by models in the bearer’s unit have the [RAPID FIRE 1] ability.",
+        "points": 35
+      },
+      {
+        "id": "more_dakka_enhancement_3",
+        "name": "Targetin’ Squigs",
+        "description": "<span class=\"kwb\">ORKS</span> model only. Each time a model in the bearer’s unit makes a ranged attack, add 1 to the Hit roll.",
+        "points": 15
+      },
+      {
+        "id": "more_dakka_enhancement_4",
+        "name": "Zog Off and Eat Dakka!",
+        "description": "<span class=\"kwb\">ORKS</span> model only. The bearer’s unit is eligible to shoot in a turn in which it Fell Back.",
+        "points": 10
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "more_dakka_stratagem_1",
+        "name": "ORKS IS STILL ORKS",
+        "description": "<b>WHEN:</b> Fight phase.<br><br><b>TARGET:</b> One <span class=\"kwb\">ORKS</span> unit from your army that has not been selected to fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes an attack that targets an enemy unit, re-roll a Wound roll of 1. If that enemy unit is within range of an objective marker, you can re-roll the Wound roll instead.",
+        "cpCost": 1,
+        "type": "More Dakka! – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "more_dakka_stratagem_2",
+        "name": "LONG, UNCONTROLLED BURSTS",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One <span class=\"kwb\">ORKS</span> unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, ranged weapons equipped by models in your unit have the [IGNORES COVER] ability.",
+        "cpCost": 1,
+        "type": "More Dakka! – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "more_dakka_stratagem_3",
+        "name": "GET STUCK IN, LADZ!",
+        "description": "<b>WHEN:</b> Your Command phase.<br><br><b>TARGET:</b> One <span class=\"kwb\">ORKS</span> unit from your army (excluding Gretchin units).<br><br><b>EFFECT:</b> Until the start of your next Command phase, the Waaagh! is active for your unit, even if you have already called a Waaagh! this battle.<br><br><b>Designer’s Note:</b> <i>This means that any abilities that are in effect while the Waaagh! is active for your army will be in effect for your unit.</i>",
+        "cpCost": 2,
+        "type": "More Dakka! – Epic Deed Stratagem",
+        "turn": "Your turn",
+        "phase": "Command phase"
+      },
+      {
+        "id": "more_dakka_stratagem_4",
+        "name": "HUGE SHOW-OFFS",
+        "description": "<b>WHEN:</b> Your Command phase.<br><br><b>TARGET:</b> One Orks Walker unit (excluding Killa Kans) from your army.<br><br><b>EFFECT:</b> Until the start of your next Command phase, improve your unit’s Move, Leadership and Objective Control characteristics by 1, and each time a model in your unit makes an attack, add 1 to the Hit roll.",
+        "cpCost": 1,
+        "type": "More Dakka! – Epic Deed Stratagem",
+        "turn": "Your turn",
+        "phase": "Command phase"
+      },
+      {
+        "id": "more_dakka_stratagem_5",
+        "name": "CALL DAT DAKKA?",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase, just after an enemy unit has shot.<br><br><b>TARGET:</b> One <span class=\"kwb\">ORKS</span> unit from your army that had one or more of its models destroyed as a result of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Your unit can shoot as if it were your Shooting phase, but must target only that enemy unit when doing so, and can only do so if that enemy unit is an eligible target.",
+        "cpCost": 1,
+        "type": "More Dakka! – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      {
+        "id": "more_dakka_stratagem_6",
+        "name": "SPESHUL SHELLS",
+        "description": "<b>WHEN:</b> Your Shooting phase.<br><br><b>TARGET:</b> One <span class=\"kwb\">ORKS</span> unit from your army that has not been selected to shoot this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes a ranged attack that targets the closest eligible target within 18\", improve the Armour Penetration characteristic of ranged weapons equipped by models in your unit by 1.",
+        "cpCost": 1,
+        "type": "More Dakka! – Wargear Stratagem",
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      }
+    ]
+  },
+  {
+    "id": "ramship_raiders",
+    "name": "Ramship Raiders",
+    "factionId": "ORK",
+    "factionName": "Orks",
+    "abilities": [
+      {
+        "id": "ramship_raiders_ability_1",
+        "name": "Belligerent Boarders",
+        "description": "Each time an attack targets an <span class=\"kwb\">ORKS</span> unit from your army (excluding GROTS units), if the Strength characteristic of that attack is greater than the Toughness characteristic of that <span class=\"kwb\">ORKS</span> unit, subtract 1 from the Wound roll."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "ramship_raiders_enhancement_1",
+        "name": "Living Battering Ram",
+        "description": "Each time the bearer attempts to operate a closed Hatchway, your opponent cannot try to prevent it. In addition, each time the bearer opens a Hatchway, each enemy unit within 6\" of that Hatchway and wholly on the opposite side of it from the bearer must take a Battle-shock test.",
+        "points": 0
+      },
+      {
+        "id": "ramship_raiders_enhancement_2",
+        "name": "Scarred Brute",
+        "description": "The bearer has the Feel No Pain 5+ ability.",
+        "points": 0
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "ramship_raiders_stratagem_1",
+        "name": "PILE THROUGH",
+        "description": "<b>WHEN:</b> Your Movement phase, just after an ORKS unit from your army opens a Hatchway.<br><br><b>TARGET:</b> That <span class=\"kwb\">ORKS</span> unit.<br><br><b>EFFECT:</b> Until the end of the turn, your unit has the Fights First ability.",
+        "cpCost": 1,
+        "type": "Ramship Raiders – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "ramship_raiders_stratagem_2",
+        "name": "RAMBOYZ RAMPAGE",
+        "description": "<b>WHEN:</b> Your Movement phase.<br><br><b>TARGET:</b> One BOYz unit from your army that has not been selected to move this phase.<br><br><b>EFFECT:</b> Until the end of the turn, your unit is eligible to declare a charge in a turn in which it Advanced and each time your unit Advances, do not make an Advance roll; instead, until the end of the phase, add 6\" to the Move characteristic of models in your unit.",
+        "cpCost": 1,
+        "type": "Ramship Raiders – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "ramship_raiders_stratagem_3",
+        "name": "EAGER TO FIGHT",
+        "description": "<b>WHEN:</b> Your Movement phase, in the Reinforcements step, just after an <span class=\"kwb\">ORKS</span> unit from your army is set up in an Entry Zone.<br><br><b>TARGET:</b> That <span class=\"kwb\">ORKS</span> unit.<br><br><b>EFFECT:</b> Your unit can make an Advance move.",
+        "cpCost": 1,
+        "type": "Ramship Raiders – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "ramship_raiders_stratagem_4",
+        "name": "ENRAGED RUSH",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase, just after an enemy unit has shot.<br><br><b>TARGET:</b> One BOYz unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Your unit can make an Enraged Rush move. To do so, roll one D6: your unit can be moved a distance in inches up to the result, but must end that move as close as possible to the attacking unit. When doing so, those models can be moved within Engagement Range of that enemy unit, but only that enemy unit.",
+        "cpCost": 1,
+        "type": "Ramship Raiders – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      }
+    ]
+  },
+  {
+    "id": "taktikal_brigade",
+    "name": "Taktikal Brigade",
+    "factionId": "ORK",
+    "factionName": "Orks",
+    "abilities": [
+      {
+        "id": "taktikal_brigade_ability_1",
+        "name": "Lissen ’Ere",
+        "description": "Once per battle round, in your Command phase or after being set up on the battlefield in your Movement phase, each Boss Snikrot, Mek and Warboss model in your army can issue Taktiks abilities.<br><br>To do so, select one of the Taktiks abilities below and select one friendly <span class=\"kwb\">ORKS</span> unit within 6\" of that model to issue them to. That model must take a Leadership test: if failed, the selected unit suffers 1 mortal wound. Until the start of your next Command phase, the selected unit is affected by the selected Taktik. A unit cannot have Taktiks issued to it in this way more than once per battle round.<br><br>Taktiks abilities cannot be issued to Battle-shocked units, and if a unit affected by Taktiks becomes Battle-shocked, all Taktiks cease to affect that unit while it is Battle-shocked.<br><br><b>Get Stuck In:</b> You can re-roll Charge rolls made for this unit.<br><br><b>Get On Wiv It:</b> Add 1 to the Strength characteristic of melee weapons equipped by models in this unit.<br><br><b>Sneaky Stalkin’:</b> Infantry and Mounted models (excluding Meganobz) in this unit have the Stealth ability and each time a ranged attack targets this unit, those models have the Benefit of Cover against that attack.<br><br><b>Shoota Drills:</b> Each time an <span class=\"kwb\">INFANTRY</span> or <span class=\"kwb\">MOUNTED</span> model in this unit makes a ranged attack, add 1 to the Hit roll.<br><br><span class=\"hi_custom\">KEYWORDS</span><br>Stormboyz units from your army gain the Battleline keyword."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "taktikal_brigade_enhancement_1",
+        "name": "Skwad Leader",
+        "description": "Warboss Infantry model only. During the Declare Battle Formations step, the bearer can be attached to a Kommandos unit. While leading a Kommandos unit, it has the Infiltrators and Stealth abilities.",
+        "points": 15
+      },
+      {
+        "id": "taktikal_brigade_enhancement_2",
+        "name": "Mek Kaptin",
+        "description": "Big Mek, Big Mek in Mega Armour or Big Mek with Shokk Attack Gun model only. During the Declare Battle Formations step, the bearer can be attached to a Flash Gitz unit. Each time a model in the bearer’s unit makes a ranged attack, you can re-roll the Hit roll.",
+        "points": 45
+      },
+      {
+        "id": "taktikal_brigade_enhancement_3",
+        "name": "Mork’s Kunnin’",
+        "description": "<span class=\"kwb\">ORKS</span> model only. After both players have deployed their armies, select up to three <span class=\"kwb\">ORKS</span> units from your army and redeploy them. When doing so, you can set those units up in Strategic Reserves, regardless of how many units are already in Strategic Reserves.",
+        "points": 15
+      },
+      {
+        "id": "taktikal_brigade_enhancement_4",
+        "name": "Gob Boomer",
+        "description": "Warboss or Mek model only. Each time the bearer issues Taktiks, it can do so to a friendly Orks Infantry or Orks Mounted unit within 18\", instead of 6\".",
+        "points": 10
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "taktikal_brigade_stratagem_1",
+        "name": "KRUNCHIN’ DESCENT",
+        "description": "<b>WHEN:</b> Your Charge phase, just after a <span class=\"kwb\">STORMBOYZ</span> unit from your army ends a Charge move.<br><br><b>TARGET:</b> That Stormboyz unit.<br><br><b>EFFECT:</b> Select one enemy unit within Engagement Range of your unit, then roll one D6 for each model in your unit that is within Engagement Range of that enemy unit: for each 4+, that enemy unit suffers 1 mortal wound (to a maximum of 6 mortal wounds).",
+        "cpCost": 1,
+        "type": "Taktikal Brigade – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Charge phase"
+      },
+      {
+        "id": "taktikal_brigade_stratagem_2",
+        "name": "FIGHT PROPPA",
+        "description": "<b>WHEN:</b> Fight phase.<br><br><b>TARGET:</b> One Orks Infantry or Orks Mounted unit from your army that has not been selected to fight this phase.<br><br><b>EFFECT:</b> Select the [SUSTAINED HITS 1] or [LETHAL HITS] ability. Until the end of the phase, melee weapons equipped by models in your unit have the selected ability.",
+        "cpCost": 1,
+        "type": "Taktikal Brigade – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "taktikal_brigade_stratagem_3",
+        "name": "DAT’S OURS",
+        "description": "<b>WHEN:</b> Command phase.<br><br><b>TARGET:</b> One <span class=\"kwb\">ORKS</span> unit from your army that is within Engagement Range of one or more enemy units.<br><br><b>EFFECT:</b> Until the start of the next Command phase, add 1 to the Objective Control characteristic of models in your unit.",
+        "cpCost": 1,
+        "type": "Taktikal Brigade – Strategic Ploy Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Command phase"
+      },
+      {
+        "id": "taktikal_brigade_stratagem_4",
+        "name": "ON TO DA NEXT",
+        "description": "<b>WHEN:</b> Your opponent’s Movement phase, just after an enemy unit Falls Back.<br><br><b>TARGET:</b> One <span class=\"kwb\">ORKS</span> unit from your army that was within Engagement Range of that enemy unit at the start of the phase.<br><br><b>EFFECT:</b> Your unit can make a Normal move of up to 6\".",
+        "cpCost": 1,
+        "type": "Taktikal Brigade – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "taktikal_brigade_stratagem_5",
+        "name": "DED SNEAKY",
+        "description": "<b>WHEN:</b> End of your opponent’s Fight phase.<br><br><b>TARGET:</b> One Kommandos or Stormboyz unit from your army that is not within Engagement Range of one or more enemy units.<br><br><b>EFFECT:</b> Remove your unit from the battlefield and place it into Strategic Reserves.",
+        "cpCost": 1,
+        "type": "Taktikal Brigade – Strategic Ploy Stratagem",
+        "turn": "Opponent’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "taktikal_brigade_stratagem_6",
+        "name": "TAKTIKAL RETREAT",
+        "description": "<b>WHEN:</b> Your Movement phase, just after an <span class=\"kwb\">ORKS</span> unit from your army Falls Back.<br><br><b>TARGET:</b> That <span class=\"kwb\">ORKS</span> unit.<br><br><b>EFFECT:</b> Until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it Fell Back.",
+        "cpCost": 1,
+        "type": "Taktikal Brigade – Strategic Ploy Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      }
+    ]
+  },
+  {
+    "id": "war_horde",
+    "name": "War Horde",
+    "factionId": "ORK",
+    "factionName": "Orks",
+    "abilities": [
+      {
+        "id": "war_horde_ability_1",
+        "name": "Get Stuck In",
+        "description": "Melee weapons equipped by <span class=\"kwb\">ORKS</span> models from your army have the [SUSTAINED HITS 1] ability."
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "war_horde_enhancement_1",
+        "name": "Follow Me Ladz",
+        "description": "<span class=\"kwb\">ORKS</span> model only. While the bearer is leading a unit, add 2\" to the Move characteristic of models in that unit.",
+        "points": 25
+      },
+      {
+        "id": "war_horde_enhancement_2",
+        "name": "Headwoppa’s Killchoppa",
+        "description": "<span class=\"kwb\">ORKS</span> model only. Melee weapons equipped by the bearer (excluding Extra Attacks weapons) have the [DEVASTATING WOUNDS] ability.",
+        "points": 20
+      },
+      {
+        "id": "war_horde_enhancement_3",
+        "name": "Kunnin’ But Brutal",
+        "description": "<span class=\"kwb\">ORKS</span> model only. While the bearer is leading a unit, that unit is eligible to shoot and declare a charge in a turn in which it Fell Back.",
+        "points": 15
+      },
+      {
+        "id": "war_horde_enhancement_4",
+        "name": "Supa-Cybork Body",
+        "description": "<span class=\"kwb\">ORKS</span> model only. The bearer has the Feel No Pain 4+ ability.",
+        "points": 15
+      }
+    ],
+    "stratagems": [
+      {
+        "id": "war_horde_stratagem_1",
+        "name": "ERE WE GO",
+        "description": "<b>WHEN:</b> Start of your Movement phase.<br><br><b>TARGET:</b> One Orks Infantry unit from your army.<br><br><b>EFFECT:</b> Until the end of the turn, add 2 to Advance and Charge rolls made for your unit.",
+        "cpCost": 1,
+        "type": "War Horde – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      {
+        "id": "war_horde_stratagem_2",
+        "name": "MOB RULE",
+        "description": "<b>WHEN:</b> End of your Command phase.<br><br><b>TARGET:</b> One Mob unit from your army that contains 10 or more models and is not Below Half-strength.  <br><br><b>EFFECT:</b> Select one friendly Battle-shocked Orks Infantry unit within 6\" of that <span class=\"kwb\">MOB</span> unit. That <span class=\"kwb\">ORKS</span> <span class=\"kwb\">INFANTRY</span> unit is no longer Battle-shocked.",
+        "cpCost": 1,
+        "type": "War Horde – Battle Tactic Stratagem",
+        "turn": "Your turn",
+        "phase": "Command phase"
+      },
+      {
+        "id": "war_horde_stratagem_3",
+        "name": "’ARD AS NAILS",
+        "description": "<b>WHEN:</b> Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One <span class=\"kwb\">ORKS</span> unit from your army (excluding Grots, Monster and Vehicle units) that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time an attack targets your unit, subtract 1 from the Wound roll.",
+        "cpCost": 1,
+        "type": "War Horde – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Shooting or Fight phase"
+      },
+      {
+        "id": "war_horde_stratagem_4",
+        "name": "UNBRIDLED CARNAGE",
+        "description": "<b>WHEN:</b> Fight phase.<br><br><b>TARGET:</b> One <span class=\"kwb\">ORKS</span> unit from your army that has not been selected to fight this phase.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit makes a melee attack, an unmodified hit roll of 5+ scores a Critical Hit.",
+        "cpCost": 1,
+        "type": "War Horde – Battle Tactic Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "war_horde_stratagem_5",
+        "name": "ORKS IS NEVER BEATEN",
+        "description": "<b>WHEN:</b> Fight phase, just after an enemy unit has selected its targets.<br><br><b>TARGET:</b> One <span class=\"kwb\">ORKS</span> unit from your army that was selected as the target of one or more of the attacking unit’s attacks.<br><br><b>EFFECT:</b> Until the end of the phase, each time a model in your unit is destroyed, if that model has not fought this phase, do not remove it from play. The destroyed model can fight after the attacking model’s unit has finished making attacks, and is then removed from play.",
+        "cpCost": 2,
+        "type": "War Horde – Epic Deed Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      {
+        "id": "war_horde_stratagem_6",
+        "name": "CAREEN!",
+        "description": "<b>WHEN:</b> Any phase, just after an Orks Vehicle unit from your army with the Deadly Demise ability is destroyed.<br><br><b>TARGET:</b> That destroyed <span class=\"kwb\">ORKS</span> <span class=\"kwb\">VEHICLE</span> unit, if you roll a 6 for its Deadly Demise ability. You can use this Stratagem on that unit even though it was just destroyed.<br><br><b>EFFECT:</b> Your unit can make a Normal or Fall Back move before its Deadly Demise ability is resolved, and before any embarked units perform an Emergency Disembarkation. When making this move, your unit can move over enemy units (excluding <span class=\"kwb\">MONSTERS</span> and <span class=\"kwb\">VEHICLES</span>) as if they were not there.",
+        "cpCost": 1,
+        "type": "War Horde – Epic Deed Stratagem",
+        "turn": "Either player’s turn",
+        "phase": "Any phase"
+      }
+    ]
+  }
+]
