@@ -108,7 +108,7 @@ Each unit is displayed as a **collapsible card** or **expandable row**:
 ```
 
 **Unit Card (Expanded — when editing):**
-```
+```''''''
 ┌────────────────────────────────────────┐
 │ Unit Details                    [Close] │
 ├────────────────────────────────────────┤
