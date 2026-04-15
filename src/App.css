@@ -2791,7 +2791,7 @@ button:focus-visible,
 .workspace-unit-list {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0px;
 }
 
 .workspace-army-panel__empty,
@@ -2809,19 +2809,21 @@ button:focus-visible,
   width: 100%;
   padding: 10px 12px;
   border-radius: var(--radius-sm);
-  border: 1px solid transparent;
-  background: none;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.015);
   cursor: pointer;
   text-align: left;
   font-family: inherit;
   color: inherit;
-  transition: background 0.12s ease, border-color 0.12s ease;
+  transition: all 0.12s ease;
   gap: 10px;
+  margin-bottom: 6px;
 }
 
 .workspace-unit-row:hover {
   background: rgba(255, 255, 255, 0.04);
-  border-color: var(--border);
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
 }
 
 .workspace-unit-row--nested {
@@ -3387,6 +3389,7 @@ button:focus-visible,
 
   .workspace-unit-row {
     padding: 8px;
+    margin-bottom: 4px;
   }
 
   .workspace-unit-row__name {
@@ -3520,6 +3523,38 @@ button:focus-visible,
 .app-header__support:hover {
   background: rgba(242, 106, 27, 0.14);
   border-color: rgba(242, 106, 27, 0.36);
+  transform: translateY(-1px);
+}
+
+.app-header__actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.app-header__discord {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(99, 102, 241, 0.22);
+  background: rgba(99, 102, 241, 0.08);
+  color: #c7d2fe;
+  font-size: 0.9rem;
+  font-weight: 700;
+  white-space: nowrap;
+  transition:
+    background 0.14s ease,
+    border-color 0.14s ease,
+    transform 0.14s ease;
+  text-decoration: none;
+}
+
+.app-header__discord:hover {
+  background: rgba(99, 102, 241, 0.14);
+  border-color: rgba(99, 102, 241, 0.36);
   transform: translateY(-1px);
 }
 
@@ -4043,6 +4078,17 @@ button:focus-visible,
     gap: 12px;
   }
 
+  .app-header__actions {
+    gap: 8px;
+  }
+
+  .app-header__discord,
+  .app-header__support {
+    padding: 0 10px;
+    font-size: 0.8rem;
+    min-height: 36px;
+  }
+
   .app-header__support {
     order: 3;
   }
@@ -4070,6 +4116,52 @@ button:focus-visible,
 
   .calculator-page__info {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Extra small 480px - app header */
+@media (max-width: 480px) {
+  .app-header__content {
+    gap: 12px;
+  }
+
+  .app-header__brand,
+  .app-header__nav,
+  .app-header__actions {
+    gap: 8px;
+  }
+
+  .app-header__logo {
+    height: 28px;
+    width: 28px;
+  }
+
+  .app-header__brand-name {
+    font-size: 1rem;
+  }
+
+  .app-header__nav {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .app-header__tab {
+    padding: 6px 3px;
+    font-size: 0.75rem;
+    flex: 1;
+    min-width: 65px;
+  }
+
+  .app-header__actions {
+    width: 100%;
+  }
+
+  .app-header__discord,
+  .app-header__support {
+    flex: 1;
+    padding: 0 8px;
+    font-size: 0.7rem;
+    min-height: 32px;
   }
 }
 

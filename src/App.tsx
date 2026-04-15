@@ -392,14 +392,25 @@ function LoadedApp({ units, detachments }: LoadedAppProps) {
               </button>
             </nav>
 
-            <a
-              className="app-header__support"
-              href="https://buymeacoffee.com/damageforge"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Support
-            </a>
+            <div className="app-header__actions">
+              <a
+                className="app-header__discord"
+                href="https://discord.gg/f5hQXr2Hc7"
+                target="_blank"
+                rel="noreferrer"
+                title="Join our Discord community"
+              >
+                Discord
+              </a>
+              <a
+                className="app-header__support"
+                href="https://buymeacoffee.com/damageforge"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Support
+              </a>
+            </div>
 
           </div>
         </div>
