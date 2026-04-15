@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import type { ArmyPresetV2, SavedUnitInPreset } from "../types/armyPreset";
-import type { CombatUnit } from "../types/combat";
+import type { ArmyPresetV2 } from "../types/armyPreset";
+import type { Unit } from "../types/combat";
 
 interface LoadArmySelectorProps {
   armies: ArmyPresetV2[];

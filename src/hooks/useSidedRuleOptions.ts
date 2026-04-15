@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import type { RuleOption } from "../types/faction";
 import type { SpecialRule } from "../types/combat";
 import {
@@ -30,9 +30,12 @@ export function useSidedRuleOptions(ruleOptions: RuleOption[]) {
     useState<SidedActiveIds>({ attacker: [], defender: [] });
 
   // Reset selections when the rule pool changes (faction or detachment switch).
-  useEffect(() => {
+  // Previous-value comparison during render avoids setState-in-effect lint violations.
+  const [prevRuleOptions, setPrevRuleOptions] = useState(ruleOptions);
+  if (prevRuleOptions !== ruleOptions) {
+    setPrevRuleOptions(ruleOptions);
     setActiveRuleOptionIdsBySide({ attacker: [], defender: [] });
-  }, [ruleOptions]);
+  }
 
   const toggleRuleOptionForSide = (ruleId: string, side: RuleOptionSide) => {
     const option = ruleOptions.find((o) => o.id === ruleId);

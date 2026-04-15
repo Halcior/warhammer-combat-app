@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import type {
   AttachedLeaderInPreset,
   SavedUnitInPreset,
@@ -47,6 +47,7 @@ export type WeaponSelectionValidation = {
   selectedByCategory: Record<string, number>;
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function stripRuleHtmlText(value?: string) {
   if (!value) {
     return "";
@@ -63,6 +64,7 @@ export function stripRuleHtmlText(value?: string) {
     .trim();
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function getEnhancementRestrictionLabel(
   unitDefinition: Unit,
   enhancement: EnhancementOption | undefined
@@ -113,6 +115,7 @@ export function getEnhancementRestrictionLabel(
   return `Restricted to: ${restrictionText}`;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function validateWeaponSelections(
   selectedWeapons: SelectedWeaponEntry[] | undefined
 ): WeaponSelectionValidation {
@@ -349,12 +352,16 @@ export function UnitCard({
   const [editSnapshot, setEditSnapshot] = useState<SavedUnitInPreset>(unit);
   const [localUnit, setLocalUnit] = useState<SavedUnitInPreset>(unit);
 
-  useEffect(() => {
+  // Sync local state when the parent prop changes (e.g. after a save from another
+  // card in the same list). Previous-value comparison avoids setState-in-effect.
+  const [prevUnit, setPrevUnit] = useState(unit);
+  if (prevUnit !== unit) {
+    setPrevUnit(unit);
     setLocalUnit(unit);
     if (!isEditing) {
       setEditSnapshot(unit);
     }
-  }, [unit, isEditing]);
+  }
 
   const resolvedLocalUnit = useMemo(
     () =>

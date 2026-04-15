@@ -141,6 +141,7 @@ export function ModifiersPanel(props: ModifiersPanelProps) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function buildModifiersPanelModel(
   props: ModifiersPanelProps
 ): ModifiersPanelModel {
@@ -414,6 +415,7 @@ export function buildModifiersPanelModel(
   };
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function classifyRuleGroup(rule: SpecialRule): DisplayRuleGroup {
   switch (rule.type) {
     case "SET_SAVE_CHARACTERISTIC":

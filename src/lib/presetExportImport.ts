@@ -124,7 +124,8 @@ export function importArmyPreset(
   const units = exportData.units
     .filter((u) => unitDefinitions.has(u.unitId))
     .map((u) => {
-      const { unitName, resolvedPoints, ...rest } = u;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { unitName: _unitName, resolvedPoints: _resolvedPoints, ...rest } = u;
       return rest;
     });
 

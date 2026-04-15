@@ -4,7 +4,10 @@
       "Bash(npx tsc:*)",
       "Bash(node /c/Users/bpawelec/warhammer-helper/node_modules/vitest/vitest.mjs run)",
       "Bash(npx vitest:*)",
-      "Bash(npx eslint:*)"
+      "Bash(npx eslint:*)",
+      "Bash(grep -E \"^\\\\s*\\(C:|src/|[A-Z]:\\\\\\\\\\)\")",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(npm run:*)"
     ]
   }
 }

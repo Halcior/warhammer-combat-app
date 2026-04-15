@@ -1,6 +1,12 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import type { ArmyPresetV2, SavedUnitInPreset } from "../../types/armyPreset";
 import type { Unit } from "../../types/combat";
+import {
+  getFactionScopedUnits,
+  applyFactionSelectionToPreset,
+  applyDetachmentSelectionToPreset,
+} from "../../lib/armyBuilderUtils";
+
 import {
   validateArmyPreset,
   generatePointsBreakdown,
@@ -27,6 +33,7 @@ interface Enhancement {
   cost?: number;
 }
 
+// Note: Enhancement is kept here because ArmyBuilderProps references it.
 interface ArmyBuilderProps {
   initial?: ArmyPresetV2;
   onSave: (preset: ArmyPresetV2) => void;
@@ -37,78 +44,6 @@ interface ArmyBuilderProps {
   availableUnits: Unit[];
   availableLeaders: Unit[];
   availableEnhancementsByDetachment: Record<string, Enhancement[]>;
-}
-
-export function getFactionScopedUnits(availableUnits: Unit[], faction: string) {
-  if (!faction) {
-    return [];
-  }
-
-  return availableUnits.filter((unit) => unit.faction === faction);
-}
-
-export function applyFactionSelectionToPreset(
-  preset: ArmyPresetV2,
-  faction: string,
-  unitDefinitions: Map<string, Unit>
-): ArmyPresetV2 {
-  const nextUnits = preset.units.filter(
-    (unit) => unitDefinitions.get(unit.unitId)?.faction === faction
-  );
-  const totalPoints = nextUnits.reduce(
-    (sum, unit) =>
-      sum + unit.unitTotalPoints + (unit.leaderPointsCost ?? 0) + (unit.enhancementPointsCost ?? 0),
-    0
-  );
-
-  return {
-    ...preset,
-    faction,
-    detachmentId: undefined,
-    detachmentName: undefined,
-    units: nextUnits,
-    totalPoints,
-    updatedAt: Date.now(),
-  };
-}
-
-export function applyDetachmentSelectionToPreset(
-  preset: ArmyPresetV2,
-  detachmentId: string | undefined,
-  detachmentName: string | undefined,
-  availableEnhancementsByDetachment: Record<string, Enhancement[]>
-): ArmyPresetV2 {
-  const allowedEnhancementIds = new Set(
-    (detachmentId ? availableEnhancementsByDetachment[detachmentId] : [])?.map(
-      (enhancement) => enhancement.id
-    ) ?? []
-  );
-
-  const nextUnits = preset.units.map((unit) => {
-    if (!unit.enhancementId || allowedEnhancementIds.has(unit.enhancementId)) {
-      return unit;
-    }
-
-    return {
-      ...unit,
-      enhancementId: undefined,
-      enhancementHost: "unit" as const,
-      enhancementPointsCost: 0,
-    };
-  });
-
-  return {
-    ...preset,
-    detachmentId,
-    detachmentName,
-    units: nextUnits,
-    totalPoints: nextUnits.reduce(
-      (sum, unit) =>
-        sum + unit.unitTotalPoints + (unit.leaderPointsCost ?? 0) + (unit.enhancementPointsCost ?? 0),
-      0
-    ),
-    updatedAt: Date.now(),
-  };
 }
 
 export function ArmyBuilder({
@@ -122,7 +57,8 @@ export function ArmyBuilder({
   availableLeaders,
   availableEnhancementsByDetachment,
 }: ArmyBuilderProps) {
-  const [preset, setPreset] = useState<ArmyPresetV2>(
+  // Lazy initializer avoids calling Date.now() on every render.
+  const [preset, setPreset] = useState<ArmyPresetV2>(() =>
     initial ?? {
       id: `army-${Date.now()}`,
       name: "",
@@ -148,18 +84,18 @@ export function ArmyBuilder({
     [availableEnhancementsByDetachment, preset.detachmentId]
   );
 
-  useEffect(() => {
+  // Reset the selected unit when the available faction units change (e.g. after a
+  // faction switch). Using a previous-value comparison during render avoids an
+  // effect-based setState which the React Compiler disallows.
+  const [prevFactionScopedUnits, setPrevFactionScopedUnits] = useState(factionScopedUnits);
+  if (prevFactionScopedUnits !== factionScopedUnits) {
+    setPrevFactionScopedUnits(factionScopedUnits);
     if (factionScopedUnits.length === 0) {
-      if (unitToAddId !== "") {
-        setUnitToAddId("");
-      }
-      return;
-    }
-
-    if (!unitToAddId || !factionScopedUnits.some((unit) => unit.id === unitToAddId)) {
+      setUnitToAddId("");
+    } else if (!factionScopedUnits.some((unit) => unit.id === unitToAddId)) {
       setUnitToAddId(factionScopedUnits[0].id);
     }
-  }, [factionScopedUnits, unitToAddId]);
+  }
 
   const validation = useMemo(() => validateArmyPreset(preset), [preset]);
   const breakdown = useMemo(

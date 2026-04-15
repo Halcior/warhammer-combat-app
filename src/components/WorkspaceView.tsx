@@ -3,7 +3,7 @@ import { units } from "../data/units";
 import { calculateUnitPoints } from "../lib/presetUtils";
 import type { ArmyPresetV2, SavedUnitInPreset } from "../types/armyPreset";
 import type { AttackConditions } from "../types/combat";
-import { battleStateToggles } from "./SetupPanel";
+import { battleStateToggles } from "../lib/battleStateToggles";
 
 function unitById(unitId: string) {
   return units.find((unit) => unit.id === unitId) ?? null;
@@ -66,6 +66,7 @@ export type WorkspaceSelectableEntry = {
   weaponOptions: Array<{ weaponId: string; label: string }>;
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function buildWorkspaceSelectableEntries(army: ArmyPresetV2 | null): WorkspaceSelectableEntry[] {
   if (!army) {
     return [];

@@ -5,7 +5,13 @@ import { ExpectedResultPanel } from "../ExpectedResultPanel";
 import { AttackBreakdownSourcesPanel } from "../AttackBreakdownSourcesPanel";
 import { ModifiersPanel } from "../ModifiersPanel";
 import type { ArmyPresetV2 } from "../../types/armyPreset";
-import type { AttackConditions } from "../../types/combat";
+import type { AttackConditions, SpecialRule, Unit, Weapon } from "../../types/combat";
+import type {
+  DetachmentConfig,
+  EnhancementConfig,
+  RuleOption,
+  StratagemConfig,
+} from "../../types/faction";
 import type { SimulationSummary } from "../../lib/combat/simulation/analyzeSimulation";
 import type { CalculationMode } from "../../lib/combat/simulation/runSimulationByMode";
 import type { AttackBreakdownExplanation } from "../../lib/combat/explainAttackBreakdown";
@@ -41,42 +47,42 @@ interface WorkspacePageProps {
   simulationSummary: SimulationSummary | null;
   simulationError: string | null;
   isSimulationRunning: boolean;
-  activeAttackModifiers: any;
-  setActiveAttackModifiers: any;
-  attackerActiveModifierRules: any;
-  defenderActiveModifierRules: any;
-  selectedWeapon: any;
-  attacker: any;
-  defender: any;
-  availableDetachments: any;
+  activeAttackModifiers: { devastatingWounds: boolean; lethalHits: boolean; ignoresCover: boolean };
+  setActiveAttackModifiers: React.Dispatch<React.SetStateAction<{ devastatingWounds: boolean; lethalHits: boolean; ignoresCover: boolean }>>;
+  attackerActiveModifierRules: SpecialRule[];
+  defenderActiveModifierRules: SpecialRule[];
+  selectedWeapon: Weapon;
+  attacker: Unit;
+  defender: Unit;
+  availableDetachments: DetachmentConfig[];
   selectedDetachmentId: string;
   setSelectedDetachmentId: React.Dispatch<React.SetStateAction<string>>;
-  selectedDetachment: any;
-  availableRuleOptions: any;
+  selectedDetachment?: DetachmentConfig;
+  availableRuleOptions: RuleOption[];
   activeRuleOptionIdsBySide: { attacker: string[]; defender: string[] };
   toggleRuleOptionForSide: (id: string, side: "attacker" | "defender") => void;
-  stratagems: any;
-  enhancements: any;
+  stratagems: StratagemConfig[];
+  enhancements: EnhancementConfig[];
   activeEnhancementIds: string[];
   toggleEnhancement: (id: string) => void;
   activeStratagemIds: string[];
   toggleStratagem: (id: string) => void;
-  defenderAvailableDetachments: any;
+  defenderAvailableDetachments: DetachmentConfig[];
   defenderSelectedDetachmentId: string;
   setDefenderSelectedDetachmentId: React.Dispatch<React.SetStateAction<string>>;
-  defenderAvailableRuleOptions: any;
+  defenderAvailableRuleOptions: RuleOption[];
   activeDefenderDetachmentRuleOptionIds: string[];
   toggleDefenderDetachmentRuleOption: (id: string) => void;
-  defenderDetachmentStratagems: any;
-  defenderDetachmentEnhancements: any;
+  defenderDetachmentStratagems: StratagemConfig[];
+  defenderDetachmentEnhancements: EnhancementConfig[];
   activeDefenderDetachmentEnhancementIds: string[];
   toggleDefenderDetachmentEnhancement: (id: string) => void;
   activeDefenderDetachmentStratagemIds: string[];
   toggleDefenderDetachmentStratagem: (id: string) => void;
-  attackerUnitAbilityOptions: any;
+  attackerUnitAbilityOptions: RuleOption[];
   activeAttackerUnitAbilityIds: string[];
   toggleAttackerUnitAbility: (id: string) => void;
-  defenderUnitAbilityOptions: any;
+  defenderUnitAbilityOptions: RuleOption[];
   activeDefenderUnitAbilityIds: string[];
   toggleDefenderUnitAbility: (id: string) => void;
 }

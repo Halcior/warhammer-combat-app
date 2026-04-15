@@ -5,7 +5,7 @@ import {
   applyDetachmentSelectionToPreset,
   applyFactionSelectionToPreset,
   getFactionScopedUnits,
-} from "../ArmyBuilder";
+} from "../../../lib/armyBuilderUtils";
 
 function createUnit(id: string, name: string, faction: string): Unit {
   return {

@@ -337,6 +337,7 @@ function App() {
       isCancelled = true;
       window.clearTimeout(timeoutId);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- intentional: simulationInputSignature is a derived hash of all simulation inputs; listing them individually would re-run the effect on every reference change rather than on value changes.
   }, [simulationInputSignature, simulationRefreshKey]);
 
   return (

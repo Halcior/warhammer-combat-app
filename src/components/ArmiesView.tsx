@@ -212,8 +212,8 @@ export function ArmiesView({
     () => new Map(units.map((unit) => [unit.id, unit])),
     []
   );
-  const detachmentsByFaction = useMemo(buildDetachmentsByFaction, []);
-  const enhancementsByDetachment = useMemo(buildEnhancementsByDetachment, []);
+  const detachmentsByFaction = useMemo(() => buildDetachmentsByFaction(), []);
+  const enhancementsByDetachment = useMemo(() => buildEnhancementsByDetachment(), []);
   const availableLeaders = useMemo(
     () =>
       units.filter((unit) =>
