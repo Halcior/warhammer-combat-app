@@ -281,3 +281,77 @@ Pełna lista: `src/types/combat.ts`
 | 7 | 2026-04-16 | Engine edge case testy (MELTA, REROLL_*_ONES) | 168 |
 | 8 | 2026-04-16 | CSM FC + Tyranids FC + Aeldari FC | 176 |
 | **9** | TBD | **Orks + Grey Knights + Adepta Sororitas FC** | ~184? |
+
+---
+
+## Post-Sprint 9 handoff notes (2026-04-16)
+
+### Additional faction coverage already landed
+
+- `Astra Militarum`
+  - `FactionConfig` added
+  - `Born Soldiers` implemented as attacker-side ranged `LETHAL_HITS`
+
+- `Chaos Knights`
+  - `FactionConfig` added
+  - army rule registered as `info-only`
+
+- `Thousand Sons`
+  - `FactionConfig` added
+  - army rule registered as `info-only`
+
+- `Adeptus Mechanicus`
+  - `FactionConfig` added
+  - army rule registered as `info-only`
+
+- `Leagues of Votann`
+  - `FactionConfig` added
+  - army rule registered as `info-only`
+
+### Important UI / engine fixes after the original sprint plan
+
+- `ModifiersPanel` owner-side bug fixed
+  - attacker detachment changes no longer leak defender enhancements / stratagems in UI
+  - active toggles are grouped by rule owner, not effect side
+
+- `ASSAULT` is now real in calculator logic
+  - ranged attacks after `Advance` are blocked unless `ASSAULT` is active
+  - implemented in:
+    - `src/lib/combat/expectedDamage.ts`
+    - `src/lib/combat/simulation/simulateAttackContext.ts`
+    - `src/lib/combat/explainAttackBreakdown.ts`
+
+- `PISTOL` is now real in calculator logic
+  - ranged attacks in `Engagement Range` are blocked unless `PISTOL` is active
+  - implemented in the same files as `ASSAULT`
+
+### Why this matters
+
+- Several already-mapped rules were previously visible but effectively cosmetic.
+- This especially improves practical support for current and future rules such as:
+  - `Death Guard`
+    - `Droning Chorus`
+    - `Font of Filth`
+    - future pistol / assault interactions
+
+### Verification snapshot after these changes
+
+- `npx.cmd tsc -b --pretty false` — PASS
+- `npm.cmd test` — PASS
+- `npm.cmd run build` — PASS
+
+### Best next direction
+
+- Continue `Death Guard`, but selectively.
+- Prefer rules that map cleanly to current engine primitives:
+  - `REROLL_*`
+  - `AP_MODIFIER`
+  - `DAMAGE_MODIFIER`
+  - `TARGETING_RANGE_LIMIT`
+  - `HIT_MODIFIER`
+  - `WOUND_MODIFIER`
+
+- Keep mixed attacker+defender army modes as `info-only` until the model improves.
+  - This still applies to:
+    - `Doctrina Imperatives`
+    - `Hostile Acquisition / Fortify Takeover`

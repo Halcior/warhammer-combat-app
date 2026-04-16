@@ -4,6 +4,48 @@ Based on: [`docs/next-steps-analysis-2026-04-09.md`](../docs/next-steps-analysis
 
 ---
 
+## Current follow-up after Sprint 9 (2026-04-16)
+
+### Recently completed
+
+- `Astra Militarum`
+  - `FactionConfig` added
+  - `Born Soldiers` implemented as ranged `LETHAL_HITS`
+
+- `Chaos Knights`
+  - `FactionConfig` added
+  - army rule tracked as `info-only`
+
+- `Thousand Sons`
+  - `FactionConfig` added
+  - army rule tracked as `info-only`
+
+- `Adeptus Mechanicus`
+  - `FactionConfig` added
+  - army rule tracked as `info-only`
+
+- `Leagues of Votann`
+  - `FactionConfig` added
+  - army rule tracked as `info-only`
+
+- Engine upgrades
+  - `ASSAULT` now affects attack legality after `Advance`
+  - `PISTOL` now affects attack legality in `Engagement Range`
+
+- UI fix
+  - `ModifiersPanel` no longer leaks attacker-owned defensive toggles into defender-side active sections
+
+### Best next task
+
+- Continue `Death Guard` with calculator-real effects only.
+- Prioritize effects that already map to the current rule engine cleanly.
+
+### Validation standard
+
+- `npx.cmd tsc -b --pretty false`
+- `npm.cmd test`
+- `npm.cmd run build`
+
 ## Sprint 1 — "Green CI + porządek techniczny"
 
 ### 1. ✅ Naprawa konfliktów merge - COMPLETE ✅✅✅

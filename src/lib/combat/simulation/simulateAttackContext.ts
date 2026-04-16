@@ -62,11 +62,21 @@ function simulateSingleAttackSequence(
     activeRules,
     params.weapon.type
   );
+  const rangedAttackBlockedByAdvance =
+    params.weapon.type === "ranged" &&
+    params.conditions.advancedThisTurn &&
+    !hasRule(activeRules, "ASSAULT");
+  const rangedAttackBlockedByEngagement =
+    params.weapon.type === "ranged" &&
+    params.conditions.targetInEngagementRange &&
+    !hasRule(activeRules, "PISTOL");
 
   if (
-    params.weapon.type === "ranged" &&
-    targetingRangeLimit !== null &&
-    params.conditions.targetDistanceInches > targetingRangeLimit
+    rangedAttackBlockedByAdvance ||
+    rangedAttackBlockedByEngagement ||
+    (params.weapon.type === "ranged" &&
+      targetingRangeLimit !== null &&
+      params.conditions.targetDistanceInches > targetingRangeLimit)
   ) {
     return {
       damage: 0,

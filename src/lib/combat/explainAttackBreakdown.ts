@@ -55,6 +55,82 @@ export function explainAttackBreakdown(params: {
     weapon,
     conditions,
   });
+  const rangedAttackBlockedByAdvance =
+    weapon.type === "ranged" &&
+    conditions.advancedThisTurn &&
+    !hasRule(activeRules, "ASSAULT");
+  const rangedAttackBlockedByEngagement =
+    weapon.type === "ranged" &&
+    conditions.targetInEngagementRange &&
+    !hasRule(activeRules, "PISTOL");
+
+  if (rangedAttackBlockedByAdvance || rangedAttackBlockedByEngagement) {
+    return {
+      hit: {
+        resolved: "Unavailable",
+        rows: [
+          { label: "Weapon type", value: "Ranged", type: "input" },
+          {
+            label: "Advanced this turn",
+            value: conditions.advancedThisTurn ? "Yes" : "No",
+            type: conditions.advancedThisTurn ? "input" : "inactive",
+          },
+          {
+            label: "Target in Engagement Range",
+            value: conditions.targetInEngagementRange ? "Yes" : "No",
+            type: conditions.targetInEngagementRange ? "input" : "inactive",
+          },
+          {
+            label: "Assault",
+            value: hasRule(activeRules, "ASSAULT") ? "Yes" : "No",
+            type: hasRule(activeRules, "ASSAULT") ? "modifier" : "inactive",
+          },
+          {
+            label: "Pistol",
+            value: hasRule(activeRules, "PISTOL") ? "Yes" : "No",
+            type: hasRule(activeRules, "PISTOL") ? "modifier" : "inactive",
+          },
+          {
+            label: "Attack availability",
+            value: rangedAttackBlockedByAdvance
+              ? "Cannot shoot after Advancing"
+              : "Cannot make ranged attacks in Engagement Range",
+            type: "final",
+          },
+        ],
+      },
+      wound: {
+        resolved: "Unavailable",
+        rows: [
+          {
+            label: "Reason",
+            value: "Ranged attack is not eligible this turn",
+            type: "final",
+          },
+        ],
+      },
+      save: {
+        resolved: "Unavailable",
+        rows: [
+          {
+            label: "Reason",
+            value: "Attack sequence stops before wound rolls",
+            type: "final",
+          },
+        ],
+      },
+      damage: {
+        resolved: "0",
+        rows: [
+          {
+            label: "Expected damage",
+            value: 0,
+            type: "final",
+          },
+        ],
+      },
+    };
+  }
 
   // ── Hit ─────────────────────────────────────────────────────────────────────
   const hitModifier = getRuleModifier(activeRules, "HIT_MODIFIER", weapon.type);

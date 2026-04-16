@@ -22,15 +22,20 @@ import {
 } from "../../../lib/combat/combatRoleGuards";
 import { aeldariArmyRules } from "../Aeldari/armyRules";
 import { adeptaSororitasArmyRules } from "../AdeptaSororitas/armyRules";
+import { adeptusMechanicusArmyRules } from "../AdeptusMechanicus/armyRules";
+import { astraMilitarumArmyRules } from "../AstraMilitarum/armyRules";
 import { adeptusCustodesArmyRules } from "../AdeptusCustodes/armyRules";
+import { chaosKnightsArmyRules } from "../ChaosKnights/armyRules";
 import { chaosSpaceMarinesArmyRules } from "../ChaosSpaceMarines/armyRules";
 import { tyranidsArmyRules } from "../Tyranids/armyRules";
 import { shieldHostDetachment } from "../AdeptusCustodes/detachments/shieldHost";
 import { deathGuardArmyRules } from "../DeathGuard/armyRules";
 import { greyKnightsArmyRules } from "../GreyKnights/armyRules";
+import { leaguesOfVotannArmyRules } from "../LeaguesOfVotann/armyRules";
 import { necronsArmyRules } from "../Necrons/armyRules";
 import { orksArmyRules } from "../Orks/armyRules";
 import { tauArmyRules } from "../Tau/armyRules";
+import { thousandSonsArmyRules } from "../ThousandSons/armyRules";
 import { spaceMarinesArmyRules } from "../SpaceMarines/armyRules";
 import { worldEatersArmyRules } from "../WorldEaters/armyRules";
 import { mapNormalizedDetachmentToDetachmentConfig } from "../../mappers/mapNormalizedDetachmentToFactionConfig";
@@ -319,6 +324,53 @@ describe("Aeldari rule contracts", () => {
 });
 
 // ---------------------------------------------------------------------------
+// Adeptus Mechanicus — hand-crafted army rules
+// ---------------------------------------------------------------------------
+
+describe("Adeptus Mechanicus rule contracts", () => {
+  it("army rules have correct side assignment", () => {
+    validateRuleOptions(
+      adeptusMechanicusArmyRules,
+      "Adeptus Mechanicus army rules"
+    );
+  });
+
+  it("all Adeptus Mechanicus army rules are info-only with no modifiers", () => {
+    for (const rule of adeptusMechanicusArmyRules) {
+      expect(rule.supportLevel).toBe("info-only");
+      expect(rule.modifiers).toHaveLength(0);
+    }
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Astra Militarum — hand-crafted army rules
+// ---------------------------------------------------------------------------
+
+describe("Astra Militarum rule contracts", () => {
+  it("army rules have correct side assignment", () => {
+    validateRuleOptions(astraMilitarumArmyRules, "Astra Militarum army rules");
+  });
+
+  it("Born Soldiers is an attacker rule with ranged LETHAL_HITS", () => {
+    const bornSoldiers = astraMilitarumArmyRules.find(
+      (r) => r.id === "am-born-soldiers"
+    );
+    expect(bornSoldiers).toBeDefined();
+    expect(bornSoldiers?.combatRole).toBe("attacker");
+    const mod = bornSoldiers?.modifiers.find((m) => m.type === "LETHAL_HITS");
+    expect(mod).toBeDefined();
+    expect((mod as { type: "LETHAL_HITS"; attackType?: string })?.attackType).toBe(
+      "ranged"
+    );
+    expect(
+      (mod as { type: "LETHAL_HITS"; excludedDefenderKeywords?: string[] })
+        ?.excludedDefenderKeywords
+    ).toEqual(["MONSTER", "VEHICLE"]);
+  });
+});
+
+// ---------------------------------------------------------------------------
 // Orks — hand-crafted army rules
 // ---------------------------------------------------------------------------
 
@@ -356,6 +408,26 @@ describe("Grey Knights rule contracts", () => {
 });
 
 // ---------------------------------------------------------------------------
+// Leagues of Votann — hand-crafted army rules
+// ---------------------------------------------------------------------------
+
+describe("Leagues of Votann rule contracts", () => {
+  it("army rules have correct side assignment", () => {
+    validateRuleOptions(
+      leaguesOfVotannArmyRules,
+      "Leagues of Votann army rules"
+    );
+  });
+
+  it("all Leagues of Votann army rules are info-only with no modifiers", () => {
+    for (const rule of leaguesOfVotannArmyRules) {
+      expect(rule.supportLevel).toBe("info-only");
+      expect(rule.modifiers).toHaveLength(0);
+    }
+  });
+});
+
+// ---------------------------------------------------------------------------
 // Adepta Sororitas — hand-crafted army rules
 // ---------------------------------------------------------------------------
 
@@ -366,6 +438,40 @@ describe("Adepta Sororitas rule contracts", () => {
 
   it("all Adepta Sororitas army rules are info-only with no modifiers", () => {
     for (const rule of adeptaSororitasArmyRules) {
+      expect(rule.supportLevel).toBe("info-only");
+      expect(rule.modifiers).toHaveLength(0);
+    }
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Thousand Sons — hand-crafted army rules
+// ---------------------------------------------------------------------------
+
+describe("Thousand Sons rule contracts", () => {
+  it("army rules have correct side assignment", () => {
+    validateRuleOptions(thousandSonsArmyRules, "Thousand Sons army rules");
+  });
+
+  it("all Thousand Sons army rules are info-only with no modifiers", () => {
+    for (const rule of thousandSonsArmyRules) {
+      expect(rule.supportLevel).toBe("info-only");
+      expect(rule.modifiers).toHaveLength(0);
+    }
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Chaos Knights — hand-crafted army rules
+// ---------------------------------------------------------------------------
+
+describe("Chaos Knights rule contracts", () => {
+  it("army rules have correct side assignment", () => {
+    validateRuleOptions(chaosKnightsArmyRules, "Chaos Knights army rules");
+  });
+
+  it("all Chaos Knights army rules are info-only with no modifiers", () => {
+    for (const rule of chaosKnightsArmyRules) {
       expect(rule.supportLevel).toBe("info-only");
       expect(rule.modifiers).toHaveLength(0);
     }

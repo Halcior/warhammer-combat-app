@@ -68,11 +68,21 @@ export function calculateExpectedDamage({
   );
   const effectiveSave = getSaveCharacteristic(activeRules, defender.save);
   const targetingRangeLimit = getTargetingRangeLimit(activeRules, weapon.type);
+  const rangedAttackBlockedByAdvance =
+    weapon.type === "ranged" &&
+    conditions.advancedThisTurn &&
+    !hasRule(activeRules, "ASSAULT");
+  const rangedAttackBlockedByEngagement =
+    weapon.type === "ranged" &&
+    conditions.targetInEngagementRange &&
+    !hasRule(activeRules, "PISTOL");
 
   if (
-    weapon.type === "ranged" &&
-    targetingRangeLimit !== null &&
-    conditions.targetDistanceInches > targetingRangeLimit
+    rangedAttackBlockedByAdvance ||
+    rangedAttackBlockedByEngagement ||
+    (weapon.type === "ranged" &&
+      targetingRangeLimit !== null &&
+      conditions.targetDistanceInches > targetingRangeLimit)
   ) {
     return {
       totalAttacks: 0,

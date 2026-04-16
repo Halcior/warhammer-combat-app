@@ -18,12 +18,17 @@ export type ReleaseSnapshotItem = {
 export const releaseSnapshot: ReleaseSnapshotItem[] = [
   { label: "Current build", value: "Public alpha" },
   { label: "Best test flow", value: "Calculator + Workspace + saved armies" },
-  { label: "Best-tested factions", value: "Custodes, CSM, Necrons, Orks, Space Marines, Tau, Tyranids, World Eaters" },
+  { label: "Best-tested factions", value: "Astra Militarum, Custodes, CSM, Necrons, Orks, Space Marines, Tau, Tyranids, World Eaters" },
 ];
 
 export const latestChanges: StatusSection = {
   title: "Latest changes",
   items: [
+    "Ranged attack eligibility now respects Pistol in Engagement Range, so Pistol-granting effects are no longer cosmetic and can change the real calculator result.",
+    "Ranged attack eligibility now respects Advancing: non-Assault weapons are blocked after an Advance, while Assault effects now work as real calculator rules. This directly unlocks Death Guard and other Assault-based buffs.",
+    "Adeptus Mechanicus and Leagues of Votann now have FactionConfig support with army rules registered as explicit info-only, so both factions are fully wired into the faction rules system.",
+    "Astra Militarum now has FactionConfig support with Born Soldiers implemented as a real ranged Lethal Hits toggle, making the faction meaningfully testable in the calculator.",
+    "Chaos Knights and Thousand Sons now have FactionConfig support with army rules registered as info-only, so they are fully wired into the faction rules system.",
     "Orks now have FactionConfig support with Waaagh! implemented as a real melee attack boost toggle. Grey Knights and Adepta Sororitas are now registered with info-only army rules.",
     "Chaos Space Marines: Veterans of the Long War (re-roll Wound rolls in melee) now toggleable. Tyranids: Synaptic Directives added — Voracious Appetite (re-roll Wounds of 1) implemented, others info-only.",
     "Aeldari detachments now registered (16 total). Army rules Strands of Fate and Battle Focus listed as info-only — no direct calculator equivalent.",
@@ -36,7 +41,7 @@ export const latestChanges: StatusSection = {
 export const inProgress: StatusSection = {
   title: "In progress",
   items: [
-    "Expanding Death Guard detachment rule coverage beyond Flyblown Host and Mortarion's Hammer.",
+    "Expanding Death Guard coverage toward the remaining calculator-relevant detachment effects, especially where existing battle-state toggles can support them cleanly.",
     "Edge case engine rules: critical hit thresholds, melta damage, blast weapons.",
     "UI polish: Blessings of Khorne should display as a radio group (one selection) rather than independent checkboxes.",
     "More aggressive loading optimization for very large factions like Space Marines and Aeldari.",
@@ -57,28 +62,23 @@ export const factionSupportGroups: FactionSupportGroup[] = [
   {
     label: "Recommended for testing",
     tone: "ready",
-    factions: ["Adeptus Custodes", "Necrons", "Orks", "Space Marines", "Tau Empire", "World Eaters"],
+    factions: ["Adeptus Custodes", "Astra Militarum", "Necrons", "Orks", "Space Marines", "Tau Empire", "World Eaters"],
     note: "These have the most complete gameplay-facing rule coverage right now.",
   },
   {
     label: "Playable beta",
     tone: "beta",
-    factions: ["Adepta Sororitas", "Aeldari", "Chaos Space Marines", "Death Guard", "Grey Knights", "Tyranids"],
+    factions: ["Adepta Sororitas", "Adeptus Mechanicus", "Aeldari", "Chaos Knights", "Chaos Space Marines", "Death Guard", "Grey Knights", "Leagues of Votann", "Thousand Sons", "Tyranids"],
     note: "Army rules and detachments registered. Key rules implemented; full coverage still expanding.",
   },
   {
     label: "Data present, rules still partial",
     tone: "partial",
     factions: [
-      "Adeptus Mechanicus",
-      "Astra Militarum",
       "Chaos Daemons",
-      "Chaos Knights",
       "Drukhari",
       "Imperial Agents",
       "Imperial Knights",
-      "Leagues of Votann",
-      "Thousand Sons",
     ],
     note: "These are available in the data model, but should not be treated as deeply supported yet.",
   },

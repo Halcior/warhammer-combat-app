@@ -145,6 +145,155 @@ describe("calculateExpectedDamage", () => {
     expect(result.totalAttacks).toBe(3);
   });
 
+  it("blocks ranged attacks after advancing when the weapon does not have Assault", () => {
+    const weapon: Weapon = {
+      id: "bolter",
+      name: "Bolter",
+      attacks: 2,
+      skill: 3,
+      strength: 4,
+      ap: 0,
+      damage: 1,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const result = calculateExpectedDamage({
+      attacker,
+      weapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        advancedThisTurn: true,
+      },
+      activeModifierRules: [],
+    });
+
+    expect(result.totalAttacks).toBe(0);
+    expect(result.expectedHits).toBe(0);
+    expect(result.expectedDamage).toBe(0);
+  });
+
+  it("allows ranged attacks after advancing when Assault is active", () => {
+    const weapon: Weapon = {
+      id: "plague-spewer",
+      name: "Plague Spewer",
+      attacks: 2,
+      skill: 3,
+      strength: 5,
+      ap: -1,
+      damage: 1,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const blocked = calculateExpectedDamage({
+      attacker,
+      weapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        advancedThisTurn: true,
+      },
+      activeModifierRules: [],
+    });
+
+    const assaultEnabled = calculateExpectedDamage({
+      attacker,
+      weapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        advancedThisTurn: true,
+      },
+      activeModifierRules: [{ type: "ASSAULT", attackType: "ranged" }],
+    });
+
+    expect(blocked.expectedDamage).toBe(0);
+    expect(assaultEnabled.totalAttacks).toBeGreaterThan(0);
+    expect(assaultEnabled.expectedDamage).toBeGreaterThan(0);
+  });
+
+  it("blocks ranged attacks in engagement range when the weapon is not a Pistol", () => {
+    const weapon: Weapon = {
+      id: "carbine",
+      name: "Carbine",
+      attacks: 2,
+      skill: 3,
+      strength: 4,
+      ap: 0,
+      damage: 1,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const result = calculateExpectedDamage({
+      attacker,
+      weapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        targetInEngagementRange: true,
+      },
+      activeModifierRules: [],
+    });
+
+    expect(result.totalAttacks).toBe(0);
+    expect(result.expectedDamage).toBe(0);
+  });
+
+  it("allows ranged attacks in engagement range when Pistol is active", () => {
+    const weapon: Weapon = {
+      id: "plasma-pistol",
+      name: "Plasma Pistol",
+      attacks: 1,
+      skill: 3,
+      strength: 8,
+      ap: -2,
+      damage: 2,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const blocked = calculateExpectedDamage({
+      attacker,
+      weapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        targetInEngagementRange: true,
+      },
+      activeModifierRules: [],
+    });
+
+    const pistolEnabled = calculateExpectedDamage({
+      attacker,
+      weapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        targetInEngagementRange: true,
+      },
+      activeModifierRules: [{ type: "PISTOL" }],
+    });
+
+    expect(blocked.expectedDamage).toBe(0);
+    expect(pistolEnabled.totalAttacks).toBeGreaterThan(0);
+    expect(pistolEnabled.expectedDamage).toBeGreaterThan(0);
+  });
+
   it("adds blast bonus against larger units", () => {
     const weapon: Weapon = {
       id: "blast-gun",
