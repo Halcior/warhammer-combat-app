@@ -77,6 +77,7 @@ type DisplayRule = {
   group: DisplayRuleGroup;
   checked?: boolean;
   onToggle?: () => void;
+  selectionGroup?: string;
 };
 
 type RuleBucket = {
@@ -205,6 +206,7 @@ export function buildModifiersPanelModel(
         checked: props.activeRuleOptionIdsBySide[side].includes(rule.id),
         onToggle: () => props.toggleRuleOptionForSide(rule.id, side),
         group: inferRuleOptionGroup(rule),
+        selectionGroup: rule.selectionGroup,
       });
     }),
     ...props.enhancements.map((enhancement) =>
@@ -700,6 +702,15 @@ function CombatRoleSection({
   const detachmentRules = panel.activeRules.filter(
     (r) => r.source === "Faction / Detachment"
   );
+  const standaloneDetachmentRules = detachmentRules.filter((r) => !r.selectionGroup);
+  const selectionGroupMap = new Map<string, DisplayRule[]>();
+  for (const rule of detachmentRules.filter((r) => r.selectionGroup)) {
+    const g = rule.selectionGroup!;
+    if (!selectionGroupMap.has(g)) selectionGroupMap.set(g, []);
+    selectionGroupMap.get(g)!.push(rule);
+  }
+  const selectionGroupEntries = Array.from(selectionGroupMap.entries());
+
   const enhancementRules = panel.activeRules.filter(
     (r) => r.source === "Enhancement"
   );
@@ -780,8 +791,11 @@ function CombatRoleSection({
       {hasAnyToggles && (
         <CrpSubSection title="Active Toggles">
           <div className="toggle-list">
-            {detachmentRules.map((r) => (
+            {standaloneDetachmentRules.map((r) => (
               <ToggleRow key={r.id} rule={r} />
+            ))}
+            {selectionGroupEntries.map(([groupId, groupRules]) => (
+              <SelectionGroupRow key={groupId} groupId={groupId} rules={groupRules} />
             ))}
             {enhancementRules.map((r) => (
               <ToggleRow key={r.id} rule={r} />
@@ -861,6 +875,84 @@ function ToggleRow({ rule }: { rule: DisplayRule }) {
         </div>,
         document.body
       )}
+    </>
+  );
+}
+
+// ── Selection group (radio buttons, mutex) ────────────────────────────────
+
+function SelectionGroupRow({
+  groupId,
+  rules,
+}: {
+  groupId: string;
+  rules: DisplayRule[];
+}) {
+  const activeRule = rules.find((r) => r.checked);
+  const noneIsActive = !activeRule;
+
+  const handleNoneSelect = () => {
+    if (activeRule?.onToggle) activeRule.onToggle();
+  };
+
+  return (
+    <div className="selection-group">
+      <RadioRow
+        rule={{
+          id: `${groupId}-none`,
+          label: "None",
+          tooltip: "No option selected — clear this group.",
+          kind: "active",
+          side: rules[0].side,
+          group: rules[0].group,
+          checked: noneIsActive,
+          onToggle: handleNoneSelect,
+        }}
+        groupName={groupId}
+      />
+      {rules.map((rule) => (
+        <RadioRow key={rule.id} rule={rule} groupName={groupId} />
+      ))}
+    </div>
+  );
+}
+
+function RadioRow({
+  rule,
+  groupName,
+}: {
+  rule: DisplayRule;
+  groupName: string;
+}) {
+  const { visible, coords, show, hide } = usePortalTooltip();
+  const labelRef = useRef<HTMLLabelElement>(null);
+  const badge = getSourceBadgeLabel(rule.source);
+
+  return (
+    <>
+      <label
+        ref={labelRef}
+        className={`toggle-row${rule.checked ? " toggle-row--on" : ""}`}
+        onMouseEnter={() => labelRef.current && show(labelRef.current)}
+        onMouseLeave={hide}
+      >
+        <input
+          className="toggle-row__input"
+          type="radio"
+          name={groupName}
+          checked={Boolean(rule.checked)}
+          onChange={rule.onToggle ?? (() => undefined)}
+        />
+        <span className="toggle-row__name">{rule.label}</span>
+        {badge && <span className="toggle-row__badge">{badge}</span>}
+      </label>
+      {visible && rule.tooltip &&
+        createPortal(
+          <div className="tt" style={{ top: coords.top, left: coords.left }}>
+            {rule.tooltip}
+          </div>,
+          document.body
+        )}
     </>
   );
 }

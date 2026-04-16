@@ -1,24 +1,22 @@
 import { useMemo, useState } from "react";
 import { getFactionRuntimeDetachments } from "../data/factions/runtimeDetachments";
 import type { RuleOption } from "../types/faction";
-import { getAdeptusCustodesFactionConfig } from "../data/factions/AdeptusCustodes/faction";
+import { getFactionConfigByName } from "../data/factions/index";
 import type { NormalizedDetachment } from "../types/wahapedia";
 
 export function useFactionRules(
   attackerFaction: string,
   normalizedDetachments: NormalizedDetachment[]
 ) {
+  // eslint-disable-next-line react-hooks/preserve-manual-memoization -- React Compiler cannot preserve memoization across conditional branches; manual useMemo is still needed for stable references.
   const runtimeData = useMemo(() => {
-    if (attackerFaction === "Adeptus Custodes") {
-      const adeptusCustodesFactionConfig = getAdeptusCustodesFactionConfig(normalizedDetachments);
+    const factionConfig = getFactionConfigByName(attackerFaction, normalizedDetachments);
+    if (factionConfig) {
       return {
-        detachments: adeptusCustodesFactionConfig.detachments,
-        enhancements: adeptusCustodesFactionConfig.detachments.flatMap(
-          (detachment) => detachment.enhancements ?? []
-        ),
-        stratagems: adeptusCustodesFactionConfig.detachments.flatMap(
-          (detachment) => detachment.stratagems
-        ),
+        detachments: factionConfig.detachments,
+        enhancements: factionConfig.detachments.flatMap((d) => d.enhancements ?? []),
+        stratagems: factionConfig.detachments.flatMap((d) => d.stratagems),
+        armyRules: factionConfig.armyRules,
       };
     }
 
@@ -45,16 +43,11 @@ export function useFactionRules(
     ) ?? availableDetachments[0];
 
   const allAvailableRuleOptions: RuleOption[] = useMemo(() => {
-    if (attackerFaction === "Adeptus Custodes") {
-      const adeptusCustodesFactionConfig = getAdeptusCustodesFactionConfig(normalizedDetachments);
-      return [
-        ...adeptusCustodesFactionConfig.armyRules,
-        ...(selectedDetachment?.ruleOptions ?? []),
-      ];
-    }
-
-    return selectedDetachment?.ruleOptions ?? [];
-  }, [attackerFaction, normalizedDetachments, selectedDetachment]);
+    return [
+      ...(runtimeData.armyRules ?? []),
+      ...(selectedDetachment?.ruleOptions ?? []),
+    ];
+  }, [runtimeData.armyRules, selectedDetachment]);
 
   // Stable references — only change when selectedDetachment changes.
   // Without memoization these would be new array instances on every render,

@@ -134,11 +134,11 @@ export function useBattleSetup(units: Unit[]) {
 
   const attackerUnits = useMemo(() => {
     return units.filter((unit) => unit.faction === attackerFaction);
-  }, [attackerFaction]);
+  }, [units, attackerFaction]);
 
   const defenderUnits = useMemo(() => {
     return units.filter((unit) => unit.faction === defenderFaction);
-  }, [defenderFaction]);
+  }, [units, defenderFaction]);
 
   const attacker =
     attackerUnits.find((unit) => unit.id === attackerId) ?? attackerUnits[0];

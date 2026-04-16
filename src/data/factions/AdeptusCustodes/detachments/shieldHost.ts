@@ -12,6 +12,7 @@ export const shieldHostDetachment: DetachmentConfig = {
       description:
         "Each time a model with Martial Ka’tah makes a melee attack, a successful unmodified Hit roll of 5+ scores a Critical Hit.",
       appliesTo: "attacker",
+      combatRole: "attacker",
       phase: "fight",
       isToggle: true,
       modifiers: [{ type: "CRITICAL_HITS_ON", value: 5 }],
@@ -27,6 +28,7 @@ export const shieldHostDetachment: DetachmentConfig = {
       description:
         "Improve the Armour Penetration characteristic of melee weapons equipped by models with Martial Ka’tah by 1.",
       appliesTo: "attacker",
+      combatRole: "attacker",
       phase: "fight",
       isToggle: true,
       modifiers: [{ type: "AP_MODIFIER", value: 1, attackType: "melee" }],
@@ -49,6 +51,7 @@ export const shieldHostDetachment: DetachmentConfig = {
           id: "slayers-of-nightmares-effect",
           name: "Slayers of Nightmares Effect",
           appliesTo: "attacker",
+          combatRole: "attacker",
           phase: "fight",
           isToggle: true,
           modifiers: [
@@ -92,6 +95,7 @@ export const shieldHostDetachment: DetachmentConfig = {
       id: "hall-of-armouries-strength",
       name: "Hall of Armouries: +1 Strength",
       appliesTo: "attacker",
+      combatRole: "attacker",
       phase: "fight",
       isToggle: true,
       modifiers: [
@@ -104,6 +108,7 @@ export const shieldHostDetachment: DetachmentConfig = {
       id: "hall-of-armouries-damage",
       name: "Hall of Armouries: +1 Damage",
       appliesTo: "attacker",
+      combatRole: "attacker",
       phase: "fight",
       isToggle: true,
       modifiers: [
@@ -125,6 +130,7 @@ export const shieldHostDetachment: DetachmentConfig = {
           id: "panoptispex-effect",
           name: "Panoptispex Effect",
           appliesTo: "attacker",
+          combatRole: "attacker",
           phase: "shooting",
           isToggle: true,
           modifiers: [{ type: "IGNORES_COVER" }],

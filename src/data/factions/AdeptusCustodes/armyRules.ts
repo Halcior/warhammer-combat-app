@@ -7,6 +7,7 @@ export const adeptusCustodesArmyRules: RuleOption[] = [
     description: "Selected stance grants Lethal Hits.",
     modifiers: [{ type: "LETHAL_HITS" }],
     appliesTo: "attacker",
+    combatRole: "attacker",
     phase: "fight",
     isToggle: true,
 
@@ -19,6 +20,7 @@ export const adeptusCustodesArmyRules: RuleOption[] = [
     description: "Selected stance grants Sustained Hits 1.",
     modifiers: [{ type: "SUSTAINED_HITS", value: 1 }],
     appliesTo: "attacker",
+    combatRole: "attacker",
     phase: "fight",
     isToggle: true,
 

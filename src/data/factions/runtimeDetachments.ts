@@ -17,5 +17,6 @@ export function getFactionRuntimeDetachments(
     detachments: mappedDetachments,
     enhancements: mappedDetachments.flatMap((detachment) => detachment.enhancements ?? []),
     stratagems: mappedDetachments.flatMap((detachment) => detachment.stratagems),
+    armyRules: [] as import("../../types/faction").RuleOption[],
   };
 }

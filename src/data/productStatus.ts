@@ -18,26 +18,27 @@ export type ReleaseSnapshotItem = {
 export const releaseSnapshot: ReleaseSnapshotItem[] = [
   { label: "Current build", value: "Public alpha" },
   { label: "Best test flow", value: "Calculator + Workspace + saved armies" },
-  { label: "Best-tested factions", value: "Custodes, Necrons, Tau, World Eaters" },
+  { label: "Best-tested factions", value: "Custodes, CSM, Necrons, Space Marines, T'au, Tyranids, World Eaters" },
 ];
 
 export const latestChanges: StatusSection = {
   title: "Latest changes",
   items: [
-    "Battle Workspace now supports saved-army matchup flow with explicit attacker weapon selection and battle-state setup.",
-    "Army Builder uses cleaner saved loadouts and supports attached leader editing with live points updates.",
-    "App startup is lighter: units and detachments now load by faction instead of one giant upfront bundle.",
-    "Rules and modifiers are separated more clearly by attacker and defender context for faster scanning.",
+    "Chaos Space Marines: Veterans of the Long War (re-roll Wound rolls in melee) now toggleable. Tyranids: Synaptic Directives added — Voracious Appetite (re-roll Wounds of 1) implemented, others info-only.",
+    "Aeldari detachments now registered (16 total). Army rules Strands of Fate and Battle Focus listed as info-only — no direct calculator equivalent.",
+    "Space Marines: Oath of Moment (re-roll Hit + Wound rolls) toggleable. World Eaters Blessings of Khorne mutex radio group.",
+    "Necrons: Reanimation Protocols (FNP 4+). T'au Empire: Markerlight (+1 to hit) + Saviour Protocols (FNP 5+).",
+    "Attacker and defender rules are now strictly separated — a rule in the Defender panel can never boost the attacker.",
   ],
 };
 
 export const inProgress: StatusSection = {
   title: "In progress",
   items: [
-    "Further Death Guard support and wider faction rule coverage across detachments and abilities.",
-    "More practical Army Builder validation for loadouts, hosts and attached leaders.",
+    "Expanding Death Guard detachment rule coverage beyond Flyblown Host and Mortarion's Hammer.",
+    "Edge case engine rules: critical hit thresholds, melta damage, blast weapons.",
+    "UI polish: Blessings of Khorne should display as a radio group (one selection) rather than independent checkboxes.",
     "More aggressive loading optimization for very large factions like Space Marines and Aeldari.",
-    "More tester guidance around faction coverage, known limitations and expected workflow.",
   ],
 };
 
@@ -55,14 +56,14 @@ export const factionSupportGroups: FactionSupportGroup[] = [
   {
     label: "Recommended for testing",
     tone: "ready",
-    factions: ["Adeptus Custodes", "Necrons", "Tau Empire", "World Eaters"],
+    factions: ["Adeptus Custodes", "Necrons", "Space Marines", "T'au Empire", "World Eaters"],
     note: "These have the most complete gameplay-facing rule coverage right now.",
   },
   {
     label: "Playable beta",
     tone: "beta",
-    factions: ["Death Guard"],
-    note: "Already useful, but still being actively expanded and stabilized.",
+    factions: ["Aeldari", "Chaos Space Marines", "Death Guard", "Tyranids"],
+    note: "Army rules and detachments registered. Key rules implemented; full coverage still expanding.",
   },
   {
     label: "Data present, rules still partial",
@@ -73,16 +74,13 @@ export const factionSupportGroups: FactionSupportGroup[] = [
       "Astra Militarum",
       "Chaos Daemons",
       "Chaos Knights",
-      "Chaos Space Marines",
       "Drukhari",
       "Grey Knights",
       "Imperial Agents",
       "Imperial Knights",
       "Leagues of Votann",
       "Orks",
-      "Space Marines",
       "Thousand Sons",
-      "Tyranids",
     ],
     note: "These are available in the data model, but should not be treated as deeply supported yet.",
   },

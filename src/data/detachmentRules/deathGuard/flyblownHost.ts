@@ -7,6 +7,7 @@ export const flyblownHostRuleOverride: DetachmentRuleOverride = ({ rule }) => {
     return {
       ...rule,
       appliesTo: "defender",
+      combatRole: "defender",
       supportLevel: "implemented",
       phase: "any",
       modifiers: [

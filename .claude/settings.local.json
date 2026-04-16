@@ -7,7 +7,14 @@
       "Bash(npx eslint:*)",
       "Bash(grep -E \"^\\\\s*\\(C:|src/|[A-Z]:\\\\\\\\\\)\")",
       "Bash(echo \"EXIT:$?\")",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); [print\\(d['factionName'], d['detachmentCount'], d['slug']\\) for d in data]\")",
+      "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); [print\\(d['id'], '-', d['name']\\) for d in data]\")",
+      "Bash(node -e \"const d=require\\('./src/data/normalized/detachments-by-faction/death-guard.json'\\);d.forEach\\(x=>console.log\\(x.id,'-',x.name\\)\\)\")",
+      "Bash(node -e \"const d=require\\('./src/data/normalized/detachments-by-faction/necrons.json'\\);d.forEach\\(x=>console.log\\(x.id,'-',x.name\\)\\)\")",
+      "Bash(node -e \"const d=require\\('./src/data/normalized/detachments-by-faction/t-au-empire.json'\\);d.forEach\\(x=>console.log\\(x.id,'-',x.name\\)\\)\")",
+      "Bash(node -e \"const d=require\\('./src/data/normalized/detachments-by-faction/world-eaters.json'\\);d.forEach\\(x=>console.log\\(x.id,'-',x.name\\)\\)\")",
+      "Bash(python3 -c ' *)"
     ]
   }
 }

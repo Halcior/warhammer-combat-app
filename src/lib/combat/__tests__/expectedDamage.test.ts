@@ -2334,3 +2334,137 @@ it("applies Tallyband Summoners hit rerolls only when the target is tied down by
   expect(withSupport.expectedHits).toBeGreaterThan(noSupport.expectedHits);
   expect(withSupport.expectedDamage).toBeGreaterThan(noSupport.expectedDamage);
 });
+
+it("applies Melta bonus damage only at half range", () => {
+  const meltaWeapon: Weapon = {
+    id: "melta-gun",
+    name: "Meltagun",
+    attacks: 1,
+    skill: 3,
+    strength: 9,
+    ap: -4,
+    damage: "D6",
+    type: "ranged",
+    specialRules: [{ type: "MELTA", value: 2 }],
+  };
+
+  const fullRange = calculateExpectedDamage({
+    attacker,
+    weapon: meltaWeapon,
+    defender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: { ...baseConditions, isHalfRange: false },
+    activeModifierRules: [],
+  });
+
+  const halfRange = calculateExpectedDamage({
+    attacker,
+    weapon: meltaWeapon,
+    defender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: { ...baseConditions, isHalfRange: true },
+    activeModifierRules: [],
+  });
+
+  // D6 = 3.5 expected; D6+2 = 5.5 expected at half range
+  expect(fullRange.damagePerFailedSave).toBeCloseTo(3.5, 3);
+  expect(halfRange.damagePerFailedSave).toBeCloseTo(5.5, 3);
+  expect(halfRange.expectedDamage).toBeGreaterThan(fullRange.expectedDamage);
+});
+
+it("applies REROLL_HITS_ONES for a smaller hit boost than full rerolls", () => {
+  const rangedWeapon: Weapon = {
+    id: "bolt-rifle",
+    name: "Bolt Rifle",
+    attacks: 4,
+    skill: 3,
+    strength: 4,
+    ap: -1,
+    damage: 1,
+    type: "ranged",
+    specialRules: [],
+  };
+
+  const baseline = calculateExpectedDamage({
+    attacker,
+    weapon: rangedWeapon,
+    defender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: baseConditions,
+    activeModifierRules: [],
+  });
+
+  const rerollOnes = calculateExpectedDamage({
+    attacker,
+    weapon: rangedWeapon,
+    defender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: baseConditions,
+    activeModifierRules: [{ type: "REROLL_HITS_ONES", attackType: "ranged" }],
+  });
+
+  const rerollAll = calculateExpectedDamage({
+    attacker,
+    weapon: rangedWeapon,
+    defender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: baseConditions,
+    activeModifierRules: [{ type: "REROLL_HITS", attackType: "ranged" }],
+  });
+
+  // Reroll ones gives a boost, but less than full rerolls
+  expect(rerollOnes.expectedHits).toBeGreaterThan(baseline.expectedHits);
+  expect(rerollOnes.expectedHits).toBeLessThan(rerollAll.expectedHits);
+});
+
+it("applies REROLL_WOUNDS_ONES for a smaller wound boost than full rerolls", () => {
+  const rangedWeapon: Weapon = {
+    id: "boltgun-w",
+    name: "Boltgun",
+    attacks: 4,
+    skill: 3,
+    strength: 4,
+    ap: 0,
+    damage: 1,
+    type: "ranged",
+    specialRules: [],
+  };
+
+  const baseline = calculateExpectedDamage({
+    attacker,
+    weapon: rangedWeapon,
+    defender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: baseConditions,
+    activeModifierRules: [],
+  });
+
+  const rerollOnes = calculateExpectedDamage({
+    attacker,
+    weapon: rangedWeapon,
+    defender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: baseConditions,
+    activeModifierRules: [{ type: "REROLL_WOUNDS_ONES", attackType: "ranged" }],
+  });
+
+  const rerollAll = calculateExpectedDamage({
+    attacker,
+    weapon: rangedWeapon,
+    defender,
+    attackingModels: 1,
+    defendingModels: 10,
+    conditions: baseConditions,
+    activeModifierRules: [{ type: "REROLL_WOUNDS", attackType: "ranged" }],
+  });
+
+  expect(rerollOnes.expectedWounds).toBeGreaterThan(baseline.expectedWounds);
+  expect(rerollOnes.expectedWounds).toBeLessThan(rerollAll.expectedWounds);
+});
