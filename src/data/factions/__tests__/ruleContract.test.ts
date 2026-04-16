@@ -21,12 +21,15 @@ import {
   DEFENDER_EXCLUSIVE_RULE_TYPES,
 } from "../../../lib/combat/combatRoleGuards";
 import { aeldariArmyRules } from "../Aeldari/armyRules";
+import { adeptaSororitasArmyRules } from "../AdeptaSororitas/armyRules";
 import { adeptusCustodesArmyRules } from "../AdeptusCustodes/armyRules";
 import { chaosSpaceMarinesArmyRules } from "../ChaosSpaceMarines/armyRules";
 import { tyranidsArmyRules } from "../Tyranids/armyRules";
 import { shieldHostDetachment } from "../AdeptusCustodes/detachments/shieldHost";
 import { deathGuardArmyRules } from "../DeathGuard/armyRules";
+import { greyKnightsArmyRules } from "../GreyKnights/armyRules";
 import { necronsArmyRules } from "../Necrons/armyRules";
+import { orksArmyRules } from "../Orks/armyRules";
 import { tauArmyRules } from "../Tau/armyRules";
 import { spaceMarinesArmyRules } from "../SpaceMarines/armyRules";
 import { worldEatersArmyRules } from "../WorldEaters/armyRules";
@@ -309,6 +312,60 @@ describe("Aeldari rule contracts", () => {
 
   it("all Aeldari army rules are info-only with no modifiers", () => {
     for (const rule of aeldariArmyRules) {
+      expect(rule.supportLevel).toBe("info-only");
+      expect(rule.modifiers).toHaveLength(0);
+    }
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Orks — hand-crafted army rules
+// ---------------------------------------------------------------------------
+
+describe("Orks rule contracts", () => {
+  it("army rules have correct side assignment", () => {
+    validateRuleOptions(orksArmyRules, "Orks army rules");
+  });
+
+  it("Waaagh! is an attacker rule with ATTACKS_MODIFIER (melee)", () => {
+    const waaagh = orksArmyRules.find((r) => r.id === "orks-waaagh");
+    expect(waaagh).toBeDefined();
+    expect(waaagh?.combatRole).toBe("attacker");
+    const mod = waaagh?.modifiers.find((m) => m.type === "ATTACKS_MODIFIER");
+    expect(mod).toBeDefined();
+    expect((mod as { type: "ATTACKS_MODIFIER"; value: number; attackType?: string })?.value).toBe(1);
+    expect((mod as { type: "ATTACKS_MODIFIER"; value: number; attackType?: string })?.attackType).toBe("melee");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Grey Knights — hand-crafted army rules
+// ---------------------------------------------------------------------------
+
+describe("Grey Knights rule contracts", () => {
+  it("army rules have correct side assignment", () => {
+    validateRuleOptions(greyKnightsArmyRules, "Grey Knights army rules");
+  });
+
+  it("all Grey Knights army rules are info-only with no modifiers", () => {
+    for (const rule of greyKnightsArmyRules) {
+      expect(rule.supportLevel).toBe("info-only");
+      expect(rule.modifiers).toHaveLength(0);
+    }
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Adepta Sororitas — hand-crafted army rules
+// ---------------------------------------------------------------------------
+
+describe("Adepta Sororitas rule contracts", () => {
+  it("army rules have correct side assignment", () => {
+    validateRuleOptions(adeptaSororitasArmyRules, "Adepta Sororitas army rules");
+  });
+
+  it("all Adepta Sororitas army rules are info-only with no modifiers", () => {
+    for (const rule of adeptaSororitasArmyRules) {
       expect(rule.supportLevel).toBe("info-only");
       expect(rule.modifiers).toHaveLength(0);
     }

@@ -155,6 +155,72 @@ export function buildModifiersPanelModel(
   const attackerCoreRules = getCoreUnitRules(props.attacker);
   const defenderCoreRules = getCoreUnitRules(props.defender);
 
+  const attackerDetachmentRules = props.availableRuleOptions.map((rule) =>
+    createToggleRule({
+      id: `rule-option-${rule.id}`,
+      label: rule.displayLabel ?? formatUiName(rule.name),
+      tooltip: buildRuleOptionTooltip(rule),
+      source: "Faction / Detachment",
+      side: "attacker",
+      checked: props.activeRuleOptionIdsBySide.attacker.includes(rule.id),
+      onToggle: () => props.toggleRuleOptionForSide(rule.id, "attacker"),
+      group: inferRuleOptionGroup(rule),
+      selectionGroup: rule.selectionGroup,
+    })
+  );
+
+  const attackerEnhancementRules = props.enhancements.map((enhancement) =>
+    createToggleRule({
+      id: `enhancement-${enhancement.id}`,
+      label: formatUiName(enhancement.name),
+      tooltip: buildEnhancementTooltip(enhancement),
+      source: "Enhancement",
+      side: "attacker",
+      checked: props.activeEnhancementIds.includes(enhancement.id),
+      onToggle: () => props.toggleEnhancement(enhancement.id),
+      group: inferRuleCollectionGroup(enhancement.effects),
+    })
+  );
+
+  const attackerStratagemRules = props.stratagems.map((stratagem) =>
+    createToggleRule({
+      id: `stratagem-${stratagem.id}`,
+      label: formatUiName(stratagem.name),
+      tooltip: buildStratagemTooltip(stratagem),
+      source: "Stratagem",
+      side: "attacker",
+      checked: props.activeStratagemIds.includes(stratagem.id),
+      onToggle: () => props.toggleStratagem(stratagem.id),
+      group: inferRuleCollectionGroup(stratagem.effects),
+    })
+  );
+
+  const attackerAbilityRules = visibleAttackerAbilities
+    .map((ability) => {
+      const toggledOption = props.attackerUnitAbilityOptions.find(
+        (option) => option.id === `attacker-ability-${ability.id}`
+      );
+
+      if (!toggledOption) {
+        return null;
+      }
+
+      return createToggleRule({
+        id: `attacker-ability-${ability.id}`,
+        label:
+          ability.displayLabel ??
+          toggledOption.displayLabel ??
+          formatUiName(ability.name),
+        tooltip: buildUnitAbilityTooltip(ability),
+        source: "Attacker ability",
+        side: "attacker",
+        checked: props.activeAttackerUnitAbilityIds.includes(toggledOption.id),
+        onToggle: () => props.toggleAttackerUnitAbility(toggledOption.id),
+        group: inferAbilityGroup(ability, "attacker"),
+      });
+    })
+    .filter(Boolean) as DisplayRule[];
+
   const defenderDetachmentActiveRules = dedupeDisplayRules([
     ...props.defenderAvailableRuleOptions.map((rule) =>
       createToggleRule({
@@ -194,68 +260,7 @@ export function buildModifiersPanelModel(
     ),
   ]);
 
-  const activeRules = dedupeDisplayRules([
-    ...props.availableRuleOptions.map((rule) => {
-      const side = inferRuleOptionSide(rule);
-      return createToggleRule({
-        id: `rule-option-${rule.id}`,
-        label: rule.displayLabel ?? formatUiName(rule.name),
-        tooltip: buildRuleOptionTooltip(rule),
-        source: "Faction / Detachment",
-        side,
-        checked: props.activeRuleOptionIdsBySide[side].includes(rule.id),
-        onToggle: () => props.toggleRuleOptionForSide(rule.id, side),
-        group: inferRuleOptionGroup(rule),
-        selectionGroup: rule.selectionGroup,
-      });
-    }),
-    ...props.enhancements.map((enhancement) =>
-      createToggleRule({
-        id: `enhancement-${enhancement.id}`,
-        label: formatUiName(enhancement.name),
-        tooltip: buildEnhancementTooltip(enhancement),
-        source: "Enhancement",
-        side: inferRuleCollectionSide(enhancement.effects),
-        checked: props.activeEnhancementIds.includes(enhancement.id),
-        onToggle: () => props.toggleEnhancement(enhancement.id),
-        group: inferRuleCollectionGroup(enhancement.effects),
-      })
-    ),
-    ...props.stratagems.map((stratagem) =>
-      createToggleRule({
-        id: `stratagem-${stratagem.id}`,
-        label: formatUiName(stratagem.name),
-        tooltip: buildStratagemTooltip(stratagem),
-        source: "Stratagem",
-        side: inferRuleCollectionSide(stratagem.effects),
-        checked: props.activeStratagemIds.includes(stratagem.id),
-        onToggle: () => props.toggleStratagem(stratagem.id),
-        group: inferRuleCollectionGroup(stratagem.effects),
-      })
-    ),
-    ...visibleAttackerAbilities
-      .map((ability) => {
-        const toggledOption = props.attackerUnitAbilityOptions.find(
-          (option) => option.id === `attacker-ability-${ability.id}`
-        );
-
-        if (!toggledOption) {
-          return null;
-        }
-
-        return createToggleRule({
-          id: `attacker-ability-${ability.id}`,
-          label: ability.displayLabel ?? toggledOption.displayLabel ?? formatUiName(ability.name),
-          tooltip: buildUnitAbilityTooltip(ability),
-          source: "Attacker ability",
-          side: "attacker",
-          checked: props.activeAttackerUnitAbilityIds.includes(toggledOption.id),
-          onToggle: () => props.toggleAttackerUnitAbility(toggledOption.id),
-          group: inferAbilityGroup(ability, "attacker"),
-        });
-      })
-      .filter(Boolean) as DisplayRule[],
-    ...visibleDefenderAbilities
+  const defenderAbilityRules = visibleDefenderAbilities
       .map((ability) => {
         const toggledOption = props.defenderUnitAbilityOptions.find(
           (option) => option.id === `defender-ability-${ability.id}`
@@ -276,8 +281,7 @@ export function buildModifiersPanelModel(
           group: inferAbilityGroup(ability, "defender"),
         });
       })
-      .filter(Boolean) as DisplayRule[],
-  ]);
+      .filter(Boolean) as DisplayRule[];
 
   const derivedRows = dedupeDisplayRules([
     ...props.attackerActiveModifierRules.map((rule, index) =>
@@ -392,7 +396,12 @@ export function buildModifiersPanelModel(
 
   return {
     attacker: {
-      activeRules: activeRules.filter((rule) => rule.side === "attacker"),
+      activeRules: dedupeDisplayRules([
+        ...attackerDetachmentRules,
+        ...attackerEnhancementRules,
+        ...attackerStratagemRules,
+        ...attackerAbilityRules,
+      ]),
       derivedRows: derivedRows.filter((rule) => rule.side === "attacker"),
       derivedBuckets: buildDerivedBuckets(
         derivedRules.filter((rule) => rule.side === "attacker")
@@ -403,8 +412,8 @@ export function buildModifiersPanelModel(
     },
     defender: {
       activeRules: dedupeDisplayRules([
-        ...activeRules.filter((rule) => rule.side === "defender"),
         ...defenderDetachmentActiveRules,
+        ...defenderAbilityRules,
       ]),
       derivedRows: derivedRows.filter((rule) => rule.side === "defender"),
       derivedBuckets: buildDerivedBuckets(
@@ -483,36 +492,6 @@ function buildDerivedBuckets(rules: DisplayRule[]): RuleBucket[] {
     .filter((bucket) => bucket.rules.length > 0);
 }
 
-function inferRuleOptionSide(
-  rule: Pick<RuleOption, "appliesTo" | "modifiers" | "combatRole">
-): DisplayRuleSide {
-  if (rule.combatRole === "attacker") return "attacker";
-  if (rule.combatRole === "defender") return "defender";
-
-  if (rule.appliesTo === "attacker") {
-    return "attacker";
-  }
-
-  if (rule.appliesTo === "defender") {
-    return "defender";
-  }
-
-  const inferred = inferSideFromModifiers(rule.modifiers);
-  return inferred ?? "attacker";
-}
-
-function inferRuleCollectionSide(
-  rules: Array<Pick<RuleOption, "appliesTo" | "modifiers" | "combatRole">>
-): DisplayRuleSide {
-  const counts = { attacker: 0, defender: 0 };
-
-  rules.forEach((rule) => {
-    counts[inferRuleOptionSide(rule)] += 1;
-  });
-
-  return counts.defender > counts.attacker ? "defender" : "attacker";
-}
-
 function inferRuleOptionGroup(
   rule: Pick<RuleOption, "modifiers">
 ): DisplayRuleGroup {
@@ -536,33 +515,6 @@ function inferAbilityGroup(
   }
 
   return side === "attacker" ? "offense" : "defense";
-}
-
-function inferSideFromModifiers(
-  modifiers: SpecialRule[]
-): DisplayRuleSide | undefined {
-  let attackerScore = 0;
-  let defenderScore = 0;
-
-  modifiers.forEach((modifier) => {
-    const group = classifyRuleGroup(modifier);
-    if (group === "offense") {
-      attackerScore += 1;
-    }
-    if (group === "defense") {
-      defenderScore += 1;
-    }
-  });
-
-  if (attackerScore > defenderScore) {
-    return "attacker";
-  }
-
-  if (defenderScore > attackerScore) {
-    return "defender";
-  }
-
-  return undefined;
 }
 
 function inferGroupFromModifiers(modifiers: SpecialRule[]): DisplayRuleGroup {

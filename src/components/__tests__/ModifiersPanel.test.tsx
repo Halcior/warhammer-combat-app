@@ -6,7 +6,13 @@ import {
   classifyRuleGroup,
 } from "../ModifiersPanel";
 import type { SpecialRule, Unit, Weapon } from "../../types/combat";
-import type { DetachmentConfig, RuleOption } from "../../types/faction";
+import type {
+  DetachmentConfig,
+  EnhancementConfig,
+  RuleOption,
+} from "../../types/faction";
+
+type ModifiersPanelProps = React.ComponentProps<typeof ModifiersPanel>;
 
 function createWeapon(overrides: Partial<Weapon> = {}): Weapon {
   return {
@@ -66,7 +72,7 @@ function createDetachment(
   };
 }
 
-function createProps() {
+function createProps(): ModifiersPanelProps {
   const attackerActiveModifierRules: SpecialRule[] = [
     { type: "REROLL_HITS", attackType: "ranged" },
   ];
@@ -116,12 +122,6 @@ function createProps() {
     selectedDetachment: createDetachment(),
     availableRuleOptions: [
       createRuleOption({ supportLevel: "implemented" }),
-      createRuleOption({
-        id: "rule-2",
-        name: "Shield Protocol",
-        appliesTo: "defender",
-        modifiers: [{ type: "INVULNERABLE_SAVE", value: 5 }],
-      }),
     ],
     activeRuleOptionIdsBySide: { attacker: [], defender: [] },
     toggleRuleOptionForSide: () => undefined,
@@ -134,7 +134,15 @@ function createProps() {
     defenderAvailableDetachments: [],
     defenderSelectedDetachmentId: "",
     setDefenderSelectedDetachmentId: () => undefined,
-    defenderAvailableRuleOptions: [],
+    defenderAvailableRuleOptions: [
+      createRuleOption({
+        id: "rule-2",
+        name: "Shield Protocol",
+        appliesTo: "defender",
+        combatRole: "defender",
+        modifiers: [{ type: "INVULNERABLE_SAVE", value: 5 }],
+      }),
+    ],
     activeDefenderDetachmentRuleOptionIds: [],
     toggleDefenderDetachmentRuleOption: () => undefined,
     defenderDetachmentStratagems: [],
@@ -177,6 +185,56 @@ describe("ModifiersPanel model", () => {
     ).toBe(true);
     expect(
       model.defender.passiveInfoRules.some((rule) => rule.label === "Silent Watcher")
+    ).toBe(true);
+  });
+
+  it("keeps attacker-owned enhancements and stratagems in the attacker panel even when they apply defensively", () => {
+    const props = createProps();
+    props.enhancements = [
+      {
+        id: "attacker-defensive-enh",
+        name: "Reactive Plating",
+        description: "Attacks against this unit have lower AP.",
+        effects: [
+          {
+            id: "attacker-defensive-enh-effect",
+            name: "Reactive Plating",
+            appliesTo: "defender",
+            phase: "any",
+            modifiers: [{ type: "INVULNERABLE_SAVE", value: 5 }],
+            combatRole: "defender",
+          },
+        ],
+      },
+    ] as EnhancementConfig[];
+    props.defenderDetachmentEnhancements = [
+      {
+        id: "defender-enh",
+        name: "Void Shield",
+        description: "Improves the defended unit's resilience.",
+        effects: [
+          {
+            id: "defender-enh-effect",
+            name: "Void Shield",
+            appliesTo: "defender",
+            phase: "any",
+            modifiers: [{ type: "FEEL_NO_PAIN", value: 6 }],
+            combatRole: "defender",
+          },
+        ],
+      },
+    ] as EnhancementConfig[];
+
+    const model = buildModifiersPanelModel(props);
+
+    expect(
+      model.attacker.activeRules.some((rule) => rule.label === "Reactive Plating")
+    ).toBe(true);
+    expect(
+      model.defender.activeRules.some((rule) => rule.label === "Reactive Plating")
+    ).toBe(false);
+    expect(
+      model.defender.activeRules.some((rule) => rule.label === "Void Shield")
     ).toBe(true);
   });
 
