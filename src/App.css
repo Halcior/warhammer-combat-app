@@ -3550,6 +3550,7 @@ button:focus-visible,
     border-color 0.14s ease,
     transform 0.14s ease;
   text-decoration: none;
+  visibility: hidden; /* hide on initial load to prevent FOUC */
 }
 
 .app-header__discord:hover {
