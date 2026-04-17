@@ -106,6 +106,45 @@ describe("Adeptus Custodes rule contracts", () => {
   it("Shield Host detachment rules have correct side assignment", () => {
     validateDetachmentRules(shieldHostDetachment, "Shield Host");
   });
+
+  it("mapped Shield Host Martial Mastery becomes two mutex options", () => {
+    const shieldHostNormalized: NormalizedDetachment = {
+      id: "shield_host",
+      name: "Shield Host",
+      factionId: "adeptus_custodes",
+      factionName: "Adeptus Custodes",
+      abilities: [
+        {
+          id: "shield_host_ability_1",
+          name: "Martial Mastery",
+          description:
+            "At the start of the battle round, you can select one of the bullet points below. If you do, until the start of the next battle round, that bullet point's effects apply.",
+        },
+      ],
+      enhancements: [],
+      stratagems: [],
+    };
+
+    const config = mapNormalizedDetachmentToDetachmentConfig(shieldHostNormalized);
+    const martialMasteryRules = config.ruleOptions.filter(
+      (rule) => rule.selectionGroup === "custodes-martial-mastery"
+    );
+
+    expect(martialMasteryRules).toHaveLength(2);
+    expect(
+      martialMasteryRules.some((rule) =>
+        rule.modifiers.some((modifier) => modifier.type === "CRITICAL_HITS_ON")
+      )
+    ).toBe(true);
+    expect(
+      martialMasteryRules.some((rule) =>
+        rule.modifiers.some((modifier) => modifier.type === "AP_MODIFIER")
+      )
+    ).toBe(true);
+    expect(
+      martialMasteryRules.every((rule) => rule.modifiers.length === 1)
+    ).toBe(true);
+  });
 });
 
 // ---------------------------------------------------------------------------

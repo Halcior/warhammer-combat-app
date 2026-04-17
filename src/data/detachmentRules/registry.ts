@@ -2,7 +2,6 @@ import type { DetachmentRuleOverride } from "./types";
 import { auricChampionsRuleOverride } from "./adeptusCustodes/auricChampions";
 import { blackShipGuardiansRuleOverride } from "./adeptusCustodes/blackShipGuardians";
 import { lionsOfTheEmperorRuleOverride } from "./adeptusCustodes/lionsOfTheEmperor";
-import { shieldHostRuleOverride } from "./adeptusCustodes/shieldHost";
 import { solarSpearheadRuleOverride } from "./adeptusCustodes/solarSpearhead";
 import { annihilationLegionRuleOverride } from "./necrons/annihilationLegion";
 import { awakenedDynastyRuleOverride } from "./necrons/awakenedDynasty";
@@ -46,7 +45,6 @@ const detachmentRuleOverrideRegistry: Record<string, DetachmentRuleOverride> = {
   obeisance_phalanx: obeisancePhalanxRuleOverride,
   pantheon_of_woe: pantheonOfWoeRuleOverride,
   retaliation_cadre: retaliationCadreRuleOverride,
-  shield_host: shieldHostRuleOverride,
   solar_spearhead: solarSpearheadRuleOverride,
   starfire_cadre: starfireCadreRuleOverride,
   starshatter_arsenal: starshatterArsenalRuleOverride,

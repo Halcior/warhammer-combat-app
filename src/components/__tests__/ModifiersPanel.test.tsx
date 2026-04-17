@@ -238,6 +238,40 @@ describe("ModifiersPanel model", () => {
     ).toBe(true);
   });
 
+  it("labels army rules as Faction and detachment rules as Detachment", () => {
+    const props = createProps();
+    props.selectedDetachment = createDetachment({
+      id: "shield-host",
+      ruleOptions: [
+        createRuleOption({
+          id: "detachment-rule",
+          name: "Martial Mastery",
+        }),
+      ],
+    });
+    props.availableRuleOptions = [
+      createRuleOption({
+        id: "army-rule",
+        name: "Martial Ka'tah",
+      }),
+      createRuleOption({
+        id: "detachment-rule",
+        name: "Martial Mastery",
+      }),
+    ];
+
+    const model = buildModifiersPanelModel(props);
+    const factionRule = model.attacker.activeRules.find(
+      (rule) => rule.label === "Martial Ka'tah"
+    );
+    const detachmentRule = model.attacker.activeRules.find(
+      (rule) => rule.label === "Martial Mastery"
+    );
+
+    expect(factionRule?.source).toBe("Faction");
+    expect(detachmentRule?.source).toBe("Detachment");
+  });
+
   it("classifies common offensive and defensive rules into the correct chip groups", () => {
     expect(classifyRuleGroup({ type: "HEAVY", attackType: "ranged" })).toBe(
       "offense"
@@ -266,5 +300,26 @@ describe("ModifiersPanel model", () => {
     expect(markup).toContain("Passive Info");
     expect(markup).not.toContain("Always Active");
     expect(markup).not.toContain("Active Rules");
+  });
+
+  it("does not render a synthetic None option for selection groups", () => {
+    const props = createProps();
+    props.availableRuleOptions = [
+      createRuleOption({
+        id: "stance-a",
+        name: "Martial Mastery: Critical Hit on 5+",
+        selectionGroup: "custodes-martial-mastery",
+      }),
+      createRuleOption({
+        id: "stance-b",
+        name: "Martial Mastery: Improve AP by 1",
+        selectionGroup: "custodes-martial-mastery",
+        modifiers: [{ type: "AP_MODIFIER", value: 1, attackType: "melee" }],
+      }),
+    ];
+
+    const markup = renderToStaticMarkup(<ModifiersPanel {...props} />);
+
+    expect(markup).not.toContain(">None<");
   });
 });

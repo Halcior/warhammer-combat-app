@@ -12,7 +12,9 @@ export function mapNormalizedDetachmentToDetachmentConfig(
 ): DetachmentConfig {
   const override = getDetachmentRuleOverride(detachment.id);
 
-  const baseRuleOptions = detachment.abilities.map(mapAbilityToRuleOption);
+  const baseRuleOptions = detachment.abilities.flatMap((ability) =>
+    mapAbilityToRuleOptions(detachment, ability)
+  );
   const ruleOptions = override
     ? baseRuleOptions.map((rule) =>
         override({
@@ -3274,20 +3276,55 @@ export function mapNormalizedDetachmentToStratagems(
   });
 }
 
-function mapAbilityToRuleOption(
+function mapAbilityToRuleOptions(
+  detachment: NormalizedDetachment,
   ability: NormalizedDetachment["abilities"][number]
-): RuleOption {
-  return {
-    id: ability.id,
-    name: ability.name,
-    description: ability.description,
-    appliesTo: "detachment",
-    phase: "any",
-    supportLevel: "info-only",
-    modifiers: [],
-    engineTags: [],
-    isToggle: true,
-  };
+): RuleOption[] {
+  const abilityName = ability.name.toLowerCase();
+  const abilityDescription = (ability.description ?? "").toLowerCase();
+
+  if (
+    detachment.id === "shield_host" &&
+    (abilityName.includes("martial mastery") ||
+      abilityDescription.includes("martial mastery"))
+  ) {
+    return [
+      createImplementedRuleOption({
+        id: `${ability.id}-crit-5plus`,
+        name: "Martial Mastery: Critical Hit on 5+",
+        description:
+          "Each time an Adeptus Custodes model with Martial Ka'tah makes a melee attack, a successful unmodified Hit roll of 5+ scores a Critical Hit.",
+        phase: "fight",
+        modifiers: [{ type: "CRITICAL_HITS_ON", value: 5 }],
+        selectionGroup: "custodes-martial-mastery",
+        maxSelectionsInGroup: 1,
+      }),
+      createImplementedRuleOption({
+        id: `${ability.id}-ap-bonus`,
+        name: "Martial Mastery: Improve AP by 1",
+        description:
+          "Improve the Armour Penetration characteristic of melee weapons equipped by Adeptus Custodes models with Martial Ka'tah by 1.",
+        phase: "fight",
+        modifiers: [{ type: "AP_MODIFIER", value: 1, attackType: "melee" }],
+        selectionGroup: "custodes-martial-mastery",
+        maxSelectionsInGroup: 1,
+      }),
+    ];
+  }
+
+  return [
+    {
+      id: ability.id,
+      name: ability.name,
+      description: ability.description,
+      appliesTo: "detachment",
+      phase: "any",
+      supportLevel: "info-only",
+      modifiers: [],
+      engineTags: [],
+      isToggle: true,
+    },
+  ];
 }
 
 function summarizeDetachmentDescription(
@@ -3407,10 +3444,14 @@ function createImplementedRuleOption(params: {
   description: string;
   phase: RuleOption["phase"];
   modifiers: RuleOption["modifiers"];
+  displayLabel?: string;
+  selectionGroup?: string;
+  maxSelectionsInGroup?: number;
 }): RuleOption {
   return {
     id: params.id,
     name: params.name,
+    displayLabel: params.displayLabel,
     description: params.description,
     appliesTo: "attacker",
     combatRole: "attacker",
@@ -3419,6 +3460,8 @@ function createImplementedRuleOption(params: {
     supportLevel: "implemented",
     modifiers: params.modifiers,
     engineTags: [],
+    selectionGroup: params.selectionGroup,
+    maxSelectionsInGroup: params.maxSelectionsInGroup,
   };
 }
 

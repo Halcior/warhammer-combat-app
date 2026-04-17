@@ -155,6 +155,16 @@ export function buildModifiersPanelModel(
   const attackerCoreRules = getCoreUnitRules(props.attacker);
   const defenderCoreRules = getCoreUnitRules(props.defender);
 
+  const attackerDetachmentRuleIds = new Set(
+    (props.selectedDetachment?.ruleOptions ?? []).map((rule) => rule.id)
+  );
+  const defenderSelectedDetachment = props.defenderAvailableDetachments.find(
+    (detachment) => detachment.id === props.defenderSelectedDetachmentId
+  );
+  const defenderDetachmentRuleIds = new Set(
+    (defenderSelectedDetachment?.ruleOptions ?? []).map((rule) => rule.id)
+  );
+
   const attackerDetachmentRules = props.availableRuleOptions
     .filter((rule) => rule.isToggle !== false)
     .map((rule) =>
@@ -162,7 +172,7 @@ export function buildModifiersPanelModel(
       id: `rule-option-${rule.id}`,
       label: rule.displayLabel ?? formatUiName(rule.name),
       tooltip: buildRuleOptionTooltip(rule),
-      source: "Faction / Detachment",
+      source: attackerDetachmentRuleIds.has(rule.id) ? "Detachment" : "Faction",
       side: "attacker",
       checked: props.activeRuleOptionIdsBySide.attacker.includes(rule.id),
       onToggle: () => props.toggleRuleOptionForSide(rule.id, "attacker"),
@@ -231,7 +241,7 @@ export function buildModifiersPanelModel(
         id: `defender-det-rule-${rule.id}`,
         label: rule.displayLabel ?? formatUiName(rule.name),
         tooltip: buildRuleOptionTooltip(rule),
-        source: "Faction / Detachment",
+        source: defenderDetachmentRuleIds.has(rule.id) ? "Detachment" : "Faction",
         side: "defender",
         checked: props.activeDefenderDetachmentRuleOptionIds.includes(rule.id),
         onToggle: () => props.toggleDefenderDetachmentRuleOption(rule.id),
@@ -656,7 +666,7 @@ function CombatRoleSection({
   const detSelectRef = useRef<HTMLSelectElement>(null);
 
   const detachmentRules = panel.activeRules.filter(
-    (r) => r.source === "Faction / Detachment"
+    (r) => r.source === "Faction" || r.source === "Detachment"
   );
   const standaloneDetachmentRules = detachmentRules.filter((r) => !r.selectionGroup);
   const selectionGroupMap = new Map<string, DisplayRule[]>();
@@ -844,28 +854,8 @@ function SelectionGroupRow({
   groupId: string;
   rules: DisplayRule[];
 }) {
-  const activeRule = rules.find((r) => r.checked);
-  const noneIsActive = !activeRule;
-
-  const handleNoneSelect = () => {
-    if (activeRule?.onToggle) activeRule.onToggle();
-  };
-
   return (
     <div className="selection-group">
-      <RadioRow
-        rule={{
-          id: `${groupId}-none`,
-          label: "None",
-          tooltip: "No option selected — clear this group.",
-          kind: "active",
-          side: rules[0].side,
-          group: rules[0].group,
-          checked: noneIsActive,
-          onToggle: handleNoneSelect,
-        }}
-        groupName={groupId}
-      />
       {rules.map((rule) => (
         <RadioRow key={rule.id} rule={rule} groupName={groupId} />
       ))}
@@ -1088,7 +1078,9 @@ function formatDescription(description?: string): string {
 
 function getSourceBadgeLabel(source?: string): string | undefined {
   switch (source) {
-    case "Faction / Detachment":
+    case "Faction":
+      return "Faction";
+    case "Detachment":
       return "Detachment";
     case "Enhancement":
       return "Enhancement";
