@@ -2,6 +2,10 @@ import { useMemo, useState } from "react";
 import type { RuleOption, EnhancementConfig, StratagemConfig } from "../types/faction";
 import type { SpecialRule } from "../types/combat";
 
+function isAutoImplementedRule(rule: RuleOption): boolean {
+  return rule.isToggle === false && rule.supportLevel === "implemented" && rule.modifiers.length > 0;
+}
+
 export function useRuleOptions(ruleOptions: RuleOption[]) {
   const [activeRuleOptionIds, setActiveRuleOptionIds] = useState<string[]>([]);
 
@@ -43,7 +47,9 @@ export function useRuleOptions(ruleOptions: RuleOption[]) {
   };
 
   const activeRuleOptions = useMemo(() => {
-    return ruleOptions.filter((rule) => activeRuleOptionIds.includes(rule.id));
+    return ruleOptions.filter(
+      (rule) => activeRuleOptionIds.includes(rule.id) || isAutoImplementedRule(rule)
+    );
   }, [ruleOptions, activeRuleOptionIds]);
 
   const activeRuleModifiers: SpecialRule[] = useMemo(() => {

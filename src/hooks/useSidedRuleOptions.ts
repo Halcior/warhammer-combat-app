@@ -13,6 +13,10 @@ type SidedActiveIds = {
   defender: string[];
 };
 
+function isAutoImplementedRule(rule: RuleOption): boolean {
+  return rule.isToggle === false && rule.supportLevel === "implemented" && rule.modifiers.length > 0;
+}
+
 /**
  * Side-aware variant of useRuleOptions.
  *
@@ -67,16 +71,20 @@ export function useSidedRuleOptions(ruleOptions: RuleOption[]) {
 
   const attackerActiveRuleOptions = useMemo(
     () =>
-      ruleOptions.filter((rule) =>
-        activeRuleOptionIdsBySide.attacker.includes(rule.id)
+      ruleOptions.filter(
+        (rule) =>
+          activeRuleOptionIdsBySide.attacker.includes(rule.id) ||
+          (isAutoImplementedRule(rule) && rule.combatRole !== "defender" && rule.appliesTo !== "defender")
       ),
     [ruleOptions, activeRuleOptionIdsBySide.attacker]
   );
 
   const defenderActiveRuleOptions = useMemo(
     () =>
-      ruleOptions.filter((rule) =>
-        activeRuleOptionIdsBySide.defender.includes(rule.id)
+      ruleOptions.filter(
+        (rule) =>
+          activeRuleOptionIdsBySide.defender.includes(rule.id) ||
+          (isAutoImplementedRule(rule) && (rule.combatRole === "defender" || rule.appliesTo === "defender"))
       ),
     [ruleOptions, activeRuleOptionIdsBySide.defender]
   );

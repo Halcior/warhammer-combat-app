@@ -155,7 +155,9 @@ export function buildModifiersPanelModel(
   const attackerCoreRules = getCoreUnitRules(props.attacker);
   const defenderCoreRules = getCoreUnitRules(props.defender);
 
-  const attackerDetachmentRules = props.availableRuleOptions.map((rule) =>
+  const attackerDetachmentRules = props.availableRuleOptions
+    .filter((rule) => rule.isToggle !== false)
+    .map((rule) =>
     createToggleRule({
       id: `rule-option-${rule.id}`,
       label: rule.displayLabel ?? formatUiName(rule.name),
@@ -222,7 +224,9 @@ export function buildModifiersPanelModel(
     .filter(Boolean) as DisplayRule[];
 
   const defenderDetachmentActiveRules = dedupeDisplayRules([
-    ...props.defenderAvailableRuleOptions.map((rule) =>
+    ...props.defenderAvailableRuleOptions
+      .filter((rule) => rule.isToggle !== false)
+      .map((rule) =>
       createToggleRule({
         id: `defender-det-rule-${rule.id}`,
         label: rule.displayLabel ?? formatUiName(rule.name),

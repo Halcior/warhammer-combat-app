@@ -3,10 +3,8 @@ import type { RuleOption } from "../../../types/faction";
 /**
  * T'au Empire army-wide rule options for the combat calculator.
  *
- * Markerlight: the +1 to hit effect fires automatically when the battle-state
- * toggle "Spotted / markerlit" (targetIsSpotted) is active in SetupPanel.
- * It is listed here as an explicit army rule toggle for clarity in the Rules
- * Engine panel so players know it is active when they set that condition.
+ * Guided Fire fires automatically when the battle-state toggles
+ * "Attacker is Guided" and "Spotted / markerlit" are active.
  *
  * Saviour Protocols (drone intercept) is modelled as FNP 5+ — a calculator
  * approximation. The real mechanic transfers wounds to a Drone model; FNP 5+
@@ -31,7 +29,7 @@ export const tauArmyRules: RuleOption[] = [
     appliesTo: "attacker",
     combatRole: "attacker",
     phase: "shooting",
-    isToggle: true,
+    isToggle: false,
     supportLevel: "implemented",
     engineTags: ["markerlight", "hit-plus-1-ranged"],
   },
