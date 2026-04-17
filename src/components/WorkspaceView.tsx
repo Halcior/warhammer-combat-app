@@ -295,6 +295,41 @@ function classifyBattleStateSide(key: keyof AttackConditions) {
   return "shared";
 }
 
+function renderToggleGrid(
+  toggles: Array<{
+    key: keyof AttackConditions;
+    label: string;
+    title: string;
+  }>,
+  conditions: AttackConditions,
+  setConditions: (c: AttackConditions) => void,
+  emptyMessage: string
+) {
+  if (toggles.length === 0) {
+    return <p className="workspace-advanced-state__empty">{emptyMessage}</p>;
+  }
+
+  return (
+    <div className="workspace-advanced-state__grid">
+      {toggles.map(({ key, label, title }) => (
+        <label key={key} className="checkbox-row" title={title}>
+          <input
+            type="checkbox"
+            checked={conditions[key]}
+            onChange={(event) =>
+              setConditions({
+                ...conditions,
+                [key]: event.target.checked,
+              })
+            }
+          />
+          <span className="checkbox-row__label">{label}</span>
+        </label>
+      ))}
+    </div>
+  );
+}
+
 function WorkspaceCombatSetup({
   attackerEntry,
   defenderEntry,
@@ -311,6 +346,7 @@ function WorkspaceCombatSetup({
   setConditions,
 }: WorkspaceCombatSetupProps) {
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [showAllBattleState, setShowAllBattleState] = useState(false);
 
   function toggle(key: keyof AttackConditions) {
     setConditions({ ...conditions, [key]: !conditions[key] });
@@ -340,28 +376,38 @@ function WorkspaceCombatSetup({
     const selectedWeapon = actorUnit?.weapons.find((weapon) => weapon.id === weaponId);
     return selectedWeapon?.type !== "melee";
   }, [attackerEntry, unitDefinitions, weaponId]);
-  const visibleCoreToggles = battleStateToggles.filter(
-    (toggle) =>
-      toggle.group === "core" &&
-      isBattleStateToggleRelevant({
-        toggle,
-        conditions,
-        relevantFactions,
-        attackType: isRangedAttack ? "ranged" : "melee",
-      })
-  );
-  const secondaryCoreToggles = visibleCoreToggles.filter(
-    (toggle) => !corePills.some((pill) => pill.key === toggle.key)
-  );
+  const coreToggles = battleStateToggles.filter((toggle) => toggle.group === "core");
   const advancedToggles = battleStateToggles.filter((toggle) => toggle.group === "advanced");
-  const visibleAdvancedToggles = advancedToggles.filter((toggle) => {
-    return isBattleStateToggleRelevant({
+  const visibleCoreToggles = (showAllBattleState ? coreToggles : coreToggles.filter((toggle) =>
+    isBattleStateToggleRelevant({
       toggle,
       conditions,
       relevantFactions,
       attackType: isRangedAttack ? "ranged" : "melee",
-    });
-  });
+    })
+  ));
+  const secondaryCoreToggles = visibleCoreToggles.filter(
+    (toggle) => !corePills.some((pill) => pill.key === toggle.key)
+  );
+  const attackerCoreToggles = secondaryCoreToggles.filter(
+    (toggle) => classifyBattleStateSide(toggle.key) === "attacker"
+  );
+  const defenderCoreToggles = secondaryCoreToggles.filter(
+    (toggle) => classifyBattleStateSide(toggle.key) === "defender"
+  );
+  const sharedCoreToggles = secondaryCoreToggles.filter(
+    (toggle) => classifyBattleStateSide(toggle.key) === "shared"
+  );
+  const visibleAdvancedToggles = showAllBattleState
+    ? advancedToggles
+    : advancedToggles.filter((toggle) => {
+        return isBattleStateToggleRelevant({
+          toggle,
+          conditions,
+          relevantFactions,
+          attackType: isRangedAttack ? "ranged" : "melee",
+        });
+      });
   const attackerAdvancedToggles = visibleAdvancedToggles.filter(
     (toggle) => classifyBattleStateSide(toggle.key) === "attacker"
   );
@@ -526,28 +572,67 @@ function WorkspaceCombatSetup({
         ))}
       </div>
 
+      <div className="workspace-state-strip">
+        <span className="workspace-state-strip__label">
+          Showing {showAllBattleState ? "all" : "relevant"} battle-state options for attacker and defender
+        </span>
+        <button
+          type="button"
+          className="workspace-condition-pill"
+          onClick={() => setShowAllBattleState((prev) => !prev)}
+          aria-pressed={showAllBattleState}
+        >
+          {showAllBattleState ? "Show relevant only" : "Show all battle-state options"}
+        </button>
+      </div>
+
       {secondaryCoreToggles.length > 0 && (
-        <div className="workspace-advanced-state__group">
-          <div className="workspace-advanced-state__group-header">
-            <h4>Core battle state</h4>
-            <span>{secondaryCoreToggles.length}</span>
+        <div className="workspace-advanced-state">
+          <div className="workspace-advanced-state__summary">
+            <span>Core battle state</span>
+            <span className="workspace-advanced-state__meta">
+              {showAllBattleState ? `${secondaryCoreToggles.length} total` : `${secondaryCoreToggles.length} relevant`}
+            </span>
           </div>
-          <div className="workspace-advanced-state__grid">
-            {secondaryCoreToggles.map(({ key, label, title }) => (
-              <label key={key} className="checkbox-row" title={title}>
-                <input
-                  type="checkbox"
-                  checked={conditions[key]}
-                  onChange={(event) =>
-                    setConditions({
-                      ...conditions,
-                      [key]: event.target.checked,
-                    })
-                  }
-                />
-                <span className="checkbox-row__label">{label}</span>
-              </label>
-            ))}
+          <div className="workspace-advanced-state__columns">
+            <div className="workspace-advanced-state__group">
+              <div className="workspace-advanced-state__group-header">
+                <h4>Attacker-side</h4>
+                <span>{attackerCoreToggles.length}</span>
+              </div>
+              {renderToggleGrid(
+                attackerCoreToggles,
+                conditions,
+                setConditions,
+                "No attacker-side core states are relevant."
+              )}
+            </div>
+
+            <div className="workspace-advanced-state__group">
+              <div className="workspace-advanced-state__group-header">
+                <h4>Defender-side</h4>
+                <span>{defenderCoreToggles.length}</span>
+              </div>
+              {renderToggleGrid(
+                defenderCoreToggles,
+                conditions,
+                setConditions,
+                "No defender-side core states are relevant."
+              )}
+            </div>
+
+            <div className="workspace-advanced-state__group">
+              <div className="workspace-advanced-state__group-header">
+                <h4>Shared</h4>
+                <span>{sharedCoreToggles.length}</span>
+              </div>
+              {renderToggleGrid(
+                sharedCoreToggles,
+                conditions,
+                setConditions,
+                "No shared core states are relevant."
+              )}
+            </div>
           </div>
         </div>
       )}
@@ -561,7 +646,9 @@ function WorkspaceCombatSetup({
           }}
         >
           <span>Advanced battle state</span>
-          <span className="workspace-advanced-state__meta">{visibleAdvancedToggles.length} relevant</span>
+          <span className="workspace-advanced-state__meta">
+            {showAllBattleState ? `${visibleAdvancedToggles.length} total` : `${visibleAdvancedToggles.length} relevant`}
+          </span>
         </summary>
 
         {showAdvanced && (
@@ -571,27 +658,12 @@ function WorkspaceCombatSetup({
                 <h4>Attacker-side</h4>
                 <span>{attackerAdvancedToggles.length}</span>
               </div>
-              <div className="workspace-advanced-state__grid">
-                {attackerAdvancedToggles.length > 0 ? (
-                  attackerAdvancedToggles.map(({ key, label, title }) => (
-                    <label key={key} className="checkbox-row" title={title}>
-                      <input
-                        type="checkbox"
-                        checked={conditions[key]}
-                        onChange={(event) =>
-                          setConditions({
-                            ...conditions,
-                            [key]: event.target.checked,
-                          })
-                        }
-                      />
-                      <span className="checkbox-row__label">{label}</span>
-                    </label>
-                  ))
-                ) : (
-                  <p className="workspace-advanced-state__empty">No attacker-side advanced states are relevant.</p>
-                )}
-              </div>
+              {renderToggleGrid(
+                attackerAdvancedToggles,
+                conditions,
+                setConditions,
+                "No attacker-side advanced states are relevant."
+              )}
             </div>
 
             <div className="workspace-advanced-state__group">
@@ -599,27 +671,12 @@ function WorkspaceCombatSetup({
                 <h4>Defender-side</h4>
                 <span>{defenderAdvancedToggles.length}</span>
               </div>
-              <div className="workspace-advanced-state__grid">
-                {defenderAdvancedToggles.length > 0 ? (
-                  defenderAdvancedToggles.map(({ key, label, title }) => (
-                    <label key={key} className="checkbox-row" title={title}>
-                      <input
-                        type="checkbox"
-                        checked={conditions[key]}
-                        onChange={(event) =>
-                          setConditions({
-                            ...conditions,
-                            [key]: event.target.checked,
-                          })
-                        }
-                      />
-                      <span className="checkbox-row__label">{label}</span>
-                    </label>
-                  ))
-                ) : (
-                  <p className="workspace-advanced-state__empty">No defender-side advanced states are relevant.</p>
-                )}
-              </div>
+              {renderToggleGrid(
+                defenderAdvancedToggles,
+                conditions,
+                setConditions,
+                "No defender-side advanced states are relevant."
+              )}
             </div>
 
             <div className="workspace-advanced-state__group">
@@ -627,27 +684,12 @@ function WorkspaceCombatSetup({
                 <h4>Shared</h4>
                 <span>{sharedAdvancedToggles.length}</span>
               </div>
-              <div className="workspace-advanced-state__grid">
-                {sharedAdvancedToggles.length > 0 ? (
-                  sharedAdvancedToggles.map(({ key, label, title }) => (
-                    <label key={key} className="checkbox-row" title={title}>
-                      <input
-                        type="checkbox"
-                        checked={conditions[key]}
-                        onChange={(event) =>
-                          setConditions({
-                            ...conditions,
-                            [key]: event.target.checked,
-                          })
-                        }
-                      />
-                      <span className="checkbox-row__label">{label}</span>
-                    </label>
-                  ))
-                ) : (
-                  <p className="workspace-advanced-state__empty">No shared advanced states are relevant.</p>
-                )}
-              </div>
+              {renderToggleGrid(
+                sharedAdvancedToggles,
+                conditions,
+                setConditions,
+                "No shared advanced states are relevant."
+              )}
             </div>
           </div>
         )}
