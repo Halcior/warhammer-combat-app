@@ -8,6 +8,7 @@ import type { ArmyPresetV2 } from "../types/armyPreset";
 import type { ArmyDraft } from "../lib/storage/armyStorage";
 import type { Unit } from "../types/combat";
 import type { NormalizedDetachment } from "../types/wahapedia";
+import { normalizeFactionName } from "../lib/normalizeFactionName";
 
 type Props = {
   armies: ArmyPresetV2[];
@@ -31,7 +32,7 @@ type EditorState =
 function toArmyDraft(preset: ArmyPresetV2, detachmentName?: string): ArmyDraft {
   return {
     name: preset.name,
-    faction: preset.faction,
+    faction: normalizeFactionName(preset.faction),
     units: preset.units,
     detachmentId: preset.detachmentId,
     detachmentName: detachmentName ?? preset.detachmentName,
@@ -51,13 +52,14 @@ function toArmyDraft(preset: ArmyPresetV2, detachmentName?: string): ArmyDraft {
 function buildDetachmentsByFaction() {
   return (availableDetachments: NormalizedDetachment[]) => availableDetachments.reduce<Record<string, Array<{ id: string; name: string }>>>(
     (accumulator, detachment) => {
-      const current = accumulator[detachment.factionName] ?? [];
+      const normalizedFactionName = normalizeFactionName(detachment.factionName);
+      const current = accumulator[normalizedFactionName] ?? [];
 
       if (!current.some((item) => item.id === detachment.id)) {
         current.push({ id: detachment.id, name: detachment.name });
       }
 
-      accumulator[detachment.factionName] = current.sort((left, right) =>
+      accumulator[normalizedFactionName] = current.sort((left, right) =>
         left.name.localeCompare(right.name)
       );
       return accumulator;
@@ -101,7 +103,7 @@ export function ArmiesView({
   const [showImportModal, setShowImportModal] = useState(false);
 
   const factions = useMemo(
-    () => [...new Set(availableUnits.map((unit) => unit.faction))].sort(),
+    () => [...new Set(availableUnits.map((unit) => normalizeFactionName(unit.faction)))].sort(),
     [availableUnits]
   );
   const unitDefinitions = useMemo(
@@ -125,7 +127,7 @@ export function ArmiesView({
       <ArmyBuilder
         onSave={(preset) => {
           const detachmentName =
-            detachmentsByFaction[preset.faction]?.find(
+            detachmentsByFaction[normalizeFactionName(preset.faction)]?.find(
               (item) => item.id === preset.detachmentId
             )?.name ?? preset.detachmentName;
 
@@ -149,7 +151,7 @@ export function ArmiesView({
         initial={editor.army}
         onSave={(preset) => {
           const detachmentName =
-            detachmentsByFaction[preset.faction]?.find(
+            detachmentsByFaction[normalizeFactionName(preset.faction)]?.find(
               (item) => item.id === preset.detachmentId
             )?.name ?? preset.detachmentName;
 
@@ -247,7 +249,7 @@ export function ArmiesView({
           unitDefinitions={unitDefinitions}
           onImport={(preset) => {
             const detachmentName =
-              detachmentsByFaction[preset.faction]?.find(
+              detachmentsByFaction[normalizeFactionName(preset.faction)]?.find(
                 (item) => item.id === preset.detachmentId
               )?.name ?? preset.detachmentName;
 

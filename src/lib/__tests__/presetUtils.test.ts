@@ -11,6 +11,7 @@ import {
   formatUnitPointsOptionsSummary,
   getBestPointsOptionForModelCount,
   getEstimatedPointsPerModel,
+  loadAndMigratePreset,
   removeUnitFromPreset,
   resolveEditedUnitPoints,
   updateUnitInPreset,
@@ -219,5 +220,30 @@ describe("presetUtils points helpers", () => {
     const removed = removeUnitFromPreset(preset, "unit-instance-1");
     expect(removed.units).toHaveLength(1);
     expect(removed.units[0]?.nickname).toBe("Beta");
+  });
+
+  it("normalizes preset faction names while loading migrated presets", () => {
+    const loaded = loadAndMigratePreset({
+      id: "army-legacy",
+      name: "Legacy Tau",
+      faction: "Tâ€™au Empire",
+      units: [
+        {
+          instanceId: "unit-instance-1",
+          unitId: "shared-unit",
+          nickname: "Alpha",
+          modelCount: 5,
+          selectedWeaponId: "weapon-a",
+          unitTotalPoints: 100,
+          pointsPerModel: 20,
+        },
+      ],
+      totalPoints: 100,
+      pointsLimit: 2000,
+      createdAt: 1,
+      updatedAt: 1,
+    });
+
+    expect(loaded.faction).toBe("T'au Empire");
   });
 });

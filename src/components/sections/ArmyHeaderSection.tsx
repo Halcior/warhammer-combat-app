@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import type { ArmyPresetV2 } from "../../types/armyPreset";
+import { normalizeFactionName } from "../../lib/normalizeFactionName";
 
 interface ArmyHeaderSectionProps {
   preset: ArmyPresetV2;
@@ -25,7 +26,7 @@ export function ArmyHeaderSection({
   validationErrors,
 }: ArmyHeaderSectionProps) {
   const availableDetachments = useMemo(
-    () => detachmentsByFaction[preset.faction] ?? [],
+    () => detachmentsByFaction[normalizeFactionName(preset.faction)] ?? [],
     [preset.faction, detachmentsByFaction]
   );
 

@@ -1,5 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { calculateUnitPoints } from "../lib/presetUtils";
+import {
+  calculateUnitPoints,
+  resolvePresetPrimaryWeaponId,
+  resolvePresetWeaponLabel,
+  resolvePresetWeaponOptions,
+} from "../lib/presetUtils";
 import type { ArmyPresetV2, SavedUnitInPreset } from "../types/armyPreset";
 import type { AttackConditions, Unit } from "../types/combat";
 import {
@@ -11,48 +16,9 @@ function unitById(unitDefinitions: Unit[], unitId: string) {
   return unitDefinitions.find((unit) => unit.id === unitId) ?? null;
 }
 
-function getPresetUnitPrimaryWeapon(savedUnit: SavedUnitInPreset) {
-  const selectedWeapons = savedUnit.selectedWeapons ?? [];
-  const rangedWeapon = selectedWeapons.find((weapon) => weapon.category === "ranged")?.weaponId;
-  const meleeWeapon = selectedWeapons.find((weapon) => weapon.category === "melee")?.weaponId;
-
-  return (
-    rangedWeapon ??
-    savedUnit.selectedRangedWeaponId ??
-    savedUnit.selectedWeaponId ??
-    meleeWeapon ??
-    savedUnit.selectedMeleeWeaponId
-  );
-}
-
-function formatSelectedWeapons(
-  selectedWeapons: SavedUnitInPreset["selectedWeapons"] | undefined,
-  fallbackLabel = "Weapon not set"
-) {
-  if (!selectedWeapons || selectedWeapons.length === 0) {
-    return fallbackLabel;
-  }
-
-  return selectedWeapons
-    .map((weapon) => weapon.name)
-    .join(" | ");
-}
-
 function getPresetUnitWeaponLabel(savedUnit: SavedUnitInPreset, unitDefinitions: Unit[]) {
   const unit = unitById(unitDefinitions, savedUnit.unitId);
-  if (savedUnit.selectedWeapons && savedUnit.selectedWeapons.length > 0) {
-    return formatSelectedWeapons(savedUnit.selectedWeapons);
-  }
-
-  const rangedWeapon = unit?.weapons.find((weapon) => weapon.id === savedUnit.selectedRangedWeaponId);
-  const meleeWeapon = unit?.weapons.find((weapon) => weapon.id === savedUnit.selectedMeleeWeaponId);
-  const primaryWeapon = unit?.weapons.find((weapon) => weapon.id === savedUnit.selectedWeaponId);
-
-  if (rangedWeapon && meleeWeapon) {
-    return `${rangedWeapon.name} | ${meleeWeapon.name}`;
-  }
-
-  return rangedWeapon?.name ?? primaryWeapon?.name ?? meleeWeapon?.name ?? "Weapon not set";
+  return resolvePresetWeaponLabel(savedUnit, unit ?? undefined);
 }
 
 export type WorkspaceSelectableEntry = {
@@ -87,8 +53,8 @@ export function buildWorkspaceSelectableEntries(
       modelCount: savedUnit.modelCount,
       points: calculateUnitPoints(savedUnit),
       source: "unit",
-      primaryWeaponId: getPresetUnitPrimaryWeapon(savedUnit),
-      weaponOptions: (savedUnit.selectedWeapons ?? []).map((weapon) => ({
+      primaryWeaponId: resolvePresetPrimaryWeaponId(savedUnit, hostUnit ?? undefined),
+      weaponOptions: resolvePresetWeaponOptions(savedUnit, hostUnit ?? undefined).map((weapon) => ({
         weaponId: weapon.weaponId,
         label: weapon.name,
       })),
@@ -99,16 +65,22 @@ export function buildWorkspaceSelectableEntries(
           entryId: `${hostEntry.entryId}::leader`,
           unitId: savedUnit.attachedLeader.unitId,
           displayName: savedUnit.attachedLeader.unitName,
-          weaponLabel: formatSelectedWeapons(savedUnit.attachedLeader.selectedWeapons),
+          weaponLabel: resolvePresetWeaponLabel(
+            savedUnit.attachedLeader,
+            unitById(unitDefinitions, savedUnit.attachedLeader.unitId) ?? undefined
+          ),
           modelCount: savedUnit.attachedLeader.modelCount,
           points: savedUnit.leaderPointsCost ?? savedUnit.attachedLeader.pointsTotal ?? 0,
           source: "attachedLeader" as const,
           parentLabel: hostEntry.displayName,
-          primaryWeaponId:
-            savedUnit.attachedLeader.selectedRangedWeaponId ??
-            savedUnit.attachedLeader.selectedWeaponId ??
-            savedUnit.attachedLeader.selectedMeleeWeaponId,
-          weaponOptions: (savedUnit.attachedLeader.selectedWeapons ?? []).map((weapon) => ({
+          primaryWeaponId: resolvePresetPrimaryWeaponId(
+            savedUnit.attachedLeader,
+            unitById(unitDefinitions, savedUnit.attachedLeader.unitId) ?? undefined
+          ),
+          weaponOptions: resolvePresetWeaponOptions(
+            savedUnit.attachedLeader,
+            unitById(unitDefinitions, savedUnit.attachedLeader.unitId) ?? undefined
+          ).map((weapon) => ({
             weaponId: weapon.weaponId,
             label: weapon.name,
           })),

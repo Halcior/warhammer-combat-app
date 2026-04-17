@@ -1,6 +1,10 @@
 import { useMemo, useState } from "react";
 import type { ArmyPresetV2 } from "../types/armyPreset";
 import type { Unit } from "../types/combat";
+import {
+  resolvePresetPrimaryWeaponId,
+  resolvePresetWeaponLabel,
+} from "../lib/presetUtils";
 
 interface LoadArmySelectorProps {
   armies: ArmyPresetV2[];
@@ -39,7 +43,7 @@ export function LoadArmySelector({
   const handleLoadUnit = () => {
     if (!selectedArmy || !selectedUnit || !selectedUnitDefinition) return;
 
-    const weaponId = selectedUnit.selectedWeaponId;
+    const weaponId = resolvePresetPrimaryWeaponId(selectedUnit, selectedUnitDefinition);
     onLoadUnit(selectedArmy.faction, selectedUnit.unitId, weaponId);
 
     // Reset selections after loading
@@ -111,8 +115,7 @@ export function LoadArmySelector({
             <div className="load-army-selector__preview-row">
               <span className="load-army-selector__preview-label">Weapon:</span>
               <span className="load-army-selector__preview-value">
-                {selectedUnitDefinition.weapons.find((w: Unit["weapons"][number]) => w.id === selectedUnit.selectedWeaponId)
-                  ?.name ?? "Unknown"}
+                {resolvePresetWeaponLabel(selectedUnit, selectedUnitDefinition, "Unknown")}
               </span>
             </div>
             {selectedUnit.modelCount !== undefined && (

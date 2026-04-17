@@ -108,4 +108,59 @@ describe("WorkspaceView helpers", () => {
     expect(entries[0]?.weaponOptions[0]?.label).toBe("Plaguespurt Gauntlet");
     expect(entries[1]?.weaponOptions[0]?.label).toBe("Plaguereaper");
   });
+
+  it("reconstructs weapon options for legacy preset units that only store selectedWeaponId", () => {
+    const army: ArmyPresetV2 = {
+      id: "army-legacy",
+      name: "Tau Legacy",
+      faction: "T'au Empire",
+      units: [
+        {
+          instanceId: "unit-legacy-1",
+          unitId: "hammerhead-gunship",
+          nickname: "Hammerhead",
+          modelCount: 1,
+          selectedWeaponId: "railgun",
+          unitTotalPoints: 145,
+          pointsPerModel: 145,
+        },
+      ],
+      totalPoints: 145,
+      createdAt: 1,
+      updatedAt: 1,
+    };
+
+    const unitDefinitions: Unit[] = [
+      {
+        id: "hammerhead-gunship",
+        name: "Hammerhead Gunship",
+        faction: "T'au Empire",
+        toughness: 10,
+        save: 3,
+        woundsPerModel: 14,
+        weapons: [
+          {
+            id: "railgun",
+            name: "Railgun",
+            type: "ranged",
+            attacks: 1,
+            skill: 4,
+            strength: 20,
+            ap: -5,
+            damage: 6,
+          },
+        ],
+        keywords: ["VEHICLE"],
+      },
+    ];
+
+    const entries = buildWorkspaceSelectableEntries(army, unitDefinitions);
+
+    expect(entries).toHaveLength(1);
+    expect(entries[0]?.primaryWeaponId).toBe("railgun");
+    expect(entries[0]?.weaponLabel).toBe("Railgun");
+    expect(entries[0]?.weaponOptions).toEqual([
+      { weaponId: "railgun", label: "Railgun" },
+    ]);
+  });
 });

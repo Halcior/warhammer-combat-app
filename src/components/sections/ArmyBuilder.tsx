@@ -25,6 +25,7 @@ import {
 import { ArmyHeaderSection } from "./ArmyHeaderSection";
 import { PointsSummarySection } from "./PointsSummarySection";
 import { UnitCard } from "./UnitCard";
+import { normalizeFactionName } from "../../lib/normalizeFactionName";
 
 interface Enhancement {
   id: string;
@@ -59,16 +60,18 @@ export function ArmyBuilder({
 }: ArmyBuilderProps) {
   // Lazy initializer avoids calling Date.now() on every render.
   const [preset, setPreset] = useState<ArmyPresetV2>(() =>
-    initial ?? {
-      id: `army-${Date.now()}`,
-      name: "",
-      faction: "",
-      units: [],
-      totalPoints: 0,
-      pointsLimit: 2000,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
-    }
+    initial
+      ? { ...initial, faction: normalizeFactionName(initial.faction) }
+      : {
+          id: `army-${Date.now()}`,
+          name: "",
+          faction: "",
+          units: [],
+          totalPoints: 0,
+          pointsLimit: 2000,
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
+        }
   );
   const [unitToAddId, setUnitToAddId] = useState("");
   const factionScopedUnits = useMemo(
@@ -123,7 +126,7 @@ export function ArmyBuilder({
   const handleDetachmentChange = (detachmentId: string | undefined) => {
     const detachmentName =
       preset.faction && detachmentId
-        ? detachmentsByFaction[preset.faction]?.find((item) => item.id === detachmentId)?.name
+        ? detachmentsByFaction[normalizeFactionName(preset.faction)]?.find((item) => item.id === detachmentId)?.name
         : undefined;
 
     setPreset((current) =>

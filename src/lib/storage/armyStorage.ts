@@ -1,5 +1,6 @@
 import type { ArmyPresetV2 } from "../../types/armyPreset";
 import { loadAndMigratePreset } from "../presetUtils";
+import { normalizeFactionName } from "../normalizeFactionName";
 
 const STORAGE_KEY = "df_army_presets_v2";
 const LEGACY_STORAGE_KEY = "df_army_presets_v1";
@@ -38,6 +39,7 @@ export function createArmy(data: ArmyDraft): ArmyPresetV2 {
   const now = Date.now();
   const army: ArmyPresetV2 = {
     ...data,
+    faction: normalizeFactionName(data.faction),
     id: `army_${now}_${Math.random().toString(36).slice(2, 7)}`,
     createdAt: now,
     updatedAt: now,
@@ -56,6 +58,7 @@ export function updateArmy(id: string, data: ArmyDraft): ArmyPresetV2 | null {
   const updated: ArmyPresetV2 = {
     ...armies[idx],
     ...data,
+    faction: normalizeFactionName(data.faction),
     id,
     updatedAt: Date.now(),
   };

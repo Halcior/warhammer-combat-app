@@ -1,5 +1,6 @@
 import type { ArmyPresetV2, SavedUnitInPreset } from "../types/armyPreset";
 import type { Unit } from "../types/combat";
+import { normalizeFactionName } from "./normalizeFactionName";
 
 /**
  * Export format version
@@ -58,7 +59,7 @@ export function exportArmyPreset(
     type: EXPORT_FORMAT_TYPE,
     exportedAt: new Date().toISOString(),
     armyName: preset.name,
-    faction: preset.faction,
+    faction: normalizeFactionName(preset.faction),
     detachmentId: preset.detachmentId,
     detachmentName: preset.detachmentName,
     notes: preset.notes,
@@ -132,7 +133,7 @@ export function importArmyPreset(
   return {
     id: `army-${Date.now()}`,
     name: exportData.armyName,
-    faction: exportData.faction,
+    faction: normalizeFactionName(exportData.faction),
     units,
     detachmentId: exportData.detachmentId,
     detachmentName: exportData.detachmentName,

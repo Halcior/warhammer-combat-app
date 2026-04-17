@@ -22,6 +22,7 @@ import type {
 } from "../types/armyPreset";
 import type { Unit } from "../types/combat";
 import { ARMY_PRESET_DEFAULTS } from "../types/armyPreset";
+import { normalizeFactionName } from "./normalizeFactionName";
 
 // ── Points Calculation ────────────────────────────────────────────
 
@@ -85,6 +86,85 @@ export function deriveLegacyWeaponSelection(
     selectedRangedWeaponId,
     selectedMeleeWeaponId,
   };
+}
+
+type PresetWeaponCarrier = Pick<
+  SavedUnitInPreset | AttachedLeaderInPreset,
+  | "selectedWeapons"
+  | "selectedWeaponId"
+  | "selectedRangedWeaponId"
+  | "selectedMeleeWeaponId"
+>;
+
+export function resolvePresetWeaponOptions(
+  unit: PresetWeaponCarrier,
+  unitDefinition: Unit | undefined
+): SelectedWeaponEntry[] {
+  if (unit.selectedWeapons && unit.selectedWeapons.length > 0) {
+    return unit.selectedWeapons;
+  }
+
+  const resolved: SelectedWeaponEntry[] = [];
+  const usedWeaponIds = new Set<string>();
+
+  const pushWeapon = (
+    weaponId: string | undefined,
+    category: SelectedWeaponEntry["category"]
+  ) => {
+    if (!weaponId || usedWeaponIds.has(weaponId)) {
+      return;
+    }
+
+    const matchingWeapon = unitDefinition?.weapons.find((weapon) => weapon.id === weaponId);
+
+    resolved.push({
+      weaponId,
+      name: matchingWeapon?.name ?? weaponId,
+      category,
+    });
+    usedWeaponIds.add(weaponId);
+  };
+
+  pushWeapon(unit.selectedRangedWeaponId, "ranged");
+  pushWeapon(unit.selectedMeleeWeaponId, "melee");
+  pushWeapon(unit.selectedWeaponId, "other");
+
+  if (resolved.length > 0) {
+    return resolved;
+  }
+
+  return buildDefaultSelectedWeapons(unitDefinition);
+}
+
+export function resolvePresetPrimaryWeaponId(
+  unit: PresetWeaponCarrier,
+  unitDefinition: Unit | undefined
+): string {
+  const resolvedWeapons = resolvePresetWeaponOptions(unit, unitDefinition);
+
+  return (
+    resolvedWeapons.find((weapon) => weapon.category === "ranged")?.weaponId ??
+    unit.selectedRangedWeaponId ??
+    unit.selectedWeaponId ??
+    resolvedWeapons[0]?.weaponId ??
+    unit.selectedMeleeWeaponId ??
+    unitDefinition?.weapons[0]?.id ??
+    ""
+  );
+}
+
+export function resolvePresetWeaponLabel(
+  unit: PresetWeaponCarrier,
+  unitDefinition: Unit | undefined,
+  fallbackLabel = "Weapon not set"
+): string {
+  const resolvedWeapons = resolvePresetWeaponOptions(unit, unitDefinition);
+
+  if (resolvedWeapons.length === 0) {
+    return fallbackLabel;
+  }
+
+  return resolvedWeapons.map((weapon) => weapon.name).join(" | ");
 }
 
 export function createAttachedLeaderFromUnit(unitDefinition: Unit | undefined): AttachedLeaderInPreset | undefined {
@@ -349,7 +429,7 @@ export function migratePresetToV2(
   const migratedPreset: ArmyPresetV2 = {
     id: oldPreset.id,
     name: oldPreset.name,
-    faction: oldPreset.faction,
+    faction: normalizeFactionName(oldPreset.faction),
     units: newUnits,
     notes: oldPreset.notes,
     detachmentId: undefined,
@@ -377,6 +457,7 @@ export function loadAndMigratePreset(preset: ArmyPreset): ArmyPresetV2 {
 
     return {
       ...v2Preset,
+      faction: normalizeFactionName(v2Preset.faction),
       units: v2Preset.units.map((unit) => ({
         ...unit,
         instanceId: unit.instanceId ?? createPresetUnitInstanceId(),
