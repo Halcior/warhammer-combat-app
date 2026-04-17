@@ -2097,6 +2097,70 @@ describe("calculateExpectedDamage", () => {
     expect(ignoredPenalty.hitTarget).toBe(4);
     expect(ignoredPenalty.expectedHits).toBeGreaterThan(penalized.expectedHits);
   });
+
+  it("requires both Guided and Spotted for the Tau hit bonus", () => {
+    const rangedWeapon: Weapon = {
+      id: "pulse-rifle",
+      name: "Pulse Rifle",
+      attacks: 2,
+      skill: 4,
+      strength: 5,
+      ap: 0,
+      damage: 1,
+      type: "ranged",
+      specialRules: [],
+    };
+
+    const guidedFireRule = {
+      type: "HIT_MODIFIER" as const,
+      value: 1,
+      attackType: "ranged" as const,
+      requiresAttackerGuided: true,
+      requiresTargetSpotted: true,
+    };
+
+    const baseline = calculateExpectedDamage({
+      attacker,
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: baseConditions,
+      activeModifierRules: [guidedFireRule],
+    });
+
+    const onlyGuided = calculateExpectedDamage({
+      attacker,
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        attackerIsGuided: true,
+      },
+      activeModifierRules: [guidedFireRule],
+    });
+
+    const guidedAndSpotted = calculateExpectedDamage({
+      attacker,
+      weapon: rangedWeapon,
+      defender,
+      attackingModels: 1,
+      defendingModels: 10,
+      conditions: {
+        ...baseConditions,
+        attackerIsGuided: true,
+        targetIsSpotted: true,
+      },
+      activeModifierRules: [guidedFireRule],
+    });
+
+    expect(baseline.hitTarget).toBe(4);
+    expect(onlyGuided.hitTarget).toBe(4);
+    expect(guidedAndSpotted.hitTarget).toBe(3);
+    expect(guidedAndSpotted.expectedHits).toBeGreaterThan(onlyGuided.expectedHits);
+  });
 });
 
 it("applies wound modifier against high toughness targets", () => {

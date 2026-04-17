@@ -2,7 +2,10 @@ import { useEffect, useMemo, useState } from "react";
 import { calculateUnitPoints } from "../lib/presetUtils";
 import type { ArmyPresetV2, SavedUnitInPreset } from "../types/armyPreset";
 import type { AttackConditions, Unit } from "../types/combat";
-import { battleStateToggles } from "../lib/battleStateToggles";
+import {
+  battleStateToggles,
+  isBattleStateToggleRelevant,
+} from "../lib/battleStateToggles";
 
 function unitById(unitDefinitions: Unit[], unitId: string) {
   return unitDefinitions.find((unit) => unit.id === unitId) ?? null;
@@ -337,18 +340,27 @@ function WorkspaceCombatSetup({
     const selectedWeapon = actorUnit?.weapons.find((weapon) => weapon.id === weaponId);
     return selectedWeapon?.type !== "melee";
   }, [attackerEntry, unitDefinitions, weaponId]);
+  const visibleCoreToggles = battleStateToggles.filter(
+    (toggle) =>
+      toggle.group === "core" &&
+      isBattleStateToggleRelevant({
+        toggle,
+        conditions,
+        relevantFactions,
+        attackType: isRangedAttack ? "ranged" : "melee",
+      })
+  );
+  const secondaryCoreToggles = visibleCoreToggles.filter(
+    (toggle) => !corePills.some((pill) => pill.key === toggle.key)
+  );
   const advancedToggles = battleStateToggles.filter((toggle) => toggle.group === "advanced");
   const visibleAdvancedToggles = advancedToggles.filter((toggle) => {
-    if (conditions[toggle.key]) {
-      return true;
-    }
-
-    const matchesFaction =
-      !toggle.factions || toggle.factions.some((faction) => relevantFactions.has(faction));
-    const matchesAttackType =
-      !toggle.attackTypes || toggle.attackTypes.includes(isRangedAttack ? "ranged" : "melee");
-
-    return matchesFaction && matchesAttackType;
+    return isBattleStateToggleRelevant({
+      toggle,
+      conditions,
+      relevantFactions,
+      attackType: isRangedAttack ? "ranged" : "melee",
+    });
   });
   const attackerAdvancedToggles = visibleAdvancedToggles.filter(
     (toggle) => classifyBattleStateSide(toggle.key) === "attacker"
@@ -513,6 +525,32 @@ function WorkspaceCombatSetup({
           </button>
         ))}
       </div>
+
+      {secondaryCoreToggles.length > 0 && (
+        <div className="workspace-advanced-state__group">
+          <div className="workspace-advanced-state__group-header">
+            <h4>Core battle state</h4>
+            <span>{secondaryCoreToggles.length}</span>
+          </div>
+          <div className="workspace-advanced-state__grid">
+            {secondaryCoreToggles.map(({ key, label, title }) => (
+              <label key={key} className="checkbox-row" title={title}>
+                <input
+                  type="checkbox"
+                  checked={conditions[key]}
+                  onChange={(event) =>
+                    setConditions({
+                      ...conditions,
+                      [key]: event.target.checked,
+                    })
+                  }
+                />
+                <span className="checkbox-row__label">{label}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+      )}
 
       <details className="workspace-advanced-state" open={showAdvanced}>
         <summary

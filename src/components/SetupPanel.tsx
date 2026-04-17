@@ -5,6 +5,7 @@ import {
   type BattleStateToggle,
   type BattleStateToggleKey,
   battleStateToggles,
+  isBattleStateToggleRelevant,
 } from "../lib/battleStateToggles";
 
 // Re-export types so existing consumers keep working without import path changes.
@@ -63,21 +64,19 @@ export function SetupPanel({
   const isRangedAttack = attacker.weapons.some((weapon) => weapon.id === weaponId && weapon.type === "ranged");
 
   const isRelevantToggle = (toggle: BattleStateToggle) => {
-    if (conditions[toggle.key]) {
-      return true;
-    }
-
-    const matchesFaction =
-      !toggle.factions || toggle.factions.some((faction) => relevantFactions.has(faction));
-    const matchesAttackType =
-      !toggle.attackTypes ||
-      toggle.attackTypes.includes(isRangedAttack ? "ranged" : "melee");
-
-    return matchesFaction && matchesAttackType;
+    return isBattleStateToggleRelevant({
+      toggle,
+      conditions,
+      relevantFactions,
+      attackType: isRangedAttack ? "ranged" : "melee",
+    });
   };
 
   const coreToggles = battleStateToggles.filter((toggle) => toggle.group === "core");
   const advancedToggles = battleStateToggles.filter((toggle) => toggle.group === "advanced");
+  const visibleCoreToggles = showAllBattleState
+    ? coreToggles
+    : coreToggles.filter(isRelevantToggle);
   const visibleAdvancedToggles = showAllBattleState
     ? advancedToggles
     : advancedToggles.filter(isRelevantToggle);
@@ -268,7 +267,7 @@ export function SetupPanel({
             <p className="setup-state-toolbar__meta">
               {showAllBattleState
                 ? `Showing all ${battleStateToggles.length} battle-state toggles`
-                : `Showing ${coreToggles.length + visibleAdvancedToggles.length} relevant toggles for this matchup`}
+                : `Showing ${visibleCoreToggles.length + visibleAdvancedToggles.length} relevant toggles for this matchup`}
             </p>
             <button
               type="button"
@@ -282,10 +281,10 @@ export function SetupPanel({
           <div className="setup-state-group">
             <div className="setup-state-group__header">
               <h4>Core conditions</h4>
-              <span>{coreToggles.length}</span>
+              <span>{showAllBattleState ? coreToggles.length : visibleCoreToggles.length}</span>
             </div>
             <div className="setup-conditions-grid">
-              {coreToggles.map(({ key, label, title }) => (
+              {visibleCoreToggles.map(({ key, label, title }) => (
                 <label key={key} className="checkbox-row" title={title}>
                   <input
                     type="checkbox"

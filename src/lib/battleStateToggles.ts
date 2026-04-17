@@ -1,4 +1,5 @@
 import type { WeaponType } from "../types/combat";
+import type { AttackConditions } from "../types/combat";
 
 export type BattleStateToggleKey =
   | "isTargetInCover"
@@ -87,3 +88,29 @@ export const battleStateToggles: BattleStateToggle[] = [
   { key: "targetIsUnravelling", label: "Target is unravelling", title: "The target currently counts as unravelling.", group: "advanced", factions: ["Necrons"] },
   { key: "attackerIsIsolated", label: "Attacker is isolated", title: "The attacking unit counts as isolated.", group: "advanced", factions: ["World Eaters"] },
 ];
+
+type BattleStateToggleRelevanceParams = {
+  toggle: BattleStateToggle;
+  conditions: AttackConditions;
+  relevantFactions: Set<string>;
+  attackType: WeaponType;
+};
+
+export function isBattleStateToggleRelevant({
+  toggle,
+  conditions,
+  relevantFactions,
+  attackType,
+}: BattleStateToggleRelevanceParams): boolean {
+  if (conditions[toggle.key]) {
+    return true;
+  }
+
+  const matchesFaction =
+    !toggle.factions ||
+    toggle.factions.some((faction) => relevantFactions.has(faction));
+  const matchesAttackType =
+    !toggle.attackTypes || toggle.attackTypes.includes(attackType);
+
+  return matchesFaction && matchesAttackType;
+}

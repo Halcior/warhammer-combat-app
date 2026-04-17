@@ -15,11 +15,19 @@ import type { RuleOption } from "../../../types/faction";
 export const tauArmyRules: RuleOption[] = [
   {
     id: "tau-markerlight-hit-bonus",
-    name: "Markerlight: +1 to Hit",
-    displayLabel: "Markerlight",
+    name: "For the Greater Good: Guided Fire",
+    displayLabel: "Guided Fire",
     description:
-      "T'au ranged attacks against a Markerlight-designated target gain +1 to their Hit rolls. Requires the 'Spotted / markerlit' battle-state toggle to be active.",
-    modifiers: [{ type: "HIT_MODIFIER", value: 1, requiresTargetSpotted: true }],
+      "T'au ranged attacks improve their Ballistic Skill by 1 when a Guided unit attacks its Spotted target. Requires both 'Attacker is Guided' and 'Spotted / markerlit' battle-state toggles.",
+    modifiers: [
+      {
+        type: "HIT_MODIFIER",
+        value: 1,
+        attackType: "ranged",
+        requiresAttackerGuided: true,
+        requiresTargetSpotted: true,
+      },
+    ],
     appliesTo: "attacker",
     combatRole: "attacker",
     phase: "shooting",
