@@ -1,6 +1,7 @@
 import type { FactionConfig } from "../../../types/faction";
 import type { NormalizedDetachment } from "../../../types/wahapedia";
 import { mapNormalizedDetachmentToDetachmentConfig } from "../../mappers/mapNormalizedDetachmentToFactionConfig";
+import { findFactionDetachment } from "../findFactionDetachment";
 import { deathGuardArmyRules } from "./armyRules";
 
 const deathGuardDetachmentIds = [
@@ -20,7 +21,7 @@ export function getDeathGuardFactionConfig(
   detachments: NormalizedDetachment[]
 ): FactionConfig {
   const factionDetachments = deathGuardDetachmentIds
-    .map((id) => detachments.find((d) => d.factionName === "Death Guard" && d.id === id))
+    .map((id) => findFactionDetachment(detachments, "Death Guard", id))
     .filter((d): d is NormalizedDetachment => Boolean(d))
     .map(mapNormalizedDetachmentToDetachmentConfig);
 

@@ -1,6 +1,7 @@
 import type { FactionConfig } from "../../../types/faction";
 import type { NormalizedDetachment } from "../../../types/wahapedia";
 import { mapNormalizedDetachmentToDetachmentConfig } from "../../mappers/mapNormalizedDetachmentToFactionConfig";
+import { findFactionDetachment } from "../findFactionDetachment";
 import { tyranidsArmyRules } from "./armyRules";
 
 const tyranidsDetachmentIds = [
@@ -22,9 +23,7 @@ export function getTyranidsFactionConfig(
   detachments: NormalizedDetachment[]
 ): FactionConfig {
   const factionDetachments = tyranidsDetachmentIds
-    .map((id) =>
-      detachments.find((d) => d.factionName === "Tyranids" && d.id === id)
-    )
+    .map((id) => findFactionDetachment(detachments, "Tyranids", id))
     .filter((d): d is NormalizedDetachment => Boolean(d))
     .map(mapNormalizedDetachmentToDetachmentConfig);
 

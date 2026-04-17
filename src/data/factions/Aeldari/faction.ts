@@ -1,6 +1,7 @@
 import type { FactionConfig } from "../../../types/faction";
 import type { NormalizedDetachment } from "../../../types/wahapedia";
 import { mapNormalizedDetachmentToDetachmentConfig } from "../../mappers/mapNormalizedDetachmentToFactionConfig";
+import { findFactionDetachment } from "../findFactionDetachment";
 import { aeldariArmyRules } from "./armyRules";
 
 const aeldariDetachmentIds = [
@@ -26,9 +27,7 @@ export function getAeldariFactionConfig(
   detachments: NormalizedDetachment[]
 ): FactionConfig {
   const factionDetachments = aeldariDetachmentIds
-    .map((id) =>
-      detachments.find((d) => d.factionName === "Aeldari" && d.id === id)
-    )
+    .map((id) => findFactionDetachment(detachments, "Aeldari", id))
     .filter((d): d is NormalizedDetachment => Boolean(d))
     .map(mapNormalizedDetachmentToDetachmentConfig);
 

@@ -62,7 +62,7 @@ export const factionSupportGroups: FactionSupportGroup[] = [
   {
     label: "Recommended for testing",
     tone: "ready",
-    factions: ["Adeptus Custodes", "Astra Militarum", "Necrons", "Orks", "Space Marines", "Tau Empire", "World Eaters"],
+    factions: ["Adeptus Custodes", "Astra Militarum", "Necrons", "Orks", "Space Marines", "T'au Empire", "World Eaters"],
     note: "These have the most complete gameplay-facing rule coverage right now.",
   },
   {

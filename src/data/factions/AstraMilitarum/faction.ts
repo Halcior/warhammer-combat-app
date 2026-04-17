@@ -1,6 +1,7 @@
 import type { FactionConfig } from "../../../types/faction";
 import type { NormalizedDetachment } from "../../../types/wahapedia";
 import { mapNormalizedDetachmentToDetachmentConfig } from "../../mappers/mapNormalizedDetachmentToFactionConfig";
+import { findFactionDetachment } from "../findFactionDetachment";
 import { astraMilitarumArmyRules } from "./armyRules";
 
 const astraMilitarumDetachmentIds = [
@@ -19,11 +20,7 @@ export function getAstraMilitarumFactionConfig(
   detachments: NormalizedDetachment[]
 ): FactionConfig {
   const factionDetachments = astraMilitarumDetachmentIds
-    .map((id) =>
-      detachments.find(
-        (d) => d.factionName === "Astra Militarum" && d.id === id
-      )
-    )
+    .map((id) => findFactionDetachment(detachments, "Astra Militarum", id))
     .filter((d): d is NormalizedDetachment => Boolean(d))
     .map(mapNormalizedDetachmentToDetachmentConfig);
 

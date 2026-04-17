@@ -1,5 +1,6 @@
 import type { ArmyPresetV2 } from "../types/armyPreset";
 import type { Unit } from "../types/combat";
+import { normalizeFactionName } from "./normalizeFactionName";
 
 interface Enhancement {
   id: string;
@@ -12,7 +13,10 @@ export function getFactionScopedUnits(availableUnits: Unit[], faction: string): 
   if (!faction) {
     return [];
   }
-  return availableUnits.filter((unit) => unit.faction === faction);
+  const normalizedFaction = normalizeFactionName(faction);
+  return availableUnits.filter(
+    (unit) => normalizeFactionName(unit.faction) === normalizedFaction
+  );
 }
 
 export function applyFactionSelectionToPreset(
@@ -20,8 +24,11 @@ export function applyFactionSelectionToPreset(
   faction: string,
   unitDefinitions: Map<string, Unit>
 ): ArmyPresetV2 {
+  const normalizedFaction = normalizeFactionName(faction);
   const nextUnits = preset.units.filter(
-    (unit) => unitDefinitions.get(unit.unitId)?.faction === faction
+    (unit) =>
+      normalizeFactionName(unitDefinitions.get(unit.unitId)?.faction ?? "") ===
+      normalizedFaction
   );
   const totalPoints = nextUnits.reduce(
     (sum, unit) =>
@@ -31,7 +38,7 @@ export function applyFactionSelectionToPreset(
 
   return {
     ...preset,
-    faction,
+    faction: normalizedFaction,
     detachmentId: undefined,
     detachmentName: undefined,
     units: nextUnits,

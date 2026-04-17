@@ -1,6 +1,7 @@
 import type { FactionConfig } from "../../../types/faction";
 import type { NormalizedDetachment } from "../../../types/wahapedia";
 import { mapNormalizedDetachmentToDetachmentConfig } from "../../mappers/mapNormalizedDetachmentToFactionConfig";
+import { findFactionDetachment } from "../findFactionDetachment";
 import { necronsArmyRules } from "./armyRules";
 
 const necronsDetachmentIds = [
@@ -22,7 +23,7 @@ export function getNecronsFactionConfig(
   detachments: NormalizedDetachment[]
 ): FactionConfig {
   const factionDetachments = necronsDetachmentIds
-    .map((id) => detachments.find((d) => d.factionName === "Necrons" && d.id === id))
+    .map((id) => findFactionDetachment(detachments, "Necrons", id))
     .filter((d): d is NormalizedDetachment => Boolean(d))
     .map(mapNormalizedDetachmentToDetachmentConfig);
 

@@ -1,6 +1,7 @@
 import type { FactionConfig } from "../../../types/faction";
 import type { NormalizedDetachment } from "../../../types/wahapedia";
 import { mapNormalizedDetachmentToDetachmentConfig } from "../../mappers/mapNormalizedDetachmentToFactionConfig";
+import { findFactionDetachment } from "../findFactionDetachment";
 import { leaguesOfVotannArmyRules } from "./armyRules";
 
 const leaguesOfVotannDetachmentIds = [
@@ -19,11 +20,7 @@ export function getLeaguesOfVotannFactionConfig(
   detachments: NormalizedDetachment[]
 ): FactionConfig {
   const factionDetachments = leaguesOfVotannDetachmentIds
-    .map((id) =>
-      detachments.find(
-        (d) => d.factionName === "Leagues of Votann" && d.id === id
-      )
-    )
+    .map((id) => findFactionDetachment(detachments, "Leagues of Votann", id))
     .filter((d): d is NormalizedDetachment => Boolean(d))
     .map(mapNormalizedDetachmentToDetachmentConfig);
 

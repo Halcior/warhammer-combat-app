@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { Unit } from "../types/combat";
 import type { AttackConditions } from "../types/combat";
 import { loadBattleSetup, saveBattleSetup } from "../lib/storage/uiStorage";
+import { normalizeFactionName } from "../lib/normalizeFactionName";
 
 export function useBattleSetup(units: Unit[]) {
   const initialConditions: AttackConditions = {
@@ -52,18 +53,26 @@ export function useBattleSetup(units: Unit[]) {
 
   const saved = loadBattleSetup();
 
-  const factions = [...new Set(units.map((unit) => unit.faction))];
+  const factions = [...new Set(units.map((unit) => normalizeFactionName(unit.faction)))];
 
   // ── Attacker initial values ───────────────────────────────────────────────
 
   const initialAttackerFaction = (() => {
-    if (saved.attackerFaction && units.some(u => u.faction === saved.attackerFaction)) {
-      return saved.attackerFaction;
+    const normalizedSavedAttackerFaction = saved.attackerFaction
+      ? normalizeFactionName(saved.attackerFaction)
+      : "";
+    if (
+      normalizedSavedAttackerFaction &&
+      units.some((u) => normalizeFactionName(u.faction) === normalizedSavedAttackerFaction)
+    ) {
+      return normalizedSavedAttackerFaction;
     }
-    return units[0].faction;
+    return normalizeFactionName(units[0].faction);
   })();
 
-  const initialAttackerUnits = units.filter(u => u.faction === initialAttackerFaction);
+  const initialAttackerUnits = units.filter(
+    (u) => normalizeFactionName(u.faction) === initialAttackerFaction
+  );
 
   const initialAttackerId = (() => {
     if (saved.attackerId) {
@@ -86,13 +95,21 @@ export function useBattleSetup(units: Unit[]) {
   // ── Defender initial values ───────────────────────────────────────────────
 
   const initialDefenderFaction = (() => {
-    if (saved.defenderFaction && units.some(u => u.faction === saved.defenderFaction)) {
-      return saved.defenderFaction;
+    const normalizedSavedDefenderFaction = saved.defenderFaction
+      ? normalizeFactionName(saved.defenderFaction)
+      : "";
+    if (
+      normalizedSavedDefenderFaction &&
+      units.some((u) => normalizeFactionName(u.faction) === normalizedSavedDefenderFaction)
+    ) {
+      return normalizedSavedDefenderFaction;
     }
-    return units[1]?.faction ?? units[0].faction;
+    return normalizeFactionName(units[1]?.faction ?? units[0].faction);
   })();
 
-  const initialDefenderUnits = units.filter(u => u.faction === initialDefenderFaction);
+  const initialDefenderUnits = units.filter(
+    (u) => normalizeFactionName(u.faction) === initialDefenderFaction
+  );
 
   const initialDefenderId = (() => {
     if (saved.defenderId) {
@@ -133,11 +150,15 @@ export function useBattleSetup(units: Unit[]) {
   // ── Derived ───────────────────────────────────────────────────────────────
 
   const attackerUnits = useMemo(() => {
-    return units.filter((unit) => unit.faction === attackerFaction);
+    return units.filter(
+      (unit) => normalizeFactionName(unit.faction) === normalizeFactionName(attackerFaction)
+    );
   }, [units, attackerFaction]);
 
   const defenderUnits = useMemo(() => {
-    return units.filter((unit) => unit.faction === defenderFaction);
+    return units.filter(
+      (unit) => normalizeFactionName(unit.faction) === normalizeFactionName(defenderFaction)
+    );
   }, [units, defenderFaction]);
 
   const attacker =
@@ -153,10 +174,13 @@ export function useBattleSetup(units: Unit[]) {
   // ── Handlers ──────────────────────────────────────────────────────────────
 
   function handleAttackerFactionChange(newFaction: string) {
-    const newAttackerUnits = units.filter((unit) => unit.faction === newFaction);
+    const normalizedFaction = normalizeFactionName(newFaction);
+    const newAttackerUnits = units.filter(
+      (unit) => normalizeFactionName(unit.faction) === normalizedFaction
+    );
     const newAttacker = newAttackerUnits[0];
 
-    setAttackerFaction(newFaction);
+    setAttackerFaction(normalizedFaction);
 
     if (newAttacker) {
       setAttackerId(newAttacker.id);
@@ -179,10 +203,13 @@ export function useBattleSetup(units: Unit[]) {
   }
 
   function handleDefenderFactionChange(newFaction: string) {
-    const newDefenderUnits = units.filter((unit) => unit.faction === newFaction);
+    const normalizedFaction = normalizeFactionName(newFaction);
+    const newDefenderUnits = units.filter(
+      (unit) => normalizeFactionName(unit.faction) === normalizedFaction
+    );
     const newDefender = newDefenderUnits[0];
 
-    setDefenderFaction(newFaction);
+    setDefenderFaction(normalizedFaction);
 
     if (newDefender) {
       setDefenderId(newDefender.id);
@@ -195,14 +222,14 @@ export function useBattleSetup(units: Unit[]) {
 
   // Directly select attacker from an army preset unit (sets faction + unit + weapon atomically)
   function selectAttacker(faction: string, unitId: string, weaponId: string) {
-    setAttackerFaction(faction);
+    setAttackerFaction(normalizeFactionName(faction));
     setAttackerId(unitId);
     setWeaponId(weaponId);
   }
 
   // Directly select defender from an army preset unit
   function selectDefender(faction: string, unitId: string) {
-    setDefenderFaction(faction);
+    setDefenderFaction(normalizeFactionName(faction));
     setDefenderId(unitId);
   }
 
