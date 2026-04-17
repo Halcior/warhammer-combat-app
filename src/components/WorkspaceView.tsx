@@ -315,7 +315,7 @@ function renderToggleGrid(
         <label key={key} className="checkbox-row" title={title}>
           <input
             type="checkbox"
-            checked={conditions[key]}
+            checked={Boolean(conditions[key])}
             onChange={(event) =>
               setConditions({
                 ...conditions,

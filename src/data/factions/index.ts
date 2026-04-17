@@ -18,33 +18,39 @@ import { getThousandSonsFactionConfig } from "./ThousandSons/faction";
 import { getTyranidsFactionConfig } from "./Tyranids/faction";
 import { getWorldEatersFactionConfig } from "./WorldEaters/faction";
 
+const factionConfigFactories: Record<
+  string,
+  (detachments: NormalizedDetachment[]) => FactionConfig
+> = {
+  "Adepta Sororitas": getAdeptaSororitasFactionConfig,
+  "Adeptus Mechanicus": getAdeptusMechanicusFactionConfig,
+  "Astra Militarum": getAstraMilitarumFactionConfig,
+  "Adeptus Custodes": getAdeptusCustodesFactionConfig,
+  Aeldari: getAeldariFactionConfig,
+  "Chaos Knights": getChaosKnightsFactionConfig,
+  "Chaos Space Marines": getChaosSpaceMarinesFactionConfig,
+  "Death Guard": getDeathGuardFactionConfig,
+  "Grey Knights": getGreyKnightsFactionConfig,
+  "Leagues of Votann": getLeaguesOfVotannFactionConfig,
+  Necrons: getNecronsFactionConfig,
+  Orks: getOrksFactionConfig,
+  "Space Marines": getSpaceMarinesFactionConfig,
+  "T'au Empire": getTauFactionConfig,
+  "Thousand Sons": getThousandSonsFactionConfig,
+  Tyranids: getTyranidsFactionConfig,
+  "World Eaters": getWorldEatersFactionConfig,
+};
+
 export function getFactionConfigs(
   detachments: NormalizedDetachment[]
 ): FactionConfig[] {
-  return [
-    getAdeptaSororitasFactionConfig(detachments),
-    getAdeptusMechanicusFactionConfig(detachments),
-    getAstraMilitarumFactionConfig(detachments),
-    getAdeptusCustodesFactionConfig(detachments),
-    getAeldariFactionConfig(detachments),
-    getChaosKnightsFactionConfig(detachments),
-    getChaosSpaceMarinesFactionConfig(detachments),
-    getDeathGuardFactionConfig(detachments),
-    getGreyKnightsFactionConfig(detachments),
-    getLeaguesOfVotannFactionConfig(detachments),
-    getNecronsFactionConfig(detachments),
-    getOrksFactionConfig(detachments),
-    getSpaceMarinesFactionConfig(detachments),
-    getTauFactionConfig(detachments),
-    getThousandSonsFactionConfig(detachments),
-    getTyranidsFactionConfig(detachments),
-    getWorldEatersFactionConfig(detachments),
-  ];
+  return Object.values(factionConfigFactories).map((factory) => factory(detachments));
 }
 
 export function getFactionConfigByName(
   factionName: string,
   detachments: NormalizedDetachment[]
 ): FactionConfig | undefined {
-  return getFactionConfigs(detachments).find((config) => config.faction === factionName);
+  const factory = factionConfigFactories[factionName];
+  return factory ? factory(detachments) : undefined;
 }
