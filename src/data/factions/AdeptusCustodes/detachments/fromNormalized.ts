@@ -1,6 +1,7 @@
 import { mapNormalizedDetachmentToDetachmentConfig } from "../../../mappers/mapNormalizedDetachmentToFactionConfig";
 import type { DetachmentConfig } from "../../../../types/faction";
 import type { NormalizedDetachment } from "../../../../types/wahapedia";
+import { normalizeFactionName } from "../../../../lib/normalizeFactionName";
 
 export function getAdeptusCustodesDetachmentFromNormalized(
   id: string,
@@ -13,7 +14,9 @@ export function getAdeptusCustodesDetachmentFromNormalized(
   }
 
   const detachment = detachments.find(
-    (entry) => entry.factionName === "Adeptus Custodes" && entry.id === id
+    (entry) =>
+      normalizeFactionName(entry.factionName) === "Adeptus Custodes" &&
+      entry.id === id
   );
 
   if (!detachment) {

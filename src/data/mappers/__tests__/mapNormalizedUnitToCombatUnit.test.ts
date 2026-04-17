@@ -363,4 +363,22 @@ describe("mapNormalizedUnitToCombatUnit primary model selection", () => {
       },
     ]);
   });
+
+  it("normalizes faction names with smart apostrophes to the app's canonical form", () => {
+    const unit = buildUnit([
+      {
+        id: "m1",
+        name: "Hammerhead Gunship",
+        toughness: 10,
+        save: 3,
+        wounds: 14,
+      },
+    ]);
+
+    unit.factionName = "T’au Empire";
+
+    const mapped = mapNormalizedUnitToCombatUnit(unit);
+
+    expect(mapped.faction).toBe("T'au Empire");
+  });
 });

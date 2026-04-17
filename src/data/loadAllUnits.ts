@@ -4,6 +4,7 @@ import type { Unit } from "../types/combat";
 import type { ArmyPresetV2 } from "../types/armyPreset";
 import type { NormalizedUnit } from "../types/wahapedia";
 import type { SavedBattleSetup } from "../lib/storage/uiStorage";
+import { normalizeFactionName } from "../lib/normalizeFactionName";
 
 const unitChunkModules = import.meta.glob("./normalized/units-by-faction/*.json");
 
@@ -49,7 +50,7 @@ function mapLoadedChunksToUnits(loadedChunks: unknown[]): Unit[] {
 export function getAvailableUnitFactions(
   manifest: UnitChunkManifestEntry[] = manifestEntries
 ): string[] {
-  return manifest.map((entry) => entry.factionName);
+  return manifest.map((entry) => normalizeFactionName(entry.factionName));
 }
 
 export function resolvePriorityUnitFactions(
@@ -61,17 +62,23 @@ export function resolvePriorityUnitFactions(
   }: PriorityUnitLoadContext,
   manifest: UnitChunkManifestEntry[] = manifestEntries
 ): string[] {
-  const availableFactions = new Set(manifest.map((entry) => entry.factionName));
+  const availableFactions = new Set(
+    manifest.map((entry) => normalizeFactionName(entry.factionName))
+  );
   const priorityFactions: string[] = [];
   const armiesById = new Map(armies.map((army) => [army.id, army]));
 
   function addFaction(factionName?: string | null) {
-    if (!factionName || !availableFactions.has(factionName)) {
+    const normalizedFactionName = factionName
+      ? normalizeFactionName(factionName)
+      : null;
+
+    if (!normalizedFactionName || !availableFactions.has(normalizedFactionName)) {
       return;
     }
 
-    if (!priorityFactions.includes(factionName)) {
-      priorityFactions.push(factionName);
+    if (!priorityFactions.includes(normalizedFactionName)) {
+      priorityFactions.push(normalizedFactionName);
     }
   }
 
@@ -100,9 +107,13 @@ export function resolvePriorityUnitFactions(
 }
 
 export async function loadUnitsForFactions(factionNames: string[]): Promise<Unit[]> {
-  const requestedFactionNames = new Set(factionNames);
+  const requestedFactionNames = new Set(
+    factionNames.map((factionName) => normalizeFactionName(factionName))
+  );
   const loaders = manifestEntries
-    .filter((entry) => requestedFactionNames.has(entry.factionName))
+    .filter((entry) =>
+      requestedFactionNames.has(normalizeFactionName(entry.factionName))
+    )
     .map((entry) => getChunkLoaderByFileName(entry.fileName))
     .filter((loader): loader is NonNullable<typeof loader> => Boolean(loader));
 
@@ -119,8 +130,8 @@ export async function loadRemainingUnits(
 ): Promise<Unit[]> {
   const alreadyLoaded = new Set(loadedFactionNames);
   const remainingFactions = manifestEntries
-    .filter((entry) => !alreadyLoaded.has(entry.factionName))
-    .map((entry) => entry.factionName);
+    .filter((entry) => !alreadyLoaded.has(normalizeFactionName(entry.factionName)))
+    .map((entry) => normalizeFactionName(entry.factionName));
 
   return loadUnitsForFactions(remainingFactions);
 }

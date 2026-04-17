@@ -2,6 +2,7 @@ import type { FactionConfig } from "../../../types/faction";
 import type { NormalizedDetachment } from "../../../types/wahapedia";
 import { mapNormalizedDetachmentToDetachmentConfig } from "../../mappers/mapNormalizedDetachmentToFactionConfig";
 import { tauArmyRules } from "./armyRules";
+import { normalizeFactionName } from "../../../lib/normalizeFactionName";
 
 const tauDetachmentIds = [
   "auxiliary_cadre",
@@ -18,7 +19,12 @@ export function getTauFactionConfig(
   detachments: NormalizedDetachment[]
 ): FactionConfig {
   const factionDetachments = tauDetachmentIds
-    .map((id) => detachments.find((d) => d.factionName === "T'au Empire" && d.id === id))
+    .map((id) =>
+      detachments.find(
+        (d) =>
+          normalizeFactionName(d.factionName) === "T'au Empire" && d.id === id
+      )
+    )
     .filter((d): d is NormalizedDetachment => Boolean(d))
     .map(mapNormalizedDetachmentToDetachmentConfig);
 

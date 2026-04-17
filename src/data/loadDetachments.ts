@@ -1,5 +1,6 @@
 import detachmentChunkManifest from "./normalized/detachments-by-faction/manifest.json";
 import type { NormalizedDetachment } from "../types/wahapedia";
+import { normalizeFactionName } from "../lib/normalizeFactionName";
 
 const detachmentChunkModules = import.meta.glob("./normalized/detachments-by-faction/*.json");
 
@@ -31,9 +32,13 @@ function mapLoadedChunksToDetachments(loadedChunks: unknown[]): NormalizedDetach
 export async function loadDetachmentsForFactions(
   factionNames: string[]
 ): Promise<NormalizedDetachment[]> {
-  const requestedFactionNames = new Set(factionNames);
+  const requestedFactionNames = new Set(
+    factionNames.map((factionName) => normalizeFactionName(factionName))
+  );
   const loaders = manifestEntries
-    .filter((entry) => requestedFactionNames.has(entry.factionName))
+    .filter((entry) =>
+      requestedFactionNames.has(normalizeFactionName(entry.factionName))
+    )
     .map((entry) => getChunkLoaderByFileName(entry.fileName))
     .filter((loader): loader is NonNullable<typeof loader> => Boolean(loader));
 
@@ -50,12 +55,14 @@ export async function loadRemainingDetachments(
 ): Promise<NormalizedDetachment[]> {
   const alreadyLoaded = new Set(loadedFactionNames);
   const remainingFactions = manifestEntries
-    .filter((entry) => !alreadyLoaded.has(entry.factionName))
-    .map((entry) => entry.factionName);
+    .filter((entry) => !alreadyLoaded.has(normalizeFactionName(entry.factionName)))
+    .map((entry) => normalizeFactionName(entry.factionName));
 
   return loadDetachmentsForFactions(remainingFactions);
 }
 
 export async function loadAllDetachments(): Promise<NormalizedDetachment[]> {
-  return loadDetachmentsForFactions(manifestEntries.map((entry) => entry.factionName));
+  return loadDetachmentsForFactions(
+    manifestEntries.map((entry) => normalizeFactionName(entry.factionName))
+  );
 }

@@ -17,6 +17,7 @@ import { getTauFactionConfig } from "./Tau/faction";
 import { getThousandSonsFactionConfig } from "./ThousandSons/faction";
 import { getTyranidsFactionConfig } from "./Tyranids/faction";
 import { getWorldEatersFactionConfig } from "./WorldEaters/faction";
+import { normalizeFactionName } from "../../lib/normalizeFactionName";
 
 const factionConfigFactories: Record<
   string,
@@ -51,6 +52,6 @@ export function getFactionConfigByName(
   factionName: string,
   detachments: NormalizedDetachment[]
 ): FactionConfig | undefined {
-  const factory = factionConfigFactories[factionName];
+  const factory = factionConfigFactories[normalizeFactionName(factionName)];
   return factory ? factory(detachments) : undefined;
 }

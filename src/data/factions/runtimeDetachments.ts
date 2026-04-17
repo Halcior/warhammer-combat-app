@@ -1,12 +1,15 @@
 import { mapNormalizedDetachmentToDetachmentConfig } from "../mappers/mapNormalizedDetachmentToFactionConfig";
 import type { NormalizedDetachment } from "../../types/wahapedia";
+import { normalizeFactionName } from "../../lib/normalizeFactionName";
 
 export function getFactionRuntimeDetachments(
   factionName: string,
   detachments: NormalizedDetachment[]
 ) {
   const factionDetachments = detachments.filter(
-    (detachment) => detachment.factionName === factionName
+    (detachment) =>
+      normalizeFactionName(detachment.factionName) ===
+      normalizeFactionName(factionName)
   );
 
   const mappedDetachments = factionDetachments.map(

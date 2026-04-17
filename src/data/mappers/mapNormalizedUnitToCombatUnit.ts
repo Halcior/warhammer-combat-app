@@ -6,6 +6,7 @@ import type {
   Weapon,
 } from "../../types/combat";
 import type { NormalizedAbility, NormalizedUnit } from "../../types/wahapedia";
+import { normalizeFactionName } from "../../lib/normalizeFactionName";
 
 export function mapNormalizedUnitToCombatUnit(unit: NormalizedUnit): Unit {
   const primaryModel = pickPrimaryModel(unit);
@@ -13,7 +14,7 @@ export function mapNormalizedUnitToCombatUnit(unit: NormalizedUnit): Unit {
   return {
     id: unit.id,
     name: unit.name,
-    faction: unit.factionName,
+    faction: normalizeFactionName(unit.factionName),
     toughness: primaryModel.toughness,
     save: primaryModel.save,
     invulnerableSave:

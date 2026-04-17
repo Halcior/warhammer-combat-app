@@ -1,5 +1,6 @@
 import type { WeaponType } from "../types/combat";
 import type { AttackConditions } from "../types/combat";
+import { normalizeFactionName } from "./normalizeFactionName";
 
 export type BattleStateToggleKey =
   | "isTargetInCover"
@@ -108,7 +109,12 @@ export function isBattleStateToggleRelevant({
 
   const matchesFaction =
     !toggle.factions ||
-    toggle.factions.some((faction) => relevantFactions.has(faction));
+    toggle.factions.some((faction) =>
+      Array.from(relevantFactions).some(
+        (relevantFaction) =>
+          normalizeFactionName(relevantFaction) === normalizeFactionName(faction)
+      )
+    );
   const matchesAttackType =
     !toggle.attackTypes || toggle.attackTypes.includes(attackType);
 
